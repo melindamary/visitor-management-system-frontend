@@ -1,0 +1,26 @@
+.dashboard-tiles {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+.charts{
+    display: flex;
+    flex-direction: row;
+    .barChart{
+        width: 60%;
+    }
+    .pieChart{
+        width: 40%;
+    }
+
+}
+
+.securitytiles{
+    display: flex;
+    flex-direction: column;
+    padding-top: 30px;
+    padding-left: 30px;
+    .tilesSecurity{
+        padding: 30px;
+    } 
+}

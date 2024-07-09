@@ -1,0 +1,39 @@
+<p>admin-ace-dashbord works!</p>
+
+<div class="dashboard-tiles">
+    <app-tiles [title]="'Active Visitors'" [value]="activeVisitors" [backgroundColor]="'#896CC7'" [icon]="'pi-users'"></app-tiles>
+    <app-tiles [title]="'Scheduled Visitors'" [value]="totalVisitors" [backgroundColor]="'#FF858C'" [icon]="'pi-users'"></app-tiles>
+    <app-tiles [title]="'Total visitors'" [value]="ScheduledVisitors" [backgroundColor]="'#952991'" [icon]="'pi-users'"></app-tiles>
+</div>
+<div class="charts">
+    <div class="barChart">
+        <app-location-chart></app-location-chart>
+
+    </div>
+    <div class="pieChart">
+        <app-purpose-pie></app-purpose-pie>
+    </div>
+</div>
+<div class="tables">
+    <div class="table1">
+        <app-location-visitortable></app-location-visitortable>
+
+    </div>
+    <div class="table2">
+
+    </div>
+
+</div>
+<div>
+    <div class="securitytiles">
+        <app-tiles class="tilesSecurity" [title]="'Scheduled Visitors'" [value]="totalVisitors" [backgroundColor]="'#FF858C'" [icon]="'pi-users'"></app-tiles>
+        <app-tiles class="tilesSecurity" [title]="'Total visitors'" [value]="ScheduledVisitors" [backgroundColor]="'#952991'" [icon]="'pi-users'"></app-tiles>
+
+    </div>
+    <div>
+
+    </div>
+
+
+</div>
+

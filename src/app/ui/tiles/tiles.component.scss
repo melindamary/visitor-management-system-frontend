@@ -1,0 +1,41 @@
+@import "primeicons/primeicons.css";
+
+.tiles{
+    width: 370px;
+    height: 153px;
+    // background-color: #896CC7;
+    border-radius: 16px;
+}
+
+.tile-title{
+    display: flex;
+    justify-content: center;
+    color: white;
+    font-size: 16px;
+    font-family: 'Times New Roman', Times, serif;
+}
+.title-contents{
+    display: flex;
+    justify-content:space-between;
+    margin: 0;
+    padding: 0;
+    color: white;
+    font-size: 36px;
+    i{
+        display:flex;
+        color:black;
+        padding: 10px;
+        align-items: center;
+        padding-right: 70px;
+    }
+    .pi{
+        font-size: 2rem;
+    }
+
+}
+.tile-value{
+    padding: 0;
+    padding-left: 120px;
+    
+
+}
