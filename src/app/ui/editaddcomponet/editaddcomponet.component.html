@@ -1,0 +1,35 @@
+<div class="role-form-container">
+    <h2>{{ isEditMode ? 'Edit Role' : 'Add Role' }}</h2>
+    <div class="line"> </div>
+    <form [formGroup]="roleForm" (ngSubmit)="onSubmit()">
+      <div class="form-group1">
+        <label for="role">Role:</label>
+        <input id="role" formControlName="role" placeholder="Admin">
+      </div>
+      <div class="form-group">
+        <h3> <u>Role Permissions</u></h3>
+        <div formGroupName="permissions" class="checkbox-group">
+          <div class="checkbox-item">
+            <input type="checkbox" id="visitorLog" formControlName="visitorLog">
+            <label for="visitorLog">Visitor Log</label>
+          </div>
+          <div class="checkbox-item">
+            <input type="checkbox" id="adminDashboard" formControlName="adminDashboard">
+            <label for="adminDashboard">Admin/Ace Dashboard</label>
+          </div>
+          <div class="checkbox-item">
+            <input type="checkbox" id="reports" formControlName="reports">
+            <label for="reports">Reports</label>
+          </div>
+          <div class="checkbox-item">
+            <input type="checkbox" id="adminSettings" formControlName="adminSettings">
+            <label for="adminSettings">Admin Settings</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button type="submit" class="submit-btn">Submit</button>
+        <button type="button" class="cancel-btn" (click)="onCancel()">CANCEL</button>
+      </div>
+    </form>

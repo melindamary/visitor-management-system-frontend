@@ -1,0 +1,27 @@
+<!-- <p>tiles works!</p> -->
+<!-- <div class="tiles">
+    <div class="tile-title">
+        <p>
+            Active Visitors
+        </p>
+    </div>
+        <div class="title-contents">
+            <p class="tile-value">
+                10
+            </p>
+            <i class="pi pi-user"></i>
+        </div>
+
+</div> -->
+
+<div class="tiles" [style.background-color]="backgroundColor">
+    <div class="tile-title">
+      <p>{{ title }}</p>
+    </div>
+    <div class="title-contents">
+      <p class="tile-value">{{ value }}</p>
+      <i class="pi {{ icon }}"></i>
+    </div>
+  </div>
+  
+  

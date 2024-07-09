@@ -1,0 +1,287 @@
+.parallax-container {
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  section {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    visibility: hidden;
+  
+    &.active {
+      opacity: 1;
+      visibility: visible;
+    }
+  
+    h1 {
+      font-size: 48px;
+      color: white;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+      z-index: 300;
+
+    }
+  }
+  
+  .angled-shape {
+    width: 50vw;
+    height: 100vh;
+    background-color: #f803136c;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    overflow: hidden;
+  }
+  
+  .left {
+    clip-path: polygon(0 0, 80% 0,  0 70%,90% 100%);
+    transform: rotate(0deg);
+  }
+  
+  .grid-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(15, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+  }
+  .angled-shape1 {
+    width: 50vw;
+    height: 100vh;
+    background-color: #f803136c;
+    position: absolute;
+    top: 0;
+    right: 80px;
+    z-index: 10;
+    overflow: hidden;
+    transform: rotate(120deg);
+
+  }
+  .grid-container1 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(15, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+  }
+  .angled-shape2 {
+    width: 50vw;
+    height: 100vh;
+    background-color: #f803136c;
+    position: absolute;
+    bottom: -370px;
+    right: 390px;
+    z-index: 10;
+    overflow: hidden;
+    transform: rotate(50deg);
+    scale: .5;
+
+  }
+  .grid-container2 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(15, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+  }
+  
+  .logo {
+    position: absolute;
+    top: 20px; /* Adjust as needed */
+    left: 60px; /* Adjust as needed */
+    width: 200px; /* Adjust size as needed */
+    height: auto; /* Maintain aspect ratio */
+    z-index: 101; /* Ensure logo is above the shape */
+  }
+ 
+  
+  .grid-cell {
+    background-color: rgba(182, 29, 29, 0.1);
+    transition: background-color 0.3s ease;
+  }
+  
+  .grid-cell.active {
+    background-color: rgba(206, 29, 29, 0.3);
+  }
+  
+
+  .slide-container-wrapper {
+    position: fixed;
+    // bottom: 50px; // Adjust this value to position vertically
+    left: 0;
+    right: 0;
+    display: flex;
+    top:60%;
+    justify-content: center;
+    z-index: 1000; // Ensure it's above other content
+  }
+  
+  .slide-container {
+    width: 450px;
+    height: 80px;
+    background-color: #e0e0e0;
+    border-radius: 35px;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .slider {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    display: flex;
+    align-items: center;
+    transition: 0.3s ease;
+  }
+  
+  .slider-button {
+    width: 66px;
+    height: 66px;
+    background-color: #f803136c;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    cursor: pointer;
+    margin-left: 2px;
+  }
+  
+  .slider-text {
+    margin-left: 10px;
+    color: #333;
+  }
+
+
+
+
+// .parallax-container {
+//     height: 100vh;
+//     overflow: hidden;
+//     position: relative;
+//   }
+  
+//   section {
+//     height: 100vh;
+//     width: 100%;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     position: absolute;
+//     top: 0;
+//     left: 0;
+//     background-size: cover;
+//     background-position: center;
+//     opacity: 0;
+//     visibility: hidden;
+  
+//     &.active {
+//       opacity: 1;
+//       visibility: visible;
+//     }
+  
+//     h1 {
+//       font-size: 48px;
+//       color: white;
+//       text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+//     }
+//   }
+//   .slide-container {
+//     width: 250px;
+//     height: 50px;
+//     background-color: #e0e0e0;
+//     border-radius: 25px;
+//     position: relative;
+//     overflow: hidden;
+//   }
+//   .slider {
+//     width: 100%;
+//     height: 100%;
+//     position: absolute;
+//     left: 0;
+//     display: flex;
+//     align-items: center;
+//     transition: 0.3s ease;
+//   }
+//   .slider-button {
+//     width: 46px;
+//     height: 46px;
+//     background-color: #3f51b5;
+//     border-radius: 50%;
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//     color: white;
+//     cursor: pointer;
+//     margin-left: 2px;
+//   }
+//   .slider-text {
+//     margin-left: 10px;
+//     color: #333;
+//   }
+
+
+
+
+
+
+//   .slide-button {
+//     position: fixed;
+//     bottom: 20px;
+//     right: 20px;
+//     background-color: rgba(0, 0, 0, 0.6);
+//     color: white;
+//     padding: 10px 20px;
+//     border-radius: 20px;
+//     cursor: pointer;
+//     transition: background-color 0.3s;
+  
+//     &:hover {
+//       background-color: rgba(0, 0, 0, 0.8);
+//     }
+//   }
+// html,
+// body {
+//     margin: 0 !important;
+// }
+
+// section {
+//     position: fixed !important;
+// }
+
+// section:not(.first) {
+//     opacity: 0;
+//     visibility: hidden;
+//     transform: scale(0.8);
+// }
+// .bg {
+//     position: absolute;
+//     top: 0;
+//     left: 0;
+//     width: 100%;
+//     height: 100vh;
+//     z-index: -1;
+//     background-size: cover;
+//     background-position: center;
+//     background-repeat: no-repeat;
+//   }

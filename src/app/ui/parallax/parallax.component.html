@@ -1,0 +1,61 @@
+<!-- <p>parallax works!</p>
+
+<section class="first">
+    <h1>THIS IS MY FIRST FADE ANIMATION</h1>
+</section>
+<section>
+    <h1>GREAT THAT IT'S WORKING</h1>
+</section>
+<section>
+    <h1>SCROLL MORE TO SEE MORE</h1>
+</section>
+<section>
+    <h1>LOVING THE IMAGES</h1>
+</section>
+<section>
+    <h1>NICE, RIGHT?</h1>
+</section> -->
+<div class="parallax-container">
+    <section *ngFor="let section of sections; let i = index" [class.active]="currentSectionIndex === i">
+      
+        
+       <h1>{{section.text}}</h1>
+    </section>
+<div class="angled-shape left">
+    <div class="grid-container">
+        <div *ngFor="let cell of gridCells" class="grid-cell" [class.active]="cell.active"></div>
+      </div>
+
+
+    <img src="logo.png" alt="Logo" class="logo">
+
+</div>
+<div class="angled-shape1 left">
+    <div class="grid-container1">
+        <div *ngFor="let cell of gridCells" class="grid-cell" [class.active]="cell.active"></div>
+      </div>
+
+
+
+</div>
+<div class="angled-shape2 left">
+    <div class="grid-container2">
+        <div *ngFor="let cell of gridCells" class="grid-cell" [class.active]="cell.active"></div>
+      </div>
+
+
+
+</div>
+
+<div class="slide-container-wrapper">
+    <div class="slide-container">
+        <div #slider class="slider" (mousedown)="startSlide($event)" (touchstart)="startSlide($event)">
+          <div class="slider-button">
+            <span>></span>
+          </div>
+          <span class="slider-text">Slide To Enter</span>
+        </div>
+      </div>
+    </div> 
+ </div>
+  
