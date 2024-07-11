@@ -5,6 +5,7 @@ import { PurposePieComponent } from './ui/purpose-pie/purpose-pie.component';
 import { AdminACEDashbordComponent } from './pages/admin-ace-dashbord/admin-ace-dashbord.component';
 import { WelcomepageComponent } from './pages/welcomepage/welcomepage.component';
 import { EditaddcomponetComponent } from './ui/editaddcomponet/editaddcomponet.component';
+import { LocationSecurityTableComponent } from './ui/location-security-table/location-security-table.component';
 
 export const routes: Routes = [
 {
@@ -23,6 +24,9 @@ export const routes: Routes = [
     path:'welcomepage',component:WelcomepageComponent
 },
 {
-    path:'',component:EditaddcomponetComponent
+    path:'EditaddcomponetComponent',component:EditaddcomponetComponent
+},
+{
+    path:'',component:LocationSecurityTableComponent
 }
 ];
