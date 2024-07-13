@@ -7,6 +7,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { MatSidenav } from '@angular/material/sidenav';
 import { NgClass, NgIf } from '@angular/common';
+import { RouterOutlet } from '@angular/router';
 
 
 
@@ -15,7 +16,9 @@ import { NgClass, NgIf } from '@angular/common';
     standalone: true,
     templateUrl: './side-nav.component.html',
     styleUrl: './side-nav.component.scss',
-    imports: [MatIconModule, MatButtonModule, MatToolbarModule, MatSidenavModule, MatListModule, NgIf, NgClass]
+    imports: [MatIconModule, MatButtonModule, MatToolbarModule,
+       MatSidenavModule, MatListModule, NgIf, NgClass,
+       RouterOutlet]
 })
 export class SideNavComponent {
 

@@ -7,17 +7,17 @@ import { WelcomepageComponent } from './pages/welcomepage/welcomepage.component'
 import { EditaddcomponetComponent } from './ui/editaddcomponet/editaddcomponet.component';
 
 export const routes: Routes = [
+// {
+//     path:'location-chart',component:LocationChartComponent
+// },
+// {
+//     path:'location-visitortable',component:LocationVisitortableComponent
+// },
+// {
+//     path:'pie-charts',component:PurposePieComponent
+// },
 {
-    path:'location-chart',component:LocationChartComponent
-},
-{
-    path:'location-visitortable',component:LocationVisitortableComponent
-},
-{
-    path:'pie-charts',component:PurposePieComponent
-},
-{
-    path:'amaindashbord',component:AdminACEDashbordComponent
+    path:'dashboard',component:AdminACEDashbordComponent
 },
 {
     path:'welcomepage',component:WelcomepageComponent
