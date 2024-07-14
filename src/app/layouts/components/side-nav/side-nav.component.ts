@@ -7,9 +7,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { MatSidenav } from '@angular/material/sidenav';
 import { NgClass, NgIf } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
-
-
+import { RouterLinkActive, RouterOutlet } from '@angular/router';
+import { RouterLink } from '@angular/router';
 
 @Component({
     selector: 'app-side-nav',
@@ -18,7 +17,8 @@ import { RouterOutlet } from '@angular/router';
     styleUrl: './side-nav.component.scss',
     imports: [MatIconModule, MatButtonModule, MatToolbarModule,
        MatSidenavModule, MatListModule, NgIf, NgClass,
-       RouterOutlet]
+       RouterOutlet, RouterLink, RouterLinkActive
+      ]
 })
 export class SideNavComponent {
 

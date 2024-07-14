@@ -7,30 +7,34 @@ import { WelcomepageComponent } from './pages/welcomepage/welcomepage.component'
 import { EditaddcomponetComponent } from './ui/editaddcomponet/editaddcomponet.component';
 import { LoginComponent } from './pages/login/login.component';
 import { authAdminGuard } from './core/guard/auth-admin.guard';
+import { NavigationPanelComponent } from './layouts/navigation-panel/navigation-panel.component';
+import { Component } from '@angular/core';
 
 export const routes: Routes = [
-// {
-//     path:'location-chart',component:LocationChartComponent
-// },
-// {
-//     path:'location-visitortable',component:LocationVisitortableComponent
-// },
-// {
-//     path:'pie-charts',component:PurposePieComponent
-// },
-{
-    path:"", redirectTo: "/login", pathMatch: "full"
-},
-{
-    path:"login", component: LoginComponent
-},
-{
-    path:'dashboard',component:AdminACEDashbordComponent, canActivate: [authAdminGuard]
-},
-{
-    path:'welcomepage',component:WelcomepageComponent
-},
-// {
-//     path:'',component:EditaddcomponetComponent
-// }
+    {
+        path:"vms", 
+        component: NavigationPanelComponent, 
+        canActivate: [authAdminGuard],
+        children: [
+            {path: "dashboard", component: AdminACEDashbordComponent}
+        ]
+    },
+    { 
+        path:'welcomepage',
+        component:WelcomepageComponent
+    },
+    { 
+        path:"login", 
+        component: LoginComponent 
+    },
+    { 
+        path:"", 
+        redirectTo: "/login", 
+        pathMatch: "full" 
+    },
+    {
+        path:"**",
+        redirectTo: "/dashboard", 
+    }
+
 ];
