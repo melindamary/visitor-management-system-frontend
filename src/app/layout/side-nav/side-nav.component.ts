@@ -9,7 +9,6 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { NgClass, NgIf } from '@angular/common';
 
 
-
 @Component({
     selector: 'app-side-nav',
     standalone: true,

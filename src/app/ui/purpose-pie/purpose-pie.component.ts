@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { ChartModule } from 'primeng/chart';
-import { Chart } from 'chart.js';
+import { Chart ,registerables} from 'chart.js';
 
+Chart.register(...registerables);
 
 @Component({
   selector: 'app-purpose-pie',
@@ -16,149 +17,92 @@ export class PurposePieComponent {
   options: any;
  
   ngOnInit() {
-    this.createRadarChart();
-
     const documentStyle = getComputedStyle(document.documentElement);
     const textColor = documentStyle.getPropertyValue('--text-color');
 
     // Sort your data and labels based on the data in descending order
     let labels = ['House Keeping', 'Customer visit', 'Vendor Meetings', 'Interview', 'AC Service', 'CCTV Service', 'Fire extinguisher service', 'Plumbing related service', 'Pest control service', 'Water Purifier service', 'Access door service', 'Server room related', 'Laptop Vendors', 'Laptop technicians', 'Training', 'Chief guest', 'F&B Vendors', 'Others'];
     let data = [65, 59, 90, 81, 56, 55, 40,65, 59, 90, 81, 56, 55, 40,81, 56, 55, 0];
-
-    // let list = [];
-    // for (let j = 0; j < labels.length; j++)
-    //     list.push({'label': labels[j], 'data': data[j]});
-
-    // // Sorting the array based on 'data'
-    // list.sort(function(a, b) {
-    //     return ((a.data > b.data) ? -1 : ((a.data == b.data) ? 0 : 1));
-    // });
-
-    // // Separate the top 6 and the rest
-    // let topSixList = list.slice(0, 6);
-    // let restList = list.slice(6);
-
-    // // Prepare your final labels and data
-    // let finalLabels = topSixList.map(a => a.label);
-    // let finalData = topSixList.map(a => a.data);
-
-    // // Calculate the sum of the rest of the data
-    // let restSum = restList.reduce((a, b) => a + b.data, 0);
-
-    // // Add the rest as the 7th category
-    // finalLabels.push('Others');
-    // finalData.push(restSum);
+    // Sort data in descending order
+    const sortedData = data.slice().sort((a, b) => b - a);
+    const sortedLabels = labels.slice().sort((a, b) => data[labels.indexOf(b)] - data[labels.indexOf(a)]);
+    
+    const othersData = sortedData.slice(6);
+    const others = othersData.reduce((a, b) => a + b, 0);
+    sortedData.splice(6, othersData.length);
+    sortedLabels.splice(6, othersData.length);
+    sortedData.push(others);
+    sortedLabels.push('Others');
 
     this.data = {
-      labels: labels,
-      datasets: [
-          {   
-              data: data,
-              backgroundColor: [
-                '#1E90FF', // DodgerBlue
-                '#FFD700', // Gold
-                '#008000', // Green
-                '#FF0000', // Red
-                '#800080', // Purple
-                '#FFA500', // Orange
-                '#008080', // Teal
-                '#FFC0CB', // Pink
-                // '#4B0082', // Indigo
-                // '#32CD32', // LimeGreen
-                // '#00FFFF', // Cyan
-                // '#FFBF00', // Amber
-                // '#808080', // Gray
-                // '#A52A2A', // Brown
-                // '#ADD8E6', // LightBlue
-                // '#FF8C00', // DarkOrange
-                // '#9400D3', // DarkViolet
-                // '#90EE90'  // LightGreen
-            ],
-            hoverBackgroundColor: [
-                '#104E8B', // DodgerBlue4
-                '#8B6508', // DarkGoldenrod4
-                '#006400', // DarkGreen
-                '#8B0000', // DarkRed
-                '#551A8B', // Purple4
-                '#8B4500', // DarkOrange4
-                '#4F4F2F', // DarkOliveGreen4
-                '#8B3A62', // PaleVioletRed4
-                '#2E0854', // Indigo4
-                '#1C853D', // LimeGreen4
-                '#008B8B', // DarkCyan
-                '#8B7D26', // Khaki4
-                '#525252', // Gray32
-                '#8B2323', // Brown4
-                '#68838B', // LightBlue4
-                '#8B4500', // DarkOrange4
-                '#551A8B', // Purple4
-                '#548B54'  // PaleGreen4
-            ]
-            
-          }
-      ]
-  };
-
-
-  
-
-    this.options = {
-        plugins: {
-            legend: {
-                labels: {
-                    usePointStyle: true,
-                    color: textColor
-                }
-            }
-              }
-            }
-
-        
+      labels: sortedLabels,
+      datasets: [{
+        data: sortedData,
+        backgroundColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(255, 159, 64, 1)',
+          'rgba(255, 205, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(201, 203, 207, 1)'
+        ],
+        borderWidth: 1
+      }]
     };
   
 
+    this.options = {
+      plugins: {
+        legend: {
+          labels: {
+            usePointStyle: true,
+            color: textColor
+          }
+        },
+        
+        tooltip: {
+          mode: 'index',
+          intersect: false,
+          callbacks: {
+            title: (tooltipItem: any) => {
+              console.log(tooltipItem[0].label);
+              
+              return tooltipItem[0].label;
 
-      // const documentStyle = getComputedStyle(document.documentElement);
-      // const textColor = documentStyle.getPropertyValue('--text-color');
+            },
+            label: (context: any) => {
+              let label = context.dataset.label || '';
+              if (label) {
+                label += ': ';
+              }
+              
+              if (context.parsed.y !== null) {
+                // Calculate total within the function
+                const total = context.chart.data.datasets[0].data.reduce((a: any, b: any) => a + b, 0);
+                const percentage = (context.parsed.y / total) * 100;
+                label += `${context.parsed.y} (${percentage.toFixed(2)}%)`;
+              }
+              return label;
+            },
+            footer: (tooltipItems: any) => {
+              if (tooltipItems[0].label === 'Others') {
+                const otherLabels = sortedLabels.slice(6).join(', ');
+                const otherData = sortedData.slice(6).join(', ');
+                
+                return `${otherLabels}: ${otherData}`;
+              }
+              return '';
+            }
+          }
+        }
+      }
+    };
+  
 
-      // this.data = {
-      //     labels: ['House Keeping',
-      //       'Customer visit',
-      //       'Vendor Meetings',
-      //       'Interview',
-      //       'AC Service',
-      //       'CCTV Service',
-      //       'Fire extinguisher service',
-      //       'Plumbing related service',
-      //       'Pest control service',
-      //       'Water Purifier service',
-      //       'Access door service',
-      //       'Server room related',
-      //       'Laptop Vendors',
-      //       'Laptop technicians',
-      //       'Training',
-      //       'Chief guest',
-      //       'F&B Vendors',
-      //       'Others'],
-      //     datasets: [
-      //         {   
-      //             data: [65, 59, 90, 81, 56, 55, 40,65, 59, 90, 81, 56, 55, 40,81, 56, 55, 40],
-      //             backgroundColor: [documentStyle.getPropertyValue('--blue-500'), documentStyle.getPropertyValue('--yellow-500'), documentStyle.getPropertyValue('--green-500')],
-      //             hoverBackgroundColor: [documentStyle.getPropertyValue('--blue-400'), documentStyle.getPropertyValue('--yellow-400'), documentStyle.getPropertyValue('--green-400')]
-      //         }
-      //     ]
-      // };
+    this.createRadarChart();
 
-      // this.options = {
-      //     plugins: {
-      //         legend: {
-      //             labels: {
-      //                 usePointStyle: true,
-      //                 color: textColor
-      //             }
-      //         }
-      //     }
-      // };
+  }
   
   createRadarChart(): void {
     const canvas = document.getElementById('myRadarChart') as HTMLCanvasElement;

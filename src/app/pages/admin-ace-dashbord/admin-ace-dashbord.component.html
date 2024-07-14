@@ -1,5 +1,6 @@
-<p>admin-ace-dashbord works!</p>
+<h1>Welcome To Dashboard</h1>
 
+        
 <div class="dashboard-tiles">
     <app-tiles [title]="'Active Visitors'" [value]="activeVisitors" [backgroundColor]="'#896CC7'" [icon]="'pi-users'"></app-tiles>
     <app-tiles [title]="'Scheduled Visitors'" [value]="totalVisitors" [backgroundColor]="'#FF858C'" [icon]="'pi-users'"></app-tiles>
@@ -24,16 +25,8 @@
     </div>
 
 </div>
-<div>
-    <div class="securitytiles">
-        <app-tiles class="tilesSecurity" [title]="'Scheduled Visitors'" [value]="totalVisitors" [backgroundColor]="'#FF858C'" [icon]="'pi-users'"></app-tiles>
-        <app-tiles class="tilesSecurity" [title]="'Total visitors'" [value]="ScheduledVisitors" [backgroundColor]="'#952991'" [icon]="'pi-users'"></app-tiles>
-
-    </div>
-    <div>
-
-    </div>
+<div class="locationsecuritytable">
+<app-location-security-table ></app-location-security-table>
 
 
 </div>
-

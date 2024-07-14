@@ -6,6 +6,7 @@ import { AdminACEDashbordComponent } from './pages/admin-ace-dashbord/admin-ace-
 import { WelcomepageComponent } from './pages/welcomepage/welcomepage.component';
 import { EditaddcomponetComponent } from './ui/editaddcomponet/editaddcomponet.component';
 import { LocationSecurityTableComponent } from './ui/location-security-table/location-security-table.component';
+import { SideNavComponent } from './layout/side-nav/side-nav.component';
 
 export const routes: Routes = [
 {

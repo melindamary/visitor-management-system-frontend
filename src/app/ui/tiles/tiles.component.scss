@@ -1,10 +1,13 @@
 @import "primeicons/primeicons.css";
 
 .tiles{
-    width: 370px;
+    // width: 370px;
     height: 153px;
     // background-color: #896CC7;
     border-radius: 16px;
+    justify-content: center;
+    flex-direction: column;
+    display: flex;
 }
 
 .tile-title{
@@ -17,6 +20,8 @@
 .title-contents{
     display: flex;
     justify-content:space-between;
+    align-items: baseline;
+    gap: 1rem;
     margin: 0;
     padding: 0;
     color: white;
