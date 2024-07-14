@@ -1,0 +1,18 @@
+
+<form class="form-container" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <p>Visit<span style="color: #DC143c">EX</span></p>
+    <div class="input-container">
+       <mat-icon>account_circle</mat-icon>
+        <input type="text" formControlName="username" placeholder="Username">
+      </div>
+
+      <div class="input-container">
+        <mat-icon>lock</mat-icon>
+         <input formControlName="password" type="text" placeholder="Password">
+       </div>
+    <button class="login-btn" [disabled]="" type="submit" (click)="onSubmit()">Login</button>
+</form>
+
+
+
+
