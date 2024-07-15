@@ -9,6 +9,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { authAdminGuard } from './core/guard/auth-admin.guard';
 import { NavigationPanelComponent } from './layouts/navigation-panel/navigation-panel.component';
 import { Component } from '@angular/core';
+import { SecurityVisitorLogComponent } from './pages/security-visitor-log/security-visitor-log.component';
 
 export const routes: Routes = [
     {
@@ -22,6 +23,10 @@ export const routes: Routes = [
     { 
         path:'welcomepage',
         component:WelcomepageComponent
+    },
+    {
+        path: "visitor-log",
+        component:SecurityVisitorLogComponent
     },
     { 
         path:"login", 
