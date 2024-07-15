@@ -47,7 +47,8 @@ export class PurposePieComponent {
       datasets: [
         {
           data: top6.map((item: { value: any; }) => item.value),
-          backgroundColor: colors
+          backgroundColor: colors,
+          radius:'100%'
         }
       ]
     };
@@ -58,12 +59,23 @@ export class PurposePieComponent {
           display: true,
           text: 'Visitor Purposes',
           font: {
-            size: 16
+            size: 16,
+            weight:'bold'
+          },      padding: {
+            top: 10,
+            bottom: 30  // This will add some space between the title and the legend
           }
         },
         legend: {
-          position: 'right'
-        },
+          position: 'bottom',
+          align: 'center',
+          labels: {
+            usePointStyle: true,
+            boxWidth: 6,        font: {
+              size: 14  // Increase font size for better readability
+            }
+          }
+            },
         tooltip: {
           callbacks: {
             label: (context: any) => {
@@ -81,6 +93,15 @@ export class PurposePieComponent {
       },
       responsive: true,
       maintainAspectRatio: false
+      // ,
+      // layout: {
+      //   padding: {
+      //     top: 20,
+      //     bottom: 20,
+      //     left: 20,
+      //     right: 20
+      //   }
+      // }
     };
   
 
