@@ -1,0 +1,33 @@
+<div class="card">
+    <p-toast />
+    <p-table #dt1 [columns]="cols" [value]="activeVisitors" [rows]="5" [paginator]="true" [tableStyle]="{ 'min-width': '50rem' }" [rowHover]="true" dataKey="id"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [showCurrentPageReport]="true">
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th *ngFor="let col of columns">
+                    {{ col.header }}
+                </th>
+                <th>Actions</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-activeVisitor let-columns="columns">
+            <tr>
+                <td *ngFor="let col of columns">
+                    {{ activeVisitor[col.field] }}
+                </td>
+                <td>
+                    <p-button class="mr-2" icon="pi pi-eye" [outlined]="true"></p-button>
+                    <p-button  icon="pi pi-times" [outlined]="true" severity="danger" (onClick)="checkOut(activeVisitor)"/>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div class="flex align-items-center justify-content-between">
+                In total there are {{ activeVisitors ? activeVisitors.length : 0 }} visitors.
+            </div>
+        </ng-template>
+    </p-table>
+    <p-confirmDialog [style]="{ width: '450px' }" />
+</div>
+
