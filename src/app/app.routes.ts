@@ -14,7 +14,7 @@ export const routes: Routes = [
     {
         path:"vms", 
         component: NavigationPanelComponent, 
-        // canActivate: [authAdminGuard],
+        canActivate: [authAdminGuard],
         children: [
             {path: "dashboard", component: AdminACEDashbordComponent}
         ]
