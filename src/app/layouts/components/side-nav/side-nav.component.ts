@@ -22,30 +22,32 @@ import { RouterLink } from '@angular/router';
 })
 export class SideNavComponent {
 
-  @ViewChild(MatSidenav)
-  sidenav!: MatSidenav;
-  isMobile= true;
+  @ViewChild(MatSidenav) sidenav!: MatSidenav;
+  isMobile = true;
   isCollapsed = true;
 
   constructor(private observer: BreakpointObserver) {}
 
   ngOnInit() {
     this.observer.observe(['(max-width: 800px)']).subscribe((screenSize) => {
-      if(screenSize.matches){
-        this.isMobile = true;
+      this.isMobile = screenSize.matches;
+      this.isCollapsed = this.isMobile; // Make sure it starts as collapsed on mobile
+      if (this.isMobile) {
+        this.sidenav.mode = 'over';
+        this.sidenav.open();
       } else {
-        this.isMobile = false;
+        this.sidenav.mode = 'side';
+        this.sidenav.open();
       }
     });
   }
 
   toggleMenu() {
-    if(this.isMobile){
-      this.sidenav.toggle();
-      this.isCollapsed = false; // On mobile, the menu can never be collapsed
+    if (this.isMobile) {
+      this.isCollapsed = !this.isCollapsed; // Toggle the collapsed state on mobile
     } else {
-      this.sidenav.open(); // On desktop/tablet, the menu can never be fully closed
-      this.isCollapsed = !this.isCollapsed;
+      this.isCollapsed = !this.isCollapsed; // Toggle the collapsed state on desktop
+      this.sidenav.open();
     }
   }
 }
