@@ -5,9 +5,13 @@
   }
 .charts{
     display: flex;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    height: 500px;
     flex-direction: row;
     .barChart{
         width: 60%;
+        height: 500px;
     }
     .pieChart{
         width: 40%;
@@ -26,5 +30,8 @@
 }
 
 .locationsecuritytable{
+    padding-bottom: 3rem;
+}
+.table1{
     padding-bottom: 3rem;
 }
