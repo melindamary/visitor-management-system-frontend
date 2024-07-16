@@ -21,7 +21,6 @@ import { RouterLink } from '@angular/router';
       ]
 })
 export class SideNavComponent {
-
   @ViewChild(MatSidenav) sidenav!: MatSidenav;
   isMobile = true;
   isCollapsed = true;
