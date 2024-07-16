@@ -16,7 +16,8 @@ export const routes: Routes = [
         component: NavigationPanelComponent, 
         // canActivate: [authAdminGuard],
         children: [
-            {path: "dashboard", component: AdminACEDashbordComponent}
+            {path: "dashboard", component: AdminACEDashbordComponent},
+            {path:"addandeditrole",component: EditaddcomponetComponent}
         ]
     },
     { 

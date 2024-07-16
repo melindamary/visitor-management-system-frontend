@@ -28,7 +28,7 @@ export class LocationVisitortableComponent {
 
 
   ngOnInit() {
-
+        
           this.fetchlbTable();
 
      

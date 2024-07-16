@@ -15,73 +15,95 @@ export class PurposePieComponent {
 
   options: any;
  
-  ngOnInit() {    let data = [
-    { value: 100, name: 'House Keeping' },
-    { value: 100, name: 'CCTV Service' },
-    { value: 48, name: 'Vendor Meetings' },
-    { value: 48, name: 'Chief guest' },
-    { value: 48, name: 'Laptop technicians' },
-    { value: 28, name: 'Customer visit' },
-    { value: 96, name: 'Fire extinguisher service' },
-    { value: 40, name: 'Plumbing related service' },
-    { value: 19, name: 'Pest control service' },
-    { value: 19, name: 'Water Purifier service' },
-    { value: 96, name: 'Access door service' },
-    { value: 0, name: 'Server room related' },
-    { value: 28, name: 'Laptop Vendors' },
-    { value: 48, name: 'Laptop technicians' },
-    { value: 0, name: 'Training' },
-    { value: 48, name: 'Chief guest' },
-    { value: 0, name: 'F&B Vendors' }
-  ];
+  ngOnInit() {
+    let data = [
+      { value: 100, name: 'House Keeping' },
+      { value: 100, name: 'CCTV Service' },
+      { value: 48, name: 'Vendor Meetings' },
+      { value: 48, name: 'Chief guest' },
+      { value: 48, name: 'Laptop technicians' },
+      { value: 28, name: 'Customer visit' },
+      { value: 96, name: 'Fire extinguisher service' },
+      { value: 40, name: 'Plumbing related service' },
+      { value: 19, name: 'Pest control service' },
+      { value: 19, name: 'Water Purifier service' },
+      { value: 96, name: 'Access door service' },
+      { value: 0, name: 'Server room related' },
+      { value: 28, name: 'Laptop Vendors' },
+      { value: 48, name: 'Laptop technicians' },
+      { value: 0, name: 'Training' },
+      { value: 48, name: 'Chief guest' },
+      { value: 0, name: 'F&B Vendors' }
+    ];
 
-  let { top6, otherItems } = this.prepareData(data);
+    let { top6, otherItems } = this.prepareData(data);
 
-  const colors = [
-    '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40', '#C9CBCF'
-  ];
+    const colors = [
+      '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40', '#C9CBCF'
+    ];
 
-  this.data = {
-    labels: top6.map(item => item.name),
-    datasets: [
-      {
-        data: top6.map(item => item.value),
-        backgroundColor: colors
-      }
-    ]
-  };
-
-  this.options = {
-    plugins: {
-      title: {
-        display: true,
-        text: 'Visitor Purposes',
-        font: {
-          size: 16
+    this.data = {
+      labels: top6.map((item: { name: any; }) => item.name),
+      datasets: [
+        {
+          data: top6.map((item: { value: any; }) => item.value),
+          backgroundColor: colors,
+          radius:'100%'
         }
-      },
-      legend: {
-        position: 'right'
-      },
-      tooltip: {
-        callbacks: {
-          label: (context: any) => {
-            if (context.label === 'Others') {
-              return otherItems;
-            } else {
-              let value = context.raw;
-              let total = context.chart.getDatasetMeta(0).total;
-              let percentage = Math.round((value / total) * 100);
-              return `${context.label}: ${value} (${percentage}%)`;
+      ]
+    };
+
+    this.options = {
+      plugins: {
+        title: {
+          display: true,
+          text: 'Visitor Purposes',
+          font: {
+            size: 16
+          },      
+          padding: {
+            top: 10,
+            bottom: 30  // This will add some space between the title and the legend
+          }
+        },
+        legend: {
+          position: 'bottom',
+          align: 'center',
+          labels: {
+            usePointStyle: true,
+            boxWidth: 6,        font: {
+              size: 14  // Increase font size for better readability
+            }
+          }
+            },
+        tooltip: {
+          callbacks: {
+            label: (context: any) => {
+              if (context.label === 'Others') {
+                return otherItems;
+              } else {
+                let value = context.raw;
+                let total = context.chart.getDatasetMeta(0).total;
+                let percentage = Math.round((value / total) * 100);
+                return `${context.label}: ${value} (${percentage}%)`;
+              }
             }
           }
         }
-      }
-    },
-    responsive: true,
-    maintainAspectRatio: false
-  };
-
+      },
+      responsive: true,
+      maintainAspectRatio: false
+      // ,
+      // layout: {
+      //   padding: {
+      //     top: 20,
+      //     bottom: 20,
+      //     left: 20,
+      //     right: 20
+      //   }
+      // }
+    };
+  
 
     this.createRadarChart();
 
@@ -100,11 +122,13 @@ export class PurposePieComponent {
       value: othersValue,
       name: 'Others'
     });
-        // Prepare the otherItems array
-        let otherItems = others.map((item) => `${item.name}: ${item.value}`);
 
-        return { top6, otherItems };
-      }
+    // Prepare the otherItems array
+    let otherItems = others.map((item) => `${item.name}: ${item.value}`);
+
+    return { top6, otherItems };
+  }
+  
   createRadarChart(): void {
     const canvas = document.getElementById('myRadarChart') as HTMLCanvasElement;
     if (canvas) {
