@@ -59,9 +59,9 @@ export class PurposePieComponent {
           display: true,
           text: 'Visitor Purposes',
           font: {
-            size: 16,
-            weight:'bold'
-          },      padding: {
+            size: 16
+          },      
+          padding: {
             top: 10,
             bottom: 30  // This will add some space between the title and the legend
           }
