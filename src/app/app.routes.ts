@@ -10,6 +10,7 @@ import { authAdminGuard } from './core/guard/auth-admin.guard';
 import { NavigationPanelComponent } from './layouts/navigation-panel/navigation-panel.component';
 import { Component } from '@angular/core';
 import { SecurityVisitorLogComponent } from './pages/security-visitor-log/security-visitor-log.component';
+import { ReportTableComponent } from './pages/reports/components/report-table/report-table.component';
 
 export const routes: Routes = [
     {
@@ -18,13 +19,16 @@ export const routes: Routes = [
         canActivate: [authAdminGuard],
         children: [
             {path: "dashboard", component: AdminACEDashbordComponent},
-            {path: "addandeditrole",component: EditaddcomponetComponent},
             {path: "visitor-log", component: SecurityVisitorLogComponent}
         ]
     },
     { 
         path:'welcomepage',
         component:WelcomepageComponent
+    },
+    {
+        path: "reports",
+        component: ReportTableComponent
     },
     { 
         path:"login", 
