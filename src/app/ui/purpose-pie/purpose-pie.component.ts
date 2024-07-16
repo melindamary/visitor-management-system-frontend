@@ -105,7 +105,6 @@ export class PurposePieComponent {
     };
   
 
-    this.createRadarChart();
 
   }
   prepareData(data: any[]) {
@@ -129,63 +128,5 @@ export class PurposePieComponent {
     return { top6, otherItems };
   }
   
-  createRadarChart(): void {
-    const canvas = document.getElementById('myRadarChart') as HTMLCanvasElement;
-    if (canvas) {
-      canvas.height = 600;  // Replace with your desired height
-      canvas.width = 600; // Replace with your desired width
-      new Chart(canvas, {
-        
-        type: 'radar',
-        data: {
-          labels: ['House Keeping',
-            'Customer visit',
-            'Vendor Meetings',
-            'Interview',
-            'AC Service',
-            'CCTV Service',
-            'Fire extinguisher service',
-            'Plumbing related service',
-            'Pest control service',
-            'Water Purifier service',
-            'Access door service',
-            'Server room related',
-            'Laptop Vendors',
-            'Laptop technicians',
-            'Training',
-            'Chief guest',
-            'F&B Vendors',
-            'Others'],
-          datasets: [
-        
-
-            
-            {
-              label: 'Experion visitor purpose',
-
-              data: [  100,28, 48, 0, 19, 100,96, 0,40, 19, 96, 0,28, 48,0, 48, 0, 10],
-              fill: true,
-              backgroundColor: 'rgba(100, 10, 20, 0.2)',
-              borderColor: '#952991',
-              pointBackgroundColor: '#952991',
-              pointBorderColor: '#fff',
-              pointHoverBackgroundColor: '#FF858C',
-              pointHoverBorderColor: '#952991'
-            }
-          ]
-        },
-        options: {
-          maintainAspectRatio: false, // Add this line
-          responsive: true, // Add this line if you want the chart to be responsive
-          // aspectRatio:false,
-          elements: {
-            line: {
-              borderWidth: 3
-            }
-          }
-        }
-      });
-    }
-  }
 
 }
