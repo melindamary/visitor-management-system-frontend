@@ -1,0 +1,14 @@
+::ng-deep .p-datatable tr:hover td {
+    background-color: #f1ebff; /* Change to desired hover background color */
+  }
+
+  th{
+    background-color: #eaeaea;
+    color: #896cc7;
+  }
+::ng-deep .p-sortable-column .p-sortable-column-icon,
+::ng-deep .p-column-filter-menu-button {
+    color: #896cc7;
+}
+  
+  

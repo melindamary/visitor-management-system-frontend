@@ -19,7 +19,8 @@ export const routes: Routes = [
         canActivate: [authAdminGuard],
         children: [
             {path: "dashboard", component: AdminACEDashbordComponent},
-            {path: "visitor-log", component: SecurityVisitorLogComponent}
+            {path: "visitor-log", component: SecurityVisitorLogComponent},
+            {path: "reports", component: ReportTableComponent},
         ]
     },
     { 

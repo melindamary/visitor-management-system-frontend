@@ -6,6 +6,7 @@ import { TableModule } from 'primeng/table';
 interface Column {
   field: string;
   header: string;
+  width: string;
 };
 @Component({
   selector: 'app-report-table',
@@ -165,17 +166,17 @@ export class ReportTableComponent {
   cols!: Column[];
   ngOnInit(): void {
     this.cols = [
-      { field: 'slNo', header: 'Sl.No.' },
-      { field: 'name', header: 'Name' },
-      { field: 'phoneNumber', header: 'Phone Number' },
-      { field: 'visitDate', header: 'Visit Date' },
-      { field: 'officeLocation', header: 'Office Location' },
-      { field: 'visitPurpose', header: 'Visit Purpose' },
-      { field: 'hostName', header: 'Host Name' },
-      { field: 'onDutyStaff', header: 'On-duty Staff' },
-      { field:'staffContactNumber', header: 'Staff Contact Number' },
-      { field: 'checkIn', header: 'Check-In' }, 
-      { field: 'checkOut', header: 'Check-Out' }, 
+      { field: 'slNo', header: 'Sl.No.', width: "2%"},
+      { field: 'name', header: 'Name', width: "10%" },
+      { field: 'phoneNumber', header: 'Phone Number',width: "10%" },
+      { field: 'visitDate', header: 'Visit Date', width: "10" },
+      { field: 'officeLocation', header: 'Office Location', width: "10" },
+      { field: 'visitPurpose', header: 'Visit Purpose', width: "10" },
+      { field: 'hostName', header: 'Host Name', width: "10" },
+      { field: 'onDutyStaff', header: 'On-duty Staff', width: "10" },
+      { field:'staffContactNumber', header: 'Staff Contact Number',  width: "10" },
+      { field: 'checkIn', header: 'Check-In',width:"5" }, 
+      { field: 'checkOut', header: 'Check-Out', width:"5" }, 
 
   ];
   };

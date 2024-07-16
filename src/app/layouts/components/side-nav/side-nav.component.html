@@ -25,7 +25,7 @@
             }
           </div>
         </a>
-        <a mat-list-item>
+        <a mat-list-item [routerLink]="['/vms/reports']" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}">
           <div class="entry">
             <mat-icon>description</mat-icon>
             @if (!isCollapsed) {

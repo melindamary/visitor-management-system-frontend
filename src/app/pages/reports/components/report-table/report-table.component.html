@@ -4,24 +4,22 @@
   [value]="reports"
   [tableStyle]="{ 'min-width': '50rem', 'width':'150rem' }"
   [paginator]="true"
-  [rows]="10"
+  [rows]="5"
   [rowsPerPageOptions]="[5, 10, 20]"
   sortMode="multiple"
 >
   <ng-template pTemplate="header" let-columns>
     <tr>
-         <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+        <th *ngFor="let col of columns" [pSortableColumn]="col.field">
         <div class="flex align-items-center">
             {{ col.header }} 
+            <p-sortIcon *ngIf="isSortable(col.field)" [field]="col.field" />
             <p-columnFilter 
                 *ngIf="(col.field !== 'slNo') && (col.field !== 'checkIn') && (col.field !== 'checkOut')"
                 type="text" [field]="col.field" display="menu" 
             />
-            <p-sortIcon *ngIf="isSortable(col.field)" [field]="col.field" />
+            
         </div>
-       
-     
-       
         
       </th>
       <th>Actions</th>
@@ -30,10 +28,10 @@
   </ng-template>
   <ng-template pTemplate="body" let-rowData let-columns="columns">
     <tr>
-      <td *ngFor="let col of columns">
+      <td *ngFor="let col of columns"  [style.width]="col.width || 'auto'">
         {{ rowData[col.field] }}
       </td>
-      <td>hi</td>
+      
     </tr>
   </ng-template>
 </p-table>
