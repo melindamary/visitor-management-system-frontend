@@ -17,16 +17,13 @@ export const routes: Routes = [
         component: NavigationPanelComponent, 
         canActivate: [authAdminGuard],
         children: [
-            {path: "dashboard", component: AdminACEDashbordComponent}
+            {path: "dashboard", component: AdminACEDashbordComponent},
+            {path: "visitor-log", component: SecurityVisitorLogComponent}
         ]
     },
     { 
         path:'welcomepage',
         component:WelcomepageComponent
-    },
-    {
-        path: "visitor-log",
-        component:SecurityVisitorLogComponent
     },
     { 
         path:"login", 
