@@ -17,7 +17,7 @@
             }
           </div>
         </a>
-        <a mat-list-item>
+        <a mat-list-item [routerLink]="['/vms/visitor-log']" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}">
           <div class="entry">
             <mat-icon>assignment_ind</mat-icon>
             @if (!isCollapsed) {

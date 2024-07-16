@@ -15,19 +15,16 @@ export const routes: Routes = [
     {
         path:"vms", 
         component: NavigationPanelComponent, 
-        // canActivate: [authAdminGuard],
+        canActivate: [authAdminGuard],
         children: [
             {path: "dashboard", component: AdminACEDashbordComponent},
-            {path:"addandeditrole",component: EditaddcomponetComponent}
+            {path: "addandeditrole",component: EditaddcomponetComponent},
+            {path: "visitor-log", component: SecurityVisitorLogComponent}
         ]
     },
     { 
         path:'welcomepage',
         component:WelcomepageComponent
-    },
-    {
-        path: "visitor-log",
-        component:SecurityVisitorLogComponent
     },
     { 
         path:"login", 
