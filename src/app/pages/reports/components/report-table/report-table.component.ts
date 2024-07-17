@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
 
 
@@ -11,12 +12,15 @@ interface Column {
 @Component({
   selector: 'app-report-table',
   standalone: true,
-  imports: [TableModule, CommonModule, ],
+  imports: [TableModule, CommonModule, ButtonModule ],
   templateUrl: './report-table.component.html',
   styleUrl: './report-table.component.scss'
 })
 
 export class ReportTableComponent {
+viewDetails(_t31: any) {
+throw new Error('Method not implemented.');
+}
 
   reports: Array<{
     slNo: number,
@@ -166,23 +170,23 @@ export class ReportTableComponent {
   cols!: Column[];
   ngOnInit(): void {
     this.cols = [
-      { field: 'slNo', header: 'Sl.No.', width: "2%"},
-      { field: 'name', header: 'Name', width: "10%" },
-      { field: 'phoneNumber', header: 'Phone Number',width: "10%" },
-      { field: 'visitDate', header: 'Visit Date', width: "10" },
-      { field: 'officeLocation', header: 'Office Location', width: "10" },
-      { field: 'visitPurpose', header: 'Visit Purpose', width: "10" },
-      { field: 'hostName', header: 'Host Name', width: "10" },
-      { field: 'onDutyStaff', header: 'On-duty Staff', width: "10" },
-      { field:'staffContactNumber', header: 'Staff Contact Number',  width: "10" },
-      { field: 'checkIn', header: 'Check-In',width:"5" }, 
-      { field: 'checkOut', header: 'Check-Out', width:"5" }, 
+      { field: 'slNo', header: 'Sl.No.', width: "1%"},
+      { field: 'name', header: 'Name', width: "9%" },
+      { field: 'phoneNumber', header: 'Phone Number',width: "11%" },
+      { field: 'visitDate', header: 'Visit Date', width: "9%" },
+      { field: 'officeLocation', header: 'Office Location', width: "12%" },
+      { field: 'visitPurpose', header: 'Visit Purpose', width: "10%" },
+      { field: 'hostName', header: 'Host Name', width: "11%" },
+      { field: 'onDutyStaff', header: 'On-duty Staff', width: "10%" },
+      { field:'staffContactNumber', header: 'Staff Contact',  width: "10%" },
+      { field: 'checkIn', header: 'Check-In',width:"8%" }, 
+      { field: 'checkOut', header: 'Check-Out', width:"14%" }, 
 
   ];
   };
 
   isSortable(field: string): boolean {
-    const sortableFields = ['name', 'visitDate','officeLocation', 'visitPurpose', 'hostName', 'onDutyStaff']; // Add all the fields you want to be sortable here
+    const sortableFields = ['name','phoneNumber', 'visitDate','officeLocation', 'visitPurpose', 'hostName', 'onDutyStaff', 'staffContactNumber', 'checkIn', 'checkOut']; // Add all the fields you want to be sortable here
     return sortableFields.includes(field);
   }
   

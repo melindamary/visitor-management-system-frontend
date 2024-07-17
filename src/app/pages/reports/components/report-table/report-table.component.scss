@@ -1,14 +1,39 @@
 ::ng-deep .p-datatable tr:hover td {
     background-color: #f1ebff; /* Change to desired hover background color */
-  }
+}
 
-  th{
-    background-color: #eaeaea;
-    color: #896cc7;
-  }
+::ng-deep .p-datatable tr td {
+  padding-block: 5px; 
+}
+th{
+  background-color: #eaeaea;
+  color: #896cc7;
+  padding-block: 20px;
+}
+.search-header{
+  background-color: white;
+  padding-block: 5px;
+}
+
 ::ng-deep .p-sortable-column .p-sortable-column-icon,
 ::ng-deep .p-column-filter-menu-button {
     color: #896cc7;
 }
-  
+
+::ng-deep .p-fluid .p-inputtext{
+  width: 100%;
+  height: 16px;
+  border-radius: none;
+  padding-left: 1px;
+}
+::ng-deep .p-column-filter-row .p-column-filter-clear-button,
+::ng-deep .p-column-filter-menu-button{
+  display: none;
+}
+
+::ng-deep .p-button.p-button-outlined{
+  box-shadow: none;
+  padding-block: 10px;
+}
+
   
