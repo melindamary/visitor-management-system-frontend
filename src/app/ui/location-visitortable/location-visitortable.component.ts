@@ -2,12 +2,26 @@ import { Component } from '@angular/core'
 import { TableModule } from 'primeng/table';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+// Define the new interface for the API response
+interface ApiResponse {
+  $id: string;
+  $values: Array<{
+    $id: string;
+    location: string;
+    numberOfSecurity: number;
+    passesGenerated: number;
+    totalVisitors: number;
+  }>;
+}
+
 interface LbTable {
   location: string;
-  NumberOfSecurity: string;
-  PassesGenerated: string;
-  TotalVisitors: number;
+  numberOfSecurity: number;
+  passesGenerated: number;
+  totalVisitors: number;
 }
+
+
 @Component({
   selector: 'app-location-visitortable',
   standalone: true,
@@ -36,13 +50,17 @@ export class LocationVisitortableComponent {
 
   fetchlbTable() {
     this.http
-
-      .get<LbTable[]>('https://localhost:7082/LocationTable/GetTable')
+      .get<ApiResponse>('https://localhost:7121/Statistics/GetLocationStatistics')
       .subscribe((res) => {
         console.log(res);
-        this.lbTables = res;
-        this.filteredLbTables = res;  // Initialize filteredLbTables with all data
-
+        // Map the API response to the LbTable format
+        this.lbTables = res.$values.map(value => ({
+          location: value.location,
+          numberOfSecurity: value.numberOfSecurity,
+          passesGenerated: value.passesGenerated,
+          totalVisitors: value.totalVisitors
+        }));
+        this.filteredLbTables = [...this.lbTables];  // Initialize filteredLbTables with all data
       });
   }
 
