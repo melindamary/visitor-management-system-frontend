@@ -1,14 +1,42 @@
-
+ 
   <button class="export-button" 
     (click)="exportSelectedToExcel()"
   ><i class="pi pi-file-excel excel-icon"></i></button>
 
+    <p-calendar 
+    [(ngModel)]="rangeDates" 
+    (onClose)="filterByDateRange()"
+    selectionMode="range"
+    placeholder="Select Date Range"
+    [showIcon]="true" 
+    [readonlyInput]="true"
+    variant="filled" 
+    />
+
+    <p-calendar 
+    [(ngModel)]="selectedMonth" 
+    (onClose)="filterByMonth()"
+    view="month" 
+    dateFormat="mm/yy" 
+    [readonlyInput]="true" 
+    [showIcon]="true"
+    placeholder="Select Month"/>
+
+    <p-calendar 
+    [(ngModel)]="selectedYear" 
+    (onClose)="filterByYear()"
+    view="year" 
+    dateFormat="yy" 
+    [showIcon]="true"
+    placeholder="Select Year"/>
+
 
 <p-table
-  styleClass="p-datatable-striped " 
+  [resizableColumns]="true"
+  styleClass="p-datatable-striped p-datatable-gridlines" 
   [columns]="cols"
-  [value]="reports"
-  [tableStyle]="{ 'min-width': '50rem', 'width':'110rem' }"
+  [value]="filteredReports"
+  [tableStyle]="{ 'min-width': '50rem'}"
   [paginator]="true"
   [rows]="10"
   [scrollable]="true" 
@@ -17,6 +45,7 @@
   sortMode="multiple"
   selectionMode="multiple"
   [(selection)]="selectedReports"
+  
 
 >
   <ng-template pTemplate="header" let-columns>

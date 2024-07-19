@@ -3,6 +3,8 @@ import { Component } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
 import * as XLSX from 'xlsx';
+import { CalendarModule } from 'primeng/calendar';
+import { FormsModule } from '@angular/forms';
 
 interface Column {
   field: string;
@@ -25,15 +27,18 @@ interface Report {
 @Component({
   selector: 'app-report-table',
   standalone: true,
-  imports: [TableModule, CommonModule, ButtonModule ],
+  imports: [TableModule, CommonModule, ButtonModule, CalendarModule, FormsModule ],
   templateUrl: './report-table.component.html',
   styleUrl: './report-table.component.scss'
 })
 
 export class ReportTableComponent {
 
-
+selectedMonth: Date | undefined;
+selectedYear: Date | undefined;
+rangeDates: Date[] | undefined;
 selectedReports: any[] = [];
+filteredReports: any[] = [];
 reports: Array<{
     slNo: number,
     name: string,
@@ -168,7 +173,7 @@ reports: Array<{
       slNo: 10,
       name: 'Jessica Parker',
       phoneNumber: '012-345-6789',
-      visitDate: '2024-07-10',
+      visitDate: '2023-07-10',
       officeLocation: 'Branch Office',
       visitPurpose: 'Seminar',
       hostName: 'Alexander Lopez',
@@ -178,7 +183,8 @@ reports: Array<{
       checkOut: '04:30 PM'
     }
   ];
-  
+  startDate!: Date;
+  endDate!: Date;
 cols!: Column[];
 customHeaders: { [key: string]: string } = {
   slNo: 'Sl. No.',
@@ -210,8 +216,47 @@ customHeaders: { [key: string]: string } = {
       { field: 'checkOut', header: 'Check-Out', width:"14%" }, 
 
   ];
+  this.filteredReports = this.reports;
   };
+  filterByMonth(): void {
+    if (this.selectedMonth) {
+      const selectedMonth = this.selectedMonth.getMonth(); // month is zero-based
+      const selectedYear = this.selectedMonth.getFullYear();
 
+      this.filteredReports = this.reports.filter(report => {
+        const reportDate = new Date(report.visitDate);
+        return reportDate.getMonth() === selectedMonth && reportDate.getFullYear() === selectedYear;
+      });
+    } else {
+      this.filteredReports = this.reports;
+    }
+  }
+  filterByYear(): void {
+    if (this.selectedYear) {
+      const selectedYear = this.selectedYear.getFullYear();
+
+      this.filteredReports = this.reports.filter(report => {
+        const reportDate = new Date(report.visitDate);
+        return reportDate.getFullYear() === selectedYear;
+      });
+    } else {
+      this.filteredReports = this.reports;
+    }
+  }
+  filterByDateRange() {
+   
+    if (this.rangeDates && this.rangeDates.length === 2) {
+      const startDate = new Date(this.rangeDates[0]);
+      const endDate = new Date(this.rangeDates[1]);
+
+      this.filteredReports = this.reports.filter(report => {
+        const reportDate = new Date(report.visitDate); // Replace 'date' with your date field
+        return reportDate >= startDate && reportDate <= endDate;
+      });
+    } else {
+      this.filteredReports = this.reports; // Show all reports if no date range is selected
+    }
+  }
   exportSelectedToExcel() {
     if (this.selectedReports.length > 0) {
       // Clone the selectedReports to modify headers
