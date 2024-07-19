@@ -2,13 +2,26 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
-
+import * as XLSX from 'xlsx';
 
 interface Column {
   field: string;
   header: string;
   width: string;
 };
+
+interface Report {
+  // slNo: number;
+  // name: string;
+  // phoneNumber: string;
+  // visitDate: string;
+  // officeLocation: string;
+  // visitPurpose: string;
+  // hostName: string;
+  // checkIn: string;
+  // checkOut: string;
+  [key: string]: any; // Add this line to allow indexing with a string key
+}
 @Component({
   selector: 'app-report-table',
   standalone: true,
@@ -18,11 +31,10 @@ interface Column {
 })
 
 export class ReportTableComponent {
-viewDetails(_t31: any) {
-throw new Error('Method not implemented.');
-}
 
-  reports: Array<{
+
+selectedReports: any[] = [];
+reports: Array<{
     slNo: number,
     name: string,
     phoneNumber: string,
@@ -167,10 +179,25 @@ throw new Error('Method not implemented.');
     }
   ];
   
-  cols!: Column[];
+cols!: Column[];
+customHeaders: { [key: string]: string } = {
+  slNo: 'Sl. No.',
+  name: "Name",
+  phoneNumber: "Phone Number",
+  visitDate: "Visit Date",
+  officeLocation: "Office Location",
+  visitPurpose: "Visit Purpose",
+  hostName: "Host Name",
+  onDutyStaff: "On-duty Staff",
+  staffContactNumber: "Staff Contact",
+  checkIn: "Check-In",
+  checkOut: "Check-Out",
+  // Add more field mappings as needed
+};
+
   ngOnInit(): void {
     this.cols = [
-      { field: 'slNo', header: 'Sl.No.', width: "1%"},
+      // { field: 'slNo', header: 'Sl.No.', width: "1%"},
       { field: 'name', header: 'Name', width: "9%" },
       { field: 'phoneNumber', header: 'Phone Number',width: "11%" },
       { field: 'visitDate', header: 'Visit Date', width: "9%" },
@@ -185,6 +212,36 @@ throw new Error('Method not implemented.');
   ];
   };
 
+  exportSelectedToExcel() {
+    if (this.selectedReports.length > 0) {
+      // Clone the selectedReports to modify headers
+      const dataToExport = this.selectedReports.map(report => {
+        const newReport: { [key: string]: any } = {}; // Use an index signature
+        Object.keys(report).forEach(key => {
+          const customHeader = this.customHeaders[key] || key.toUpperCase();
+          newReport[customHeader] = report[key];
+        });
+        return newReport;
+      });
+      const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(dataToExport);
+      
+      // Set column widths to auto
+      const colWidths = dataToExport.map(row => 
+        Object.keys(row).map(key => ({ wch: Math.max(...dataToExport.map(r => (r[key] ? r[key].toString().length : 0))) }))
+      )[0];
+
+      worksheet['!cols'] = colWidths;
+
+      const workbook: XLSX.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
+      XLSX.writeFile(workbook, 'SelectedReports.xlsx');
+    } else {
+      alert('Please select at least one report to export.');
+    }
+  }
+    
+    viewDetails(_t31: any) {
+    throw new Error('Method not implemented.');
+    }
   isSortable(field: string): boolean {
     const sortableFields = ['name','phoneNumber', 'visitDate','officeLocation', 'visitPurpose', 'hostName', 'onDutyStaff', 'staffContactNumber', 'checkIn', 'checkOut']; // Add all the fields you want to be sortable here
     return sortableFields.includes(field);
