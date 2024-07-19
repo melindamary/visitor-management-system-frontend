@@ -1,19 +1,16 @@
- 
-  <button class="export-button" 
-    (click)="exportSelectedToExcel()"
-  ><i class="pi pi-file-excel excel-icon"></i></button>
-
-    <p-calendar 
-    [(ngModel)]="rangeDates" 
-    (onClose)="filterByDateRange()"
-    selectionMode="range"
-    placeholder="Select Date Range"
-    [showIcon]="true" 
-    [readonlyInput]="true"
-    variant="filled" 
-    />
-
-    <p-calendar 
+  <p-toolbar>
+    <ng-template pTemplate="left">
+      <p-calendar 
+      [(ngModel)]="rangeDates" 
+      (onClose)="filterByDateRange()"
+      selectionMode="range"
+      placeholder="Select Date Range"
+      [showIcon]="true" 
+      [readonlyInput]="true"
+      variant="filled" 
+      />
+      
+      <p-calendar 
     [(ngModel)]="selectedMonth" 
     (onClose)="filterByMonth()"
     view="month" 
@@ -31,6 +28,16 @@
     placeholder="Select Year"/>
 
 
+    </ng-template>
+
+    <ng-template pTemplate="right">
+        <p-button 
+            severity="success" 
+            label="Export" 
+            icon="pi pi-file-excel" 
+            (click)="exportSelectedToExcel()"/>
+    </ng-template>
+</p-toolbar>
 <p-table
   [resizableColumns]="true"
   styleClass="p-datatable-striped p-datatable-gridlines" 

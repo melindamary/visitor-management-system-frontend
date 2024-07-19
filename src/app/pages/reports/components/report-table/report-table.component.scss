@@ -45,3 +45,14 @@ th{
   background-color: #eaeaea;
   border: solid 1px #8e8e8e;
 }
+
+::ng-deep .p-toolbar{
+  background-color: #fff;
+  padding: 0.5rem;
+}
+
+::ng-deep .p-calendar{
+  height: 2rem;
+  width: 14rem;
+  margin-right: 0.5rem;
+}

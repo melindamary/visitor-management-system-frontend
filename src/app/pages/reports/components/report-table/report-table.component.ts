@@ -5,292 +5,156 @@ import { TableModule } from 'primeng/table';
 import * as XLSX from 'xlsx';
 import { CalendarModule } from 'primeng/calendar';
 import { FormsModule } from '@angular/forms';
-
-interface Column {
-  field: string;
-  header: string;
-  width: string;
-};
-
-interface Report {
-  // slNo: number;
-  // name: string;
-  // phoneNumber: string;
-  // visitDate: string;
-  // officeLocation: string;
-  // visitPurpose: string;
-  // hostName: string;
-  // checkIn: string;
-  // checkOut: string;
-  [key: string]: any; // Add this line to allow indexing with a string key
-}
+import { reports } from '../../../../../../public/data';
+import { Report, Column } from '../../../../core/models/report.interface';
+import { ToolbarModule } from 'primeng/toolbar';
 @Component({
   selector: 'app-report-table',
   standalone: true,
-  imports: [TableModule, CommonModule, ButtonModule, CalendarModule, FormsModule ],
+  imports: [
+    TableModule,
+    CommonModule,
+    ButtonModule,
+    CalendarModule,
+    FormsModule,
+    ToolbarModule
+  ],
   templateUrl: './report-table.component.html',
-  styleUrl: './report-table.component.scss'
+  styleUrl: './report-table.component.scss',
 })
-
 export class ReportTableComponent {
-
-selectedMonth: Date | undefined;
-selectedYear: Date | undefined;
-rangeDates: Date[] | undefined;
-selectedReports: any[] = [];
-filteredReports: any[] = [];
-reports: Array<{
-    slNo: number,
-    name: string,
-    phoneNumber: string,
-    visitDate: string,
-    officeLocation: string,
-    visitPurpose: string,
-    hostName: string,
-    onDutyStaff: string,
-    staffContactNumber: string,
-    checkIn: string,
-    checkOut: string
-  }> = [
-    {
-      slNo: 1,
-      name: 'John Doe',
-      phoneNumber: '123-456-7890',
-      visitDate: '2024-07-01',
-      officeLocation: 'Head Office',
-      visitPurpose: 'Meeting',
-      hostName: 'Alice Smith',
-      onDutyStaff: 'Robert Brown',
-      staffContactNumber: '987-654-3210',
-      checkIn: '09:00 AM',
-      checkOut: '10:30 AM'
-    },
-    {
-      slNo: 2,
-      name: 'Jane Roe',
-      phoneNumber: '234-567-8901',
-      visitDate: '2024-07-02',
-      officeLocation: 'Branch Office',
-      visitPurpose: 'Interview',
-      hostName: 'Michael Johnson',
-      onDutyStaff: 'Emily Davis',
-      staffContactNumber: '876-543-2109',
-      checkIn: '10:00 AM',
-      checkOut: '11:00 AM'
-    },
-    {
-      slNo: 3,
-      name: 'Richard Miles',
-      phoneNumber: '345-678-9012',
-      visitDate: '2024-07-03',
-      officeLocation: 'Head Office',
-      visitPurpose: 'Delivery',
-      hostName: 'Daniel Wilson',
-      onDutyStaff: 'Sophia Lee',
-      staffContactNumber: '765-432-1098',
-      checkIn: '11:00 AM',
-      checkOut: '11:30 AM'
-    },
-    {
-      slNo: 4,
-      name: 'Emily Stone',
-      phoneNumber: '456-789-0123',
-      visitDate: '2024-07-04',
-      officeLocation: 'Branch Office',
-      visitPurpose: 'Maintenance',
-      hostName: 'Oliver Harris',
-      onDutyStaff: 'Liam White',
-      staffContactNumber: '654-321-0987',
-      checkIn: '01:00 PM',
-      checkOut: '02:00 PM'
-    },
-    {
-      slNo: 5,
-      name: 'James Baker',
-      phoneNumber: '567-890-1234',
-      visitDate: '2024-07-05',
-      officeLocation: 'Head Office',
-      visitPurpose: 'Client Meeting',
-      hostName: 'Lucas Martin',
-      onDutyStaff: 'Mia Thompson',
-      staffContactNumber: '543-210-9876',
-      checkIn: '02:00 PM',
-      checkOut: '03:30 PM'
-    },
-    {
-      slNo: 6,
-      name: 'Sophia Taylor',
-      phoneNumber: '678-901-2345',
-      visitDate: '2024-07-06',
-      officeLocation: 'Branch Office',
-      visitPurpose: 'Inspection',
-      hostName: 'Ella Moore',
-      onDutyStaff: 'Noah Anderson',
-      staffContactNumber: '432-109-8765',
-      checkIn: '03:00 PM',
-      checkOut: '04:00 PM'
-    },
-    {
-      slNo: 7,
-      name: 'William King',
-      phoneNumber: '789-012-3456',
-      visitDate: '2024-07-07',
-      officeLocation: 'Head Office',
-      visitPurpose: 'Training',
-      hostName: 'Charlotte Green',
-      onDutyStaff: 'Ava Taylor',
-      staffContactNumber: '321-098-7654',
-      checkIn: '09:30 AM',
-      checkOut: '11:30 AM'
-    },
-    {
-      slNo: 8,
-      name: 'Olivia Lee',
-      phoneNumber: '890-123-4567',
-      visitDate: '2024-07-08',
-      officeLocation: 'Branch Office',
-      visitPurpose: 'Consultation',
-      hostName: 'Amelia King',
-      onDutyStaff: 'Isabella Martinez',
-      staffContactNumber: '210-987-6543',
-      checkIn: '10:30 AM',
-      checkOut: '12:00 PM'
-    },
-    {
-      slNo: 9,
-      name: 'Michael Scott',
-      phoneNumber: '901-234-5678',
-      visitDate: '2024-07-09',
-      officeLocation: 'Head Office',
-      visitPurpose: 'Audit',
-      hostName: 'Benjamin Taylor',
-      onDutyStaff: 'Elijah Hernandez',
-      staffContactNumber: '109-876-5432',
-      checkIn: '01:30 PM',
-      checkOut: '03:00 PM'
-    },
-    {
-      slNo: 10,
-      name: 'Jessica Parker',
-      phoneNumber: '012-345-6789',
-      visitDate: '2023-07-10',
-      officeLocation: 'Branch Office',
-      visitPurpose: 'Seminar',
-      hostName: 'Alexander Lopez',
-      onDutyStaff: 'Mason Allen',
-      staffContactNumber: '098-765-4321',
-      checkIn: '02:30 PM',
-      checkOut: '04:30 PM'
-    }
-  ];
+  selectedMonth: Date | undefined;
+  selectedYear: Date | undefined;
+  rangeDates: Date[] | undefined;
+  selectedReports: any[] = [];
+  filteredReports: any[] = [];
   startDate!: Date;
   endDate!: Date;
-cols!: Column[];
-customHeaders: { [key: string]: string } = {
-  slNo: 'Sl. No.',
-  name: "Name",
-  phoneNumber: "Phone Number",
-  visitDate: "Visit Date",
-  officeLocation: "Office Location",
-  visitPurpose: "Visit Purpose",
-  hostName: "Host Name",
-  onDutyStaff: "On-duty Staff",
-  staffContactNumber: "Staff Contact",
-  checkIn: "Check-In",
-  checkOut: "Check-Out",
-  // Add more field mappings as needed
-};
-
-  ngOnInit(): void {
-    this.cols = [
-      // { field: 'slNo', header: 'Sl.No.', width: "1%"},
-      { field: 'name', header: 'Name', width: "9%" },
-      { field: 'phoneNumber', header: 'Phone Number',width: "11%" },
-      { field: 'visitDate', header: 'Visit Date', width: "9%" },
-      { field: 'officeLocation', header: 'Office Location', width: "12%" },
-      { field: 'visitPurpose', header: 'Visit Purpose', width: "10%" },
-      { field: 'hostName', header: 'Host Name', width: "11%" },
-      { field: 'onDutyStaff', header: 'On-duty Staff', width: "10%" },
-      { field:'staffContactNumber', header: 'Staff Contact',  width: "10%" },
-      { field: 'checkIn', header: 'Check-In',width:"8%" }, 
-      { field: 'checkOut', header: 'Check-Out', width:"14%" }, 
-
+  cols: Column[] = [
+    { field: 'name', header: 'Name', width: '9%' },
+    { field: 'phoneNumber', header: 'Phone Number', width: '11%' },
+    { field: 'visitDate', header: 'Visit Date', width: '9%' },
+    { field: 'officeLocation', header: 'Office Location', width: '12%' },
+    { field: 'visitPurpose', header: 'Visit Purpose', width: '10%' },
+    { field: 'hostName', header: 'Host Name', width: '11%' },
+    { field: 'onDutyStaff', header: 'On-duty Staff', width: '10%' },
+    { field: 'staffContactNumber', header: 'Staff Contact', width: '10%' },
+    { field: 'checkIn', header: 'Check-In', width: '8%' },
+    { field: 'checkOut', header: 'Check-Out', width: '14%' },
   ];
-  this.filteredReports = this.reports;
+  customHeaders: { [key: string]: string } = {
+    slNo: 'Sl. No.',
+    name: 'Name',
+    phoneNumber: 'Phone Number',
+    visitDate: 'Visit Date',
+    officeLocation: 'Office Location',
+    visitPurpose: 'Visit Purpose',
+    hostName: 'Host Name',
+    onDutyStaff: 'On-duty Staff',
+    staffContactNumber: 'Staff Contact',
+    checkIn: 'Check-In',
+    checkOut: 'Check-Out',
+    // Add more field mappings as needed
   };
+
   filterByMonth(): void {
     if (this.selectedMonth) {
       const selectedMonth = this.selectedMonth.getMonth(); // month is zero-based
       const selectedYear = this.selectedMonth.getFullYear();
 
-      this.filteredReports = this.reports.filter(report => {
+      this.filteredReports = reports.filter((report) => {
         const reportDate = new Date(report.visitDate);
-        return reportDate.getMonth() === selectedMonth && reportDate.getFullYear() === selectedYear;
+        return (
+          reportDate.getMonth() === selectedMonth &&
+          reportDate.getFullYear() === selectedYear
+        );
       });
     } else {
-      this.filteredReports = this.reports;
+      this.filteredReports = reports;
     }
   }
+
   filterByYear(): void {
     if (this.selectedYear) {
       const selectedYear = this.selectedYear.getFullYear();
 
-      this.filteredReports = this.reports.filter(report => {
+      this.filteredReports = reports.filter((report) => {
         const reportDate = new Date(report.visitDate);
         return reportDate.getFullYear() === selectedYear;
       });
     } else {
-      this.filteredReports = this.reports;
+      this.filteredReports = reports;
     }
   }
+
   filterByDateRange() {
-   
     if (this.rangeDates && this.rangeDates.length === 2) {
       const startDate = new Date(this.rangeDates[0]);
       const endDate = new Date(this.rangeDates[1]);
 
-      this.filteredReports = this.reports.filter(report => {
+      this.filteredReports = reports.filter((report) => {
         const reportDate = new Date(report.visitDate); // Replace 'date' with your date field
         return reportDate >= startDate && reportDate <= endDate;
       });
     } else {
-      this.filteredReports = this.reports; // Show all reports if no date range is selected
+      this.filteredReports = reports; // Show all reports if no date range is selected
     }
   }
+  
   exportSelectedToExcel() {
     if (this.selectedReports.length > 0) {
       // Clone the selectedReports to modify headers
-      const dataToExport = this.selectedReports.map(report => {
+      const dataToExport = this.selectedReports.map((report) => {
         const newReport: { [key: string]: any } = {}; // Use an index signature
-        Object.keys(report).forEach(key => {
+        Object.keys(report).forEach((key) => {
           const customHeader = this.customHeaders[key] || key.toUpperCase();
           newReport[customHeader] = report[key];
         });
         return newReport;
       });
       const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(dataToExport);
-      
+
       // Set column widths to auto
-      const colWidths = dataToExport.map(row => 
-        Object.keys(row).map(key => ({ wch: Math.max(...dataToExport.map(r => (r[key] ? r[key].toString().length : 0))) }))
+      const colWidths = dataToExport.map((row) =>
+        Object.keys(row).map((key) => ({
+          wch: Math.max(
+            ...dataToExport.map((r) => (r[key] ? r[key].toString().length : 0))
+          ),
+        }))
       )[0];
 
       worksheet['!cols'] = colWidths;
 
-      const workbook: XLSX.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
+      const workbook: XLSX.WorkBook = {
+        Sheets: { data: worksheet },
+        SheetNames: ['data'],
+      };
       XLSX.writeFile(workbook, 'SelectedReports.xlsx');
     } else {
       alert('Please select at least one report to export.');
     }
   }
-    
-    viewDetails(_t31: any) {
+
+  viewDetails(_t31: any) {
     throw new Error('Method not implemented.');
-    }
+  }
   isSortable(field: string): boolean {
-    const sortableFields = ['name','phoneNumber', 'visitDate','officeLocation', 'visitPurpose', 'hostName', 'onDutyStaff', 'staffContactNumber', 'checkIn', 'checkOut']; // Add all the fields you want to be sortable here
+    const sortableFields = [
+      'name',
+      'phoneNumber',
+      'visitDate',
+      'officeLocation',
+      'visitPurpose',
+      'hostName',
+      'onDutyStaff',
+      'staffContactNumber',
+      'checkIn',
+      'checkOut',
+    ]; // Add all the fields you want to be sortable here
     return sortableFields.includes(field);
   }
-  
-  
+
+  ngOnInit(): void {
+    this.filteredReports = reports;
+  }
 }
