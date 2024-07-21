@@ -4,25 +4,25 @@ import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFo
 import { AutoCompleteCompleteEvent, AutoCompleteModule, AutoCompleteSelectEvent } from 'primeng/autocomplete';
 import { NgClass, NgFor, NgIf } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
-import { DataserviceService } from '../../../services/VisitorFormServices/dataservice.service';
-import { IPurposeList } from '../../../Models/VisitorFormModels/IPurposeList';
-import { IDeviceList } from '../../../Models/VisitorFormModels/IDeviceList';
-import { IPurposeResponse } from '../../../Models/VisitorFormModels/IPurposeResponse';
-import { IDeviceResponse } from '../../../Models/VisitorFormModels/IDeviceResponse';
-import {ICustomKeyboardEvent} from '../../../Models/VisitorFormModels/ICustomKeyboardEvent'
-import { DeviceChangeEvent } from '../../../Models/VisitorFormModels/IDeviceChangeEvent';
-import { PurposeChangeEvent } from '../../../Models/VisitorFormModels/IPurposeChangeEvent';
-import { Observable, Subject } from 'rxjs';
-import { response } from 'express';
+import { DataserviceService } from "../../../core/services/VisitorFormServices/dataservice.service"
+import { IPurposeList } from "../../../core/models/VisitorFormModels/IPurposeList"
+import { IDeviceList } from '../../../core/models/VisitorFormModels/IDeviceList';
+import { IPurposeResponse } from '../../../core/models/VisitorFormModels/IPurposeResponse';
+import { IDeviceResponse } from '../../../core/models/VisitorFormModels/IDeviceResponse';
+import {ICustomKeyboardEvent} from '../../../core/models/VisitorFormModels/ICustomKeyboardEvent'
+import { DeviceChangeEvent } from '../../../core/models/VisitorFormModels/IDeviceChangeEvent';
+import { PurposeChangeEvent } from '../../../core/models/VisitorFormModels/IPurposeChangeEvent';
+import {  Subject } from 'rxjs';
 import { WebcamImage, WebcamModule } from 'ngx-webcam';
+import { MatDialog } from '@angular/material/dialog';
+import { CapturePhotoDialogComponentComponent } from '../capture-photo-dialog-component/capture-photo-dialog-component.component';
 
 
 
 @Component({
   selector: 'app-form-component',
   standalone: true,
-  imports: [RouterLink,NgFor,NgIf,FormsModule,ReactiveFormsModule,NgClass, 
-    AutoCompleteModule,FloatLabelModule,WebcamModule],
+  imports: [RouterLink,NgFor,NgIf,FormsModule,ReactiveFormsModule,NgClass,  AutoCompleteModule,FloatLabelModule,WebcamModule],
   templateUrl: './form-component.component.html',
   styleUrl: './form-component.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -50,7 +50,8 @@ export class FormComponentComponent {
   trigger : Subject<void> = new Subject();
  
 
-  constructor(private apiService: DataserviceService,private fb: FormBuilder,private router: Router,private cdr: ChangeDetectorRef) 
+  constructor(private apiService: DataserviceService,public dialog: MatDialog,
+    private fb: FormBuilder,private router: Router,private cdr: ChangeDetectorRef) 
   {
     this.addvisitorForm = this.fb.group({
       name: new FormControl('', Validators.required),
@@ -65,34 +66,43 @@ export class FormComponentComponent {
   }
 
 
-get $trigger():Observable<void>{
-  return this.trigger.asObservable();
-}
+// get $trigger():Observable<void>{
+//   return this.trigger.asObservable();
+// }
 
-checkPermission(){
-  navigator.mediaDevices.getUserMedia({video:{width:500,height:500}}).then((response)=>
-  {
-    this.permissionStatus ='Allowed';
-    this.camData = response;
-    console.log(this.camData);
-  }).catch(err=>{
-    this.permissionStatus = 'Not Allowed';
-    console.log(this.permissionStatus);
+// checkPermission(){
+//   navigator.mediaDevices.getUserMedia({video:{width:500,height:500}}).then((response)=>
+//   {
+//     this.permissionStatus ='Allowed';
+//     this.camData = response;
+//     console.log(this.camData);
+//   }).catch(err=>{
+//     this.permissionStatus = 'Not Allowed';
+//     console.log(this.permissionStatus);
     
-  })
-}
+//   })
+// }
 
-capture(event:WebcamImage){
-  console.log("captured event",event);
-  this.capturedImage = event.imageAsDataUrl;
+// capture(event:WebcamImage){
+//   console.log("captured event",event);
+//   this.capturedImage = event.imageAsDataUrl;
     
+// }
+
+// captureImage(){
+//   this.trigger.next();
+// }
+
+openDialog(): void {
+  const dialogRef = this.dialog.open(CapturePhotoDialogComponentComponent);
+
+  dialogRef.afterClosed().subscribe((result: WebcamImage | null) => {
+    if (result) {
+      this.capturedImage = result.imageAsDataUrl;
+      console.log("captured event", this.capturedImage);
+    }
+  });
 }
-
-captureImage(){
-  this.trigger.next();
-}
-
-
 
 
 

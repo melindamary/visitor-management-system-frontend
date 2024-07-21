@@ -11,6 +11,7 @@ import { NavigationPanelComponent } from './layouts/navigation-panel/navigation-
 import { Component } from '@angular/core';
 import { SecurityVisitorLogComponent } from './pages/security-visitor-log/security-visitor-log.component';
 import { ReportTableComponent } from './pages/reports/components/report-table/report-table.component';
+import { VisitorFormComponent } from './pages/visitor-form/visitor-form.component';
 
 export const routes: Routes = [
     {
@@ -43,6 +44,9 @@ export const routes: Routes = [
     {
         path:"**",
         redirectTo: "/dashboard", 
+    },
+    {
+        path:'visitorform',component:VisitorFormComponent
     }
 
 ];
