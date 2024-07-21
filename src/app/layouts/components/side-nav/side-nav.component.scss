@@ -6,7 +6,8 @@
 }
 
 mat-sidenav-container {
-    height:calc(100vh - 3.4rem);
+    // height:calc(100vh - 3.4rem);
+    height: calc(100vh - 44px);
   
 }
 
@@ -40,5 +41,5 @@ mat-icon,
 }
 
 mat-sidenav-content{
-    padding: 2rem;
+    padding: 1rem;
 }

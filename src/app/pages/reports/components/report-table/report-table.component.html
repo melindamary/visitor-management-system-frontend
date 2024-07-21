@@ -1,6 +1,6 @@
   <p-toolbar>
     <ng-template pTemplate="left">
-      <p-calendar 
+      <p-calendar styleClass="date-range-picker"
       [(ngModel)]="rangeDates" 
       (onClose)="filterByDateRange()"
       selectionMode="range"
@@ -17,7 +17,8 @@
     dateFormat="mm/yy" 
     [readonlyInput]="true" 
     [showIcon]="true"
-    placeholder="Select Month"/>
+    placeholder="Select Month"
+    variant="filled"/>
 
     <p-calendar 
     [(ngModel)]="selectedYear" 
@@ -27,15 +28,20 @@
     [showIcon]="true"
     placeholder="Select Year"/>
 
-
+    <button 
+    class="export-btn" 
+    (click)="resetReport()">
+    Reset
+  </button>
     </ng-template>
 
     <ng-template pTemplate="right">
-        <p-button 
-            severity="success" 
-            label="Export" 
-            icon="pi pi-file-excel" 
-            (click)="exportSelectedToExcel()"/>
+      <i class="pi pi-file-excel excel-icon"
+      (click)="exportSelectedToExcel()"
+      pTooltip="Export" 
+      tooltipPosition="bottom"
+      tooltipStyleClass="custom-tooltip"
+      ></i>
     </ng-template>
 </p-toolbar>
 <p-table
@@ -43,11 +49,11 @@
   styleClass="p-datatable-striped p-datatable-gridlines" 
   [columns]="cols"
   [value]="filteredReports"
-  [tableStyle]="{ 'min-width': '50rem'}"
+  [tableStyle]="{ 'min-width': '55rem' }"
   [paginator]="true"
   [rows]="10"
   [scrollable]="true" 
-  scrollHeight="61vh" 
+  scrollHeight="70vh" 
   [rowsPerPageOptions]="[5, 10, 20]"
   sortMode="multiple"
   selectionMode="multiple"

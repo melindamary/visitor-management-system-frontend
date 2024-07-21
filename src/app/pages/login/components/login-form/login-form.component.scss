@@ -72,11 +72,18 @@ p{
 }
 
 .login-btn:disabled {
-    background-color: #cccccc; /* Grey background */
-    color: #666666;
+    background-color: #b093d8; 
+    color: white;
     cursor: not-allowed;
 }
 
 mat-icon{
     color: #896cc7;
+}
+
+.error-message{
+    color: red;
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
 }

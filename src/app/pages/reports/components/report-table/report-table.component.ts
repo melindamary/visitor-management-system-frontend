@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { reports } from '../../../../../../public/data';
 import { Report, Column } from '../../../../core/models/report.interface';
 import { ToolbarModule } from 'primeng/toolbar';
+import { TooltipModule } from 'primeng/tooltip';
 @Component({
   selector: 'app-report-table',
   standalone: true,
@@ -17,7 +18,8 @@ import { ToolbarModule } from 'primeng/toolbar';
     ButtonModule,
     CalendarModule,
     FormsModule,
-    ToolbarModule
+    ToolbarModule,
+    TooltipModule
   ],
   templateUrl: './report-table.component.html',
   styleUrl: './report-table.component.scss',
@@ -31,8 +33,8 @@ export class ReportTableComponent {
   startDate!: Date;
   endDate!: Date;
   cols: Column[] = [
-    { field: 'name', header: 'Name', width: '9%' },
-    { field: 'phoneNumber', header: 'Phone Number', width: '11%' },
+    { field: 'name', header: 'Name', width: '15%' },
+    { field: 'phoneNumber', header: 'Phone Number', width: '8%' },
     { field: 'visitDate', header: 'Visit Date', width: '9%' },
     { field: 'officeLocation', header: 'Office Location', width: '12%' },
     { field: 'visitPurpose', header: 'Visit Purpose', width: '10%' },
@@ -135,6 +137,12 @@ export class ReportTableComponent {
     }
   }
 
+  resetReport() {
+    this.filteredReports = reports;
+    this.rangeDates = undefined;
+    this.selectedMonth = undefined;
+    this.selectedYear = undefined;
+  }
   viewDetails(_t31: any) {
     throw new Error('Method not implemented.');
   }
