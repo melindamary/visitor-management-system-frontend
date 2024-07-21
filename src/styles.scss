@@ -5,3 +5,12 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.user-avatar-button .p-button{
+    // background-color: #896cc7;
+    background-color: white !important;
+    color: #896cc7;
+    border-radius: 50%;
+    width: 1.5rem;
+    height: 1.5rem;
+}

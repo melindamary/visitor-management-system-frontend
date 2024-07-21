@@ -3,11 +3,12 @@ import { FormGroup, ReactiveFormsModule, FormControl, Validators } from '@angula
 import { MatIcon } from '@angular/material/icon';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../../../core/services/authServices/auth.service';
-
+import { NgIf } from '@angular/common';
 @Component({
   selector: 'app-login-form',
   standalone: true,
-  imports: [ReactiveFormsModule, MatIcon, RouterModule],
+  imports: [ReactiveFormsModule, MatIcon, RouterModule, NgIf
+  ],
   templateUrl: './login-form.component.html',
   styleUrl: './login-form.component.scss'
 })
@@ -16,6 +17,7 @@ export class LoginFormComponent {
   public constructor(public authService: AuthService,public router:Router ){}
 
   loginForm!: FormGroup;
+  errorMessage: string = ''; // Error message to be displayed when login fails
 
   onSubmit(): void {
     if(this.loginForm.valid){
@@ -26,9 +28,14 @@ export class LoginFormComponent {
             this.router.navigate(['/vms']);
           }
           console.log(response);
+    },(error) => {
+      this.errorMessage = "Invalid username or password. Please try again."; 
     });
   }
   }; 
+  clearError(): void {
+    this.errorMessage = '';
+  }
   ngOnInit(){
     this.loginForm = new FormGroup({
       username: new FormControl('',[Validators.required]),
