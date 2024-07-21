@@ -6,9 +6,10 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { MatSidenav } from '@angular/material/sidenav';
-import { NgClass, NgIf } from '@angular/common';
+import { NgClass, NgIf, NgFor } from '@angular/common';
 import { RouterLinkActive, RouterOutlet } from '@angular/router';
 import { RouterLink } from '@angular/router';
+import { AuthService } from '../../../core/services/authServices/auth.service';
 
 @Component({
     selector: 'app-side-nav',
@@ -16,7 +17,7 @@ import { RouterLink } from '@angular/router';
     templateUrl: './side-nav.component.html',
     styleUrl: './side-nav.component.scss',
     imports: [MatIconModule, MatButtonModule, MatToolbarModule,
-       MatSidenavModule, MatListModule, NgIf, NgClass,
+       MatSidenavModule, MatListModule, NgIf, NgFor, NgClass,
        RouterOutlet, RouterLink, RouterLinkActive
       ]
 })
@@ -25,10 +26,12 @@ export class SideNavComponent {
   @ViewChild(MatSidenav) sidenav!: MatSidenav;
   isMobile = true;
   isCollapsed = true;
+  menuItems:any;
 
-  constructor(private observer: BreakpointObserver) {}
+  constructor(private observer: BreakpointObserver, private authService: AuthService) {}
 
   ngOnInit() {
+    this.menuItems = this.authService.getMenuItems();
     this.observer.observe(['(max-width: 800px)']).subscribe((screenSize) => {
       this.isMobile = screenSize.matches;
       this.isCollapsed = this.isMobile; // Make sure it starts as collapsed on mobile

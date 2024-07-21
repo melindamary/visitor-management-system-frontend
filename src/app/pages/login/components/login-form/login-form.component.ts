@@ -18,6 +18,7 @@ export class LoginFormComponent {
 
   loginForm!: FormGroup;
   errorMessage: string = ''; // Error message to be displayed when login fails
+  userRole: string = '';
 
   onSubmit(): void {
     if(this.loginForm.valid){
@@ -25,14 +26,27 @@ export class LoginFormComponent {
       this.authService.login(this.loginForm.value).subscribe(
         (response: any) => {
           if(this.authService.isLoggedIn()){
-            this.router.navigate(['/vms']);
+            console.log(response)
+            this.authService.getUserRole(response.result.username).subscribe(
+              (response: any) => {
+                this.userRole = response.result.value.roleName;
+                console.log("Role retrieved",response.result.value.roleName);
+                if(this.userRole == "Admin" || this.userRole == "ACE")
+                  this.router.navigate(['/vms/dashboard']);
+                else if(this.userRole == "Security")
+                  this.router.navigate(['/vms/visitor-log']);
+              }
+            );
+
+            
           }
-          console.log(response);
     },(error) => {
       this.errorMessage = "Invalid username or password. Please try again."; 
     });
+   
   }
-  }; 
+  }
+
   clearError(): void {
     this.errorMessage = '';
   }
@@ -41,6 +55,7 @@ export class LoginFormComponent {
       username: new FormControl('',[Validators.required]),
       password: new FormControl('',[Validators.required]),
     });
+    
   }
 
 }
