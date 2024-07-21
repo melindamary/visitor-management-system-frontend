@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RedheaderComponentComponent } from "../../layout/parent/redheader-component/redheader-component.component";
+import { RedheaderComponentComponent } from "../../layouts/parent/redheader-component/redheader-component.component";
 import { FormComponentComponent } from "./form-component/form-component.component";
 
 @Component({

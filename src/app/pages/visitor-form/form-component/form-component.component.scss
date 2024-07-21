@@ -9,6 +9,10 @@
 .plusBtnHide{
     display: none;
 }
+.astrik-white{
+    color:white;  
+
+}
 .button3{
     border: none;
     border-radius: 5px;
@@ -21,8 +25,8 @@
     font-size: 16px;
     margin: 10px 20px;
     cursor: pointer;
-    background-color: white; 
-    color: black; 
+    background-color: #DC143C; 
+    color: white; 
     border: 2px solid #DC143C;
 }
 .button span {
@@ -92,7 +96,7 @@
     justify-content: center; 
     flex-direction: column;   
     width: 100%;
-    margin-top: 50px;
+    margin-top: 20px;
     align-items: center;
     
     

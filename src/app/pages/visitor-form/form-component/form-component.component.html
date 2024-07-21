@@ -39,7 +39,7 @@
   inputId="autocomplete-input"
   placeholder=" "
   required></p-autoComplete>
- <!-- Placeholder added to trigger floating label -->
+
               <label for="autocomplete-input">Enter the name of the host</label>
           </p-floatLabel>  
           <div *ngIf="addvisitorForm.get('personInContact')?.hasError('required')" class="astrik">
@@ -136,7 +136,7 @@
       </div>
   </div>
   <div class="row mb-3">
-      <div class="col">
+      <!-- <div class="col">
         <button (click)="checkPermission()" class=" button3" type="button">
          Permission
       </button>
@@ -151,6 +151,16 @@
          <div *ngIf="capturedImage">
            <img [src]="capturedImage" width="500px" height="500px">
          </div>
+        </div>
+      </div> -->
+      <div class="col">
+        <button class=" button3"(click)="openDialog()" type="button">
+          <i class="material-icons  camera">photo_camera</i>
+           Photo<span class="astrik-white">*</span>
+      </button>
+       
+        <div *ngIf="capturedImage">
+          <img [src]="capturedImage.imageAsDataUrl" width="500px" height="500px">
         </div>
       </div>
       <div class="col">
