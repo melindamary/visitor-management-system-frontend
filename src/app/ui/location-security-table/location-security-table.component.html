@@ -33,23 +33,22 @@
                                        styleClass="p-column-filter">
                         </p-multiSelect>
                     </th> -->
-                    <th pSortableColumn="securityStatus" style="min-width: 10rem">
-                        <div  style="display: flex; align-items: center; justify-content: center;">
-                            Status
-                            <p-sortIcon field="securityStatus"></p-sortIcon>
-                            <p-columnFilter  field="securityStatus" matchMode="equals"  [showMenu]="false"class="ml-auto">
-                                <ng-template class="d-flex" pTemplate="filter" let-value let-filter="filterCallback">
-                                    <p-dropdown [ngModel]="value" [options]="statuses" (onChange)="filter($event.value)" placeholder="Any">
-                                        <!-- <ng-template let-option pTemplate="item">
-                                            <p-tag  [value]="option.label" [severity]="getSeverity(option.value)"></p-tag>
-                                        </ng-template> -->
-                                    </p-dropdown>
+                    <th pSortableColumn="status" style="min-width: 10rem">
+                        <div style="display: flex; align-items: center; justify-content: center;">
+                          Status
+                          <p-sortIcon field="status"></p-sortIcon>
+                          <p-columnFilter field="status" matchMode="equals" [showMenu]="false" class="ml-auto">
+                            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                              <p-dropdown [ngModel]="value" [options]="statuses" (onChange)="filter($event.value)" placeholder="Any">
+                                <ng-template let-option pTemplate="item">
+                                  <p-tag [value]="option.label" [severity]="getSeverity(option.value)"></p-tag>
                                 </ng-template>
-                            </p-columnFilter>
+                              </p-dropdown>
+                            </ng-template>
+                          </p-columnFilter>
                         </div>
-                    </th>
-                    <th pSortableColumn="PhoneNumber">
-                        Phone Number<p-sortIcon field="securityStatus" />
+                      </th>                    <th pSortableColumn="PhoneNumber">
+                        Phone Number<p-sortIcon field="PhoneNumber" />
                     </th>
                     <th pSortableColumn="visitorsApproved" >
                         visitors Approved<p-sortIcon field="visitorsApproved" />
@@ -59,14 +58,14 @@
             <ng-template pTemplate="body" let-lbSecurityTable>
                 <tr>
                     <td>{{ lbSecurityTable.location }}</td>
-                    <td>{{ lbSecurityTable.securityName }}</td>
+                    <td>{{ lbSecurityTable.securityFirstName}}</td>
                     <!-- <td>
                         <span [ngClass]="getStatusClass(lbSecurityTable.securityStatus)">
                             {{ getStatusText(lbSecurityTable.securityStatus) }}
                         </span>
                     </td> -->
                     <td>
-                        <p-tag [value]="getStatusText(lbSecurityTable.securityStatus)" [severity]="getSeverity(lbSecurityTable.securityStatus)"></p-tag>
+                        <p-tag [value]="getStatusText(lbSecurityTable.status)" [severity]="getSeverity(lbSecurityTable.status)"></p-tag>
                     </td>
                     <td>{{ lbSecurityTable.phoneNumber}}</td>
                     <td>{{ lbSecurityTable.visitorsApproved }}</td>

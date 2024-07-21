@@ -12,14 +12,25 @@ import { DropdownModule } from 'primeng/dropdown';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { FormsModule, NgModel } from '@angular/forms';
 
-
+interface ApiResponse {
+  $id: string;
+  $values: Array<{
+    $id: string;
+    location:String;
+    securityFirstName:String; 
+    status:boolean; 
+    phoneNumber:String; 
+    visitorsApproved:Number;
+  }>;
+}
 interface lbSecurityTable {
   location:String;
-  securityName:String; 
-  securityStatus:boolean; 
-  PhoneNumber:String; 
+  securityFirstName:String; 
+  status:boolean; 
+  phoneNumber:String; 
   visitorsApproved:Number;
 }
+type TagSeverity = 'success' | 'info' | 'warning' | 'danger' | 'secondary' | 'contrast';
 @Component({
   selector: 'app-location-security-table',
   standalone: true,
@@ -29,18 +40,17 @@ interface lbSecurityTable {
 })
 export class LocationSecurityTableComponent {
   lbSecurityTables: lbSecurityTable[] = [];
-  filteredLbTables: lbSecurityTable[] = [];
+  filteredLbsecurityTables: lbSecurityTable[] = [];
 
   showSearch = false;
 
 
   // statuses: any[] = [];
   // selectedStatuses: any[] = [];
-  statuses: any[] = [
-    { label: 'Available', value: true },
-    { label: 'Away', value: false }
+  statuses: Array<{label: string, value: boolean, severity: TagSeverity}> = [
+    { label: 'Available', value: true, severity: 'success' },
+    { label: 'Away', value: false, severity: 'warning' }
   ];
-
   constructor(private http: HttpClient) {
 
 
@@ -61,25 +71,31 @@ export class LocationSecurityTableComponent {
   fetchlbTable() {
     this.http
 
-      .get<lbSecurityTable[]>('https://localhost:7082/LocationSecurityTable/GetTable')
+      .get<ApiResponse>('https://localhost:7121/Statistics/GetSecurityStatistics/security')
       .subscribe((res) => {
         console.log(res);
-        this.lbSecurityTables = res;        
-        this.filteredLbTables = res;  // Initialize filteredLbTables with all data
-
+        this.lbSecurityTables=res.$values.map(value=>({
+          location:value.location,
+          securityFirstName:value.securityFirstName, 
+          status:value.status, 
+          phoneNumber:value.phoneNumber, 
+          visitorsApproved:value.visitorsApproved
+        
+        }));
+        this.filteredLbsecurityTables=[...this.lbSecurityTables]
       });
   }
 
     onSearch(event: Event) {
       const searchTerm = (event.target as HTMLInputElement).value.toLowerCase();
-      this.lbSecurityTables = this.filteredLbTables.filter(table => 
+      this.lbSecurityTables = this.filteredLbsecurityTables.filter(table => 
         table.location.toLowerCase().includes(searchTerm)
       );
     }
-    getSeverity(status: boolean): 'success' | 'warning' {
+    getSeverity(status: boolean): TagSeverity {
       return status ? 'success' : 'warning';
     }
-  
+    
     getStatusText(status: boolean): string {
       return status ? 'Available' : 'Away';
     }
