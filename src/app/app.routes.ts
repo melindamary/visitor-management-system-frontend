@@ -11,16 +11,25 @@ import { NavigationPanelComponent } from './layouts/navigation-panel/navigation-
 import { Component } from '@angular/core';
 import { SecurityVisitorLogComponent } from './pages/security-visitor-log/security-visitor-log.component';
 import { ReportTableComponent } from './pages/reports/components/report-table/report-table.component';
+import { authSecurityGuard } from './core/guard/auth-security.guard';
+import { authAceGuard } from './core/guard/auth-ace.guard';
 
 export const routes: Routes = [
     {
         path:"vms", 
-        component: NavigationPanelComponent, 
-        canActivate: [authAdminGuard],
+        component: NavigationPanelComponent,
         children: [
-            {path: "dashboard", component: AdminACEDashbordComponent},
-            {path: "visitor-log", component: SecurityVisitorLogComponent},
-            {path: "reports", component: ReportTableComponent},
+            {path: "dashboard", component: AdminACEDashbordComponent, 
+                canActivate: [authAceGuard]},
+            {path: "visitor-log", component: SecurityVisitorLogComponent, 
+               canActivate: [authSecurityGuard]
+            },
+            {path: "reports", component: ReportTableComponent,
+            },
+            {
+                path:"admin-panel",
+                canActivate: [authAdminGuard],
+            }
         ]
     },
     { 
