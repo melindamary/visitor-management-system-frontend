@@ -31,22 +31,12 @@ export class SideNavComponent {
     this.observer.observe(['(max-width: 800px)']).subscribe((screenSize) => {
       this.isMobile = screenSize.matches;
       this.isCollapsed = this.isMobile; // Make sure it starts as collapsed on mobile
-      if (this.isMobile) {
-        this.sidenav.mode = 'over';
-        this.sidenav.open();
-      } else {
-        this.sidenav.mode = 'side';
-        this.sidenav.open();
-      }
+      this.sidenav.mode = 'side';
+      this.sidenav.open();
     });
   }
 
   toggleMenu() {
-    if (this.isMobile) {
-      this.isCollapsed = !this.isCollapsed; // Toggle the collapsed state on mobile
-    } else {
-      this.isCollapsed = !this.isCollapsed; // Toggle the collapsed state on desktop
-      this.sidenav.open();
-    }
+    this.isCollapsed = !this.isCollapsed;
   }
 }

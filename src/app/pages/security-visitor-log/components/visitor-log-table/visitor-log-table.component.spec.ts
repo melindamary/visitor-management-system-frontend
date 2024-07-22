@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TabViewComponent } from './tab-view.component';
+import { VisitorLogTableComponent } from './visitor-log-table.component';
 
-describe('TabViewComponent', () => {
-  let component: TabViewComponent;
-  let fixture: ComponentFixture<TabViewComponent>;
+describe('VisitorLogTableComponent', () => {
+  let component: VisitorLogTableComponent;
+  let fixture: ComponentFixture<VisitorLogTableComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TabViewComponent]
+      imports: [VisitorLogTableComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(TabViewComponent);
+    fixture = TestBed.createComponent(VisitorLogTableComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
