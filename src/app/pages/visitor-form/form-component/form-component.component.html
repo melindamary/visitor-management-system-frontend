@@ -1,27 +1,28 @@
 
 <form class="visitorForm" [formGroup]="addvisitorForm" (ngSubmit)="onSubmit()">
+  <p-toast />
   <div class="row mb-3">
       <div class="col">
           <label class="inputLabel">Name<span class="astrik">*</span></label>
-          <div class="form-floating smallInput">
-            <input type="text" class="form-control" formControlName="name" id="name"
-             placeholder="Enter the Name" required/>
+          <p-floatLabel>
+            <input  class="form-control smallInput p-inputtext" formControlName="name" id="name"
+             placeholder="" required/>
             <label for="name">Enter the Name</label>
-            <div *ngIf="addvisitorForm.get('name')?.hasError('required')" class="astrik">
+            <div *ngIf="addvisitorForm.get('name')?.hasError('required')&& addvisitorForm.get('name')?.touched" class="astrik">
               *Name is required.
             </div>
-        </div>
+          </p-floatLabel>
       </div>
       <div class="col">
           <label class="inputLabel">Phone Number<span class="astrik">*</span></label>
-          <div class="form-floating smallInput">             
-              <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" required
-              formControlName="phoneNumber" placeholder="Enter the Phone Number">
+          <p-floatLabel>             
+              <input type="text"  class="form-control smallInput p-inputtext" id="phoneNumber" name="phoneNumber" required
+              formControlName="phoneNumber" placeholder="">
               <label for="phoneNumber">Enter the Phone Number</label>
-              <div *ngIf="addvisitorForm.get('phoneNumber')?.hasError('required')" class="astrik">
+              <div *ngIf="addvisitorForm.get('phoneNumber')?.hasError('required')&& addvisitorForm.get('phoneNumber')?.touched" class="astrik">
                 *Phone Number is required.
               </div>
-          </div>
+            </p-floatLabel>
       </div>
   </div>
   <div class="row mb-3">
@@ -42,7 +43,7 @@
 
               <label for="autocomplete-input">Enter the name of the host</label>
           </p-floatLabel>  
-          <div *ngIf="addvisitorForm.get('personInContact')?.hasError('required')" class="astrik">
+          <div *ngIf="addvisitorForm.get('personInContact')?.hasError('required')&& addvisitorForm.get('personInContact')?.touched"class="astrik">
             *Name of the host is required.
           </div> 
           </div>
@@ -64,7 +65,7 @@
           (onSelect)="onPurposeChange($event)"
          >
         </p-autoComplete><!-- Placeholder added to trigger floating label -->
-        <div *ngIf="addvisitorForm.get('purposeofvisitId')?.touched" class="astrik">
+        <div *ngIf="addvisitorForm.get('purposeofvisitId')?.hasError('required')&& addvisitorForm.get('purposeofvisitId')?.touched" class="astrik">
           *Name of the purpose is required.
         </div> 
       </div>
@@ -133,6 +134,9 @@
           <label class="form-check-label" for="privacyPolicy">
               I confirm, I have read and agree to Experion Technologies'<a href="#"> Privacy Policy </a>and consent to sharing my information.
           </label>
+          <div *ngIf="addvisitorForm.get('policy')?.hasError('required') && addvisitorForm.get('policy')?.touched" class="astrik">
+            *Please indicate your confirmation..
+          </div>
       </div>
   </div>
   <div class="row mb-3">
@@ -159,16 +163,19 @@
            Photo<span class="astrik-white">*</span>
       </button>
        
-        <div *ngIf="capturedImage">
-          <img [src]="capturedImage.imageAsDataUrl" width="500px" height="500px">
-        </div>
+      <div *ngIf="capturedImage">
+        <img [src]="capturedImage.imageAsDataUrl">
+      </div>
       </div>
       <div class="col">
+        
           <button class=" button3" type="submit">
               Submit
           </button>
       </div>
+     
   </div>
+  
 </form>
 
 <!-- [ngClass]="{ 'plusBtnHide': !isItemEntered(i) }" -->

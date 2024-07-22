@@ -1,4 +1,4 @@
-export interface  IPurposeList {
+export interface PurposeResponse {
   purposeId: number;
   purposeName: string;
-  }
+}

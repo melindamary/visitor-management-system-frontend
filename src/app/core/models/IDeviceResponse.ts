@@ -1,4 +1,4 @@
-export interface IDeviceResponse {
+export interface DeviceResponse {
     deviceId: number;
     deviceName: string;
   }

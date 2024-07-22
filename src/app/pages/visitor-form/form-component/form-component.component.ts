@@ -4,31 +4,34 @@ import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFo
 import { AutoCompleteCompleteEvent, AutoCompleteModule, AutoCompleteSelectEvent } from 'primeng/autocomplete';
 import { NgClass, NgFor, NgIf } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
-import { DataserviceService } from "../../../core/services/VisitorFormServices/dataservice.service"
-import { IPurposeList } from "../../../core/models/VisitorFormModels/IPurposeList"
-import { IDeviceList } from '../../../core/models/VisitorFormModels/IDeviceList';
-import { IPurposeResponse } from '../../../core/models/VisitorFormModels/IPurposeResponse';
-import { IDeviceResponse } from '../../../core/models/VisitorFormModels/IDeviceResponse';
-import {ICustomKeyboardEvent} from '../../../core/models/VisitorFormModels/ICustomKeyboardEvent'
-import { DeviceChangeEvent } from '../../../core/models/VisitorFormModels/IDeviceChangeEvent';
-import { PurposeChangeEvent } from '../../../core/models/VisitorFormModels/IPurposeChangeEvent';
+import { DataserviceService } from '../../../core/services/VisitorFormServices/dataservice.service';
+import { PurposeResponse } from '../../../core/models/IPurposeResponse';
+import { DeviceResponse } from '../../../core/models/IDeviceResponse';
+import {CustomKeyboardEvent} from '../../../core/models/ICustomKeyboardEvent'
+import { DeviceChangeEvent } from '../../../core/models/IDeviceChangeEvent';
+import { PurposeChangeEvent } from '../../../core/models/IPurposeChangeEvent';
 import {  Subject } from 'rxjs';
+import { InputTextModule } from 'primeng/inputtext';
 import { WebcamImage, WebcamModule } from 'ngx-webcam';
 import { MatDialog } from '@angular/material/dialog';
+import { Message, MessageService } from 'primeng/api';
+import { MessagesModule } from 'primeng/messages';
 import { CapturePhotoDialogComponentComponent } from '../capture-photo-dialog-component/capture-photo-dialog-component.component';
-
+import { ToastModule } from 'primeng/toast';
+import {MatInputModule} from '@angular/material/input';
 
 
 @Component({
   selector: 'app-form-component',
   standalone: true,
-  imports: [RouterLink,NgFor,NgIf,FormsModule,ReactiveFormsModule,NgClass,  AutoCompleteModule,FloatLabelModule,WebcamModule],
+  imports: [RouterLink,NgFor,NgIf,FormsModule,ReactiveFormsModule,NgClass, InputTextModule,
+    AutoCompleteModule,FloatLabelModule,WebcamModule,MessagesModule,ToastModule],
   templateUrl: './form-component.component.html',
   styleUrl: './form-component.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormComponentComponent {
- 
+  messages!:Message[] ;
   addvisitorForm: FormGroup;  
   showItemOtherInput: boolean = false;
 
@@ -36,13 +39,13 @@ export class FormComponentComponent {
   filteredContacts: string[] = [];
   selectedContact: string[]  | null = null;
 
-  purposes: IPurposeList[] = [];
-  filteredPurposes: IPurposeList[] = [];
-  selectedPurpose: IPurposeList | undefined ;
+  purposes: PurposeResponse[] = [];
+  filteredPurposes: PurposeResponse[] = [];
+  selectedPurpose: PurposeResponse | undefined ;
 
-  Devices: IDeviceList[] = [];
-  filteredDevice: IDeviceList[] = [];
-  selectedDevice: IDeviceList | null = null;
+  Devices: DeviceResponse[] = [];
+  filteredDevice: DeviceResponse[] = [];
+  selectedDevice: DeviceResponse | null = null;
 
   permissionStatus : string="";
   camData:any = null;
@@ -50,7 +53,7 @@ export class FormComponentComponent {
   trigger : Subject<void> = new Subject();
  
 
-  constructor(private apiService: DataserviceService,public dialog: MatDialog,
+  constructor(private apiService: DataserviceService,public dialog: MatDialog,private messageService: MessageService,
     private fb: FormBuilder,private router: Router,private cdr: ChangeDetectorRef) 
   {
     this.addvisitorForm = this.fb.group({
@@ -137,7 +140,7 @@ openDialog(): void {
 
   loadVisitPurpose(){
     this.apiService.getVisitPurpose()
-      .subscribe((response :IPurposeList[]) => {
+      .subscribe((response :PurposeResponse[]) => {
         console.log("API Response:", response);
       this.purposes = response;
     });
@@ -153,7 +156,7 @@ openDialog(): void {
     
     loadDevicesCarried(){
       this.apiService.getDevice()
-      .subscribe((response: IDeviceList[]) => {
+      .subscribe((response: DeviceResponse[]) => {
         console.log("API Response:", response);
       this.Devices = response;
     });
@@ -219,7 +222,7 @@ openDialog(): void {
       
       onKeyUpHandlerDevice(event: KeyboardEvent, i: number) {
         if (event.key === 'Enter') {
-          const customEvent: ICustomKeyboardEvent = {
+          const customEvent: CustomKeyboardEvent = {
             key: event.key,
             target: {
                 value: (event.target as HTMLInputElement).value.trim()
@@ -229,7 +232,7 @@ openDialog(): void {
         }
       }
     
-      onItemBlur(event:ICustomKeyboardEvent, index: number): void {
+      onItemBlur(event:CustomKeyboardEvent, index: number): void {
         console.log('onBlur event:', event);
         const value = (event.target as HTMLInputElement).value.trim();
     
@@ -248,7 +251,7 @@ openDialog(): void {
         if (!existingDevice) {
             // Device does not exist in the list, add it via API
             this.apiService.addDevice({ deviceName: value }).subscribe(
-                (response: IDeviceResponse) => {
+                (response: DeviceResponse) => {
                     console.log("Device added successfully:", response);
     
                     // Update local devices list and form values
@@ -264,7 +267,7 @@ openDialog(): void {
     
                     console.log("new device", currentItem.value.selectedDeviceId);
                 },
-                (error) => {
+                (error: DeviceResponse) => {
                     console.error('Error adding device:', error);
                     // Handle error as needed
                 }
@@ -326,7 +329,7 @@ openDialog(): void {
       } else {
           // Purpose does not exist in the list, add it via API
           this.apiService.addPurpose(value).subscribe(
-              (response: IPurposeResponse) => {
+              (response: PurposeResponse) => {
                   console.log("Purpose added successfully:", response);
   
                   // Update local purposes list and form values
@@ -338,7 +341,7 @@ openDialog(): void {
   
                   console.log("new purpose", this.addvisitorForm.value.purposeofvisitId);
               },
-              (error) => {
+              (error: PurposeResponse) => {
                   console.error('Error adding purpose:', error);
                   // Handle error as needed
               }
@@ -357,7 +360,9 @@ openDialog(): void {
 
            
     // Add captured webcam image data to the payload
-        const imageData = this.capturedImage; // Adjust this line to match how you store the image data
+    
+        const imageData = this.capturedImage;
+         // Adjust this line to match how you store the image data
 
     
           // Determine visitorPayload based on conditions
@@ -390,19 +395,21 @@ openDialog(): void {
     
           // Call API service with visitorPayload
           this.apiService.createVisitorAndAddItem(visitorPayload).subscribe(
-            (response) => {
+            (response:any) => {
               console.log('Visitor and item added successfully:', response);
-              alert("Added Successfully");
+              // alert("Added Successfully");
               this.router.navigate(['/thankyou']);
               // Optionally, redirect to a different page or refresh data
             },
-            (error) => {
+            (error:any) => {
+              this.messages =[{ severity: 'error', detail: 'Please Fill all the details!' }]
               console.error('Error adding visitor and item:', error);
               // Handle error as needed
             }
           );
         } else {
           console.error('Form is invalid.');
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Please Fill all the details!' });
     
           // Optionally, handle invalid form state, such as displaying error messages to the user
           // or logging additional details for debugging.

@@ -90,7 +90,18 @@
     border: none;
     border-radius: 0 5px 5px 0; 
 }
-
+::ng-deep .p-autocomplete-panel{
+    padding: 10px 10px 10px 10px;
+    line-height: 30px;
+}
+.smallInput {
+    width: 410px;
+     height: 50px;
+    margin-right: 10px;
+    
+    // border: 1px solid #d1d5db;
+    // border-radius: 5px;
+}
 .visitorForm{
     display: flex;
     justify-content: center; 
@@ -131,4 +142,5 @@
 ::ng-deep .p-inputtext {
     padding-top: 1rem; /* Adjust to provide space for label */
   left:10px;
+  padding-left: 10px;
 }

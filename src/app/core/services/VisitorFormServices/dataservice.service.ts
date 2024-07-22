@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IPurposeList } from '../../Models/VisitorFormModels/IPurposeList';
-import { IPurposeResponse } from '../../Models/VisitorFormModels/IPurposeResponse'
-import { IDeviceList } from '../../Models/VisitorFormModels/IDeviceList';
+import { IPurposeList } from '../../models/IPurposeList';
+import { IPurposeResponse } from '../../models/IPurposeResponse'
+import { IDeviceList } from '../../models/IDeviceList';
 import { map } from 'rxjs/operators';
-import { IDeviceResponse } from '../../Models/VisitorFormModels/IDeviceResponse';
+import { IDeviceResponse } from '../../models/IDeviceResponse';
 
 
 @Injectable({
