@@ -27,7 +27,7 @@ import { isPlatformBrowser } from '@angular/common';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthAceGuard implements CanActivate {
+export class AccessGuard implements CanActivate {
 
   constructor(
     private authService: AuthService,
@@ -38,7 +38,7 @@ export class AuthAceGuard implements CanActivate {
   canActivate(): boolean {
     if (isPlatformBrowser(this.platformId)) {
       const userRole = localStorage.getItem('userRole');
-      if (this.authService.isLoggedIn() && (userRole === 'ACE' || userRole === 'Admin')) {
+      if (this.authService.isLoggedIn() && (userRole === 'ACE' || userRole === 'Admin' || userRole === 'Security')) {
         return true;
       } else {
         this.router.navigate(['/login']);

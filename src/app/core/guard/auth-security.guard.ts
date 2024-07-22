@@ -1,16 +1,33 @@
-import { inject } from '@angular/core';
-import { CanActivateFn, Router } from '@angular/router';
+import { Injectable, Inject } from '@angular/core';
+import { CanActivate, Router } from '@angular/router';
 import { AuthService } from '../services/authServices/auth.service';
+import { PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
-export const authSecurityGuard: CanActivateFn = (route, state) => {
-  const authService = inject(AuthService);
-  const router = inject(Router);
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthSecurityGuard implements CanActivate {
 
-  const username = localStorage.getItem('userRole');
-  if (authService.isLoggedIn() &&  ((username == 'Security') || (username == 'Admin'))) {
-    return true;
-  } else {
-    router.navigate(['/login']);
-    return false;
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
+
+  canActivate(): boolean {
+    if (isPlatformBrowser(this.platformId)) {
+      const userRole = localStorage.getItem('userRole');
+      if (this.authService.isLoggedIn() && (userRole === 'Security' || userRole === 'Admin')) {
+        return true;
+      } else {
+        this.router.navigate(['/login']);
+        return false;
+      }
+    } else {
+      // Handle non-browser environments if necessary
+      this.router.navigate(['/login']);
+      return false;
+    }
   }
-};
+}

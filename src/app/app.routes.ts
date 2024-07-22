@@ -12,8 +12,9 @@ import { Component } from '@angular/core';
 import { SecurityVisitorLogComponent } from './pages/security-visitor-log/security-visitor-log.component';
 import { ReportTableComponent } from './pages/reports/components/report-table/report-table.component';
 import { VisitorFormComponent } from './pages/visitor-form/visitor-form.component';
-import { authSecurityGuard } from './core/guard/auth-security.guard';
+import { AuthSecurityGuard } from './core/guard/auth-security.guard';
 import { AuthAceGuard } from './core/guard/auth-ace.guard';
+import { AccessGuard } from './core/guard/access.guard';
 
 export const routes: Routes = [
     {
@@ -23,9 +24,10 @@ export const routes: Routes = [
             {path: "dashboard", component: AdminACEDashbordComponent, 
                 canActivate: [AuthAceGuard]},
             {path: "visitor-log", component: SecurityVisitorLogComponent, 
-               canActivate: [authSecurityGuard]
+               canActivate: [AuthSecurityGuard]
             },
             {path: "reports", component: ReportTableComponent,
+                canActivate: [AccessGuard],
             },
            
             // {

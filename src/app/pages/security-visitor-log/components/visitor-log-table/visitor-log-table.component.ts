@@ -72,6 +72,7 @@ export class VisitorLogTableComponent {
     this.visitorLogService.getVisitorLogToday().subscribe({
       next: (response: APIResponse) => {
       if (response.isSuccess) {
+        console.log(response);
         this.activeVisitorsCount = response.result.activeVisitorsCount;
         this.totalVisitorsCount = response.result.totalVisitorsCount;
         this.checkedOutVisitorsCount = response.result.checkedOutVisitorsCount;
