@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Visitor } from '../../models/visitor';
+import { Visitor } from '../../models/visitor.interface';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 

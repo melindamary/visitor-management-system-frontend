@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Subject } from 'rxjs';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { WebcamImage, WebcamModule } from 'ngx-webcam';
+
 import { NgIf } from '@angular/common';
 import {MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition} from '@angular/material/snack-bar';
 import { Action } from 'rxjs/internal/scheduler/Action';

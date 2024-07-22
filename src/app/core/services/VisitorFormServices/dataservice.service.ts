@@ -1,11 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IPurposeList } from '../../Models/VisitorFormModels/IPurposeList';
-import { IPurposeResponse } from '../../Models/VisitorFormModels/IPurposeResponse'
-import { IDeviceList } from '../../Models/VisitorFormModels/IDeviceList';
+import { Purpose } from '../../models/purpose.interface';
 import { map } from 'rxjs/operators';
-import { IDeviceResponse } from '../../Models/VisitorFormModels/IDeviceResponse';
+import { Device } from '../../models/device.interface';
 
 
 @Injectable({
@@ -24,16 +22,16 @@ export class DataserviceService {
   }
        
     
-  getVisitPurpose(): Observable<IPurposeList[]> {
+  getVisitPurpose(): Observable<Purpose[]> {
     const apiUrl = "https://localhost:7121/Purpose/GetPurposes/get-purposes-idAndName";
-    return this.http.get<{ $id: string, $values: IPurposeList[] }>(apiUrl).pipe(
+    return this.http.get<{ $id: string, $values: Purpose[] }>(apiUrl).pipe(
       map(response => response.$values)
     );
   }
       
-  getDevice():Observable<IDeviceList[]>{
+  getDevice():Observable<Device[]>{
     const apiUrl="https://localhost:7121/Device/GetItems/get-device-id-name";
-    return this.http.get<{ $id: string, $values: IDeviceList[] }>(apiUrl).pipe(
+    return this.http.get<{ $id: string, $values: Device[] }>(apiUrl).pipe(
       map(response => response.$values)
     );
    }
@@ -46,13 +44,13 @@ export class DataserviceService {
    }
 
   
-addPurpose(purpose: string): Observable<IPurposeResponse> {
+addPurpose(purpose: string): Observable<Purpose> {
   const apiUrl = "https://localhost:7121/Purpose/PostPurpose"; // Adjust URL as per your API endpoint
 
-  return this.http.post<IPurposeResponse>(apiUrl, { purposeName: purpose });
+  return this.http.post<Purpose>(apiUrl, { purposeName: purpose });
 }
-addDevice(device: { deviceName: string }): Observable<IDeviceResponse> {
-  return this.http.post<IDeviceResponse>('https://localhost:7121/Device/PostDevice', device);
+addDevice(device: { deviceName: string }): Observable<Device> {
+  return this.http.post<Device>('https://localhost:7121/Device/PostDevice', device);
 }
    
    

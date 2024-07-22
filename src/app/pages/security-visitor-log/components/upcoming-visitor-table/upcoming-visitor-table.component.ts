@@ -18,7 +18,7 @@ import { TagModule } from 'primeng/tag';
 import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
 import { VisitorLogService } from '../../../../core/services/visitorLogServices/visitor-log.service';
-import { Visitor } from '../../../../core/models/visitor';
+import { Visitor } from '../../../../core/models/visitor.interface';
 
 @Component({
   selector: 'app-upcoming-visitor-table',

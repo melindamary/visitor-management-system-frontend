@@ -5,11 +5,9 @@ import { AutoCompleteCompleteEvent, AutoCompleteModule, AutoCompleteSelectEvent 
 import { NgClass, NgFor, NgIf } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { DataserviceService } from "../../../core/services/VisitorFormServices/dataservice.service"
-import { IPurposeList } from "../../../core/models/VisitorFormModels/IPurposeList"
-import { IDeviceList } from '../../../core/models/VisitorFormModels/IDeviceList';
-import { IPurposeResponse } from '../../../core/models/VisitorFormModels/IPurposeResponse';
-import { IDeviceResponse } from '../../../core/models/VisitorFormModels/IDeviceResponse';
-import {ICustomKeyboardEvent} from '../../../core/models/VisitorFormModels/ICustomKeyboardEvent'
+import { Purpose } from "../../../core/models/purpose.interface"
+import { Device } from '../../../core/models/device.interface';
+import {CustomKeyboardEvent} from '../../../core/models/custom-keyboard-event.interface.'
 import { DeviceChangeEvent } from '../../../core/models/VisitorFormModels/IDeviceChangeEvent';
 import { PurposeChangeEvent } from '../../../core/models/VisitorFormModels/IPurposeChangeEvent';
 import {  Subject } from 'rxjs';
@@ -36,13 +34,13 @@ export class FormComponentComponent {
   filteredContacts: string[] = [];
   selectedContact: string[]  | null = null;
 
-  purposes: IPurposeList[] = [];
-  filteredPurposes: IPurposeList[] = [];
-  selectedPurpose: IPurposeList | undefined ;
+  purposes: Purpose[] = [];
+  filteredPurposes: Purpose[] = [];
+  selectedPurpose: Purpose | undefined ;
 
-  Devices: IDeviceList[] = [];
-  filteredDevice: IDeviceList[] = [];
-  selectedDevice: IDeviceList | null = null;
+  Devices: Device[] = [];
+  filteredDevice: Device[] = [];
+  selectedDevice: Device | null = null;
 
   permissionStatus : string="";
   camData:any = null;
@@ -137,7 +135,7 @@ openDialog(): void {
 
   loadVisitPurpose(){
     this.apiService.getVisitPurpose()
-      .subscribe((response :IPurposeList[]) => {
+      .subscribe((response :Purpose[]) => {
         console.log("API Response:", response);
       this.purposes = response;
     });
@@ -153,7 +151,7 @@ openDialog(): void {
     
     loadDevicesCarried(){
       this.apiService.getDevice()
-      .subscribe((response: IDeviceList[]) => {
+      .subscribe((response: Device[]) => {
         console.log("API Response:", response);
       this.Devices = response;
     });
@@ -219,7 +217,7 @@ openDialog(): void {
       
       onKeyUpHandlerDevice(event: KeyboardEvent, i: number) {
         if (event.key === 'Enter') {
-          const customEvent: ICustomKeyboardEvent = {
+          const customEvent: CustomKeyboardEvent = {
             key: event.key,
             target: {
                 value: (event.target as HTMLInputElement).value.trim()
@@ -229,7 +227,7 @@ openDialog(): void {
         }
       }
     
-      onItemBlur(event:ICustomKeyboardEvent, index: number): void {
+      onItemBlur(event:CustomKeyboardEvent, index: number): void {
         console.log('onBlur event:', event);
         const value = (event.target as HTMLInputElement).value.trim();
     
@@ -248,7 +246,7 @@ openDialog(): void {
         if (!existingDevice) {
             // Device does not exist in the list, add it via API
             this.apiService.addDevice({ deviceName: value }).subscribe(
-                (response: IDeviceResponse) => {
+                (response: Device) => {
                     console.log("Device added successfully:", response);
     
                     // Update local devices list and form values
@@ -326,7 +324,7 @@ openDialog(): void {
       } else {
           // Purpose does not exist in the list, add it via API
           this.apiService.addPurpose(value).subscribe(
-              (response: IPurposeResponse) => {
+              (response: Purpose) => {
                   console.log("Purpose added successfully:", response);
   
                   // Update local purposes list and form values

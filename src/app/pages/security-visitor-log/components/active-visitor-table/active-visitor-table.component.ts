@@ -8,7 +8,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 import { VisitorLogService } from '../../../../core/services/visitorLogServices/visitor-log.service';
-import { Visitor } from '../../../../core/models/visitor';
+import { Visitor } from '../../../../core/models/visitor.interface';
 
 @Component({
   selector: 'app-active-visitor-table',

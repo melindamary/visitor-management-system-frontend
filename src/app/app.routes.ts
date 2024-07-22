@@ -27,19 +27,15 @@ export const routes: Routes = [
             },
             {path: "reports", component: ReportTableComponent,
             },
-            {
-                path:"admin-panel",
-                canActivate: [authAdminGuard],
-            }
+            // {
+            //     path:"admin-panel",
+            //     canActivate: [authAdminGuard],
+            // }
         ]
     },
     { 
         path:'welcomepage',
         component:WelcomepageComponent
-    },
-    {
-        path: "reports",
-        component: ReportTableComponent
     },
     { 
         path:"login", 
