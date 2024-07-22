@@ -4,6 +4,7 @@ import { LocationChartComponent } from "../../ui/location-chart/location-chart.c
 import { LocationVisitortableComponent } from "../../ui/location-visitortable/location-visitortable.component";
 import { PurposePieComponent } from "../../ui/purpose-pie/purpose-pie.component";
 import { LocationSecurityTableComponent } from "../../ui/location-security-table/location-security-table.component";
+
 @Component({
     selector: 'app-admin-ace-dashbord',
     standalone: true,

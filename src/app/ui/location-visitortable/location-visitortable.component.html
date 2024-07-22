@@ -2,8 +2,14 @@
 <div class="card" >
     <div class="Table-header">
         <h3>Location Based Visitor Details </h3>
-        <button class="weekly-button">weekly <i class="pi pi-angle-down"></i>
-        </button>
+        <div class="filterarrange">
+
+            <button class="weekly-button">weekly <i class="pi pi-angle-down"></i>
+            </button>
+            <input *ngIf="showSearch" type="text" (input)="onSearch($event)" placeholder="Search Location..." />
+    
+        </div>
+
     </div>
     <p-table [value]="lbTables" >
         <!-- <ng-template pTemplate="title"> -->
@@ -16,15 +22,9 @@
                     <th pSortableColumn="slno" >
                         SL Number <p-sortIcon field="slno" />
                     </th>           
-                <th>
-                    <div  style="display: flex; align-items: center;">
-                        Location 
-                        <button (click)="showSearch = !showSearch" style="border: 0;">
-                            <i class="pi pi-angle-down"></i>
-                        </button>
-                        <input *ngIf="showSearch" type="text" (input)="onSearch($event)" placeholder="Search Location..." />
-                    </div>
-                </th>
+                    <th pSortableColumn="location" >
+                        Location <p-sortIcon field="location" />
+                    </th>
                 <th pSortableColumn="numberOfSecurity" >
                     Number Of Security <p-sortIcon field="numberOfSecurity" />
                 </th>
