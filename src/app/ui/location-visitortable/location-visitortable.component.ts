@@ -33,7 +33,7 @@ export class LocationVisitortableComponent {
   lbTables: LbTable[] = [];
   filteredLbTables: LbTable[] = [];
 
-  showSearch = false;
+  showSearch = true;
   constructor(private http: HttpClient) {}
 
 

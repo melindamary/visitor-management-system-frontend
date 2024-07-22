@@ -23,7 +23,7 @@ export class PurposePieComponent {
  
   ngOnInit() {
 
-    let data:any=this.fetchpiedata();
+    // let data:any=this.fetchpiedata();
 
 
     // let data = [
@@ -63,7 +63,7 @@ export class PurposePieComponent {
         {
           data: top6.map((item: { value: any; }) => item.value),
           backgroundColor: colors,
-          radius:'100%'
+          radius:'80%'
         }
       ]
     };
@@ -74,7 +74,9 @@ export class PurposePieComponent {
           display: true,
           text: 'Visitor Purposes',
           font: {
-            size: 16
+            size: 16,
+            color:'#00000',
+            weight:'bolder'
           },      
           padding: {
             top: 10,
@@ -86,8 +88,11 @@ export class PurposePieComponent {
           align: 'center',
           labels: {
             usePointStyle: true,
-            boxWidth: 6,        font: {
-              size: 14  // Increase font size for better readability
+            boxWidth: 6,       
+             font: {
+              size: 12 ,            
+              color:'#00000',
+              // Increase font size for better readability
             }
           }
             },

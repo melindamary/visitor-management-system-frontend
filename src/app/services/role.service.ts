@@ -8,13 +8,16 @@ import { Page } from '../Models/page.interface';
 })
 export class RoleService {
   // private Pageroles = 'https://localhost:7121/Page/GetPages';
-  private role = 'your_api_base_url';
-  private apiUrl = 'your_api_base_url';
+  // private role = 'your_api_base_url';
+  // private apiUrl = 'your_api_base_url';
 
+  private apiUrl = 'http://yourapiurl/api/visitors/active';  
 
 
   constructor(private http: HttpClient) {}
-
+  getActiveVisitors(): Observable<number> {  
+    return this.http.get<number>(this.apiUrl);  
+  }
   getPages(): Observable<any> {
     return this.http.get<any>('https://localhost:7121/Page/GetPages');
   }

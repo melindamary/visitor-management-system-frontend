@@ -42,7 +42,7 @@ export class LocationSecurityTableComponent {
   lbSecurityTables: lbSecurityTable[] = [];
   filteredLbsecurityTables: lbSecurityTable[] = [];
 
-  showSearch = false;
+  showSearch = true;
 
 
   // statuses: any[] = [];
