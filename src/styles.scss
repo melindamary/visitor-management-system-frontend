@@ -14,3 +14,14 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     width: 1.5rem;
     height: 1.5rem;
 }
+.custom-accept-button {
+    background-color: #896CC7 !important;
+    color: #ffffff !important;
+    border: none !important;
+  }
+  
+  .custom-reject-button {
+    background-color: #EEEAEA !important;
+    color: #000000 !important;
+    border: none !important;
+  }

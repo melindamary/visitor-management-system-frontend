@@ -1,0 +1,124 @@
+<div class="tile-container">
+    <div class="tile" style="background-color:#896CC7;">
+      <h3>Active Visitors</h3>
+      <p>{{ activeVisitorsCount }}</p>
+      
+    </div>
+    <div class="tile" style="background-color:#FF858C;">
+      <h3>Total Visitors</h3>
+      <p>{{ totalVisitorsCount }}</p>
+    </div>
+    <div class="tile" style="background-color:#952991">
+      <h3>Checked Out Visitors</h3>
+      <p>{{ checkedOutVisitorsCount }}</p>
+    </div>
+  </div>
+  <div class="ml-3">
+  <p-tabView (onChange)="onTabChange($event)">
+    <p-tabPanel header="Upcoming Visitors"></p-tabPanel>
+    <p-tabPanel header="Active Visitors"></p-tabPanel>
+  </p-tabView>
+  <div class="card">
+    <p-toast></p-toast>
+  <p-table #dt [value]="dataSource" styleClass="p-datatable-striped"
+  [rows]="5" [paginator]="true" [tableStyle]="{ 'min-width': '50rem' }" [rowHover]="true" dataKey="id"
+  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+    <ng-container *ngFor="let col of columnsToDisplay">
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of columnsToDisplay" pSortableColumn>{{ col.header }}</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr>
+          <td *ngFor="let col of columnsToDisplay">
+            <span *ngIf="col.field !== 'actions'">{{ rowData[col.field] }}</span>
+            <ng-container *ngIf="col.field == 'actions'">
+              <p-button icon="pi pi-eye" [rounded]="true" [text]="true" (click)="viewVisitor(rowData)"></p-button>
+              <p-button *ngIf="currentTab == 'upcoming'" icon="pi pi-check" [rounded]="true" [text]="true" severity="success" (click)="checkInVisitor(rowData)"></p-button>
+              <p-button *ngIf="currentTab == 'active'" icon="pi pi-sign-out" [rounded]="true" [text]="true" severity="danger" (click)="checkOutVisitor(rowData)"></p-button>
+            </ng-container>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="summary">
+        <div class="flex align-items-center justify-content-between">
+          In total there are {{ currentTab === 'active' ? activeVisitors.length : upcomingVisitors.length }} visitors.
+        </div>
+    </ng-template>
+    </ng-container>
+  </p-table>
+  
+  <p-dialog header="Check-In Visitor" [(visible)]="visibleCheckInDialog" [modal]="true" [style]="{ width: '25rem' }">
+    <ng-template pTemplate="header">
+      <div class="inline-flex align-items-center justify-content-center gap-2 bg-violet">
+        <span class="font-bold white-space-nowrap">Enter Visitor Card Number</span>
+      </div>
+    </ng-template>
+    <div class="flex align-items-center gap-3 mb-2">
+      <label class="font-semibold w-6rem">Visitor Name</label>
+      <input pInputText [(ngModel)]="selectedVisitor.visitorName" id="visitorName" class="flex-auto" readonly [disabled]="true" />
+    </div>
+    <div class="flex align-items-center gap-3 mb-4">
+      <label for="cardNumber" class="font-semibold w-6rem">Visitor Pass Code</label>
+      <input pInputText [(ngModel)]="cardNumber" id="cardNumber" class="flex-auto" autocomplete="off" />
+    </div>
+    <ng-template pTemplate="footer">
+      <p-button label="Cancel" styleClass="custom-reject-button" (click)="visibleCheckInDialog = false"></p-button>
+      <p-button label="Save"  (click)="saveCheckInTime()" [disabled]="!cardNumber"></p-button>
+    </ng-template>  
+  </p-dialog>
+  
+  <p-dialog header="Visitor Details" [(visible)]="visibleDetailsDialog" [modal]="true" [style]="{ width: '40vw' }"  styleClass="p-fluid">
+    <ng-template pTemplate="header">
+      <div class="flex align-items-center gap-2">
+        <span class="font-bold">Visitor Details</span>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="content">
+      <div *ngIf="selectedVisitor">
+        <div class="flex flex-column align-items-start mb-4">
+          <div class="flex align-items-center mb-2">
+            <div class="font-bold w-6rem">Photo:</div>
+            <img *ngIf="selectedVisitor.photoBase64" [src]="'data:image/jpeg;base64,' + selectedVisitor.photoBase64" alt="Visitor Image" width="50%" class="ml-2"/>
+            <p *ngIf="!selectedVisitor.photoBase64">No photo available</p>
+          </div>
+          <div *ngIf="currentTab === 'active'" class="flex align-items-center mb-2">
+            <div class="font-bold w-9rem">Visitor Pass Code:</div>
+            <div>{{ selectedVisitor.visitorPassCode }}</div>
+          </div>
+          <div class="flex align-items-center mb-2">
+            <div class="font-bold w-6rem mb-2">Name:</div>
+            <div>{{ selectedVisitor.visitorName }}</div>
+          </div>
+          <div class="flex align-items-center mb-2">
+            <div class="font-bold w-8rem mb-2">Phone Number:</div>
+            <div>{{ selectedVisitor.phone }}</div>
+          </div>
+          <div class="flex align-items-center mb-2">
+            <div class="font-bold w-8rem mb-2">Purpose of Visit:</div>
+            <div>{{ selectedVisitor.purposeName }}</div>
+          </div>
+          <div class="flex align-items-center mb-2">
+            <div class="font-bold w-8rem mb-2">Whom to Meet:</div>
+            <div>{{ selectedVisitor.hostName }}</div>
+          </div>
+          <div *ngIf="currentTab === 'active'" class="flex align-items-center mb-2">
+            <div class="font-bold w-8rem mb-2">Check-In Time:</div>
+            <div>{{ selectedVisitor.checkInTime }}</div>
+          </div>
+          <div class="flex align-items-center mb-2">
+            <div class="font-bold w-8rem">Device Details:</div>
+            <div>{{ selectedVisitor.deviceName }}</div>
+          </div>
+  
+        </div>
+      </div>
+    </ng-template>
+  </p-dialog>
+  
+  
+  <p-confirmDialog [style]="{ width: '450px' }" />
+  </div>
+  </div>
+  

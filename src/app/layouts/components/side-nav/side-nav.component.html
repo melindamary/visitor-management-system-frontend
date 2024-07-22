@@ -1,5 +1,7 @@
 <mat-sidenav-container autosize="true">
-    <mat-sidenav [ngClass]="!isCollapsed ? 'expanded' : 'contracted'" [mode]="isMobile ? 'over' : 'side'" [opened]="true">
+    <mat-sidenav [ngClass]="!isCollapsed ? 'expanded' : 'contracted'" 
+    [mode]="'side'" 
+    [opened]="true">
       <mat-nav-list>
         <a mat-list-item (click)="toggleMenu()">
           <div class="logo">

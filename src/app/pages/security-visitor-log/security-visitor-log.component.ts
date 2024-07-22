@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { TabViewComponent } from "./components/tab-view/tab-view.component";
+import { VisitorLogTableComponent } from "./components/visitor-log-table/visitor-log-table.component";
 
 @Component({
   selector: 'app-security-visitor-log',
   standalone: true,
-  imports: [TabViewComponent],
+  imports: [VisitorLogTableComponent],
   templateUrl: './security-visitor-log.component.html',
   styleUrl: './security-visitor-log.component.scss'
 })
