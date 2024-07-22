@@ -13,7 +13,7 @@ import { SecurityVisitorLogComponent } from './pages/security-visitor-log/securi
 import { ReportTableComponent } from './pages/reports/components/report-table/report-table.component';
 import { VisitorFormComponent } from './pages/visitor-form/visitor-form.component';
 import { authSecurityGuard } from './core/guard/auth-security.guard';
-import { authAceGuard } from './core/guard/auth-ace.guard';
+import { AuthAceGuard } from './core/guard/auth-ace.guard';
 
 export const routes: Routes = [
     {
@@ -21,12 +21,13 @@ export const routes: Routes = [
         component: NavigationPanelComponent,
         children: [
             {path: "dashboard", component: AdminACEDashbordComponent, 
-                canActivate: [authAceGuard]},
+                canActivate: [AuthAceGuard]},
             {path: "visitor-log", component: SecurityVisitorLogComponent, 
                canActivate: [authSecurityGuard]
             },
             {path: "reports", component: ReportTableComponent,
             },
+           
             // {
             //     path:"admin-panel",
             //     canActivate: [authAdminGuard],
@@ -36,6 +37,9 @@ export const routes: Routes = [
     { 
         path:'welcomepage',
         component:WelcomepageComponent
+    },
+    {
+        path: "visitorform", component: VisitorFormComponent, 
     },
     { 
         path:"login", 

@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
+// import { TableModule } from 'primeng/table';
 import { TableModule } from 'primeng/table';
+// import * as XLSX from 'xlsx'
 import * as XLSX from 'xlsx';
 import { CalendarModule } from 'primeng/calendar';
 import { FormsModule } from '@angular/forms';
@@ -9,18 +11,11 @@ import { reports } from '../../../../../../public/data';
 import { Report, Column } from '../../../../core/models/report.interface';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TooltipModule } from 'primeng/tooltip';
+
 @Component({
   selector: 'app-report-table',
   standalone: true,
-  imports: [
-    TableModule,
-    CommonModule,
-    ButtonModule,
-    CalendarModule,
-    FormsModule,
-    ToolbarModule,
-    TooltipModule
-  ],
+  imports: [TableModule, CommonModule, ButtonModule, CalendarModule,FormsModule, ToolbarModule, TooltipModule],
   templateUrl: './report-table.component.html',
   styleUrl: './report-table.component.scss',
 })

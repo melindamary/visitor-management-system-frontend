@@ -1,3 +1,4 @@
+// import { HttpClient } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -23,7 +24,7 @@ export class DataserviceService {
        
     
   getVisitPurpose(): Observable<Purpose[]> {
-    const apiUrl = "https://localhost:7121/Purpose/GetPurposes/get-purposes-idAndName";
+    const apiUrl = "https://localhost:7121/PurposeOfVisit/GetPurposes/get-purposes-id-Name";
     return this.http.get<{ $id: string, $values: Purpose[] }>(apiUrl).pipe(
       map(response => response.$values)
     );

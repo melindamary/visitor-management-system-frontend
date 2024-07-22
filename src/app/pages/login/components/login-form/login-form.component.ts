@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+// import { FormGroup, ReactiveFormsModule, FormControl, Validators } from '@angular/forms';
 import { FormGroup, ReactiveFormsModule, FormControl, Validators } from '@angular/forms';
 import { MatIcon } from '@angular/material/icon';
 import { Router, RouterModule } from '@angular/router';
@@ -7,8 +8,8 @@ import { NgIf } from '@angular/common';
 @Component({
   selector: 'app-login-form',
   standalone: true,
-  imports: [ReactiveFormsModule, MatIcon, RouterModule, NgIf
-  ],
+  imports: [ReactiveFormsModule, MatIcon, RouterModule, NgIf],
+  // eactiveFormsModule, MatIcon, RouterModule, NgIf
   templateUrl: './login-form.component.html',
   styleUrl: './login-form.component.scss'
 })
