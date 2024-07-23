@@ -27,7 +27,7 @@ import { TagModule } from 'primeng/tag';
     TableModule, DialogModule, RippleModule, ButtonModule, ToastModule,
     ToolbarModule, ConfirmDialogModule, InputTextModule, InputTextareaModule,
     CommonModule, DropdownModule, TagModule, FormsModule, InputNumberModule,TabViewModule],
-  providers: [MessageService, ConfirmationService, VisitorLogService,DatePipe],
+  providers: [MessageService, ConfirmationService, VisitorLogService, DatePipe],
   templateUrl: './visitor-log-table.component.html',
   styleUrl: './visitor-log-table.component.scss'
 })
