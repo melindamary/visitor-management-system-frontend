@@ -37,5 +37,12 @@ h3{
 .filterarrange{
     display: flex;
     gap: 1rem;
+    input{
+        background-color: white;
+        border:solid #7857ff;
+    }
+    input::placeholder{
+        color: #7857ff;
 
+    }
 }

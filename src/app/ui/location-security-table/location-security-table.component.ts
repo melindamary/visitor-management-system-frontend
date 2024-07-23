@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient ,HttpParams} from '@angular/common/http';
 import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import { ButtonModule } from 'primeng/button';
@@ -11,7 +11,10 @@ import { DropdownModule } from 'primeng/dropdown';
 
 import { MultiSelectModule } from 'primeng/multiselect';
 import { FormsModule, NgModel } from '@angular/forms';
-
+interface TimePeriod {
+  label: string;
+  value: number;
+}
 interface ApiResponse {
   $id: string;
   $values: Array<{
@@ -35,7 +38,8 @@ type TagSeverity = 'success' | 'info' | 'warning' | 'danger' | 'secondary' | 'co
   selector: 'app-location-security-table',
   standalone: true,
   imports: [TableModule, TagModule, ButtonModule,IconFieldModule, InputIconModule, 
-    CommonModule, MultiSelectModule, InputTextModule, DropdownModule ,FormsModule],  templateUrl: './location-security-table.component.html',
+    CommonModule, MultiSelectModule, InputTextModule, DropdownModule ,FormsModule],
+      templateUrl: './location-security-table.component.html',
   styleUrl: './location-security-table.component.scss'
 })
 export class LocationSecurityTableComponent {
@@ -51,6 +55,15 @@ export class LocationSecurityTableComponent {
     { label: 'Available', value: true, severity: 'success' },
     { label: 'Away', value: false, severity: 'warning' }
   ];
+
+  timePeriods: TimePeriod[] = [
+    { label: 'Daily', value: 1 },
+    { label: 'Weekly', value: 7 },
+    { label: 'Monthly', value: 30 }
+  ];
+  selectedTimePeriod: TimePeriod = this.timePeriods[1];  // Default to Daily
+
+
   constructor(private http: HttpClient) {
 
 
@@ -63,29 +76,58 @@ export class LocationSecurityTableComponent {
 
   ngOnInit() {
 
-          this.fetchlbTable();
-
+    this.selectedTimePeriod = this.timePeriods[0];  // Set to Daily
+    console.log('Initial selected period:', this.selectedTimePeriod);
+    this.fetchlbTable();
      
   }
 
-  fetchlbTable() {
-    this.http
+  // fetchlbTable() {
+  //   this.http
 
-      .get<ApiResponse>('https://localhost:7121/Statistics/GetSecurityStatistics/security')
+  //     .get<ApiResponse>('https://localhost:7121/Statistics/GetSecurityStatistics/security')
+  //     .subscribe((res) => {
+  //       console.log(res);
+  //       this.lbSecurityTables=res.$values.map(value=>({
+  //         location:value.location,
+  //         securityFirstName:value.securityFirstName, 
+  //         status:value.status, 
+  //         phoneNumber:value.phoneNumber, 
+  //         visitorsApproved:value.visitorsApproved
+        
+  //       }));
+  //       this.filteredLbsecurityTables=[...this.lbSecurityTables]
+  //     });
+  // }
+  fetchlbTable() {
+    console.log('Selected time period:', this.selectedTimePeriod);
+    const days = this.selectedTimePeriod.value;
+    let params = new HttpParams().set('days', days.toString());
+    console.log('Params:', params.toString());
+    
+
+    this.http
+      .get<ApiResponse>('https://localhost:7121/Statistics/GetSecurityStatistics/security', { params })
       .subscribe((res) => {
         console.log(res);
-        this.lbSecurityTables=res.$values.map(value=>({
-          location:value.location,
-          securityFirstName:value.securityFirstName, 
-          status:value.status, 
-          phoneNumber:value.phoneNumber, 
-          visitorsApproved:value.visitorsApproved
-        
+        this.lbSecurityTables = res.$values.map(value => ({
+          location: value.location,
+          securityFirstName: value.securityFirstName,
+          status: value.status,
+          phoneNumber: value.phoneNumber,
+          visitorsApproved: value.visitorsApproved
         }));
-        this.filteredLbsecurityTables=[...this.lbSecurityTables]
+        this.filteredLbsecurityTables = [...this.lbSecurityTables];
       });
   }
-
+  onTimePeriodChange(event: any) {
+    console.log('Time period changed:', event.value);
+    this.selectedTimePeriod = event.value;
+    this.fetchlbTable();
+    
+    
+    this.fetchlbTable();
+  }
     onSearch(event: Event) {
       const searchTerm = (event.target as HTMLInputElement).value.toLowerCase();
       this.lbSecurityTables = this.filteredLbsecurityTables.filter(table => 
