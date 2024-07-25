@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy,ChangeDetectorRef,Component } from '@angular/core';
 import { FloatLabelModule } from 'primeng/floatlabel';
-import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+
 import { AutoCompleteCompleteEvent, AutoCompleteModule, AutoCompleteSelectEvent } from 'primeng/autocomplete';
 import { NgClass, NgFor, NgIf } from '@angular/common';
-import { Router, RouterLink } from '@angular/router';
+
 import { DataserviceService } from "../../../core/services/VisitorFormServices/dataservice.service"
 import { Purpose } from "../../../core/models/purpose.interface"
-import { Device } from '../../../core/models/device.interface';
+import { GetIdAndName  } from '../../../core/models/getIdAndName.interface';
 import {CustomKeyboardEvent} from '../../../core/models/custom-keyboard-event.interface.'
 import { DeviceChangeEvent } from '../../../core/models/VisitorFormModels/IDeviceChangeEvent';
 import { PurposeChangeEvent } from '../../../core/models/VisitorFormModels/IPurposeChangeEvent';
@@ -14,13 +14,15 @@ import {  Subject } from 'rxjs';
 import { WebcamImage, WebcamModule } from 'ngx-webcam';
 import { MatDialog } from '@angular/material/dialog';
 import { CapturePhotoDialogComponentComponent } from '../capture-photo-dialog-component/capture-photo-dialog-component.component';
+import { Router, RouterLink } from '@angular/router';
+import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
 
 
 @Component({
   selector: 'app-form-component',
   standalone: true,
-  imports: [RouterLink,NgFor,NgIf,FormsModule,ReactiveFormsModule,NgClass,  AutoCompleteModule,FloatLabelModule,WebcamModule],
+  imports: [RouterLink,NgFor,NgIf,FormsModule,ReactiveFormsModule,NgClass,AutoCompleteModule],
   templateUrl: './form-component.component.html',
   styleUrl: './form-component.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -38,9 +40,9 @@ export class FormComponentComponent {
   filteredPurposes: Purpose[] = [];
   selectedPurpose: Purpose | undefined ;
 
-  Devices: Device[] = [];
-  filteredDevice: Device[] = [];
-  selectedDevice: Device | null = null;
+  Devices: GetIdAndName [] = [];
+  filteredDevice: GetIdAndName [] = [];
+  selectedDevice: GetIdAndName  | null = null;
 
   permissionStatus : string="";
   camData:any = null;
@@ -108,12 +110,12 @@ openDialog(): void {
 
 
 
-  ngOnInit() {   
-   this.loadContactPerson();
-   this.loadVisitPurpose();
-   this.loadDevicesCarried();
+  // ngOnInit() {   
+  //  this.loadContactPerson();
+  //  this.loadVisitPurpose();
+  //  this.loadDevicesCarried();
  
-  }
+  // }
 
 
  loadContactPerson(){
@@ -151,7 +153,7 @@ openDialog(): void {
     
     loadDevicesCarried(){
       this.apiService.getDevice()
-      .subscribe((response: Device[]) => {
+      .subscribe((response: GetIdAndName []) => {
         console.log("API Response:", response);
       this.Devices = response;
     });
@@ -159,11 +161,11 @@ openDialog(): void {
       filterItem(event: AutoCompleteCompleteEvent) {
         let query = event.query.toLowerCase();
         this.filteredDevice = this.Devices
-        .filter(Device => Device.deviceName.toLowerCase().includes(query))
+        .filter(Device => Device.name.toLowerCase().includes(query))
         .sort((a, b) => {
-            if (a.deviceName.toLowerCase() === 'none') return 1;
-            if (b.deviceName.toLowerCase() === 'none') return -1;
-            return a.deviceName.localeCompare(b.deviceName);
+            if (a.name.toLowerCase() === 'none') return 1;
+            if (b.name.toLowerCase() === 'none') return -1;
+            return a.name.localeCompare(b.name);
         });
          console.log(this.filteredDevice);
          
@@ -237,7 +239,7 @@ openDialog(): void {
         }
     
         // Check if the entered device exists in the list
-        const existingDevice = this.Devices.find(device => device.deviceName.toLowerCase() === value.toLowerCase());
+        const existingDevice = this.Devices.find(device => device.name.toLowerCase() === value.toLowerCase());
         console.log("existing device on blur", existingDevice);
     
         // Get the form group for the current item
@@ -246,14 +248,14 @@ openDialog(): void {
         if (!existingDevice) {
             // Device does not exist in the list, add it via API
             this.apiService.addDevice({ deviceName: value }).subscribe(
-                (response: Device) => {
+                (response: GetIdAndName ) => {
                     console.log("Device added successfully:", response);
     
                     // Update local devices list and form values
-                    this.Devices.push({ deviceId: response.deviceId, deviceName: value });
+                    this.Devices.push({ id: response.id, name: value });
                     currentItem.patchValue({
                         selectedDevice: value,
-                        selectedDeviceId: response.deviceId, // Update form with the new device ID
+                        selectedDeviceId: response.id, // Update form with the new device ID
                         showItemOtherInput: true // Set to true to show the serial number input
                     });
     
