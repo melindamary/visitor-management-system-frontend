@@ -30,7 +30,7 @@
         <div class="col input-col  ">
          <mat-form-field appearance="outline" class="smallInput">
             <mat-label>Select a Location</mat-label>
-            <mat-select [(value)]="selectedRole"formControlName="LocationId" (selectionChange)="onLocationChange($event.value)">
+            <mat-select [(value)]="selectedRole" formControlName="LocationId" (selectionChange)="onLocationChange($event.value)">
               <mat-option *ngFor="let location of Locations" [value]="location.id" style="color: black;">
                 {{ location.name }}
               </mat-option>
@@ -144,13 +144,21 @@
     <div class="col input-col">
       <mat-form-field appearance="outline" class="smallInput">
         <mat-label>Re-Enter the Password</mat-label>
-        <input matInput [type]="hide() ? 'password'  :'text'" />
+        <input matInput [type]="hide() ? 'password'  :'text'" formControlName="confirmPassword" />
         <button mat-icon-button matSuffix (click)="clickEvent($event)" [attr.aria-label]="'Hide password'"
           [attr.aria-pressed]="hide()">
           <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
       </mat-form-field>
     </div>
+
+   
+  </div>
+  <div class="row">
+    <div class="col label-col"></div>
+    <div class="col input-col">
+    <div *ngIf="addUserForm.errors?.['mismatch']">Passwords do not match</div>
+  </div>
   </div>
 </div>
 <div class="buttonRow">
