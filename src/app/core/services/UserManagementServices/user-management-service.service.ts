@@ -14,14 +14,14 @@ export class UserManagementServiceService {
   constructor(private http:HttpClient) { }
 
   getRoleIdAndName(): Observable<GetIdAndName[]> {
-    const apiUrl = "https://localhost:7121/Role/GetRoleIdAndName/get-role-id-name";
+    const apiUrl = "http://localhost:5292/Role/GetRoleIdAndName/get-role-id-name";
     return this.http.get<{ $id: string; $values: GetIdAndName[] }>(apiUrl).pipe(
       map(response => response.$values)
     );
   }
 
   getLocationIdAndName(): Observable<GetIdAndName[]> {
-    const apiUrl = "https://localhost:7121/Location/GetLocationIdAndName";
+    const apiUrl = "http://localhost:5292/Location/GetLocationIdAndName";
     return this.http.get<{ $id: string; $values: GetIdAndName[] }>(apiUrl).pipe(
       map(response => response.$values)
     );
@@ -29,7 +29,7 @@ export class UserManagementServiceService {
 
   postNewUser(newUser:AddNewUser):Observable<AddNewUser>{
     console.log("new user details",newUser);    
-    const apiUrl="https://localhost:7121/User/CreateNewUser";
+    const apiUrl="http://localhost:5292/User/CreateNewUser";
      return this.http.post<AddNewUser>(apiUrl,newUser);
 
   }
