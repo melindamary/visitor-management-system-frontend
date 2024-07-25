@@ -1,4 +1,4 @@
-import { Routes } from '@angular/router';
+
 import { LocationChartComponent } from './ui/location-chart/location-chart.component';
 import { LocationVisitortableComponent } from './ui/location-visitortable/location-visitortable.component';
 import { PurposePieComponent } from './ui/purpose-pie/purpose-pie.component';
@@ -15,6 +15,8 @@ import { VisitorFormComponent } from './pages/visitor-form/visitor-form.componen
 import { AuthSecurityGuard } from './core/guard/auth-security.guard';
 import { AuthAceGuard } from './core/guard/auth-ace.guard';
 import { AccessGuard } from './core/guard/access.guard';
+import { AdminAddUserComponent } from './pages/admin-add-user/admin-add-user.component';
+import { Routes } from '@angular/router';
 
 export const routes: Routes = [
     {
@@ -53,11 +55,16 @@ export const routes: Routes = [
         pathMatch: "full" 
     },
     {
+        path:'adduser',component:AdminAddUserComponent
+    },
+    // {
+    //     path:'visitorform',component:VisitorFormComponent
+    // },
+    {
         path:"**",
         redirectTo: "/dashboard", 
     },
-    {
-        path:'visitorform',component:VisitorFormComponent
-    }
+    
+    
 
 ];

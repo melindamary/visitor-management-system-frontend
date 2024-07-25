@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Purpose } from '../../models/purpose.interface';
 import { map } from 'rxjs/operators';
-import { Device } from '../../models/device.interface';
+import { GetIdAndName  } from '../../models/getIdAndName.interface';
 
 
 @Injectable({
@@ -30,9 +30,9 @@ export class DataserviceService {
     );
   }
       
-  getDevice():Observable<Device[]>{
+  getDevice():Observable<GetIdAndName []>{
     const apiUrl="https://localhost:7121/Device/GetItems/get-device-id-name";
-    return this.http.get<{ $id: string, $values: Device[] }>(apiUrl).pipe(
+    return this.http.get<{ $id: string, $values: GetIdAndName [] }>(apiUrl).pipe(
       map(response => response.$values)
     );
    }
@@ -50,8 +50,8 @@ addPurpose(purpose: string): Observable<Purpose> {
 
   return this.http.post<Purpose>(apiUrl, { purposeName: purpose });
 }
-addDevice(device: { deviceName: string }): Observable<Device> {
-  return this.http.post<Device>('https://localhost:7121/Device/PostDevice', device);
+addDevice(device: { deviceName: string }): Observable<GetIdAndName > {
+  return this.http.post<GetIdAndName >('https://localhost:7121/Device/PostDevice', device);
 }
    
    

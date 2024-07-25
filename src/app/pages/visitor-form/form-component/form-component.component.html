@@ -28,7 +28,7 @@
       <div class="col">
           <label class="inputLabel">Whom to Meet<span class="astrik">*</span></label>
           <div class="form-floating largeInput">
-            <p-floatLabel>
+         
               <p-autoComplete 
   class="largeInput"
  name="personInContact"
@@ -41,7 +41,7 @@
   required></p-autoComplete>
 
               <label for="autocomplete-input">Enter the name of the host</label>
-          </p-floatLabel>  
+        
           <div *ngIf="addvisitorForm.get('personInContact')?.hasError('required')" class="astrik">
             *Name of the host is required.
           </div> 
