@@ -31,6 +31,8 @@ export class AdminAddUserComponent {
   Roles: GetIdAndName[]=[];
   Locations: GetIdAndName[]=[];
   addUserForm !: FormGroup  
+  hidePassword: boolean = true;
+  hideConfirmPassword: boolean = true;
  
 /**
  *
@@ -116,12 +118,13 @@ loadLocationIdAndName(): void {
 
 
 
-  hide = signal(true);
-  clickEvent(event: MouseEvent) {
-    this.hide.set(!this.hide());
-    event.stopPropagation();
+  toggleHidePassword(): void {
+    this.hidePassword = !this.hidePassword;
   }
 
+  toggleHideConfirmPassword(): void {
+    this.hideConfirmPassword = !this.hideConfirmPassword;
+  }
  
   onSubmit() {
     if (this.addUserForm.valid) {
