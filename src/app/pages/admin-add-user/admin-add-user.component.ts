@@ -9,13 +9,15 @@ import { AdminButtonSubmitComponent } from "../../ui/admin-button-submit/admin-b
 import { AdminButtonCancelComponent } from "../../ui/admin-button-cancel/admin-button-cancel.component";
 import { UserManagementServiceService } from '../../core/services/UserManagementServices/user-management-service.service';
 import { GetIdAndName } from '../../core/models/getIdAndName.interface';
-import { DatePipe, NgFor } from '@angular/common';
+import { DatePipe, NgFor, NgIf } from '@angular/common';
 import {  FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { passwordMatchValidator } from './custom-validators';
+import { AddNewUser } from '../../core/models/addNewUser.interface';
 
 @Component({
   selector: 'app-admin-add-user',
   standalone: true,
-  imports: [MatInputModule, MatFormFieldModule, MatSelectModule,NgFor,ReactiveFormsModule,
+  imports: [MatInputModule, MatFormFieldModule, MatSelectModule,NgFor,ReactiveFormsModule,NgIf,
      MatDatepickerModule, MatButtonModule, MatIconModule, AdminButtonSubmitComponent, AdminButtonCancelComponent],
   templateUrl: './admin-add-user.component.html',
   styleUrl: './admin-add-user.component.scss',
@@ -41,22 +43,31 @@ constructor(private apiService: UserManagementServiceService,private datePipe: D
 }
 initializeForm() {
   
-  this.addUserForm = new FormGroup({
-    RoleId: new FormControl('', [Validators.required]),
-    LocationId: new FormControl('', [Validators.required]),
-    Date: new FormControl('', [Validators.required]),
-    FirstName: new FormControl('', [Validators.required]),
-    LastName: new FormControl('', [Validators.required]),
-    PhoneNumber: new FormControl('', [Validators.required]),
-    Address: new FormControl('', [Validators.required]),
-    username: new FormControl('', [Validators.required, Validators.minLength(4)]),
-    password: new FormControl('', [Validators.required, Validators.minLength(4)])
+  const currentDate = new Date();
+    const transformedDate = this.datePipe.transform(currentDate, 'yyyy-MM-ddTHH:mm:ss.SSSZ');
+
+    this.addUserForm = new FormGroup({
+      RoleId: new FormControl('', [Validators.required]),
+      LocationId: new FormControl('', [Validators.required]),
+      Date: new FormControl(transformedDate, [Validators.required]),
+      FirstName: new FormControl('', [Validators.required]),
+      LastName: new FormControl('', [Validators.required]),
+      PhoneNumber: new FormControl('', [Validators.required]),
+      Address: new FormControl('', [Validators.required]),
+      username: new FormControl('', [Validators.required, Validators.minLength(4)]),
+      password: new FormControl('', [Validators.required, Validators.minLength(4)]),        
+    confirmPassword: new FormControl('', [Validators.required, Validators.minLength(4)])
+  },{
+    validators: passwordMatchValidator('password', 'confirmPassword')
   });
-
- 
-
 }
-
+passwordMatchValidator(formGroup: FormGroup) {
+  const password = formGroup.get('password');
+  const confirmPassword = formGroup.get('confirmPassword');
+  return password && confirmPassword && password.value === confirmPassword.value
+    ? null
+    : { 'mismatch': true };
+}
 
 ngOnInit(){
 this.loadRoleIdAndName();
@@ -112,8 +123,29 @@ loadLocationIdAndName(): void {
   }
 
  
- onSubmit(){
-console.log(this.addUserForm.value);
+  onSubmit() {
+    if (this.addUserForm.valid) {
+      const formValues = this.addUserForm.value;
+      const dto: AddNewUser = {
+        userName: formValues.username,
+        password: formValues.password,
+        validFrom: formValues.Date,
+        officeLocationId: formValues.LocationId,
+        firstName: formValues.FirstName,
+        lastName: formValues.LastName,
+        phone: formValues.PhoneNumber,
+        address: formValues.Address,
+        roleId: formValues.RoleId
+      };
 
- }
+      this.apiService.postNewUser(dto).subscribe(
+        response => {
+          console.log('User created successfully', response);
+        },
+        error => {
+          console.error('Error creating user', error);
+        }
+      );
+    }
+  }
 }
