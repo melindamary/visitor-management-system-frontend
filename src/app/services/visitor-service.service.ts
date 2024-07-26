@@ -10,7 +10,14 @@ import {BehaviorSubject } from 'rxjs';
 export class SignalRService {
   private hubConnection: signalR.HubConnection;
   private visitorCountSource = new BehaviorSubject<number>(9); // Observable to track visitor count
+  private scheduledVisitorsSource = new BehaviorSubject<number>(0); // Initialize with 0
+  private totalVisitorsSource = new BehaviorSubject<number>(0); // Initialize with 0
+  
+  
+  
   visitorCount$ = this.visitorCountSource.asObservable(); // Expose observable
+  scheduledVisitors$ = this.scheduledVisitorsSource.asObservable(); // Expose observable
+  totalVisitors$ = this.totalVisitorsSource.asObservable(); // Expose observable
 
   constructor() {
     this.hubConnection = new signalR.HubConnectionBuilder()
@@ -21,6 +28,15 @@ export class SignalRService {
         console.log(`Updated visitor count: ${count}`);
 
   
+      });
+      this.hubConnection.on('ReceiveScheduledVisitorsCount', (count: number) => {
+        this.scheduledVisitorsSource.next(count); // Update the observable
+        console.log(`Updated scheduled visitors count: ${count}`);
+      });
+  
+      this.hubConnection.on('ReceiveTotalVisitorsCount', (count: number) => {
+        this.totalVisitorsSource.next(count); // Update the observable
+        console.log(`Updated total visitors count: ${count}`);
       });
     this.hubConnection.start()     
      .then(() => {
@@ -34,8 +50,12 @@ export class SignalRService {
   private requestInitialCount() {
     this.hubConnection.invoke('SendInitialVisitorCount')
       .catch(err => console.error('Error requesting initial visitor count:', err));
-      setInterval(() => {}, 1000);
 
+      this.hubConnection.invoke('SendInitialScheduledVisitorsCount')
+      .catch(err => console.error('Error requesting initial scheduled visitors count:', err));
+
+    this.hubConnection.invoke('SendInitialTotalVisitorsCount')
+      .catch(err => console.error('Error requesting initial total visitors count:', err));
   }
   ngOnDestroy() {
     this.hubConnection.stop()

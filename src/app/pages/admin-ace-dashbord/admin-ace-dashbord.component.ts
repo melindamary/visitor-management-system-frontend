@@ -26,6 +26,12 @@ export class AdminACEDashbordComponent {
     this.signalRService.visitorCount$.subscribe(count => {
       this.visitorCount = count;
     });
+    this.signalRService.scheduledVisitors$.subscribe(count => {
+      this.ScheduledVisitors = count;
+    });
+    this.signalRService.totalVisitors$.subscribe(count => {
+      this.totalVisitors = count;
+    });
   }
   
 

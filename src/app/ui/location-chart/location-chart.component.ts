@@ -121,7 +121,7 @@ fetchChartData() {
       labels: labels,
       datasets: [
         {
-          label: 'Passes Generated',
+          label: 'Forms Submitted',
           backgroundColor: '#000',
           borderColor: '#000',
           data: passesGenerated
