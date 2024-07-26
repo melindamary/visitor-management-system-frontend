@@ -1,6 +1,6 @@
 export interface VisitorLogDTO {
-  visitorId: number;
-  visitorName: string;
+  id: number;
+  name: string;
   phone: string;
   purposeName: string;
   checkInTime: string | null;

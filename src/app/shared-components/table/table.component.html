@@ -1,0 +1,25 @@
+<p-table [value]="dataSource" styleClass="p-datatable-striped" [rows]="rows" [paginator]="true">
+    <ng-container *ngFor="let col of columnsToDisplay">
+      <ng-template pTemplate="header">
+        <tr>
+          <th *ngFor="let col of columnsToDisplay">{{ col.header }}</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData>
+        <tr>
+          <td *ngFor="let col of columnsToDisplay">
+            <span *ngIf="col.field !== 'actions'">{{ rowData[col.field] }}</span>
+            <ng-container *ngIf="col.field === 'actions'">
+              <ng-container *ngTemplateOutlet="actionsTemplate; context: { $implicit: rowData }"></ng-container>
+            </ng-container>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="summary">
+        <ng-container *ngIf="summaryTemplate">
+          <ng-container *ngTemplateOutlet="summaryTemplate"></ng-container>
+        </ng-container>
+      </ng-template>
+    </ng-container>
+  </p-table>
+  

@@ -57,7 +57,7 @@
     </ng-template>
     <div class="flex align-items-center gap-3 mb-2">
       <label class="font-semibold w-6rem">Visitor Name</label>
-      <input pInputText [(ngModel)]="selectedVisitor.visitorName" id="visitorName" class="flex-auto" readonly [disabled]="true" />
+      <input pInputText [(ngModel)]="selectedVisitor.name" id="name" class="flex-auto" readonly [disabled]="true" />
     </div>
     <div class="flex align-items-center gap-3 mb-4">
       <label for="cardNumber" class="font-semibold w-6rem">Visitor Pass Code</label>
@@ -89,7 +89,7 @@
           </div>
           <div class="flex align-items-center mb-2">
             <div class="font-bold w-6rem mb-2">Name:</div>
-            <div>{{ selectedVisitor.visitorName }}</div>
+            <div>{{ selectedVisitor.name }}</div>
           </div>
           <div class="flex align-items-center mb-2">
             <div class="font-bold w-8rem mb-2">Phone Number:</div>
