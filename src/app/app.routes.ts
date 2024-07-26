@@ -58,6 +58,9 @@ export const routes: Routes = [
     {
         path:'adduser',component:AdminAddUserComponent
     },
+    {
+        path:'addrole',component:EditaddcomponetComponent
+    },
     // {
     //     path:'visitorform',component:VisitorFormComponent
     // },

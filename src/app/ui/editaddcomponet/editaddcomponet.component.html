@@ -9,8 +9,8 @@
       <div formGroupName="permissions">
         <h3>Role Permissions</h3>
         <div *ngFor="let page of pages">
-          <input type="checkbox" [id]="page.pageId" [formControlName]="page.pageId.toString()">
-          <label [for]="page.pageId">{{page.pageName}}</label>
+          <input type="checkbox" [id]="page.id.toString()" [formControlName]="page.id.toString()">
+          <label [for]="page.id.toString()">{{page.name}}</label>
         </div>
       </div>
       <div class="button-group">

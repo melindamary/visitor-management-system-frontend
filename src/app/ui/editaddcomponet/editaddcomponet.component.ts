@@ -25,57 +25,57 @@ export class EditaddcomponetComponent {
   // pages:any;
 
   ngOnInit() {
-    this.roleService.getPages().subscribe(
-      (response:PagesResponse) => {
-        this.pages = response.$values;
-        const permissionsGroup: { [key: number]: [boolean] } = {};
-        console.log(this.pages);
+    this.roleService.getPages().subscribe({
+      next: (response: PagesResponse) => {
+        console.log('Role created successfully', response);
 
-        this.pages.forEach(page => {
-          permissionsGroup[page.pageId] = [false];
-          
+        if (response && response.$values) {
+          this.pages = response.$values;
+          const permissionsGroup: { [key: number]: [boolean] } = {};
+
+          this.pages.forEach(page => {
+            if (page.id != null) {
+              permissionsGroup[page.id] = [false];
+            }
+          });
+
+          this.roleForm = this.fb.group({
+            role: [''],
+            permissions: this.fb.group(permissionsGroup)
+          });
+        } else {
+          console.error('Invalid response format:', response);
         }
-      );
 
-        this.roleForm = this.fb.group({
-          role: [''],
-          permissions: this.fb.group(permissionsGroup)
-        });
       },
-      error => console.error('Error fetching pages:', error)
-    );
-
+      error: error => console.error('Error fetching pages:', error)
+    });
   }
   createRole() {
     const roleData = {
       Name: this.roleForm.get('role')?.value,
       CreatedBy: 1, // Replace with actual user ID
-      UpdatedBy: 1 ,// Replace with actual user ID
+      UpdatedBy: 1, // Replace with actual user ID
       Permissions: this.roleForm.get('permissions')?.value // Include permissions data
-
     };
 
-    this.roleService.createRole(roleData).subscribe(
-      (response: any) => {
+    this.roleService.createRole(roleData).subscribe({
+      next: (response: any) => {
         console.log('Role created successfully', response);
-        console.log('Role created successfully', response.role.$id);
-        
-        if (response && response.role.$id) {
+
+        if (response && response.id) {
           const pageControls = Object.entries(roleData.Permissions)
             .filter(([_, isSelected]) => isSelected)
             .map(([pageId, _]) => ({ pageId: parseInt(pageId) }));
-        
-          this.createPageControls(response.role.roleId, pageControls);
+
+          this.createPageControls(response.id, pageControls);
         } else {
           console.error('Invalid response from createRole:', response);
         }
-      },   
-         (error:any) => {
-          console.error('Error creating role:', error);
-        }
-    );
+      },
+      error: error => console.error('Error creating role:', error)
+    });
   }
-
 
         // if (response && response.role.$id) {
         //   this.createPageControls(response.role.$id,roleData.Permissions);

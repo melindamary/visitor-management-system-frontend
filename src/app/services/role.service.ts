@@ -19,14 +19,14 @@ export class RoleService {
     return this.http.get<number>(this.apiUrl);  
   }
   getPages(): Observable<any> {
-    return this.http.get<any>('https://localhost:7121/Page/GetPages');
+    return this.http.get<any>('https://localhost:7121/AdminRole/GetPages/get-pages');
   }
 
   createRole(roleData: any): Observable<any> {
-    return this.http.post<any>(`https://localhost:7121/Role/PostRole`, roleData);
+    return this.http.post<any>(`https://localhost:7121/AdminRole/PostRole`, roleData);
   }
   createPageControls(roleId: number, pageControls: any): Observable<any> {
-    return this.http.post(`https://localhost:7121/PageRole/CreatePageControls?roleId=${roleId}`, pageControls);
+    return this.http.post(`https://localhost:7121/AdminRole/CreatePageControls?roleId=${roleId}`, pageControls);
   }
 }
 
