@@ -9,7 +9,6 @@ import { NgIf } from '@angular/common';
   selector: 'app-login-form',
   standalone: true,
   imports: [ReactiveFormsModule, MatIcon, RouterModule, NgIf],
-  // eactiveFormsModule, MatIcon, RouterModule, NgIf
   templateUrl: './login-form.component.html',
   styleUrl: './login-form.component.scss'
 })
@@ -44,7 +43,6 @@ export class LoginFormComponent {
     },(error) => {
       this.errorMessage = "Invalid username or password. Please try again."; 
     });
-   
   }
   }
 
