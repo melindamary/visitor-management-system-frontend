@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map, Observable, throwError } from 'rxjs';
-import { APIResponse } from '../../models/api-response';
-import { VisitorPassCodeDTO } from '../../models/visitor-pass-code-dto';
+import { APIResponse } from '../../models/api-response.interface';
+import { VisitorPassCodeDTO } from '../../models/visitor-pass-code.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +24,7 @@ export class VisitorLogService {
               ...response.result,
               upcomingVisitors: response.result.upcomingVisitors.$values,
               activeVisitors: response.result.activeVisitors.$values,
+              checkedOutVisitors: response.result.checkedOutVisitors.$values,
               visitorsToday: response.result.visitorsToday.$values,
             }
           };

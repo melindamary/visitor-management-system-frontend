@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { VisitorLogDTO } from '../../../../core/models/visitor-log-dto';
+import { VisitorLogDTO } from '../../../../core/models/visitor-log.interface';
 import { VisitorLogService } from '../../../../core/services/visitorLogServices/visitor-log.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { CommonModule, DatePipe } from '@angular/common';
-import { APIResponse } from '../../../../core/models/api-response';
-import { VisitorPassCodeDTO } from '../../../../core/models/visitor-pass-code-dto';
+import { APIResponse } from '../../../../core/models/api-response.interface';
+import { VisitorPassCodeDTO } from '../../../../core/models/visitor-pass-code.interface';
 import { TableModule } from 'primeng/table';
 import { DialogModule } from 'primeng/dialog';
 import { RippleModule } from 'primeng/ripple';
@@ -45,8 +45,8 @@ export class VisitorLogTableComponent {
   cardNumber: string = '';
 
   columnsUpcoming = [
-    { field: 'visitorId', header: 'Visitor Id' },
-    { field: 'visitorName', header: 'Visitor Name' },
+    { field: 'id', header: 'Visitor Id' },
+    { field: 'name', header: 'Visitor Name' },
     { field: 'phone', header: 'Phone Number' },
     { field: 'purposeName', header: 'Purpose of Visit' },
     { field: 'actions', header: 'Actions' }
@@ -54,7 +54,7 @@ export class VisitorLogTableComponent {
 
   columnsActive = [
     { field: 'visitorPassCode', header: 'Visitor Pass Code' },
-    { field: 'visitorName', header: 'Visitor Name' },
+    { field: 'name', header: 'Visitor Name' },
     { field: 'phone', header: 'Phone Number' },
     { field: 'purposeName', header: 'Purpose of Visit' },
     { field: 'checkInTime', header: 'Check-In Time' , type: 'date'},
@@ -119,7 +119,7 @@ export class VisitorLogTableComponent {
         visitorPassCode: this.cardNumber
       };
 
-      this.visitorLogService.updateCheckInTimeAndCardNumber(this.selectedVisitor.visitorId, updateVisitorPassCode).subscribe({
+      this.visitorLogService.updateCheckInTimeAndCardNumber(this.selectedVisitor.id, updateVisitorPassCode).subscribe({
         next: (response: APIResponse) => {
           if (response.isSuccess) {
             this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Check-in time updated successfully', life: 3000 });
@@ -151,7 +151,7 @@ export class VisitorLogTableComponent {
 
   checkOutVisitor(visitor: VisitorLogDTO): void {
     this.confirmationService.confirm({
-      message: `Are you sure you want to check out ${visitor.visitorName} with card number ${visitor.visitorPassCode}?`,
+      message: `Are you sure you want to check out ${visitor.name} with card number ${visitor.visitorPassCode}?`,
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
       acceptLabel: 'Yes',
@@ -161,10 +161,10 @@ export class VisitorLogTableComponent {
       acceptButtonStyleClass: 'custom-accept-button',
       rejectButtonStyleClass: 'custom-reject-button',
       accept: () => {
-        this.visitorLogService.updateCheckOutTime(visitor.visitorId).subscribe({
+        this.visitorLogService.updateCheckOutTime(visitor.id).subscribe({
           next: (response: APIResponse) => {
             if (response.isSuccess) {
-              // this.activeVisitors = this.activeVisitors.filter(v => v.visitorId !== visitor.visitorId);
+              // this.activeVisitors = this.activeVisitors.filter(v => v.id !== visitor.id);
               this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Visitor checked out successfully', life: 3000 });
               this.loadVisitorLogToday();
             } else {

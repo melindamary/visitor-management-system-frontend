@@ -1,0 +1,46 @@
+<p-dialog header="Visitor Details" [(visible)]="visible" [modal]="true" [style]="{ width: '40vw' }" styleClass="p-fluid" (onHide)="onDialogHide()">
+  <ng-template pTemplate="header">
+    <div class="flex align-items-center gap-2">
+      <span class="font-bold">Visitor Details</span>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="content">
+    <div *ngIf="visitor">
+      <div class="flex flex-column align-items-start mb-4">
+        <div class="flex align-items-center mb-2">
+          <div class="font-bold w-6rem">Photo:</div>
+          <img *ngIf="visitor.photoBase64" [src]="'data:image/jpeg;base64,' + visitor.photoBase64" alt="Visitor Image" width="50%" class="ml-2" />
+          <p *ngIf="!visitor.photoBase64">No photo available</p>
+        </div>
+        <div *ngIf="currentTab === 'active'" class="flex align-items-center mb-2">
+          <div class="font-bold w-9rem">Visitor Pass Code:</div>
+          <div>{{ visitor.visitorPassCode }}</div>
+        </div>
+        <div class="flex align-items-center mb-2">
+          <div class="font-bold w-6rem mb-2">Name:</div>
+          <div>{{ visitor.name }}</div>
+        </div>
+        <div class="flex align-items-center mb-2">
+          <div class="font-bold w-8rem mb-2">Phone Number:</div>
+          <div>{{ visitor.phone }}</div>
+        </div>
+        <div class="flex align-items-center mb-2">
+          <div class="font-bold w-8rem mb-2">Purpose of Visit:</div>
+          <div>{{ visitor.purposeName }}</div>
+        </div>
+        <div class="flex align-items-center mb-2">
+          <div class="font-bold w-8rem mb-2">Whom to Meet:</div>
+          <div>{{ visitor.hostName }}</div>
+        </div>
+        <div *ngIf="currentTab === 'active'" class="flex align-items-center mb-2">
+          <div class="font-bold w-8rem mb-2">Check-In Time:</div>
+          <div>{{ visitor.checkInTime }}</div>
+        </div>
+        <div class="flex align-items-center mb-2">
+          <div class="font-bold w-8rem">Device Details:</div>
+          <div>{{ visitor.deviceName }}</div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</p-dialog>

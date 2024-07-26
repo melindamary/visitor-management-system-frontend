@@ -1,0 +1,29 @@
+<div class="tile-container">
+    <app-visitor-log-tiles title="Active Visitors" [content]="activeVisitorsCount" backgroundColor="#896CC7"></app-visitor-log-tiles>
+    <app-visitor-log-tiles title="Total Visitors" [content]="totalVisitorsCount" backgroundColor="#FF858C"></app-visitor-log-tiles>
+    <app-visitor-log-tiles title="Checked Out Visitors" [content]="checkedOutVisitorsCount" backgroundColor="#952991"></app-visitor-log-tiles>
+</div>
+
+<p-tabView (onChange)="onTabChange($event)">
+  <p-tabPanel header="Upcoming Visitors"></p-tabPanel>
+  <p-tabPanel header="Active Visitors"></p-tabPanel>
+  <p-tabPanel header="Checked Out Visitors"></p-tabPanel>
+</p-tabView>
+
+<app-table [dataSource]="visitorDataSource" [columnsToDisplay]="visitorColumns" [rows]="5" [totalItems]="totalItems"
+         [actionsTemplate]="actionsTemplate" [summaryTemplate]="summaryTemplate">
+<ng-template #actionsTemplate let-rowData>
+  <p-button icon="pi pi-eye" [rounded]="true" [text]="true" (click)="viewVisitor(rowData)"></p-button>
+  <p-button *ngIf="currentTab === 'upcoming'" icon="pi pi-check" [rounded]="true" [text]="true" severity="success" (click)="checkInVisitor(rowData)"></p-button>
+  <p-button *ngIf="currentTab === 'active'" icon="pi pi-sign-out" [rounded]="true" [text]="true" severity="danger" (click)="checkOutVisitor(rowData)"></p-button>
+</ng-template>
+<ng-template #summaryTemplate>
+  <div class="flex align-items-center justify-content-between">
+    In total there are {{ totalItems }} visitors.
+  </div>
+</ng-template>
+</app-table>
+
+<app-visitor-details-dialog [(visible)]="visibleDetailsDialog" [visitor]="selectedVisitor" [currentTab]="currentTab" (visibleChange)="handleDialogVisibilityChange($event)"></app-visitor-details-dialog>
+
+<p-confirmDialog [style]="{ width: '450px' }" />
