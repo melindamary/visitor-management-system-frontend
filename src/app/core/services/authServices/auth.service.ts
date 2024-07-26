@@ -24,7 +24,14 @@ export class AuthService {
     .pipe(tap((response:any) => {
       console.log("Result",response)
       if (isPlatformBrowser(this.platformId)) {
-        localStorage.setItem('authUser', response.result.username);
+        const authData = {
+          username: response.result.username,
+          token: response.result.token,
+          location: response.result.location,
+          role: response.result.role
+      };
+      
+      localStorage.setItem('authUser', JSON.stringify(authData));
       }
 
     }),
