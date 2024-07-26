@@ -17,6 +17,7 @@ import { AuthAceGuard } from './core/guard/auth-ace.guard';
 import { AccessGuard } from './core/guard/access.guard';
 import { AdminAddUserComponent } from './pages/admin-add-user/admin-add-user.component';
 import { Routes } from '@angular/router';
+import { ViewDetailsComponent } from './pages/reports/components/view-details/view-details.component';
 
 export const routes: Routes = [
     {
@@ -29,15 +30,26 @@ export const routes: Routes = [
             {path: "visitor-log", component: SecurityVisitorLogComponent, 
                canActivate: [AuthSecurityGuard]
             },
-            {path: "reports", component: ReportTableComponent,
+            {   path: "reports", component: ReportTableComponent,
                 canActivate: [AccessGuard],
+                // children: [
+                //     {path: "details", component: ViewDetailsComponent}
+                // ],
+                
             },
-           
+            {
+                path: "reports/details", component: ViewDetailsComponent,
+                canActivate: [AccessGuard],
+            }
             // {
             //     path:"admin-panel",
             //     canActivate: [authAdminGuard],
             // }
         ]
+    },
+    {
+        path:'details',
+        component: ViewDetailsComponent
     },
     { 
         path:'welcomepage',

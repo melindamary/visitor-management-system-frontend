@@ -7,7 +7,7 @@
     </div>
 
       <div class="input-container">
-        <mat-icon>account_circle</mat-icon>
+        <mat-icon>lock</mat-icon>
          <input formControlName="password" type="password" (focus)="clearError()" placeholder="Password">
        </div>
     <button class="login-btn" [disabled]="loginForm.invalid" type="submit" (click)="onSubmit()">Login</button>

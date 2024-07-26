@@ -1,25 +1,28 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
-// import { TableModule } from 'primeng/table';
 import { TableModule } from 'primeng/table';
-// import * as XLSX from 'xlsx'
 import * as XLSX from 'xlsx';
 import { CalendarModule } from 'primeng/calendar';
 import { FormsModule } from '@angular/forms';
-import { reports } from '../../../../../../public/data';
-import { Report, Column } from '../../../../core/models/report.interface';
+import {columns, customHeaders} from '../../../../../../public/report-table-columns';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TooltipModule } from 'primeng/tooltip';
+import { ReportService } from '../../../../core/services/reportServices/report.service';
+import { Router, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-report-table',
   standalone: true,
-  imports: [TableModule, CommonModule, ButtonModule, CalendarModule,FormsModule, ToolbarModule, TooltipModule],
+  imports: [TableModule, CommonModule, ButtonModule, 
+    CalendarModule,FormsModule, ToolbarModule, TooltipModule,
+    RouterOutlet],
   templateUrl: './report-table.component.html',
   styleUrl: './report-table.component.scss',
 })
 export class ReportTableComponent {
+
+  constructor(public reportService: ReportService, private router: Router){}
   selectedMonth: Date | undefined;
   selectedYear: Date | undefined;
   rangeDates: Date[] | undefined;
@@ -27,39 +30,22 @@ export class ReportTableComponent {
   filteredReports: any[] = [];
   startDate!: Date;
   endDate!: Date;
-  cols: Column[] = [
-    { field: 'name', header: 'Name', width: '15%' },
-    { field: 'phoneNumber', header: 'Phone Number', width: '8%' },
-    { field: 'visitDate', header: 'Visit Date', width: '9%' },
-    { field: 'officeLocation', header: 'Office Location', width: '12%' },
-    { field: 'visitPurpose', header: 'Visit Purpose', width: '10%' },
-    { field: 'hostName', header: 'Host Name', width: '11%' },
-    { field: 'onDutyStaff', header: 'On-duty Staff', width: '10%' },
-    { field: 'staffContactNumber', header: 'Staff Contact', width: '10%' },
-    { field: 'checkIn', header: 'Check-In', width: '8%' },
-    { field: 'checkOut', header: 'Check-Out', width: '14%' },
-  ];
-  customHeaders: { [key: string]: string } = {
-    slNo: 'Sl. No.',
-    name: 'Name',
-    phoneNumber: 'Phone Number',
-    visitDate: 'Visit Date',
-    officeLocation: 'Office Location',
-    visitPurpose: 'Visit Purpose',
-    hostName: 'Host Name',
-    onDutyStaff: 'On-duty Staff',
-    staffContactNumber: 'Staff Contact',
-    checkIn: 'Check-In',
-    checkOut: 'Check-Out',
-    // Add more field mappings as needed
-  };
+  reports: any[] = [];
+  cols: any[] = columns;
+  customHeaders: { [key: string]: string } = customHeaders;
+
+  async fetchReport():Promise<void>{
+    console.log("Entered Reports");
+    this.reports = await this.reportService.getReport();
+    this.filteredReports = this.reports;
+  }
 
   filterByMonth(): void {
     if (this.selectedMonth) {
       const selectedMonth = this.selectedMonth.getMonth(); // month is zero-based
       const selectedYear = this.selectedMonth.getFullYear();
 
-      this.filteredReports = reports.filter((report) => {
+      this.filteredReports = this.reports.filter((report) => {
         const reportDate = new Date(report.visitDate);
         return (
           reportDate.getMonth() === selectedMonth &&
@@ -67,7 +53,7 @@ export class ReportTableComponent {
         );
       });
     } else {
-      this.filteredReports = reports;
+      this.filteredReports = this.reports;
     }
   }
 
@@ -75,12 +61,12 @@ export class ReportTableComponent {
     if (this.selectedYear) {
       const selectedYear = this.selectedYear.getFullYear();
 
-      this.filteredReports = reports.filter((report) => {
+      this.filteredReports = this.reports.filter((report) => {
         const reportDate = new Date(report.visitDate);
         return reportDate.getFullYear() === selectedYear;
       });
     } else {
-      this.filteredReports = reports;
+      this.filteredReports = this.reports;
     }
   }
 
@@ -89,12 +75,12 @@ export class ReportTableComponent {
       const startDate = new Date(this.rangeDates[0]);
       const endDate = new Date(this.rangeDates[1]);
 
-      this.filteredReports = reports.filter((report) => {
+      this.filteredReports = this.reports.filter((report) => {
         const reportDate = new Date(report.visitDate); // Replace 'date' with your date field
         return reportDate >= startDate && reportDate <= endDate;
       });
     } else {
-      this.filteredReports = reports; // Show all reports if no date range is selected
+      this.filteredReports = this.reports; // Show all reports if no date range is selected
     }
   }
   
@@ -120,26 +106,27 @@ export class ReportTableComponent {
         }))
       )[0];
 
-      worksheet['!cols'] = colWidths;
+      worksheet['!columns'] = colWidths;
 
       const workbook: XLSX.WorkBook = {
         Sheets: { data: worksheet },
         SheetNames: ['data'],
       };
-      XLSX.writeFile(workbook, 'SelectedReports.xlsx');
+      XLSX.writeFile(workbook, 'SelectedVisitorReports.xlsx');
     } else {
       alert('Please select at least one report to export.');
     }
   }
 
   resetReport() {
-    this.filteredReports = reports;
+    this.filteredReports = this.reports;
     this.rangeDates = undefined;
     this.selectedMonth = undefined;
     this.selectedYear = undefined;
   }
-  viewDetails(_t31: any) {
-    throw new Error('Method not implemented.');
+  viewDetails(rowData: any) {
+    console.log("Row data: ",rowData.visitorId);
+    this.router.navigate(['/vms/reports/details'], { state: { visitorId: rowData.visitorId } });
   }
   isSortable(field: string): boolean {
     const sortableFields = [
@@ -158,6 +145,6 @@ export class ReportTableComponent {
   }
 
   ngOnInit(): void {
-    this.filteredReports = reports;
+    this.fetchReport();
   }
 }
