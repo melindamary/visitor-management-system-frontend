@@ -24,7 +24,8 @@ export const routes: Routes = [
         component: NavigationPanelComponent,
         children: [
             {path: "dashboard", component: AdminACEDashbordComponent, 
-                canActivate: [AuthAceGuard]},
+                // canActivate: [AuthAceGuard]
+            },
             {path: "visitor-log", component: SecurityVisitorLogComponent, 
                canActivate: [AuthSecurityGuard]
             },

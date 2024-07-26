@@ -4,8 +4,8 @@
         <h3>Location Based Visitor Details </h3>
         <div class="filterarrange">
 
-            <button class="weekly-button">weekly <i class="pi pi-angle-down"></i>
-            </button>
+            <p-dropdown [options]="timePeriods" [(ngModel)]="selectedTimePeriod" (onChange)="onTimePeriodChange($event)" optionLabel="label">
+            </p-dropdown>
             <input *ngIf="showSearch" type="text" (input)="onSearch($event)" placeholder="Search Location..." />
     
         </div>
