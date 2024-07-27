@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EditaddcomponetComponent } from './editaddcomponet.component';
+import { AddroleComponent } from './addrole.component';
 
-describe('EditaddcomponetComponent', () => {
-  let component: EditaddcomponetComponent;
-  let fixture: ComponentFixture<EditaddcomponetComponent>;
+describe('AddroleComponent', () => {
+  let component: AddroleComponent;
+  let fixture: ComponentFixture<AddroleComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [EditaddcomponetComponent]
+      imports: [AddroleComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(EditaddcomponetComponent);
+    fixture = TestBed.createComponent(AddroleComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

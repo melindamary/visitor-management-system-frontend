@@ -17,6 +17,8 @@ import { AuthAceGuard } from './core/guard/auth-ace.guard';
 import { AccessGuard } from './core/guard/access.guard';
 import { AdminAddUserComponent } from './pages/admin-add-user/admin-add-user.component';
 import { Routes } from '@angular/router';
+import { AddroleComponent } from './ui/addrole/addrole.component';
+import { EditroleComponent } from './ui/editrole/editrole.component';
 
 export const routes: Routes = [
     {
@@ -59,7 +61,10 @@ export const routes: Routes = [
         path:'adduser',component:AdminAddUserComponent
     },
     {
-        path:'addrole',component:EditaddcomponetComponent
+        path:'addrole',component:AddroleComponent
+    },
+    {
+        path:'editrole',component:EditroleComponent
     },
     // {
     //     path:'visitorform',component:VisitorFormComponent

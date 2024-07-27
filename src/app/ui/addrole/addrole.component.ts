@@ -1,19 +1,18 @@
 import { Component, Input } from '@angular/core';
-import { FormGroup, FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, FormBuilder, ReactiveFormsModule ,FormControl} from '@angular/forms';
 import { RoleService } from '../../services/role.service';
 import { NgFor } from '@angular/common';
 import { Page, PagesResponse } from '../../Models/page.interface';
 @Component({
-  selector: 'app-editaddcomponet',
+  selector: 'app-addrole',
   standalone: true,
   imports: [ReactiveFormsModule,NgFor],
-  templateUrl: './editaddcomponet.component.html',
-  styleUrl: './editaddcomponet.component.scss'
+  templateUrl: './addrole.component.html',
+  styleUrl: './addrole.component.scss'
 })
-export class EditaddcomponetComponent {
-
-  @Input() isEditMode = false;
+export class AddroleComponent {
   roleForm: FormGroup;
+
 
   constructor(private fb: FormBuilder, private roleService: RoleService) {
     this.roleForm = this.fb.group({
@@ -22,9 +21,9 @@ export class EditaddcomponetComponent {
     });
   }
   pages: Page[] = [];
-  // pages:any;
 
   ngOnInit() {
+
     this.roleService.getPages().subscribe({
       next: (response: PagesResponse) => {
         console.log('Role created successfully', response);
@@ -50,6 +49,7 @@ export class EditaddcomponetComponent {
       },
       error: error => console.error('Error fetching pages:', error)
     });
+
   }
   createRole() {
     const roleData = {
@@ -76,19 +76,6 @@ export class EditaddcomponetComponent {
       error: error => console.error('Error creating role:', error)
     });
   }
-
-        // if (response && response.role.$id) {
-        //   this.createPageControls(response.role.$id,roleData.Permissions);
-        // } else {
-        //   console.error('Invalid response from createRole:', response);
-        // }
-      
-      // },
-      // error => {
-      //   console.error('Error creating role:', error);
-      // }
-    // );
-  
   createPageControls(roleId: number, pageControls: any) {
     this.roleService.createPageControls(roleId, pageControls).subscribe(
       (response: any) => {
@@ -102,28 +89,9 @@ export class EditaddcomponetComponent {
       }
     );
   }
-    // createPageControls(roleId: number,permissions: { [key: number]: boolean}) {
-    //   console.log(roleId);
-
-    //   const pageControls = Object.entries(permissions)
-    // .filter(([_, isSelected]) => isSelected)
-    // .map(([pageId, _]) => ({ pageId: parseInt(pageId) }));
-    // console.log(roleId);
-
-    //   this.roleService.createPageControls(roleId, pageControls).subscribe(
-    //     () => {
-    //       console.log(roleId);
-
-    //       console.log('Role and permissions created successfully');
-          
-    //     },
-    //     error => {
-    //       console.error('Error creating page controls:', error);
-    //     }
-    //   );
-    // }
   onCancel() {
     // Handle cancellation
     console.log('Cancelled');
   }
 }
+
