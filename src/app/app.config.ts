@@ -2,15 +2,22 @@ import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { provideHttpClient } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { withFetch } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { provideRouter } from '@angular/router';
+import { AuthInterceptor } from './core/interceptors/auth-interceptor.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection({ eventCoalescing: true }),
-    provideHttpClient(),
+    provideHttpClient(
+      withInterceptorsFromDi()
+    ),
+
+    {
+      provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor,multi: true
+    },
      provideRouter(routes),
      provideNativeDateAdapter(),
      provideClientHydration(), 

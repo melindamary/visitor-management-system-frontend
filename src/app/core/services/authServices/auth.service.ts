@@ -33,7 +33,6 @@ export class AuthService {
       
       localStorage.setItem('authUser', JSON.stringify(authData));
       }
-
     }),
     catchError(error => {
       console.error("HTTP Error", error);
@@ -41,6 +40,17 @@ export class AuthService {
     })
   );
   }
+
+  getToken(){
+    if (isPlatformBrowser(this.platformId)) {
+      var authData = localStorage.getItem('authUser');
+      if (authData) {
+        const parsedAuthData = JSON.parse(authData);
+        return parsedAuthData.token || null;
+      }
+    }
+  }
+
 
   getUserRole(username: string):Observable<any>{
     const url = `${this.baseUrl}/User/GetUserRoleByUsername/${username}`;
