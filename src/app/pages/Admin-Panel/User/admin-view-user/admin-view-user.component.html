@@ -1,0 +1,28 @@
+
+
+
+
+<p-button  (click)="addUser()" label="Add new User"  />
+
+
+<app-table   [dataSource]="DataSource" [columnsToDisplay]="columnsToDisplay" [rows]="5"
+ [totalItems]="totalItems"
+[actionsTemplate]="actionsTemplate" [summaryTemplate]="summaryTemplate">
+
+
+
+<ng-template #actionsTemplate let-rowData>
+   
+    <p-button icon="pi pi-eye" [rounded]="true" [text]="true" (click)="viewOrEdit(rowData)"  pTooltip="View User" ></p-button>
+    <!-- <p-button icon="pi pi-trash" [rounded]="true" [text]="true" (click)="deleteUser(rowData,$event)"
+     severity="danger" [outlined]="false" ></p-button> -->
+     </ng-template>
+  <ng-template #summaryTemplate>
+    <div class="flex align-items-center justify-content-between">
+      In total there are {{ totalItems }} users.
+    </div>
+  </ng-template>
+  </app-table>
+  <p-toast />
+  <p-confirmDialog />
+  

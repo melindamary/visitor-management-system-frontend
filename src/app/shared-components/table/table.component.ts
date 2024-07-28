@@ -16,4 +16,6 @@ export class TableComponent {
   @Input() totalItems: number = 0;
   @Input() actionsTemplate: TemplateRef<any> | null = null;
   @Input() summaryTemplate: TemplateRef<any> | null = null;
+
+  
 }

@@ -145,7 +145,7 @@
       <mat-form-field appearance="outline" class="smallInput">
         <mat-label>Re-Enter the Password</mat-label>
         <input matInput [type]="hideConfirmPassword ? 'password' : 'text'" formControlName="confirmPassword"/>
-        <button  matSuffix type="button" (click)="toggleHideConfirmPassword()"
+        <button mat-icon-button matSuffix type="button" (click)="toggleHideConfirmPassword()"
          [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hideConfirmPassword">
           <mat-icon>{{ hideConfirmPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
         </button>

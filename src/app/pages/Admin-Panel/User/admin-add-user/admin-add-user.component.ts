@@ -5,14 +5,15 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
 import {MatIconModule} from '@angular/material/icon';
-import { AdminButtonSubmitComponent } from "../../ui/admin-button-submit/admin-button-submit.component";
-import { AdminButtonCancelComponent } from "../../ui/admin-button-cancel/admin-button-cancel.component";
-import { UserManagementServiceService } from '../../core/services/UserManagementServices/user-management-service.service';
-import { GetIdAndName } from '../../core/models/getIdAndName.interface';
+import { AdminButtonSubmitComponent } from "../../../../ui/admin-button-submit/admin-button-submit.component";
+import { AdminButtonCancelComponent } from "../../../../ui/admin-button-cancel/admin-button-cancel.component";
+import { UserManagementServiceService } from '../../../../core/services/UserManagementServices/user-management-service.service';
+import { GetIdAndName } from '../../../../core/models/getIdAndName.interface';
 import { DatePipe, NgFor, NgIf } from '@angular/common';
 import {  FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { passwordMatchValidator } from './custom-validators';
-import { AddNewUser } from '../../core/models/addNewUser.interface';
+import { AddNewUser } from '../../../../core/models/addNewUser.interface';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-admin-add-user',
@@ -72,38 +73,22 @@ passwordMatchValidator(formGroup: FormGroup) {
 }
 
 ngOnInit(){
-this.loadRoleIdAndName();
-this.loadLocationIdAndName();
+  this.loadRoleIdAndName().subscribe((response: GetIdAndName[]) => {
+    this.Roles = response;
+  });
+  this.loadLocationIdAndName().subscribe((response: GetIdAndName[]) => {
+    this.Locations = response;
+  });
+
 }
  
-loadRoleIdAndName(): void {
-  this.apiService.getRoleIdAndName()
-    .subscribe((response: GetIdAndName[]) => {
-      console.log('Role Response:', response);
-      this.Roles = response;
-      console.log(this.Roles);
-      
-      for (let role of this.Roles) {
-        console.log(role.id);
-        console.log(role.name);
-        
-      }
-    });
+loadRoleIdAndName(): Observable<GetIdAndName[]> {
+  return this.apiService.getRoleIdAndName();
 }
 
-loadLocationIdAndName(): void {
-  this.apiService.getLocationIdAndName()
-    .subscribe((response: GetIdAndName[]) => {
-      console.log('Location Response:', response);
-      this.Locations = response;
-      console.log(this.Locations);
-      
-      for (let location of this.Locations) {
-        console.log(location.id);
-        console.log(location.name);
-        
-      }
-    });
+loadLocationIdAndName(): Observable<GetIdAndName[]> {
+ return this.apiService.getLocationIdAndName();
+   
 }
   onRoleChange(roleId: string): void {
     // Handle role change
@@ -144,6 +129,7 @@ loadLocationIdAndName(): void {
       this.apiService.postNewUser(dto).subscribe(
         response => {
           console.log('User created successfully', response);
+          alert("User Added");
         },
         error => {
           console.error('Error creating user', error);

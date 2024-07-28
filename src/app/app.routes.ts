@@ -15,8 +15,11 @@ import { VisitorFormComponent } from './pages/visitor-form/visitor-form.componen
 import { AuthSecurityGuard } from './core/guard/auth-security.guard';
 import { AuthAceGuard } from './core/guard/auth-ace.guard';
 import { AccessGuard } from './core/guard/access.guard';
-import { AdminAddUserComponent } from './pages/admin-add-user/admin-add-user.component';
+import { AdminAddUserComponent } from './pages/Admin-Panel/User/admin-add-user/admin-add-user.component';
 import { Routes } from '@angular/router';
+import { AdminViewUserComponent } from './pages/Admin-Panel/User/admin-view-user/admin-view-user.component';
+import { AdminEditUserComponent } from './pages/Admin-Panel/User/admin-edit-user/admin-edit-user.component';
+import { UserManagementComponent } from './pages/Admin-Panel/User/user-management.component';
 
 export const routes: Routes = [
     {
@@ -56,6 +59,16 @@ export const routes: Routes = [
     },
     {
         path:'adduser',component:AdminAddUserComponent
+    },
+    {
+        path:'viewuser',component:AdminViewUserComponent
+    },
+    {
+        path:'edituser',component:AdminEditUserComponent
+    },
+    {
+        path:'usermanagement',component:UserManagementComponent
+
     },
     // {
     //     path:'visitorform',component:VisitorFormComponent
