@@ -1,4 +1,6 @@
   <p-toolbar>
+
+    <!-- Filter by date range -->
     <ng-template pTemplate="left">
       <p-calendar styleClass="date-range-picker"
       [(ngModel)]="rangeDates" 
@@ -10,7 +12,8 @@
       variant="filled" 
       />
       
-      <p-calendar 
+      <!-- Filter by month -->
+      <!-- <p-calendar 
     [(ngModel)]="selectedMonth" 
     (onClose)="filterByMonth()"
     view="month" 
@@ -18,8 +21,9 @@
     [readonlyInput]="true" 
     [showIcon]="true"
     placeholder="Select Month"
-    variant="filled"/>
+    variant="filled"/> -->
 
+    <!-- Filter by year -->
     <p-calendar 
     [(ngModel)]="selectedYear" 
     (onClose)="filterByYear()"
@@ -28,6 +32,7 @@
     [showIcon]="true"
     placeholder="Select Year"/>
 
+    <!-- Reset button -->
     <button 
     class="export-btn" 
     (click)="resetReport()">
@@ -35,6 +40,7 @@
   </button>
     </ng-template>
 
+    <!-- Export as Excel -->
     <ng-template pTemplate="right">
       <i class="pi pi-file-excel excel-icon"
       (click)="exportSelectedToExcel()"
@@ -44,6 +50,8 @@
       ></i>
     </ng-template>
 </p-toolbar>
+
+<!-- Reports Table -->
 <p-table
   [resizableColumns]="true"
   styleClass="p-datatable-striped p-datatable-gridlines" 
@@ -58,9 +66,9 @@
   sortMode="multiple"
   selectionMode="multiple"
   [(selection)]="selectedReports"
-  
-
 >
+
+  <!-- Column headers -->
   <ng-template pTemplate="header" let-columns>
     <tr>
       <th><p-tableHeaderCheckbox /></th>
@@ -71,7 +79,7 @@
             
         </div>
       </th>
-      <th>Actions</th>
+      <th  alignFrozen="right" pFrozenColumn [frozen]="true">Actions</th>
     </tr>
     <tr>
       <th class="search-header"></th>
@@ -82,16 +90,18 @@
               [placeholder]="'Search...'"
           ></p-columnFilter>
       </th>
-      <th class="search-header"></th>
-  </tr>
+      <th class="search-header" alignFrozen="right" pFrozenColumn [frozen]="true"></th>
+    </tr>
   </ng-template>
+
+   <!-- Column data -->
   <ng-template pTemplate="body" let-rowData let-columns="columns">
     <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="columns">
       <td><p-tableCheckbox [value]="rowData" /></td>
       <td *ngFor="let col of columns"  [style.width]="col.width || 'auto'">
         {{ rowData[col.field] }}
       </td>
-      <td>
+      <td alignFrozen="right" pFrozenColumn [frozen]="true" style="background-color: white;">
         <p-button 
             class="view-btn"
             pRipple
@@ -104,5 +114,27 @@
     </tr>
   </ng-template>
 </p-table>
+
+<!-- View Details Dialog -->
+<p-dialog 
+[(visible)]="viewDetailsDialog" 
+[style]="{ width: '450px' }" 
+header="Visitor Details" 
+[modal]="true" 
+styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <img src="{{visitorDetails.photo}}">
+        <p>{{visitorDetails.name}}</p>
+        <p>{{visitorDetails.phoneNumber}}</p>
+        <p>{{visitorDetails.visitDate}}</p>
+        <p>{{visitorDetails.officeLocation}}</p>
+        <p>{{visitorDetails.checkIn}}</p>
+        <p>{{visitorDetails.checkOut}}</p>
+        <p>{{visitorDetails.visitPurpose}}</p>
+        <p>{{visitorDetails.hostName}}</p>
+        <p>{{visitorDetails.deviceCount}}</p>
+    </ng-template>
+
+</p-dialog>
 
 <router-outlet></router-outlet>

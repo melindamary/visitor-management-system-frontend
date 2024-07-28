@@ -37,10 +37,6 @@ export const routes: Routes = [
                 // ],
                 
             },
-            {
-                path: "reports/details", component: ViewDetailsComponent,
-                canActivate: [AccessGuard],
-            }
             // {
             //     path:"admin-panel",
             //     canActivate: [authAdminGuard],

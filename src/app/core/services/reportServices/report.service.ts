@@ -21,6 +21,7 @@ export class ReportService {
     try {
         const response = await this.fetchReport().toPromise();
         var reportData = response.result.$values;
+        console.log(reportData);
         this.reports = reportData.map((item: any, index: any) => ({
             slNo: index + 1,
             visitorId: item.visitorId,
@@ -33,7 +34,10 @@ export class ReportService {
             onDutyStaff: this.capitalize(item.staffName),
             staffContactNumber: item.staffPhoneNumber,
             checkIn: this.datePipe.transform(item.checkInTime, 'hh:mm a'),
-            checkOut: this.datePipe.transform(item.checkOutTime, 'hh:mm a')
+            checkOut: this.datePipe.transform(item.checkOutTime, 'hh:mm a'),
+            photo: item.photo,
+            deviceCount: item.deviceCount,
+            devices: item.devices.$values
         }));
         console.log("Reports to be sent back: ", this.reports);
         return this.reports;
@@ -41,6 +45,12 @@ export class ReportService {
         console.error("Error fetching reports:", error);
         throw error;
     }
+}
+
+//fetch visitor details by visitor id
+getVisitorDetailsById(id: number): Observable<any>{
+  var response = this.http.get(`${this.baseUrl}/Report/GetVisitorDetails/${id}`);
+  return response;
 }
 
 //capitalize the first letter of each word
