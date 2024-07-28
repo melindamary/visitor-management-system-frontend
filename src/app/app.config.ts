@@ -12,6 +12,7 @@ import { AuthInterceptor } from './core/interceptors/auth-interceptor.intercepto
 export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection({ eventCoalescing: true }),
     provideHttpClient(
+      withFetch(),
       withInterceptorsFromDi()
     ),
 

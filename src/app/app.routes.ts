@@ -15,7 +15,7 @@ import { VisitorFormComponent } from './pages/visitor-form/visitor-form.componen
 import { AuthSecurityGuard } from './core/guard/auth-security.guard';
 import { AuthAceGuard } from './core/guard/auth-ace.guard';
 import { AccessGuard } from './core/guard/access.guard';
-import { AdminAddUserComponent } from './pages/admin-add-user/admin-add-user.component';
+import { AdminAddUserComponent } from './pages/admin-panel/components/admin-add-user/admin-add-user.component';
 import { Routes } from '@angular/router';
 import { ViewDetailsComponent } from './pages/reports/components/view-details/view-details.component';
 
