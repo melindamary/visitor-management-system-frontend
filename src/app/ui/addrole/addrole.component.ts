@@ -1,20 +1,27 @@
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { FormGroup, FormBuilder, ReactiveFormsModule ,FormControl} from '@angular/forms';
 import { RoleService } from '../../services/role.service';
 import { NgFor } from '@angular/common';
 import { Page, PagesResponse } from '../../Models/page.interface';
+import { NavigationExtras, Router } from '@angular/router';
+import { ConfirmationService, MessageService } from 'primeng/api';
+
 @Component({
   selector: 'app-addrole',
   standalone: true,
   imports: [ReactiveFormsModule,NgFor],
+  providers: [ConfirmationService, MessageService],
+
   templateUrl: './addrole.component.html',
   styleUrl: './addrole.component.scss'
 })
 export class AddroleComponent {
   roleForm: FormGroup;
 
+  private router = inject(Router);
 
-  constructor(private fb: FormBuilder, private roleService: RoleService) {
+  constructor(private fb: FormBuilder, private roleService: RoleService,    private messageService: MessageService
+  ) {
     this.roleForm = this.fb.group({
       role: [''],
       permissions: this.fb.group({})
@@ -68,7 +75,7 @@ export class AddroleComponent {
             .filter(([_, isSelected]) => isSelected)
             .map(([pageId, _]) => ({ pageId: parseInt(pageId) }));
 
-          this.createPageControls(response.id, pageControls);
+          this.createPageControls(response.id, pageControls,roleData.Name);
         } else {
           console.error('Invalid response from createRole:', response);
         }
@@ -76,22 +83,31 @@ export class AddroleComponent {
       error: error => console.error('Error creating role:', error)
     });
   }
-  createPageControls(roleId: number, pageControls: any) {
+  createPageControls(roleId: number, pageControls: any,roleName: string) {
     this.roleService.createPageControls(roleId, pageControls).subscribe(
       (response: any) => {
         console.log('Page controls created successfully', response);
-        alert("page and role conneted sucessfully");
-
+        const navigationExtras: NavigationExtras = {
+          state: { message: `Role "${roleName}" has been added successfully` }
+        };
+        this.router.navigate(['/sharedtable'], navigationExtras);        
         // Handle the response as needed
       },
       error => {
         console.error('Error creating page controls:', error);
-      }
+        this.showErrorMessage('Error creating page controls');      }
     );
   }
+
+  showErrorMessage(message: string) {
+    this.messageService.add({
+      severity: 'error',
+      summary: 'Error',
+      detail: message
+    });
+  }
   onCancel() {
-    // Handle cancellation
-    console.log('Cancelled');
+    this.router.navigate(['/sharedtable'])
   }
 }
 

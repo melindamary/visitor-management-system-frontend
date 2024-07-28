@@ -1,0 +1,22 @@
+<p-button (click)="addRole()" label="Add New Role"></p-button>
+
+<app-table [dataSource]="roleDataSource" [columnsToDisplay]="columnsToDisplay" [rows]="5"
+  [totalItems]="totalItems" [actionsTemplate]="actionsTemplate" [summaryTemplate]="summaryTemplate">
+  
+  <ng-template #actionsTemplate let-rowData>
+    <p-button icon="pi pi-eye" [rounded]="true" [text]="true" (click)="viewOrEdit(rowData)" pTooltip="View/Edit Role"></p-button>
+    <p-button icon="pi pi-trash" [rounded]="true" [text]="true" (click)="deleteRole(rowData, $event)"
+      severity="danger" [outlined]="false"></p-button>
+  </ng-template>
+  
+  <ng-template #summaryTemplate>
+    <div class="flex align-items-center justify-content-between">
+      In total there are {{ totalItems }} roles.
+    </div>
+  </ng-template>
+</app-table>
+
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>
+<!-- <app-editrole *ngIf="showEditRole" [roleId]="selectedRoleId" (editComplete)="onEditRoleComplete()"></app-editrole> -->
+

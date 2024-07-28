@@ -1,9 +1,12 @@
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { FormGroup, FormBuilder, ReactiveFormsModule ,FormControl} from '@angular/forms';
 import { RoleService } from '../../services/role.service';
 import { NgFor } from '@angular/common';
 import { Page, PagesResponse } from '../../Models/page.interface';
 import { UpdateRolePagesDTO } from '../../Models/update.interface';
+import { ActivatedRoute, NavigationExtras } from '@angular/router';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-editrole',
   standalone: true,
@@ -14,19 +17,36 @@ import { UpdateRolePagesDTO } from '../../Models/update.interface';
 export class EditroleComponent {
 
   roleForm: FormGroup;
+  private router = inject(Router);
 
   constructor(private fb: FormBuilder, private roleService: RoleService) {
     this.roleForm = this.fb.group({
       role: [''],
       permissions: this.fb.group({})
     });
+    const navigation = this.router.getCurrentNavigation();
+    if (navigation && navigation.extras && navigation.extras.state) {
+      this.roleId = navigation.extras.state['roleId'];
+    } else {
+      // Handle the case where no roleId was provided
+      console.error('No roleId provided');
+      this.router.navigate(['/sharedtable']); // Redirect back to roles list
+    }
   }
   pages: Page[] = [];
-  roleId:number=1;
+  roleId!: number;
+  private route = inject(ActivatedRoute);
 
   ngOnInit() {
-    this.loadRoleData();
+    if (this.roleId) {
+      this.loadRoleData();
+    }
+  
 
+    // this.route.params.subscribe(params => {
+    //   this.roleId = +params['id']; // Convert string to number
+    //   this.loadRoleData();
+    // });
   }
 
   loadRoleData() {
@@ -98,6 +118,10 @@ export class EditroleComponent {
       roleData).subscribe({
       next: (response: any) => {
         console.log('Role updated successfully', response);
+        const navigationExtras: NavigationExtras = {
+          state: { message: `Role  has been Updated successfully` }
+        };
+        this.router.navigate(['/sharedtable'], navigationExtras);        
       },
       error: error => console.error('Error updating role:', error)
     });
@@ -107,10 +131,9 @@ export class EditroleComponent {
 
 
 
+  goBack() {
+    this.router.navigate(['/sharedtable']);
+  }
 
-
-onCancel() {
-  // Handle cancellation
-  console.log('Cancelled');
-}  
+ 
 }

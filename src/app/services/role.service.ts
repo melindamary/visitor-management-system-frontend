@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Page, PagesResponse } from '../Models/page.interface';
 import { UpdateRolePagesDTO } from '../Models/update.interface';
+import { RoleOverview } from '../Models/RoleOverview.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,12 @@ export class RoleService {
   // private Pageroles = 'https://localhost:7121/Page/GetPages';
   // private role = 'your_api_base_url';
   // private apiUrl = 'your_api_base_url';
+  // private roleIdSource = new BehaviorSubject<number>(0);
+  // currentRoleId = this.roleIdSource.asObservable();
 
+  // setRoleId(id: number) {
+  //   this.roleIdSource.next(id);
+  // }
 
 
   constructor(private http: HttpClient) {}
@@ -40,6 +46,13 @@ export class RoleService {
 
   getPagesByRoleId(roleId: number): Observable<Page[]> {
     return this.http.get<Page[]>(`${this.baseUrl}/GetPagesByRoleId/${roleId}`);
+  }
+
+  getAllRoles(): Observable<RoleOverview[]> {
+    return this.http.get<RoleOverview[]>(`${this.baseUrl}/GetRoleIdAndName/get-role-id-name`);
+  }
+  deleteRole(roleId: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/DeleteRole/${roleId}`);
   }
 
 
