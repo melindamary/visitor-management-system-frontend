@@ -10,12 +10,13 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { TooltipModule } from 'primeng/tooltip';
 import { ReportService } from '../../../../core/services/reportServices/report.service';
 import { Router, RouterOutlet } from '@angular/router';
+import { Dialog, DialogModule } from 'primeng/dialog';
 
 @Component({
   selector: 'app-report-table',
   standalone: true,
   imports: [TableModule, CommonModule, ButtonModule, 
-    CalendarModule,FormsModule, ToolbarModule, TooltipModule,
+    CalendarModule,FormsModule, ToolbarModule, TooltipModule, DialogModule,
     RouterOutlet],
   templateUrl: './report-table.component.html',
   styleUrl: './report-table.component.scss',
@@ -33,6 +34,8 @@ export class ReportTableComponent {
   reports: any[] = [];
   cols: any[] = columns;
   customHeaders: { [key: string]: string } = customHeaders;
+  viewDetailsDialog: boolean = false;
+  visitorDetails: any;
 
   async fetchReport():Promise<void>{
     console.log("Entered Reports");
@@ -125,8 +128,10 @@ export class ReportTableComponent {
     this.selectedYear = undefined;
   }
   viewDetails(rowData: any) {
-    console.log("Row data: ",rowData.visitorId);
-    this.router.navigate(['/vms/reports/details'], { state: { visitorId: rowData.visitorId } });
+    console.log("Row data: ",rowData);
+    this.viewDetailsDialog = true;
+    this.visitorDetails = rowData;
+    // this.router.navigate(['/vms/reports/details'], { state: { visitorId: rowData.visitorId } });
   }
   isSortable(field: string): boolean {
     const sortableFields = [
