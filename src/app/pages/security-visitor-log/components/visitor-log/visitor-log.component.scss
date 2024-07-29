@@ -1,0 +1,21 @@
+.tile-container {
+    margin: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100vw;
+    //gap: 10px; /* Adjust the gap between tiles as needed */
+    overflow: hidden;
+  
+    @media (max-width: 768px) {
+      flex-direction: column;
+      // gap: 10px;
+    }
+  }
+  
+  app-visitor-log-tiles {
+    flex: 1; /* Ensures all tiles have the same width */
+    //min-width: 150px; /* Prevents tiles from being too small on smaller screens */
+    height: 120px; /* Set a fixed height for the tiles */
+  }
+  

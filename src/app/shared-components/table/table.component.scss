@@ -1,0 +1,12 @@
+::ng-deep .p-datatable tr:hover td {
+    background-color: #f1ebff; /* Change to desired hover background color */
+  }
+
+  th{
+    background-color: #eaeaea;
+    color: #896cc7;
+  }
+  td{
+    padding-top: 0  !important;
+    padding-bottom: 0 !important;
+  }

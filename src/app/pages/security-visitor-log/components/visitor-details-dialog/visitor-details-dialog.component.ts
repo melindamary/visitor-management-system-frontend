@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DialogModule } from 'primeng/dialog';
-import { VisitorLogDTO } from '../../../../core/models/visitor-log.interface';
+import { VisitorLog } from '../../../../core/models/visitor-log.interface';
 
 @Component({
   selector: 'app-visitor-details-dialog',
@@ -12,7 +12,7 @@ import { VisitorLogDTO } from '../../../../core/models/visitor-log.interface';
 })
 export class VisitorDetailsDialogComponent {
   @Input() visible = false;
-  @Input() visitor: VisitorLogDTO = {} as VisitorLogDTO;
+  @Input() visitor: VisitorLog = {} as VisitorLog;
   @Input() currentTab: string = 'upcoming';
   @Output() visibleChange = new EventEmitter<boolean>();
   onDialogHide(): void {
