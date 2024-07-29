@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { AdminVisitPurposeTableComponent } from './components/admin-visit-purpose-table/admin-visit-purpose-table.component';
-
+import { AdminVisitPurposeTableComponent } from './visit-purpose-management/admin-visit-purpose-table/admin-visit-purpose-table.component';
 @Component({
   selector: 'app-admin-panel',
   standalone: true,

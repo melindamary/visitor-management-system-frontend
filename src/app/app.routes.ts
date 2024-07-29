@@ -23,7 +23,7 @@ import { AdminPanelComponent } from './pages/admin-panel/admin-panel.component';
 import { AddroleComponent } from './ui/addrole/addrole.component';
 import { EditroleComponent } from './ui/editrole/editrole.component';
 import { TableComponent } from './shared-components/table/table.component';
-import { AdminViewRoleComponent } from './pages/Role/admin-view-role/admin-view-role.component';
+import { AdminViewRoleComponent } from './pages/admin-panel/role-management/admin-view-role/admin-view-role.component';
 
 export const routes: Routes = [
   {
@@ -69,9 +69,9 @@ export const routes: Routes = [
         path:'sharedtable',component:AdminViewRoleComponent
       },
       {
-          path:'addrole',component:AddroleComponent
+          path:'add-role',component:AddroleComponent
       },
-      { path: 'editrole', component: EditroleComponent },
+      { path: 'edit-role', component: EditroleComponent },
     ],
   },
   {

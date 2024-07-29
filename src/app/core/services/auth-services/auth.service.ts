@@ -86,7 +86,9 @@ export class AuthService {
 
 
 getMenuItems(): any {
+  if (isPlatformBrowser(this.platformId)){
   this.userRole = localStorage.getItem('userRole');
+  }
   const adminMenu = [
     { label: 'Dashboard', icon: 'dashboard', routerLink: '/vms/dashboard' },
     { label: 'Visitor Log', icon: 'assignment_ind', routerLink: '/vms/visitor-log' },
