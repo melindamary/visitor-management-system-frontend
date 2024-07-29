@@ -4,6 +4,8 @@ import { map, Observable } from 'rxjs';
 
 import { GetIdAndName } from '../../models/getIdAndName.interface';
 import { AddNewUser } from '../../models/addNewUser.interface';
+import { UserByIdOverview, UserOverview } from '../../models/user-overview-display.interface';
+import { response } from 'express';
 
 @Injectable({
   providedIn: 'root'
@@ -14,22 +16,50 @@ export class UserManagementServiceService {
   constructor(private http:HttpClient) { }
 
   getRoleIdAndName(): Observable<GetIdAndName[]> {
-    const apiUrl = "http://localhost:5292/Role/GetRoleIdAndName/get-role-id-name";
+    const apiUrl = "https://localhost:7121/Role/GetRoleIdAndName/get-role-id-name";
+    return this.http.get<{ $id: string; $values: GetIdAndName[] }>(apiUrl).pipe(
+      map(response => response.$values)
+    );
+  
+    
+  }
+
+  getLocationIdAndName(): Observable<GetIdAndName[]> {
+    const apiUrl = "https://localhost:7121/Location/GetLocationIdAndName";
     return this.http.get<{ $id: string; $values: GetIdAndName[] }>(apiUrl).pipe(
       map(response => response.$values)
     );
   }
 
-  getLocationIdAndName(): Observable<GetIdAndName[]> {
-    const apiUrl = "http://localhost:5292/Location/GetLocationIdAndName";
-    return this.http.get<{ $id: string; $values: GetIdAndName[] }>(apiUrl).pipe(
+  getAllUser():Observable<UserOverview[]>{
+    const apiUrl ="https://localhost:7121/User/GetAllUsersOverview";
+    return this.http.get<{ $id: string; $values: UserOverview[] }>(apiUrl).pipe(
       map(response => response.$values)
+    );
+
+  }
+
+  updateUserData(id:number, userData: any):Observable<any>{    
+    console.log("recieved data",userData);
+    
+      const url = `https://localhost:7121/User/UpdateUser/${id}`;
+      return this.http.put<any>(url, userData);
+    
+  }
+
+  getUserById(id: number): Observable<any> {
+    const apiUrl = `https://localhost:7121/User/GetUserById/${id}`;
+    return this.http.get<any>(apiUrl).pipe(
+      map(response  => {
+        console.log("data recieved",response);
+        return response;
+      })
     );
   }
 
   postNewUser(newUser:AddNewUser):Observable<AddNewUser>{
     console.log("new user details",newUser);    
-    const apiUrl="http://localhost:5292/User/CreateNewUser";
+    const apiUrl="https://localhost:7121/User/CreateNewUser";
      return this.http.post<AddNewUser>(apiUrl,newUser);
 
   }

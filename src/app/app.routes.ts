@@ -14,6 +14,7 @@ import { VisitorFormComponent } from './pages/visitor-form/visitor-form.componen
 import { AuthSecurityGuard } from './core/guard/auth-security.guard';
 import { AuthAceGuard } from './core/guard/auth-ace.guard';
 import { AccessGuard } from './core/guard/access.guard';
+<<<<<<< HEAD
 import { AdminAddUserComponent } from './pages/admin-panel/components/admin-add-user/admin-add-user.component';
 import { Routes } from '@angular/router';
 import { ViewDetailsComponent } from './pages/reports/components/view-details/view-details.component';
@@ -78,4 +79,71 @@ export const routes: Routes = [
     path: '**',
     redirectTo: '/login',
   },
+=======
+import { AdminAddUserComponent } from './pages/Admin-Panel/User/admin-add-user/admin-add-user.component';
+import { Routes } from '@angular/router';
+import { AdminViewUserComponent } from './pages/Admin-Panel/User/admin-view-user/admin-view-user.component';
+import { AdminEditUserComponent } from './pages/Admin-Panel/User/admin-edit-user/admin-edit-user.component';
+import { UserManagementComponent } from './pages/Admin-Panel/User/user-management.component';
+
+export const routes: Routes = [
+    {
+        path:"vms", 
+        component: NavigationPanelComponent,
+        children: [
+            {path: "dashboard", component: AdminACEDashbordComponent, 
+                canActivate: [AuthAceGuard]},
+            {path: "visitor-log", component: SecurityVisitorLogComponent, 
+               canActivate: [AuthSecurityGuard]
+            },
+            {path: "reports", component: ReportTableComponent,
+                canActivate: [AccessGuard],
+            },
+           
+            // {
+            //     path:"admin-panel",
+            //     canActivate: [authAdminGuard],
+            // }
+        ]
+    },
+    { 
+        path:'welcomepage',
+        component:WelcomepageComponent
+    },
+    {
+        path: "visitorform", component: VisitorFormComponent, 
+    },
+    { 
+        path:"login", 
+        component: LoginComponent 
+    },
+    { 
+        path:"", 
+        redirectTo: "/login", 
+        pathMatch: "full" 
+    },
+    {
+        path:'adduser',component:AdminAddUserComponent
+    },
+    {
+        path:'viewuser',component:AdminViewUserComponent
+    },
+    {
+        path:'edituser',component:AdminEditUserComponent
+    },
+    {
+        path:'usermanagement',component:UserManagementComponent
+
+    },
+    // {
+    //     path:'visitorform',component:VisitorFormComponent
+    // },
+    {
+        path:"**",
+        redirectTo: "/dashboard", 
+    },
+    
+    
+
+>>>>>>> origin/user-management-branch
 ];
