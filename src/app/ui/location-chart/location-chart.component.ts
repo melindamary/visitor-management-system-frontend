@@ -72,6 +72,7 @@ export class LocationChartComponent implements OnInit,AfterViewInit {
           ,
           plugins: {
               legend: {
+                display:false,
                   labels: {
                       color: "blue"
                   }
