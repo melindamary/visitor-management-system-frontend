@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-import { AdminViewUserComponent } from "./components/admin-view-user/admin-view-user.component";
 
 @Component({
   selector: 'app-user-management',
   standalone: true,
-  imports: [AdminViewUserComponent],
+  imports: [],
   templateUrl: './user-management.component.html',
   styleUrl: './user-management.component.scss'
 })

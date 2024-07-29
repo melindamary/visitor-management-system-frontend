@@ -83,7 +83,8 @@ export class VisitorLogComponent implements OnInit {
     { field: 'name', header: 'Visitor Name' },
     { field: 'purposeName', header: 'Purpose of Visit' },
     { field: 'phone', header: 'Phone Number' }, 
-    { field: 'hostName', header: 'Host name' }
+    { field: 'hostName', header: 'Host name' },
+    { field: 'actions', header: 'Actions' }
   ];
 
   get visitorDataSource() {
@@ -92,6 +93,8 @@ export class VisitorLogComponent implements OnInit {
         return this.activeVisitors;
       case 'checkedOut':
         return this.checkedOutVisitors;
+      case 'total':
+        return this.visitorsToday;
       default:
         return this.upcomingVisitors;
     }
@@ -103,6 +106,8 @@ export class VisitorLogComponent implements OnInit {
         return this.columnsActive;
       case 'checkedOut':
         return this.columnsCheckedOut;
+      case 'total':
+        return this.totalvisitorColumns;
       default:
         return this.columnsUpcoming;
     }
@@ -114,6 +119,8 @@ export class VisitorLogComponent implements OnInit {
         return this.activeVisitorsCount;
       case 'checkedOut':
         return this.checkedOutVisitorsCount;
+      case 'total':
+        return this.totalVisitorsCount;
       default:
         return this.upcomingVisitors.length;
     }
@@ -143,7 +150,10 @@ export class VisitorLogComponent implements OnInit {
             ...visitor,
             checkInTime: this.datePipe.transform(visitor.checkInTime, 'shortTime')
           }));
-          this.visitorsToday = response.result.visitorsToday.$values;
+          this.visitorsToday = response.result.visitorsToday.$values.map(visitor => ({
+            ...visitor,
+            checkInTime: this.datePipe.transform(visitor.checkInTime, 'shortTime')
+          }));
           this.checkedOutVisitors = response.result.checkedOutVisitors.$values.map(visitor => ({
             ...visitor,
             checkInTime: this.datePipe.transform(visitor.checkInTime, 'shortTime'),
@@ -173,6 +183,9 @@ export class VisitorLogComponent implements OnInit {
       case 2:
         this.currentTab = 'checkedOut';
         break;
+      case 3:
+        this.currentTab = 'total';
+        break;
       default:
         this.currentTab = 'upcoming';
         break;
@@ -183,13 +196,15 @@ export class VisitorLogComponent implements OnInit {
     switch (tab) {
       case 'active':
         this.activeIndex = 1;
+        this.currentTab = 'active';
         break;
       case 'checkedOut':
         this.activeIndex = 2;
+        this.currentTab = 'checkedOut';
         break;
       case 'total':
         this.activeIndex = 3;
-        this.showTotalVisitorsModal = true;
+        this.currentTab = 'total';
         break;
       default:
         this.activeIndex = 0;
