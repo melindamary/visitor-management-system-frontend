@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map, Observable, throwError } from 'rxjs';
-import { APIResponse } from '../../models/api-response.interface';
+import { VisitorLogResponse, VisitorLogResult } from '../../models/visitor-log.interface';
 import { VisitorPassCodeDTO } from '../../models/visitor-pass-code.interface';
 
 @Injectable({
@@ -12,46 +12,44 @@ export class VisitorLogService {
 
   constructor(private http: HttpClient) {}
 
-  getVisitorLogToday(): Observable<APIResponse> {
-    return this.http.get<any>(`${this.apiUrl}/GetVisitorLogToday`)
-    .pipe(
-      map(response => {
-        // Transform response to match VisitorLogResult structure
-        if (response.isSuccess) {
-          return {
-            ...response,
-            result: {
-              ...response.result,
-              upcomingVisitors: response.result.upcomingVisitors.$values,
-              activeVisitors: response.result.activeVisitors.$values,
-              checkedOutVisitors: response.result.checkedOutVisitors.$values,
-              visitorsToday: response.result.visitorsToday.$values,
-            }
-          };
-        }
-        return response;
-      }),
-      catchError(this.handleError)
-    );
-  }
-
-  updateCheckInTimeAndCardNumber(id: number, updateVisitorPassCode: VisitorPassCodeDTO): Observable<APIResponse> {
-    return this.http.put<APIResponse>(`${this.apiUrl}/UpdateCheckInTimeAndCardNumber/${id}`, updateVisitorPassCode)
+  getVisitorLogToday(): Observable<VisitorLogResponse> {
+    return this.http.get<VisitorLogResponse>(`${this.apiUrl}/GetVisitorLogToday`)
     .pipe(
       catchError(this.handleError)
     );
   }
 
-  updateCheckOutTime(id: number): Observable<APIResponse> {
-    return this.http.put<APIResponse>(`${this.apiUrl}/UpdateCheckOutTime/${id}`, {})
-    .pipe(
+  updateCheckInTimeAndCardNumber(id: number, updateVisitorPassCode: VisitorPassCodeDTO): Observable<VisitorLogResponse> {
+    return this.http.put<VisitorLogResponse>(`${this.apiUrl}/UpdateCheckInTimeAndCardNumber/${id}`, updateVisitorPassCode).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  updateCheckOutTime(id: number): Observable<VisitorLogResponse> {
+    return this.http.put<VisitorLogResponse>(`${this.apiUrl}/UpdateCheckOutTime/${id}`, {}).pipe(
       catchError(this.handleError)
     );
   }
 
   private handleError(error: any): Observable<never> {
-    console.error('An error occurred:', error);
-    return throwError(() => new Error(error.message || 'Server error'));
-  }
-}
+    let errorMessage = 'An unknown error occurred!';
+   
+    if (error.error?.errorMessages?.$values) {
+      // Backend error message
+      errorMessage = error.error.errorMessages.$values.join(', ');
+    } 
+    else if (error.status === 0) {
+      // Network error
+      errorMessage = 'Network error: Please check your internet connection or CORS configuration.';
+    } 
+    else {
+      // Other server-side error
+      errorMessage = `Server-side error: ${error.status}\nMessage: ${error.message}`;
+    }
 
+    console.error(errorMessage);
+    return throwError(() => new Error(errorMessage));
+  }
+
+  
+}

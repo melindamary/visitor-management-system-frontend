@@ -1,20 +1,27 @@
 .tile {
-    padding: 20px;
-    border-radius: 5px;
-    text-align: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    width: 25%;
-    height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  height: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  color: white;
+
+  &.active {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
-  
-  .tile h3 {
-    color: white;
-    margin: 0 0 10px;
+
+  h3 {
+    margin: 0 0 10px 0;
   }
-  
-  .tile p {
-    color: white;
+
+  p {
     font-size: 2em;
     margin: 0;
   }
-  
+}

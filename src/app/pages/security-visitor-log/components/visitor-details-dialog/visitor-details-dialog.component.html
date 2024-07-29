@@ -32,9 +32,13 @@
           <div class="font-bold w-8rem mb-2">Whom to Meet:</div>
           <div>{{ visitor.hostName }}</div>
         </div>
-        <div *ngIf="currentTab === 'active'" class="flex align-items-center mb-2">
+        <div *ngIf="currentTab === 'active' || currentTab === 'checkedOut'" class="flex align-items-center mb-2">
           <div class="font-bold w-8rem mb-2">Check-In Time:</div>
           <div>{{ visitor.checkInTime }}</div>
+        </div>
+        <div *ngIf="currentTab === 'checkedOut'" class="flex align-items-center mb-2">
+          <div class="font-bold w-8rem mb-2">Check-Out Time:</div>
+          <div>{{ visitor.checkOutTime }}</div>
         </div>
         <div class="flex align-items-center mb-2">
           <div class="font-bold w-8rem">Device Details:</div>
