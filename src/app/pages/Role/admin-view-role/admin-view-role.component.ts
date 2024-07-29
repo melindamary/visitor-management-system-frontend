@@ -23,7 +23,7 @@ export class AdminViewRoleComponent {
   roleDataSource: RoleOverview[] = [];
   columnsToDisplay: any[] = [
     { header: 'Role Name', field: 'name' },
-    { header: 'Created By', field: 'createdBy' },
+    // { header: 'Created By', field: 'createdBy' },
     { header: 'Created Date', field: 'createdDate' },
     { header: 'Actions', field: 'actions' }
   ];
