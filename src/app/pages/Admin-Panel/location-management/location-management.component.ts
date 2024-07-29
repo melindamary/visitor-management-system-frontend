@@ -14,9 +14,9 @@ import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TabViewModule } from 'primeng/tabview';
 import { ToolbarModule } from 'primeng/toolbar';
-import { TableComponent } from '../../shared-components/table/table.component';
-import { LocationService } from '../../core/services/location-management/location.service';
-import { ApiResponse, LocationDetails } from '../../core/models/location-details.interface';
+import { TableComponent } from '../../../shared-components/table/table.component';
+import { LocationService } from '../../../core/services/location-management/location.service';
+import { ApiResponse, LocationDetails } from '../../../core/models/location-details.interface';
 
 @Component({
   selector: 'app-location-management',

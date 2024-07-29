@@ -23,12 +23,8 @@
   <p-tabPanel header="Upcoming Visitors"></p-tabPanel>
   <p-tabPanel header="Active Visitors"></p-tabPanel>
   <p-tabPanel header="Checked Out Visitors"></p-tabPanel>
+  <p-tabPanel header="Total Visitors"></p-tabPanel>
 </p-tabView>
-
-<!-- Modal for Total Visitors -->
-<p-dialog header="Total Visitors" [(visible)]="showTotalVisitorsModal" [modal]="true" [style]="{ width: '50vw' }">
-  <app-table [dataSource]="visitorsToday" [columnsToDisplay]="totalvisitorColumns" [rows]="5"></app-table>
-</p-dialog>
 
     <div class="card">
       <p-toast></p-toast>
