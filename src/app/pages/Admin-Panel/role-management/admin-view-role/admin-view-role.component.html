@@ -1,22 +1,72 @@
-<p-button (click)="addRole()" label="Add New Role"></p-button>
+<div>
+  <!-- Add Role Button -->
+  <p-button (click)="openAddRoleDialog()" label="Add New Role"></p-button>
 
-<app-table [dataSource]="roleDataSource" [columnsToDisplay]="columnsToDisplay" [rows]="5"
-  [totalItems]="totalItems" [actionsTemplate]="actionsTemplate" [summaryTemplate]="summaryTemplate">
-  
-  <ng-template #actionsTemplate let-rowData>
-    <p-button icon="pi pi-eye" [rounded]="true" [text]="true" (click)="viewOrEdit(rowData)" pTooltip="View/Edit Role"></p-button>
-    <p-button icon="pi pi-trash" [rounded]="true" [text]="true" (click)="deleteRole(rowData, $event)"
-      severity="danger" [outlined]="false"></p-button>
-  </ng-template>
-  
-  <ng-template #summaryTemplate>
-    <div class="flex align-items-center justify-content-between">
-      In total there are {{ totalItems }} roles.
+  <app-table [dataSource]="roleDataSource" [columnsToDisplay]="columnsToDisplay" [rows]="5"
+    [totalItems]="totalItems" [actionsTemplate]="actionsTemplate" [summaryTemplate]="summaryTemplate">
+    
+    <ng-template #actionsTemplate let-rowData>
+      <p-button icon="pi pi-eye" [rounded]="true" [text]="true" (click)="openEditRoleDialog(rowData)" pTooltip="Edit/View Role"></p-button>
+      <p-button icon="pi pi-trash" [rounded]="true" [text]="true" (click)="deleteRole(rowData, $event)"
+        severity="danger" [outlined]="false"></p-button>
+    </ng-template>
+    
+    <ng-template #summaryTemplate>
+      <div class="flex align-items-center justify-content-between">
+        In total there are {{ totalItems }} roles.
+      </div>
+    </ng-template>
+  </app-table>
+
+  <!-- Toast for messages -->
+  <p-toast></p-toast>
+
+  <!-- Confirm Dialog for deletion confirmation -->
+  <p-confirmDialog></p-confirmDialog>
+
+  <!-- Add Role Modal -->
+  <p-dialog header="Add New Role" [(visible)]="addRoleDialogVisible" [modal]="true" [responsive]="true" [style]="{width: '50vw'}">
+    <div class="role-form-container">
+      <h2>Add Role</h2>
+      <div class="line"></div>
+      <form [formGroup]="roleForm" (ngSubmit)="createRole()">
+        <div>
+          <label for="role">Role Name:</label>
+          <input id="role" type="text" formControlName="role">
+        </div>
+        <div formGroupName="permissions">
+          <label for="permissions">Permissions:</label>
+          <div *ngFor="let page of pages">
+            <input type="checkbox" [formControlName]="page.id.toString()" id="{{ page.id }}">
+            <label for="{{ page.id }}">{{ page.name }}</label>
+          </div>
+        </div>
+        <button type="submit" pButton label="Save"></button>
+        <button type="button" pButton label="Cancel" (click)="onAddRoleCancel()"></button>
+      </form>
     </div>
-  </ng-template>
-</app-table>
+  </p-dialog>
 
-<p-toast></p-toast>
-<p-confirmDialog></p-confirmDialog>
-<!-- <app-editrole *ngIf="showEditRole" [roleId]="selectedRoleId" (editComplete)="onEditRoleComplete()"></app-editrole> -->
-
+  <!-- Edit Role Modal -->
+  <p-dialog header="Edit Role" [(visible)]="editRoleDialogVisible" [modal]="true" [responsive]="true" [style]="{width: '50vw'}">
+    <div class="role-form-container">
+      <h2>Edit Role</h2>
+      <div class="line"></div>
+      <form [formGroup]="roleForm" (ngSubmit)="updateRole()">
+        <div>
+          <label for="role">Role Name:</label>
+          <input id="role" type="text" formControlName="role" readonly>
+        </div>
+        <div formGroupName="permissions">
+          <label for="permissions">Permissions:</label>
+          <div *ngFor="let page of pages">
+            <input type="checkbox" [formControlName]="page.id.toString()" id="{{ page.id }}">
+            <label for="{{ page.id }}">{{ page.name }}</label>
+          </div>
+        </div>
+        <button type="submit" pButton label="Save"></button>
+        <button type="button" pButton label="Cancel" (click)="onEditRoleCancel()"></button>
+      </form>
+    </div>
+  </p-dialog>
+</div>

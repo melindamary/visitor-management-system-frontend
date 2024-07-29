@@ -1,1 +1,20 @@
-<p>admin-add-role works!</p>
+<div class="role-form-container">
+    <div class="line"> </div>
+    <form [formGroup]="roleForm">
+      <div>
+        <label for="role">Role:</label>
+        <input id="role" formControlName="role" placeholder="Enter role name">
+      </div>
+      <div formGroupName="permissions">
+        <h3>Role Permissions</h3>
+        <div *ngFor="let page of pages">
+          <input type="checkbox" [id]="page.id.toString()" [formControlName]="page.id.toString()">
+          <label [for]="page.id.toString()">{{page.name}}</label>
+        </div>
+      </div>
+]        <div class="button-group">
+          <button type="submit" class="submit-btn">Submit</button>
+          <button type="button" class="cancel-btn" (click)="onCancel()">Cancel</button>
+        </div>
+    </form>
+</div>

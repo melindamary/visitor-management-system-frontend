@@ -23,8 +23,7 @@ import { AdminPanelComponent } from './pages/Admin-Panel/admin-panel.component';
 import { AddroleComponent } from './ui/addrole/addrole.component';
 import { EditroleComponent } from './ui/editrole/editrole.component';
 import { TableComponent } from './shared-components/table/table.component';
-import { AdminViewRoleComponent } from './pages/admin-panel/role-management/admin-view-role/admin-view-role.component';
-
+import { AdminViewRoleComponent } from './pages/Admin-Panel/role-management/admin-view-role/admin-view-role.component'; 
 export const routes: Routes = [
   {
     path: 'vms',
