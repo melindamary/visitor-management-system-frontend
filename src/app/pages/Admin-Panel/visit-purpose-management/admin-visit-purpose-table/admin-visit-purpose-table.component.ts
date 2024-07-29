@@ -5,6 +5,10 @@ import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { MessageService, ConfirmationService} from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+
 interface VisitPurpose {
   slNo: number;
   name: string;
@@ -15,13 +19,17 @@ interface VisitPurpose {
 @Component({
   selector: 'app-admin-visit-purpose-table',
   standalone: true,
-  imports: [TableComponent, ButtonModule, DialogModule, NgIf, FormsModule],
+  imports: [TableComponent, ButtonModule, DialogModule, NgIf, FormsModule,
+    ToastModule, ConfirmDialogModule
+  ],
   templateUrl: './admin-visit-purpose-table.component.html',
   styleUrl: './admin-visit-purpose-table.component.scss'
 })
 export class AdminVisitPurposeTableComponent {
 
-  constructor(private visitPurposeService: VisitPurposeService){}
+  constructor(private visitPurposeService: VisitPurposeService,
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService) {}
 
   visitPurposes:VisitPurpose[] = [];
   columns: any[] = [
@@ -49,9 +57,7 @@ export class AdminVisitPurposeTableComponent {
   closeDialog() {
     this.isEditModalVisible = false;
   }
-  editRow(rowIndex: number) {
-    this.visitPurposes[rowIndex].isEditing = true;
-  }
+
   saveEdit() {
     var response = this.visitPurposeService.updatePurpose(this.selectedPurpose.id, this.selectedPurpose.name).subscribe();
     console.log(response);
@@ -59,11 +65,43 @@ export class AdminVisitPurposeTableComponent {
     // Close the dialog
     this.isEditModalVisible = false;
     this.selectedPurpose = null;
+    this.messageService.add({ 
+      severity: 'success', summary: 'Success', detail: 'Visit Purpose Approved!',
+      life: 3000
+    });
+    setTimeout(() => {
+      this.getVisitPurposes();
+    }, 3000); 
   }
-  deletePurpose(id: number){
-    var response = this.visitPurposeService.deletePurpose(id).subscribe();
-    console.log(response);
-  }
+ 
+confirmDelete(id:number): void {
+  this.confirmationService.confirm({
+    message: 'Are you sure you want to delete?',
+    header: 'Confirmation',
+    icon: 'pi pi-exclamation-triangle',
+    acceptLabel: 'Yes',
+    rejectLabel: 'No',
+    acceptIcon:"none",
+    rejectIcon:"none",
+    acceptButtonStyleClass: 'custom-accept-button',
+    rejectButtonStyleClass: 'custom-reject-button',
+    accept: () => {
+      this.visitPurposeService.deletePurpose(id).subscribe({
+        next: (response: any) => {
+          if (response.isSuccess) {
+            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Deleted successfully!', life: 3000 });
+            this.getVisitPurposes();
+          } else {
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: response.errorMessages.join(', '), life: 3000 });
+          }
+        },
+        error: (error) => {
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: error.message, life: 3000 });
+        }
+      });
+    }
+  });
+}
   ngOnInit(){
     this.getVisitPurposes();
   }

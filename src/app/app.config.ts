@@ -8,6 +8,7 @@ import { DatePipe } from '@angular/common';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { provideRouter } from '@angular/router';
 import { AuthInterceptor } from './core/interceptors/auth-interceptor.interceptor';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection({ eventCoalescing: true }),
@@ -23,5 +24,7 @@ export const appConfig: ApplicationConfig = {
      provideNativeDateAdapter(),
      provideClientHydration(), 
      provideAnimationsAsync(),
+     MessageService,
+     ConfirmationService,
      DatePipe]
 };
