@@ -1,7 +1,7 @@
 export interface Page {
-    pageId: number;
-    pageName: string;
-    pageUrl: string;
+    id: number;
+    name: string;
+    url: string;
   }
 
   export interface PagesResponse {

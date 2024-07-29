@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EditaddcomponetComponent } from './editaddcomponet.component';
+import { AdminAddRoleComponent } from './admin-add-role.component';
 
-describe('EditaddcomponetComponent', () => {
-  let component: EditaddcomponetComponent;
-  let fixture: ComponentFixture<EditaddcomponetComponent>;
+describe('AdminAddRoleComponent', () => {
+  let component: AdminAddRoleComponent;
+  let fixture: ComponentFixture<AdminAddRoleComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [EditaddcomponetComponent]
+      imports: [AdminAddRoleComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(EditaddcomponetComponent);
+    fixture = TestBed.createComponent(AdminAddRoleComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

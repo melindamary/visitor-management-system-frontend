@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Page } from '../Models/page.interface';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { Page, PagesResponse } from '../Models/page.interface';
+import { UpdateRolePagesDTO } from '../Models/update.interface';
+import { RoleOverview } from '../Models/RoleOverview.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -10,23 +12,49 @@ export class RoleService {
   // private Pageroles = 'https://localhost:7121/Page/GetPages';
   // private role = 'your_api_base_url';
   // private apiUrl = 'your_api_base_url';
+  // private roleIdSource = new BehaviorSubject<number>(0);
+  // currentRoleId = this.roleIdSource.asObservable();
 
-  private apiUrl = 'http://yourapiurl/api/visitors/active';  
+  // setRoleId(id: number) {
+  //   this.roleIdSource.next(id);
+  // }
 
 
   constructor(private http: HttpClient) {}
-  getActiveVisitors(): Observable<number> {  
-    return this.http.get<number>(this.apiUrl);  
-  }
-  getPages(): Observable<any> {
-    return this.http.get<any>('https://localhost:7121/Page/GetPages');
-  }
+  private baseUrl = 'https://localhost:7121/AdminRole'; // Update with your actual base URL
 
+  getPages(): Observable<any> {
+    return this.http.get<any>('https://localhost:7121/AdminRole/GetPages/get-pages');
+  }
+ 
   createRole(roleData: any): Observable<any> {
-    return this.http.post<any>(`https://localhost:7121/Role/PostRole`, roleData);
+    return this.http.post<any>(`https://localhost:7121/AdminRole/PostRole`, roleData);
   }
   createPageControls(roleId: number, pageControls: any): Observable<any> {
-    return this.http.post(`https://localhost:7121/PageRole/CreatePageControls?roleId=${roleId}`, pageControls);
+    return this.http.post(`https://localhost:7121/AdminRole/CreatePageControls?roleId=${roleId}`, pageControls);
   }
+
+  updateRolePages(updateRolePagesDTO: UpdateRolePagesDTO): Observable<any> {
+    return this.http.patch<any>(`${this.baseUrl}/UpdateRolePages`, updateRolePagesDTO);
+  }
+
+
+  getRoleById(id: number): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/Getroles/get-role-by-id/${id}`);
+  }
+  
+
+  getPagesByRoleId(roleId: number): Observable<Page[]> {
+    return this.http.get<Page[]>(`${this.baseUrl}/GetPagesByRoleId/${roleId}`);
+  }
+
+  getAllRoles(): Observable<RoleOverview[]> {
+    return this.http.get<RoleOverview[]>(`${this.baseUrl}/GetRoleIdAndName/get-role-id-name`);
+  }
+  deleteRole(roleId: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/DeleteRole/${roleId}`);
+  }
+
+
 }
 

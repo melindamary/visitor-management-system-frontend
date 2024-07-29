@@ -3,7 +3,6 @@ import { LocationVisitortableComponent } from './ui/location-visitortable/locati
 import { PurposePieComponent } from './ui/purpose-pie/purpose-pie.component';
 import { AdminACEDashbordComponent } from './pages/admin-ace-dashbord/admin-ace-dashbord.component';
 import { WelcomepageComponent } from './pages/welcomepage/welcomepage.component';
-import { EditaddcomponetComponent } from './ui/editaddcomponet/editaddcomponet.component';
 import { LoginComponent } from './pages/login/login.component';
 import { AuthAdminGuard } from './core/guard/auth-admin.guard';
 import { NavigationPanelComponent } from './layouts/navigation-panel/navigation-panel.component';
@@ -21,6 +20,10 @@ import { UserManagementComponent } from './pages/admin-panel/user-management/use
 import { Routes } from '@angular/router';
 import { ViewDetailsComponent } from './pages/reports/components/view-details/view-details.component';
 import { AdminPanelComponent } from './pages/admin-panel/admin-panel.component';
+import { AddroleComponent } from './ui/addrole/addrole.component';
+import { EditroleComponent } from './ui/editrole/editrole.component';
+import { TableComponent } from './shared-components/table/table.component';
+import { AdminViewRoleComponent } from './pages/Role/admin-view-role/admin-view-role.component';
 
 export const routes: Routes = [
   {
@@ -61,7 +64,14 @@ export const routes: Routes = [
         path: 'edit-user',
         component: AdminEditUserComponent,
         
-      }
+      },
+      {
+        path:'sharedtable',component:AdminViewRoleComponent
+      },
+      {
+          path:'addrole',component:AddroleComponent
+      },
+      { path: 'editrole', component: EditroleComponent },
     ],
   },
   {
@@ -92,4 +102,11 @@ export const routes: Routes = [
 ]
 
 
+
+
+
+    
+   
+    
+    
 
