@@ -103,3 +103,23 @@ th{
   border-radius: 5%;
 }
 
+.flex-row-container{
+  display: flex;
+  
+}
+.flex-row-container label{
+  width: 50%;
+}
+.flex-column-container{
+  display: flex;
+  flex-direction: column;
+}
+.purple-bold-heading{
+  font-size: 18px;
+  font-weight: bold;
+  color: #896cc7;
+}
+.align-center{
+  // align-items: center;
+  padding-bottom: 10px;
+}

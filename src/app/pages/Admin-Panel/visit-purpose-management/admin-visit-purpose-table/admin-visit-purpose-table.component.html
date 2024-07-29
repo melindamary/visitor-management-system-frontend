@@ -2,16 +2,21 @@
     [dataSource]="visitPurposes"
     [columnsToDisplay]="columns"
     [actionsTemplate]="actionsTemplate"
+    [rows] = 10
 >
 <ng-template #actionsTemplate let-rowData let-rowIndex="rowIndex">
-    <!-- <p-button
+    <!-- Edit button -->
+     <p-toast/>
+    <p-button 
+        *ngIf="rowData.status === 'Approved'"
         class="view-btn btn-outline-none"
         pRipple
-        icon="pi pi-trash"
+        icon="pi pi-pencil"
         outlined="true"
-        [style]="{color: 'red'}"
-        (click)="deletePurpose(rowData.id)"
-    ></p-button> -->
+        (click)="openEditModal(rowData)"
+    ></p-button>
+
+    <!-- Approve button -->
     <p-button
         *ngIf="rowData.status === 'Not Approved'"
         class="view-btn btn-outline-none"
@@ -20,6 +25,16 @@
         outlined="true"
         [style]="{color: 'green'}"
         (click)="openEditModal(rowData)"
+    ></p-button>
+
+    <!-- Delete button -->
+    <p-button
+        class="view-btn btn-outline-none"
+        pRipple
+        icon="pi pi-trash"
+        outlined="true"
+        [style]="{color: 'red'}"
+        (click)="confirmDelete(rowData.id)"
     ></p-button>
   </ng-template>
 </app-table>
@@ -35,3 +50,4 @@
       <p-button label="Cancel" icon="pi pi-times" (click)="closeDialog()" class="p-button-secondary negative-button"></p-button>
     </p-footer>
   </p-dialog>
+  <p-confirmDialog></p-confirmDialog>

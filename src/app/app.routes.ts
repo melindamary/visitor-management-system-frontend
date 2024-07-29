@@ -1,6 +1,3 @@
-import { LocationChartComponent } from './ui/location-chart/location-chart.component';
-import { LocationVisitortableComponent } from './ui/location-visitortable/location-visitortable.component';
-import { PurposePieComponent } from './ui/purpose-pie/purpose-pie.component';
 import { AdminACEDashbordComponent } from './pages/admin-ace-dashbord/admin-ace-dashbord.component';
 import { WelcomepageComponent } from './pages/welcomepage/welcomepage.component';
 import { LoginComponent } from './pages/login/login.component';
@@ -13,17 +10,17 @@ import { VisitorFormComponent } from './pages/visitor-form/visitor-form.componen
 import { AuthSecurityGuard } from './core/guard/auth-security.guard';
 import { AuthAceGuard } from './core/guard/auth-ace.guard';
 import { AccessGuard } from './core/guard/access.guard';
-import { AdminAddUserComponent } from './pages/Admin-Panel/user-management/components/admin-add-user/admin-add-user.component';
-// import { AdminViewUserComponent } from './pages/admin-panel/user-management/components/admin-view-user/admin-view-user.component';
-import { AdminEditUserComponent } from './pages/Admin-Panel/user-management/components/admin-edit-user/admin-edit-user.component';
-import { UserManagementComponent } from './pages/Admin-Panel/user-management/user-management.component';
+import { AdminAddUserComponent } from './pages/admin-panel/user-management/components/admin-add-user/admin-add-user.component';
+import { AdminViewUserComponent } from './pages/admin-panel/user-management/components/admin-view-user/admin-view-user.component';
+import { AdminEditUserComponent } from './pages/admin-panel/user-management/components/admin-edit-user/admin-edit-user.component';
+import { UserManagementComponent } from './pages/admin-panel/user-management/user-management.component';
 import { Routes } from '@angular/router';
 import { ViewDetailsComponent } from './pages/reports/components/view-details/view-details.component';
-import { AdminPanelComponent } from './pages/Admin-Panel/admin-panel.component';
+import { AdminPanelComponent } from './pages/admin-panel/admin-panel.component';
 import { AddroleComponent } from './ui/addrole/addrole.component';
 import { EditroleComponent } from './ui/editrole/editrole.component';
-import { TableComponent } from './shared-components/table/table.component';
 import { AdminViewRoleComponent } from './pages/admin-panel/role-management/admin-view-role/admin-view-role.component';
+import { AdminVisitPurposeTableComponent } from './pages/admin-panel/visit-purpose-management/admin-visit-purpose-table/admin-visit-purpose-table.component';
 
 export const routes: Routes = [
   {
@@ -72,6 +69,9 @@ export const routes: Routes = [
           path:'add-role',component:AddroleComponent
       },
       { path: 'edit-role', component: EditroleComponent },
+      {
+        path:'visit-purpose',component: AdminVisitPurposeTableComponent
+      }
     ],
   },
   {
