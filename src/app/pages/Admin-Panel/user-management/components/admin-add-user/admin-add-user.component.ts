@@ -5,18 +5,15 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
 import {MatIconModule} from '@angular/material/icon';
-import { AdminButtonSubmitComponent } from "../../../../ui/admin-button-submit/admin-button-submit.component";
-import { AdminButtonCancelComponent } from "../../../../ui/admin-button-cancel/admin-button-cancel.component";
-import { UserManagementServiceService } from '../../../../core/services/UserManagementServices/user-management-service.service';
-import { GetIdAndName } from '../../../../core/models/getIdAndName.interface';
+import { AdminButtonSubmitComponent } from "../../../../../ui/admin-button-submit/admin-button-submit.component";
+import { AdminButtonCancelComponent } from "../../../../../ui/admin-button-cancel/admin-button-cancel.component";
+import { UserManagementServiceService } from '../../../../../core/services/UserManagementServices/user-management-service.service';
+import { GetIdAndName } from '../../../../../core/models/getIdAndName.interface';
 import { DatePipe, NgFor, NgIf } from '@angular/common';
 import {  FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { passwordMatchValidator } from './custom-validators';
-import { AddNewUser } from '../../../../core/models/addNewUser.interface';
-<<<<<<<< HEAD:src/app/pages/admin-panel/components/admin-add-user/admin-add-user.component.ts
-========
+import { AddNewUser } from '../../../../../core/models/addNewUser.interface';
 import { Observable } from 'rxjs';
->>>>>>>> origin/user-management-branch:src/app/pages/Admin-Panel/User/admin-add-user/admin-add-user.component.ts
 
 @Component({
   selector: 'app-admin-add-user',

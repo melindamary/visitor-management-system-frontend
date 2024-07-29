@@ -14,8 +14,10 @@ import { VisitorFormComponent } from './pages/visitor-form/visitor-form.componen
 import { AuthSecurityGuard } from './core/guard/auth-security.guard';
 import { AuthAceGuard } from './core/guard/auth-ace.guard';
 import { AccessGuard } from './core/guard/access.guard';
-<<<<<<< HEAD
-import { AdminAddUserComponent } from './pages/admin-panel/components/admin-add-user/admin-add-user.component';
+import { AdminAddUserComponent } from './pages/admin-panel/user-management/components/admin-add-user/admin-add-user.component';
+import { AdminViewUserComponent } from './pages/admin-panel/user-management/components/admin-view-user/admin-view-user.component';
+import { AdminEditUserComponent } from './pages/admin-panel/user-management/components/admin-edit-user/admin-edit-user.component';
+import { UserManagementComponent } from './pages/admin-panel/user-management/user-management.component';
 import { Routes } from '@angular/router';
 import { ViewDetailsComponent } from './pages/reports/components/view-details/view-details.component';
 import { AdminPanelComponent } from './pages/admin-panel/admin-panel.component';
@@ -45,6 +47,21 @@ export const routes: Routes = [
         component: AdminPanelComponent,
         canActivate: [AuthAdminGuard],
       },
+      {
+        path: 'user-management',
+        component: UserManagementComponent,
+        
+      },
+      {
+        path: 'add-user',
+        component: AdminAddUserComponent,
+        
+      },
+      {
+        path: 'edit-user',
+        component: AdminEditUserComponent,
+        
+      }
     ],
   },
   {
@@ -69,81 +86,10 @@ export const routes: Routes = [
     pathMatch: 'full',
   },
   {
-    path: 'adduser',
-    component: AdminAddUserComponent,
-  },
-  // {
-  //     path:'visitorform',component:VisitorFormComponent
-  // },
-  {
     path: '**',
     redirectTo: '/login',
-  },
-=======
-import { AdminAddUserComponent } from './pages/Admin-Panel/User/admin-add-user/admin-add-user.component';
-import { Routes } from '@angular/router';
-import { AdminViewUserComponent } from './pages/Admin-Panel/User/admin-view-user/admin-view-user.component';
-import { AdminEditUserComponent } from './pages/Admin-Panel/User/admin-edit-user/admin-edit-user.component';
-import { UserManagementComponent } from './pages/Admin-Panel/User/user-management.component';
+  }
+]
 
-export const routes: Routes = [
-    {
-        path:"vms", 
-        component: NavigationPanelComponent,
-        children: [
-            {path: "dashboard", component: AdminACEDashbordComponent, 
-                canActivate: [AuthAceGuard]},
-            {path: "visitor-log", component: SecurityVisitorLogComponent, 
-               canActivate: [AuthSecurityGuard]
-            },
-            {path: "reports", component: ReportTableComponent,
-                canActivate: [AccessGuard],
-            },
-           
-            // {
-            //     path:"admin-panel",
-            //     canActivate: [authAdminGuard],
-            // }
-        ]
-    },
-    { 
-        path:'welcomepage',
-        component:WelcomepageComponent
-    },
-    {
-        path: "visitorform", component: VisitorFormComponent, 
-    },
-    { 
-        path:"login", 
-        component: LoginComponent 
-    },
-    { 
-        path:"", 
-        redirectTo: "/login", 
-        pathMatch: "full" 
-    },
-    {
-        path:'adduser',component:AdminAddUserComponent
-    },
-    {
-        path:'viewuser',component:AdminViewUserComponent
-    },
-    {
-        path:'edituser',component:AdminEditUserComponent
-    },
-    {
-        path:'usermanagement',component:UserManagementComponent
 
-    },
-    // {
-    //     path:'visitorform',component:VisitorFormComponent
-    // },
-    {
-        path:"**",
-        redirectTo: "/dashboard", 
-    },
-    
-    
 
->>>>>>> origin/user-management-branch
-];

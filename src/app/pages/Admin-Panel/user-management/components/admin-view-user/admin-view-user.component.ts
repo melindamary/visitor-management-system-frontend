@@ -1,7 +1,7 @@
 import { Component, TemplateRef } from '@angular/core';
-import { TableComponent } from "../../../../shared-components/table/table.component";
-import { UserManagementServiceService } from '../../../../core/services/UserManagementServices/user-management-service.service';
-import { UserOverview } from '../../../../core/models/user-overview-display.interface';
+import { TableComponent } from "../../../../../shared-components/table/table.component";
+import { UserManagementServiceService } from '../../../../../core/services/UserManagementServices/user-management-service.service';
+import { UserOverview } from '../../../../../core/models/user-overview-display.interface';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -10,7 +10,7 @@ import { ToastModule } from 'primeng/toast';
 import { Router } from '@angular/router';
 import { InputIconModule } from 'primeng/inputicon';
 import { IconFieldModule } from 'primeng/iconfield';
-import { UserService } from '../../../../core/services/UserManagementServices/User.service';
+import { UserService } from '../../../../../core/services/UserManagementServices/User.service';
 @Component({
   selector: 'app-admin-view-user',
   standalone: true,
@@ -65,12 +65,12 @@ viewOrEdit(user: UserOverview): void {
   
   console.log('Viewing/Editing user with ID:', userId);
   this.userService.setUserId(userId);
-  this.router.navigate(['/edituser']);
+  this.router.navigate(['/vms/edit-user']);
   // Implement the logic to view or edit the user details
 }
 
 addUser(){
-  this.router.navigate(['/adduser']);
+  this.router.navigate(['/vms/add-user']);
 }
 
 deleteUser(user: UserOverview,event:Event) {
