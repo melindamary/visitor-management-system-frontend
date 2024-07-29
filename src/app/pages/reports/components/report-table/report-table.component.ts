@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';
 import {columns, customHeaders} from '../../../../../../public/report-table-columns';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TooltipModule } from 'primeng/tooltip';
-import { ReportService } from '../../../../core/services/reportServices/report.service';
+import { ReportService } from '../../../../core/services/report-services/report.service';
 import { Router, RouterOutlet } from '@angular/router';
 import { Dialog, DialogModule } from 'primeng/dialog';
 

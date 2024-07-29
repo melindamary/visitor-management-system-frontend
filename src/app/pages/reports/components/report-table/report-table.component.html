@@ -104,7 +104,6 @@
       <td alignFrozen="right" pFrozenColumn [frozen]="true" style="background-color: white;">
         <p-button 
             class="view-btn"
-            pRipple
             pRipple 
             icon="pi pi-eye" 
             [outlined]="true" 
@@ -123,7 +122,7 @@ header="Visitor Details"
 [modal]="true" 
 styleClass="p-fluid">
     <ng-template pTemplate="content">
-        <img src="{{visitorDetails.photo}}">
+        <img src="{{visitorDetails.photo}}" height="200px" width="200px">
         <p>{{visitorDetails.name}}</p>
         <p>{{visitorDetails.phoneNumber}}</p>
         <p>{{visitorDetails.visitDate}}</p>

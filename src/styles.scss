@@ -6,6 +6,7 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+//top-bar
 .user-avatar-button .p-button{
     // background-color: #896cc7;
     background-color: white !important;
@@ -13,6 +14,22 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     border-radius: 50%;
     width: 1.5rem;
     height: 1.5rem;
+}
+
+//visit-purpose table 
+.btn-outline-none .p-button{
+  box-shadow: none;
+  padding-block: 10px;
+}
+.negative-button .p-button{
+  background-color: #e0e0e0;
+  color: #000000 ;
+  border: none;
+}
+.negative-button .p-button:hover{
+  background-color: #bdbdbd;
+  color: #000000 ;
+  border: none;
 }
 .custom-accept-button {
     background-color: #896CC7 !important;
