@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { FormGroup, ReactiveFormsModule, FormControl, Validators } from '@angular/forms';
 import { MatIcon } from '@angular/material/icon';
 import { Router, RouterModule } from '@angular/router';
-import { AuthService } from '../../../../core/services/authServices/auth.service';
+import { AuthService } from '../../../../core/services/auth-services/auth.service';
 import { NgIf } from '@angular/common';
 @Component({
   selector: 'app-login-form',
