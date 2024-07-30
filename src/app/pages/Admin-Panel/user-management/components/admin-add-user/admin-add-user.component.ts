@@ -11,7 +11,7 @@ import { UserManagementServiceService } from '../../../../../core/services/UserM
 import { GetIdAndName } from '../../../../../core/models/getIdAndName.interface';
 import { DatePipe, NgFor, NgIf } from '@angular/common';
 import {  FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { passwordMatchValidator } from './custom-validators';
+import { alphabetValidator, passwordMatchValidator } from './custom-validators';
 import { AddNewUser } from '../../../../../core/models/addNewUser.interface';
 import { Observable } from 'rxjs';
 
@@ -53,8 +53,8 @@ initializeForm() {
       RoleId: new FormControl('', [Validators.required]),
       LocationId: new FormControl('', [Validators.required]),
       Date: new FormControl(transformedDate, [Validators.required]),
-      FirstName: new FormControl('', [Validators.required]),
-      LastName: new FormControl('', [Validators.required]),
+      FirstName: new FormControl('', [Validators.required,alphabetValidator()]),
+      LastName: new FormControl('', [Validators.required,alphabetValidator()]),
       PhoneNumber: new FormControl('', [Validators.required]),
       Address: new FormControl('', [Validators.required]),
       username: new FormControl('', [Validators.required, Validators.minLength(4)]),
@@ -111,30 +111,50 @@ loadLocationIdAndName(): Observable<GetIdAndName[]> {
     this.hideConfirmPassword = !this.hideConfirmPassword;
   }
  
-  onSubmit() {
-    if (this.addUserForm.valid) {
-      const formValues = this.addUserForm.value;
-      const dto: AddNewUser = {
-        userName: formValues.username,
-        password: formValues.password,
-        validFrom: formValues.Date,
-        officeLocationId: formValues.LocationId,
-        firstName: formValues.FirstName,
-        lastName: formValues.LastName,
-        phone: formValues.PhoneNumber,
-        address: formValues.Address,
-        roleId: formValues.RoleId
-      };
+ // component.ts
+onSubmit() {
+  if (this.addUserForm.valid) {
+    const formValues = this.addUserForm.value;
+    const username = formValues.username;
 
-      this.apiService.postNewUser(dto).subscribe(
-        response => {
-          console.log('User created successfully', response);
-          alert("User Added");
-        },
-        error => {
-          console.error('Error creating user', error);
+    // Check if the username exists
+    this.apiService.checkUsernameExists(username).subscribe(
+      exists => {
+        if (exists) {
+          // Username exists, show error message
+          alert('Username already exists. Please choose a different username.');
+        } 
+        else 
+        {
+          // Username does not exist, proceed with user creation
+          const dto: AddNewUser = {
+            userName: username,
+            password: formValues.password,
+            validFrom: formValues.Date,
+            officeLocationId: formValues.LocationId,
+            firstName: formValues.FirstName,
+            lastName: formValues.LastName,
+            phone: formValues.PhoneNumber,
+            address: formValues.Address,
+            roleId: formValues.RoleId
+          };
+
+          this.apiService.postNewUser(dto).subscribe(
+            response => {
+              console.log('User created successfully', response);
+              alert('User Added');
+            },
+            error => {
+              console.error('Error creating user', error);
+            }
+          );
         }
-      );
-    }
+      },
+      error => {
+        console.error('Error checking username', error);
+      }
+    );
   }
+}
+
 }

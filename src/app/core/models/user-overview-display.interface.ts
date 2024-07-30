@@ -24,3 +24,12 @@ export interface UserByIdOverview{
     
     
 }
+
+export interface UserOverviewTransformed {
+    userId: number;
+    fullName: string;
+    isActive: string;
+    location: string;
+    roleName: string;
+    username: string;
+  }

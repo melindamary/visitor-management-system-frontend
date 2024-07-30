@@ -61,7 +61,11 @@ h4 {
 
 .buttonRow {
   display: flex;
-  justify-content: space-between;
+  
+  justify-content: end;
+  
+ 
+  
   margin-top: 20px;
 }
 
@@ -99,4 +103,8 @@ h4 {
   color: black;
    /* Position the colon to the right edge of the label column */
   margin-left: 150px; /* Optional: Adjust the space between the label text and the colon */
+}
+.warning{
+  color:red;
+  margin-left: 30px;
 }
