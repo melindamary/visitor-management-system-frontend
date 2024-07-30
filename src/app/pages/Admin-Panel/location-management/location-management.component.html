@@ -1,12 +1,14 @@
-<div class="card">
-  <p-toast></p-toast>
- 
-  <div class="flex justify-content-end mb-2">
-    <p-button 
-        label="New" 
-        icon="pi pi-plus" 
-        (click)="openNewLocationDialog()"></p-button>
-  </div>
+<p-toast/>
+<p-toolbar styleClass="mb-4 gap-2">
+  <ng-template pTemplate="left">
+      <p-button 
+          pRipple 
+          label="New" 
+          icon="pi pi-plus" 
+          class="mr-2" 
+          (click)="openNewLocationDialog()" />
+  </ng-template>
+</p-toolbar>
 
   <app-table [dataSource]="locationDataSource" [columnsToDisplay]="locationColumns" [rows]="5" [totalItems]="totalItems"
              [actionsTemplate]="actionsTemplate" [summaryTemplate]="summaryTemplate">

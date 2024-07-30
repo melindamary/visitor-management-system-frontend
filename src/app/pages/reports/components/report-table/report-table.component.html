@@ -2,7 +2,8 @@
 
     <!-- Filter by date range -->
     <ng-template pTemplate="left">
-      <p-calendar styleClass="date-range-picker"
+      <p-calendar 
+      styleClass="date-range-picker"
       [(ngModel)]="rangeDates" 
       (onClose)="filterByDateRange()"
       selectionMode="range"
@@ -11,17 +12,7 @@
       [readonlyInput]="true"
       variant="filled" 
       />
-      
-      <!-- Filter by month -->
-      <!-- <p-calendar 
-    [(ngModel)]="selectedMonth" 
-    (onClose)="filterByMonth()"
-    view="month" 
-    dateFormat="mm/yy" 
-    [readonlyInput]="true" 
-    [showIcon]="true"
-    placeholder="Select Month"
-    variant="filled"/> -->
+
 
     <!-- Filter by year -->
     <p-calendar 
@@ -87,10 +78,24 @@
       <th class="search-header"></th>
       <th class="search-header" *ngFor="let col of columns">
           <p-columnFilter
-              *ngIf="col.field !== 'slNo'"
+              *ngIf="col.field !== 'slNo' && col.field !== 'visitDate'"
               type="text" [field]="col.field" [matchMode]="'contains'"
-              [placeholder]="'Search...'"
+              [placeholder]="''"
+              [(ngModel)]="searchTerms[col.field]"
+              (keyup)="filterReports()"
           ></p-columnFilter>
+          <p-calendar 
+            styleClass="date-picker"
+            class="single-date-picker"
+            *ngIf="col.field == 'visitDate'"
+            [(ngModel)]="selectedDate" 
+            (onClose)="filterByDate()"
+            dateFormat="dd-mm-yy" 
+            [readonlyInput]="true" 
+            [showIcon]="false"
+            placeholder=""
+            appendTo="body"
+          ></p-calendar>
       </th>
       <th class="search-header" alignFrozen="right" pFrozenColumn [frozen]="true"></th>
     </tr>
@@ -110,6 +115,9 @@
             icon="pi pi-eye" 
             [outlined]="true" 
             (onClick)="viewDetails(rowData)" 
+            pTooltip="View Details" 
+            tooltipPosition="left"
+            tooltipStyleClass="custom-tooltip"
           />
         </td>
     </tr>
