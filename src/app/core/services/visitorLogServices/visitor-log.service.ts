@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { VisitorLogResponse, VisitorLogResult } from '../../models/visitor-log.interface';
 import { VisitorPassCodeDTO } from '../../models/visitor-pass-code.interface';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,8 @@ import { VisitorPassCodeDTO } from '../../models/visitor-pass-code.interface';
 export class VisitorLogService {
   private apiUrl = 'https://localhost:7121/VisitorLog';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,
+    @Inject(PLATFORM_ID) private platformId: Object) { }
 
   getVisitorLogToday(): Observable<VisitorLogResponse> {
     return this.http.get<VisitorLogResponse>(`${this.apiUrl}/GetVisitorLogToday`)
@@ -20,7 +22,8 @@ export class VisitorLogService {
   }
 
   updateCheckInTimeAndCardNumber(id: number, updateVisitorPassCode: VisitorPassCodeDTO): Observable<VisitorLogResponse> {
-    return this.http.put<VisitorLogResponse>(`${this.apiUrl}/UpdateCheckInTimeAndCardNumber/${id}`, updateVisitorPassCode).pipe(
+    const username = this.getUser();
+    return this.http.put<VisitorLogResponse>(`${this.apiUrl}/UpdateCheckInTimeAndCardNumber/${id}`,{...updateVisitorPassCode,username} ).pipe(
       catchError(this.handleError)
     );
   }
@@ -49,6 +52,17 @@ export class VisitorLogService {
 
     console.error(errorMessage);
     return throwError(() => new Error(errorMessage));
+  }
+
+  getUser(): string | null {
+    if (isPlatformBrowser(this.platformId)) {
+      const authData = localStorage.getItem('authUser');
+      if (authData) {
+        const parsedAuthData = JSON.parse(authData);
+        return parsedAuthData.username || null;
+      }
+    }
+    return null;
   }
 
   
