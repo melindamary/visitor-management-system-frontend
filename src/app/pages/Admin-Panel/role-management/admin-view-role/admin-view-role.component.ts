@@ -1,14 +1,14 @@
 import { Component, signal, TemplateRef, ViewChild } from '@angular/core';
-import { TableComponent } from "../../../shared-components/table/table.component";
+import { TableComponent } from '../../../../shared-components/table/table.component';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { TooltipModule } from 'primeng/tooltip';
 import { ToastModule } from 'primeng/toast';
 import { NavigationExtras, Router } from '@angular/router';
-import { RoleService } from '../../../services/role.service';
-import { RoleOverview } from '../../../Models/RoleOverview.interface';
-import { EditroleComponent } from '../../../ui/editrole/editrole.component';
+import { RoleService } from '../../../../services/role.service';
+import { RoleOverview } from '../../../../Models/RoleOverview.interface';
+import { EditroleComponent } from '../../../../ui/editrole/editrole.component';
 import { NgIf } from '@angular/common';
 @Component({
   selector: 'app-admin-view-role',

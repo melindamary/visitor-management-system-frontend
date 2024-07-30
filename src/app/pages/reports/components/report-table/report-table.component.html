@@ -2,7 +2,8 @@
 
     <!-- Filter by date range -->
     <ng-template pTemplate="left">
-      <p-calendar styleClass="date-range-picker"
+      <p-calendar 
+      styleClass="date-range-picker"
       [(ngModel)]="rangeDates" 
       (onClose)="filterByDateRange()"
       selectionMode="range"
@@ -11,17 +12,7 @@
       [readonlyInput]="true"
       variant="filled" 
       />
-      
-      <!-- Filter by month -->
-      <!-- <p-calendar 
-    [(ngModel)]="selectedMonth" 
-    (onClose)="filterByMonth()"
-    view="month" 
-    dateFormat="mm/yy" 
-    [readonlyInput]="true" 
-    [showIcon]="true"
-    placeholder="Select Month"
-    variant="filled"/> -->
+
 
     <!-- Filter by year -->
     <p-calendar 
@@ -66,6 +57,8 @@
   sortMode="multiple"
   selectionMode="multiple"
   [(selection)]="selectedReports"
+  [showCurrentPageReport]="true"
+  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
 >
 
   <!-- Column headers -->
@@ -85,10 +78,24 @@
       <th class="search-header"></th>
       <th class="search-header" *ngFor="let col of columns">
           <p-columnFilter
-              *ngIf="col.field !== 'slNo'"
+              *ngIf="col.field !== 'slNo' && col.field !== 'visitDate'"
               type="text" [field]="col.field" [matchMode]="'contains'"
-              [placeholder]="'Search...'"
+              [placeholder]="''"
+              [(ngModel)]="searchTerms[col.field]"
+              (keyup)="filterReports()"
           ></p-columnFilter>
+          <p-calendar 
+            styleClass="date-picker"
+            class="single-date-picker"
+            *ngIf="col.field == 'visitDate'"
+            [(ngModel)]="selectedDate" 
+            (onClose)="filterByDate()"
+            dateFormat="dd-mm-yy" 
+            [readonlyInput]="true" 
+            [showIcon]="false"
+            placeholder=""
+            appendTo="body"
+          ></p-calendar>
       </th>
       <th class="search-header" alignFrozen="right" pFrozenColumn [frozen]="true"></th>
     </tr>
@@ -108,6 +115,9 @@
             icon="pi pi-eye" 
             [outlined]="true" 
             (onClick)="viewDetails(rowData)" 
+            pTooltip="View Details" 
+            tooltipPosition="left"
+            tooltipStyleClass="custom-tooltip"
           />
         </td>
     </tr>
@@ -117,21 +127,50 @@
 <!-- View Details Dialog -->
 <p-dialog 
 [(visible)]="viewDetailsDialog" 
-[style]="{ width: '450px' }" 
+[style]="{ width: '40vw' }" 
 header="Visitor Details" 
 [modal]="true" 
 styleClass="p-fluid">
     <ng-template pTemplate="content">
-        <!-- <img src="{{visitorDetails.photo}}" height="200px" width="200px"> -->
-        <p>{{visitorDetails.name}}</p>
-        <p>{{visitorDetails.phoneNumber}}</p>
-        <p>{{visitorDetails.visitDate}}</p>
-        <p>{{visitorDetails.officeLocation}}</p>
-        <p>{{visitorDetails.checkIn}}</p>
-        <p>{{visitorDetails.checkOut}}</p>
-        <p>{{visitorDetails.visitPurpose}}</p>
-        <p>{{visitorDetails.hostName}}</p>
-        <p>{{visitorDetails.deviceCount}}</p>
+      
+        <div class="flex-column-container purple-bold-heading align-center">
+          <img [src]="'data:image/jpeg;base64,' + visitorDetails.photo" height="200px" width="200px"/>
+          <p style="margin-top: 10px">{{visitorDetails.name}}</p>
+        </div>
+        
+        <div class="flex-row-container">
+          <label>Phone Number </label>
+          <p>: {{visitorDetails.phoneNumber}}</p>
+        </div>
+        <div class="flex-row-container">
+          <label>Visit Date </label>
+          <p>: {{visitorDetails.visitDate}}</p>
+        </div>
+        <div class="flex-row-container">
+          <label>Office Location </label>
+          <p>: {{visitorDetails.officeLocation}}</p>
+        </div>
+        <div class="flex-row-container">
+          <label>Check-in Time </label>
+          <p>: {{visitorDetails.checkIn}}</p>
+        </div>
+        <div  class="flex-row-container">
+          <label>Check-out Time </label>
+          <p>: {{visitorDetails.checkOut}}</p>
+        </div>
+        <div  class="flex-row-container">
+          <label>Visit Purpose </label>
+          <p>: {{visitorDetails.visitPurpose}}</p>
+        </div>
+        <div  class="flex-row-container">
+          <label>Host Name </label>
+          <p>: {{visitorDetails.hostName}}</p>
+        </div>
+        <div  class="flex-row-container">
+          <label>Number of Devices </label>
+          <p>: {{visitorDetails.deviceCount}}</p>
+        </div>
+     
     </ng-template>
 
 </p-dialog>

@@ -1,6 +1,7 @@
 import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+// import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { Inject,Injectable, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, map, Observable, tap, throwError } from 'rxjs';
 
@@ -86,7 +87,9 @@ export class AuthService {
 
 
 getMenuItems(): any {
+  if (isPlatformBrowser(this.platformId)){
   this.userRole = localStorage.getItem('userRole');
+  }
   const adminMenu = [
     { label: 'Dashboard', icon: 'dashboard', routerLink: '/vms/dashboard' },
     { label: 'Visitor Log', icon: 'assignment_ind', routerLink: '/vms/visitor-log' },

@@ -3,6 +3,7 @@ export interface LocationDetails {
     name: string;
     address: string;
     phone: string;
+    createdDate: string;
   }
   
   export interface ApiResponse<T> {

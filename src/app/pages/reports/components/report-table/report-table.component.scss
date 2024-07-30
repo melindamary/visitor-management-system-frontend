@@ -74,6 +74,10 @@ th{
   width: 18rem;
 }
 
+::ng-deep .date-picker{
+  width: 8rem;
+}
+
 ::ng-deep .p-paginator{
   height: 3rem;
   padding: 0px;
@@ -86,6 +90,7 @@ th{
 
 ::ng-deep .p-dropdown{
   height: 2rem;
+  outline: none;
 }
 
 ::ng-deep .p-dropdown-label{
@@ -103,3 +108,29 @@ th{
   border-radius: 5%;
 }
 
+::ng-deep .search-header .p-datepicker table td > span {
+  height: 0.5rem !important;
+  width: 0.5rem;
+  border-radius: 5%;
+}
+
+.flex-row-container{
+  display: flex;
+  
+}
+.flex-row-container label{
+  width: 50%;
+}
+.flex-column-container{
+  display: flex;
+  flex-direction: column;
+}
+.purple-bold-heading{
+  font-size: 18px;
+  font-weight: bold;
+  color: #896cc7;
+}
+.align-center{
+  // align-items: center;
+  padding-bottom: 10px;
+}

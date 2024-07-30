@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { InputIconModule } from 'primeng/inputicon';
 import { IconFieldModule } from 'primeng/iconfield';
 import { UserService } from '../../../../../core/services/UserManagementServices/User.service';
+
 @Component({
   selector: 'app-admin-view-user',
   standalone: true,
@@ -20,6 +21,7 @@ import { UserService } from '../../../../../core/services/UserManagementServices
   templateUrl: './admin-view-user.component.html',
   styleUrl: './admin-view-user.component.scss'
 })
+
 export class AdminViewUserComponent {
 
 

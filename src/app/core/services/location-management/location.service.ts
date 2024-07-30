@@ -1,7 +1,8 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { ApiResponse, LocationDetails, UpdateLocation } from '../../models/location-details.interface';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,8 @@ import { ApiResponse, LocationDetails, UpdateLocation } from '../../models/locat
 export class LocationService {
   private apiUrl = 'https://localhost:7121/Location';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              @Inject(PLATFORM_ID) private platformId: Object) { }
 
   // Fetch all location details
   getAllLocationDetails(): Observable<LocationDetails[]> {
@@ -19,14 +21,25 @@ export class LocationService {
   }
 
   // Add a new location
-  addLocation(addedLocation: UpdateLocation): Observable<ApiResponse<string>> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post<ApiResponse<string>>(`${this.apiUrl}/AddLocation`, addedLocation, { headers });
+  addLocation(addedLocation: UpdateLocation): Observable<ApiResponse<UpdateLocation>> {
+    const username = this.getUser();
+    return this.http.post<ApiResponse<UpdateLocation>>(`${this.apiUrl}/AddLocation`, { ...addedLocation, username });
   }
 
   // Update an existing location
-  updateLocation(id: number, updatedLocation: UpdateLocation): Observable<ApiResponse<string>> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.put<ApiResponse<string>>(`${this.apiUrl}/UpdateLocation/${id}`, updatedLocation, { headers });
+  updateLocation(id: number, updatedLocation: UpdateLocation): Observable<ApiResponse<UpdateLocation>> {
+    const username = this.getUser();
+    return this.http.put<ApiResponse<UpdateLocation>>(`${this.apiUrl}/UpdateLocation/${id}`, { ...updatedLocation, username });
+  }
+
+  getUser(): string | null {
+    if (isPlatformBrowser(this.platformId)) {
+      const authData = localStorage.getItem('authUser');
+      if (authData) {
+        const parsedAuthData = JSON.parse(authData);
+        return parsedAuthData.username || null;
+      }
+    }
+    return null;
   }
 }
