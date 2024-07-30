@@ -1,7 +1,7 @@
 import { Component, TemplateRef } from '@angular/core';
 import { TableComponent } from "../../../../../shared-components/table/table.component";
 import { UserManagementServiceService } from '../../../../../core/services/UserManagementServices/user-management-service.service';
-import { UserOverview } from '../../../../../core/models/user-overview-display.interface';
+import { UserOverview, UserOverviewTransformed } from '../../../../../core/models/user-overview-display.interface';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -23,13 +23,13 @@ import { UserService } from '../../../../../core/services/UserManagementServices
 export class AdminViewUserComponent {
 
 
-DataSource: UserOverview[]=[];
+DataSource: UserOverviewTransformed[] = [];;
 columnsToDisplay: any[] = [
   { header: 'Username', field: 'username' },
   { header: 'Full Name', field: 'fullName' },
   { header: 'Role ', field: 'roleName' },
   { header: 'Location', field: 'location' },
-  { header: 'Active', field: 'isActive' },
+  { header: 'Status', field: 'isActive' },
   { header: 'Actions', field: 'actions' } // Assuming you have actions like edit/delete
 ];
 rows: number = 5;
@@ -50,14 +50,16 @@ ngOnInit(){
   this.loadAllUser();
 }
 
+// this.userService.getAllUser().subscribe(users => {
+//   this.users = users;
+// });
+// }
 loadAllUser(): void {
-  this.apiService.getAllUser()
-    .subscribe((response: UserOverview[]) => {
-      console.log('Location Response:', response);
-      this.DataSource = response;
-      this.totalItems = response.length;
-      // console.log(this.visitorDataSource);     
-    });
+  this.apiService.getAllUser().subscribe(users => {
+    this.DataSource = users;
+    this.totalItems = users.length;
+  });
+    
 }
 
 viewOrEdit(user: UserOverview): void {
@@ -66,6 +68,14 @@ viewOrEdit(user: UserOverview): void {
   console.log('Viewing/Editing user with ID:', userId);
   this.userService.setUserId(userId);
   this.router.navigate(['/vms/edit-user']);
+  // Implement the logic to view or edit the user details
+}
+view(user: UserOverview): void {
+  const userId = user.userId;  // Retrieve the user ID
+  
+  console.log('Viewing/Editing user with ID:', userId);
+  this.userService.setUserId(userId);
+  this.router.navigate(['/vms/view-user']);
   // Implement the logic to view or edit the user details
 }
 

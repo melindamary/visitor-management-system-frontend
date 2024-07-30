@@ -4,7 +4,7 @@ import { map, Observable } from 'rxjs';
 
 import { GetIdAndName } from '../../models/getIdAndName.interface';
 import { AddNewUser } from '../../models/addNewUser.interface';
-import { UserByIdOverview, UserOverview } from '../../models/user-overview-display.interface';
+import { UserByIdOverview, UserOverview, UserOverviewTransformed } from '../../models/user-overview-display.interface';
 import { response } from 'express';
 
 @Injectable({
@@ -31,14 +31,19 @@ export class UserManagementServiceService {
     );
   }
 
-  getAllUser():Observable<UserOverview[]>{
-    const apiUrl ="https://localhost:7121/User/GetAllUsersOverview";
+  getAllUser(): Observable<UserOverviewTransformed[]> {
+    const apiUrl = "https://localhost:7121/User/GetAllUsersOverview";
     return this.http.get<{ $id: string; $values: UserOverview[] }>(apiUrl).pipe(
-      map(response => response.$values)
+      map(response => response.$values.map(user => ({
+        userId: user.userId,
+        fullName: user.fullName,
+        isActive: user.isActive ? 'Active' : 'Inactive',
+        location: user.location,
+        roleName: user.roleName,
+        username: user.username
+      })))
     );
-
   }
-
   updateUserData(id:number, userData: any):Observable<any>{    
     console.log("recieved data",userData);
     

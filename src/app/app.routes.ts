@@ -24,6 +24,7 @@ import { AddroleComponent } from './ui/addrole/addrole.component';
 import { EditroleComponent } from './ui/editrole/editrole.component';
 import { TableComponent } from './shared-components/table/table.component';
 import { AdminViewRoleComponent } from './pages/Role/admin-view-role/admin-view-role.component';
+import { AdminViewIndividualUserComponent } from './pages/Admin-Panel/user-management/components/admin-view-individual-user/admin-view-individual-user.component';
 
 export const routes: Routes = [
   {
@@ -49,6 +50,11 @@ export const routes: Routes = [
         path: 'admin-panel',
         component: AdminPanelComponent,
         canActivate: [AuthAdminGuard],
+      },
+      {
+        path:'view-user',
+        component:AdminViewIndividualUserComponent
+
       },
       {
         path: 'user-management',

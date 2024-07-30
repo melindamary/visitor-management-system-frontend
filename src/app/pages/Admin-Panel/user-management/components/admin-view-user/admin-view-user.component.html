@@ -5,7 +5,7 @@
 <p-button  (click)="addUser()" label="Add new User"  />
 
 
-<app-table   [dataSource]="DataSource" [columnsToDisplay]="columnsToDisplay" [rows]="5"
+<app-table class="reduced-spacing"  [dataSource]="DataSource" [columnsToDisplay]="columnsToDisplay" [rows]="5"
  [totalItems]="totalItems"
 [actionsTemplate]="actionsTemplate" [summaryTemplate]="summaryTemplate">
 
@@ -13,7 +13,8 @@
 
 <ng-template #actionsTemplate let-rowData>
    
-    <p-button icon="pi pi-eye" [rounded]="true" [text]="true" (click)="viewOrEdit(rowData)"  pTooltip="View User" ></p-button>
+    <p-button icon="pi pi-eye" [rounded]="true" [text]="true" (click)="view(rowData)"  pTooltip="View User" ></p-button>
+    <p-button icon="pi pi-pencil" [rounded]="true" [text]="true"  (click)="viewOrEdit(rowData)" pTooltip="Edit User" ></p-button>
     <!-- <p-button icon="pi pi-trash" [rounded]="true" [text]="true" (click)="deleteUser(rowData,$event)"
      severity="danger" [outlined]="false" ></p-button> -->
      </ng-template>
