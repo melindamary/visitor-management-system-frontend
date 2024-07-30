@@ -26,6 +26,7 @@ export class ReportTableComponent {
   constructor(public reportService: ReportService, private router: Router){}
   selectedMonth: Date | undefined;
   selectedYear: Date | undefined;
+  selectedDate!: Date | '';
   rangeDates: Date[] | undefined;
   selectedReports: any[] = [];
   filteredReports: any[] = [];
@@ -36,38 +37,53 @@ export class ReportTableComponent {
   customHeaders: { [key: string]: string } = customHeaders;
   viewDetailsDialog: boolean = false;
   visitorDetails: any;
+  searchTerms: { [key: string]: string } = {};
 
   async fetchReport():Promise<void>{
     console.log("Entered Reports");
     this.reports = await this.reportService.getReport();
     this.filteredReports = this.reports;
+    console.log("Filtered Reports 2" + this.filteredReports);
   }
 
-  filterByMonth(): void {
-    if (this.selectedMonth) {
-      const selectedMonth = this.selectedMonth.getMonth(); // month is zero-based
-      const selectedYear = this.selectedMonth.getFullYear();
+  filterReports() {
+    this.filteredReports = this.reports.filter(report => {
+      for (const field in this.searchTerms) {
+        if (this.searchTerms[field]) {
+          const fieldValue = report[field]?.toString().toLowerCase() || '';
+          const searchTerm = this.searchTerms[field].toLowerCase();
+          if (!fieldValue.includes(searchTerm)) {
+            return false;
+          }
+        }
+      }
+      return true;
+    });
+    console.log('Filtered reports:', this.filteredReports);
+  }
 
-      this.filteredReports = this.reports.filter((report) => {
-        const reportDate = new Date(report.visitDate);
-        return (
-          reportDate.getMonth() === selectedMonth &&
-          reportDate.getFullYear() === selectedYear
-        );
+  filterByDate() {
+    if (this.selectedDate) {
+      this.filteredReports = this.reports.filter(report => {
+        const reportDate = this.parseDate(report.visitDate);
+        return reportDate.toLocaleDateString()
+         === new Date(this.selectedDate).toLocaleDateString();
       });
     } else {
-      this.filteredReports = this.reports;
+      this.filteredReports = [...this.reports];
     }
   }
-
   filterByYear(): void {
     if (this.selectedYear) {
       const selectedYear = this.selectedYear.getFullYear();
 
+      console.log("Selected year 1: " + this.selectedYear.getFullYear())
+    
       this.filteredReports = this.reports.filter((report) => {
-        const reportDate = new Date(report.visitDate);
+        const reportDate = this.parseDate(report.visitDate);
         return reportDate.getFullYear() === selectedYear;
       });
+      console.log("Filtered reports 1: " + this.filteredReports)
     } else {
       this.filteredReports = this.reports;
     }
@@ -79,14 +95,18 @@ export class ReportTableComponent {
       const endDate = new Date(this.rangeDates[1]);
 
       this.filteredReports = this.reports.filter((report) => {
-        const reportDate = new Date(report.visitDate); // Replace 'date' with your date field
+        const reportDate = this.parseDate(report.visitDate); // Replace 'date' with your date field
         return reportDate >= startDate && reportDate <= endDate;
       });
     } else {
       this.filteredReports = this.reports; // Show all reports if no date range is selected
     }
   }
-  
+ parseDate(dateStr: string): Date {
+    const [day, month, year] = dateStr.split('-').map(Number);
+    return new Date(year, month - 1, day); // Months are 0-based in JavaScript Date
+  }
+
   exportSelectedToExcel() {
     if (this.selectedReports.length > 0) {
       // Clone the selectedReports to modify headers
@@ -126,6 +146,7 @@ export class ReportTableComponent {
     this.rangeDates = undefined;
     this.selectedMonth = undefined;
     this.selectedYear = undefined;
+    this.selectedDate = '';
   }
   viewDetails(rowData: any) {
     console.log("Row data: ",rowData);

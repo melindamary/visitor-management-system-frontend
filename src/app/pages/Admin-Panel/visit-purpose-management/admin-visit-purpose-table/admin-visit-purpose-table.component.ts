@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { MessageService, ConfirmationService} from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { TooltipModule } from 'primeng/tooltip';
 
 interface VisitPurpose {
   slNo: number;
@@ -20,7 +21,7 @@ interface VisitPurpose {
   selector: 'app-admin-visit-purpose-table',
   standalone: true,
   imports: [TableComponent, ButtonModule, DialogModule, NgIf, FormsModule,
-    ToastModule, ConfirmDialogModule
+    ToastModule, ConfirmDialogModule, TooltipModule
   ],
   templateUrl: './admin-visit-purpose-table.component.html',
   styleUrl: './admin-visit-purpose-table.component.scss'
@@ -32,14 +33,14 @@ export class AdminVisitPurposeTableComponent {
     private confirmationService: ConfirmationService) {}
 
   visitPurposes:VisitPurpose[] = [];
+  totalItems: number = 0;
   columns: any[] = [
-    { header: 'Sl.No', field: 'slNo'},
     { header: 'Visit Purpose', field: 'name'},
     { header: 'Created On', field: 'createdDate'},
-    { header: 'Last Modified By', field: 'lastModifiedBy'},
-    { header: 'Last Modified On', field: 'lastModifiedOn'},
-    { header: 'Approval Status', field:'status'},
-    { header: 'Actions', field: 'actions'},
+    { header: 'Updated By', field: 'lastModifiedBy'},
+    { header: 'Updated On', field: 'lastModifiedOn'},
+    { header: 'Status', field:'status'},
+    { header: 'Actions', field: 'actions', width: '18%'},
   ];
   isEditModalVisible: boolean = false;
   selectedPurpose: any;
@@ -48,6 +49,7 @@ export class AdminVisitPurposeTableComponent {
     this.visitPurposes = await this.visitPurposeService.getVisitPurposes();
     this.visitPurposes.forEach(item => item.isEditing = false);
     console.log("Entered Visit Purposes: ",this.visitPurposes);
+    this.totalItems = this.visitPurposes.length;
   }
 
   openEditModal(purpose: any) {
