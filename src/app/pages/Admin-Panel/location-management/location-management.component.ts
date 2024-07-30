@@ -4,7 +4,7 @@ import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
 import { TooltipModule } from 'primeng/tooltip';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DialogModule } from 'primeng/dialog';
 import { InputNumberModule } from 'primeng/inputnumber';
@@ -16,7 +16,7 @@ import { TabViewModule } from 'primeng/tabview';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TableComponent } from '../../../shared-components/table/table.component';
 import { LocationService } from '../../../core/services/location-management/location.service';
-import { ApiResponse, LocationDetails } from '../../../core/models/location-details.interface';
+import { ApiResponse, LocationDetails, UpdateLocation } from '../../../core/models/location-details.interface';
 
 @Component({
   selector: 'app-location-management',
@@ -30,14 +30,15 @@ import { ApiResponse, LocationDetails } from '../../../core/models/location-deta
     InputTextModule,
     InputTextareaModule,
     CommonModule,
-    ToolbarModule,
     InputNumberModule,
     TableComponent,
     TabViewModule,
     ButtonModule,
     FormsModule,
+    TooltipModule,
+    ToolbarModule,
   ],
-  providers: [LocationService, MessageService, ConfirmationService],
+  providers: [LocationService, MessageService, ConfirmationService, DatePipe],
   templateUrl: './location-management.component.html',
   styleUrls: ['./location-management.component.scss']
 })
@@ -54,13 +55,15 @@ export class LocationManagementComponent implements OnInit {
     { field: 'name', header: 'Location' },
     { field: 'address', header: 'Address' },
     { field: 'phone', header: 'Phone' },
+    { field: 'createdDate', header: 'Added On'},
     { field: 'actions', header: 'Actions' }
   ];
 
   constructor(
     private locationService: LocationService,
     private messageService: MessageService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private datePipe: DatePipe
   ) {}
 
   ngOnInit(): void {
@@ -70,7 +73,10 @@ export class LocationManagementComponent implements OnInit {
   loadLocationDetails(): void {
     this.locationService.getAllLocationDetails().subscribe({
       next: (response: LocationDetails[]) => {
-        this.locations = response;
+        this.locations = response.map(location => ({
+          ...location,
+          createdDate: this.getFormattedDate(location.createdDate)
+        }));
         this.locationDataSource = this.locations;
         this.totalItems = this.locations.length;
       }
@@ -102,7 +108,7 @@ export class LocationManagementComponent implements OnInit {
   
     if (this.selectedLocation.id) {
       this.locationService.updateLocation(this.selectedLocation.id, this.selectedLocation).subscribe({
-        next: (response: ApiResponse<string>) => {
+        next: (response: ApiResponse<UpdateLocation>) => {
           if (response.isSuccess) {
             this.messageService.add({ 
               severity: 'success', 
@@ -132,7 +138,7 @@ export class LocationManagementComponent implements OnInit {
       });
     } else {
       this.locationService.addLocation(this.selectedLocation).subscribe({
-        next: (response: ApiResponse<string>) => {
+        next: (response: ApiResponse<UpdateLocation>) => {
           if (response.isSuccess) {
             this.messageService.add({
               severity: 'success',
@@ -163,4 +169,7 @@ export class LocationManagementComponent implements OnInit {
     }
   }
   
+  getFormattedDate(date: string): string {
+    return this.datePipe.transform(date, 'yyyy-MM-dd') || '';
+  }
 }
