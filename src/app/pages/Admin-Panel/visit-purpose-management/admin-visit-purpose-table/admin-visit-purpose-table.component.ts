@@ -35,7 +35,7 @@ export class AdminVisitPurposeTableComponent {
   visitPurposes:VisitPurpose[] = [];
   totalItems: number = 0;
   columns: any[] = [
-    { header: 'Visit Purpose', field: 'name'},
+    { header: 'Visit Purpose', field: 'name', width: '22%'},
     { header: 'Created On', field: 'createdDate'},
     { header: 'Updated By', field: 'lastModifiedBy'},
     { header: 'Updated On', field: 'lastModifiedOn'},
