@@ -1,6 +1,6 @@
 import { Component, TemplateRef } from '@angular/core';
 import { TableComponent } from "../../../../../shared-components/table/table.component";
-import { UserManagementServiceService } from '../../../../../core/services/UserManagementServices/user-management-service.service';
+import { UserManagementServiceService } from '../../../../../core/services/user-management-service/user-management-service.service';
 import { UserOverview, UserOverviewTransformed } from '../../../../../core/models/user-overview-display.interface';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 import { ToolbarModule } from 'primeng/toolbar';
 import { InputIconModule } from 'primeng/inputicon';
 import { IconFieldModule } from 'primeng/iconfield';
-import { UserService } from '../../../../../core/services/UserManagementServices/User.service';
+import { UserService } from '../../../../../core/services/user-management-service/User.service';
 
 @Component({
   selector: 'app-admin-view-user',

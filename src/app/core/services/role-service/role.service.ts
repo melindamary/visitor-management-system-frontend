@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Page, PagesResponse } from '../Models/page.interface';
-import { UpdateRolePagesDTO } from '../Models/update.interface';
-import { RoleOverview } from '../Models/RoleOverview.interface';
+import { Page, PagesResponse } from '../../models/page.interface';
+import { UpdateRolePagesDTO } from '../../models/update.interface';
+import { RoleOverview } from '../../models/RoleOverview.interface';
 
 @Injectable({
   providedIn: 'root'

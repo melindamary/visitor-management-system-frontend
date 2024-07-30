@@ -1,8 +1,8 @@
 import { Component, inject, Input } from '@angular/core';
 import { FormGroup, FormBuilder, ReactiveFormsModule ,FormControl} from '@angular/forms';
-import { RoleService } from '../../services/role.service';
+import { RoleService } from '../../core/services/role-service/role.service';
 import { NgFor } from '@angular/common';
-import { Page, PagesResponse } from '../../Models/page.interface';
+import { Page, PagesResponse } from '../../core/models/page.interface';
 import { NavigationExtras, Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 

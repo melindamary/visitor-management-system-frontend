@@ -6,10 +6,11 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { TooltipModule } from 'primeng/tooltip';
 import { ToastModule } from 'primeng/toast';
 import { NavigationExtras, Router } from '@angular/router';
-import { RoleService } from '../../../../services/role.service';
-import { RoleOverview } from '../../../../Models/RoleOverview.interface';
+import { RoleService } from '../../../../core/services/role-service/role.service';
+import { RoleOverview } from '../../../../core/models/RoleOverview.interface';
 import { EditroleComponent } from '../../../../ui/editrole/editrole.component';
 import { NgIf } from '@angular/common';
+
 @Component({
   selector: 'app-admin-view-role',
   standalone: true,
@@ -19,6 +20,7 @@ import { NgIf } from '@angular/common';
   templateUrl: './admin-view-role.component.html',
   styleUrl: './admin-view-role.component.scss'
 })
+
 export class AdminViewRoleComponent {
   roleDataSource: RoleOverview[] = [];
   columnsToDisplay: any[] = [

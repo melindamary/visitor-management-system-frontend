@@ -7,7 +7,7 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatIconModule} from '@angular/material/icon';
 import { AdminButtonSubmitComponent } from "../../../../../ui/admin-button-submit/admin-button-submit.component";
 import { AdminButtonCancelComponent } from "../../../../../ui/admin-button-cancel/admin-button-cancel.component";
-import { UserManagementServiceService } from '../../../../../core/services/UserManagementServices/user-management-service.service';
+import { UserManagementServiceService } from '../../../../../core/services/user-management-service/user-management-service.service';
 import { GetIdAndName } from '../../../../../core/models/getIdAndName.interface';
 import { DatePipe, NgFor, NgIf } from '@angular/common';
 import {  FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';

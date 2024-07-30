@@ -9,7 +9,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { NgClass, NgIf, NgFor } from '@angular/common';
 import { RouterLinkActive, RouterOutlet } from '@angular/router';
 import { RouterLink } from '@angular/router';
-import { AuthService } from '../../../core/services/auth-services/auth.service';
+import { AuthService } from '../../../core/services/auth-service/auth.service';
 
 @Component({
     selector: 'app-side-nav',

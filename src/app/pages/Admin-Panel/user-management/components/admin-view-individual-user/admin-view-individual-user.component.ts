@@ -12,8 +12,8 @@ import { AdminButtonCancelComponent } from "../../../../../ui/admin-button-cance
 import { DatePipe, NgFor, NgIf } from '@angular/common';
 import { MatRadioModule } from '@angular/material/radio';
 import { GetIdAndName } from '../../../../../core/models/getIdAndName.interface';
-import { UserService } from '../../../../../core/services/UserManagementServices/User.service';
-import { UserManagementServiceService } from '../../../../../core/services/UserManagementServices/user-management-service.service';
+import { UserService } from '../../../../../core/services/user-management-service/User.service';
+import { UserManagementServiceService } from '../../../../../core/services/user-management-service/user-management-service.service';
 import { UserByIdOverview, UserOverview } from '../../../../../core/models/user-overview-display.interface';
 import { FormBuilder, FormGroup, FormsModule, NgModel, ReactiveFormsModule, Validators } from '@angular/forms';
 

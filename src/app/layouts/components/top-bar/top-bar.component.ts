@@ -4,7 +4,7 @@ import { Component, Inject, PLATFORM_ID } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import {MenuModule} from 'primeng/menu';
 import { ButtonModule } from 'primeng/button';
-import { AuthService } from '../../../core/services/auth-services/auth.service';
+import { AuthService } from '../../../core/services/auth-service/auth.service';
 import { isPlatformBrowser, NgIf,} from '@angular/common';
 
 @Component({

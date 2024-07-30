@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { TableComponent } from '../../../../shared-components/table/table.component';
-import { VisitPurposeService } from '../../../../core/services/visit-purpose-services/visit-purpose.service';
+import { VisitPurposeService } from '../../../../core/services/visit-purpose-service/visit-purpose.service';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { NgIf } from '@angular/common';

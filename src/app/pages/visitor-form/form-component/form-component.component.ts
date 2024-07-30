@@ -4,7 +4,7 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { AutoCompleteCompleteEvent, AutoCompleteModule, AutoCompleteSelectEvent } from 'primeng/autocomplete';
 import { NgClass, NgFor, NgIf } from '@angular/common';
 
-import { DataserviceService } from "../../../core/services/VisitorFormServices/dataservice.service"
+import { DataserviceService } from "../../../core/services/visitor-form-service/dataservice.service"
 import { Purpose } from "../../../core/models/purpose.interface"
 import { GetIdAndName  } from '../../../core/models/getIdAndName.interface';
 import {CustomKeyboardEvent} from '../../../core/models/custom-keyboard-event.interface.'

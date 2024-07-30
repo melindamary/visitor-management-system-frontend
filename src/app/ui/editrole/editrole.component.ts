@@ -1,9 +1,9 @@
 import { Component, inject, Input } from '@angular/core';
 import { FormGroup, FormBuilder, ReactiveFormsModule ,FormControl} from '@angular/forms';
-import { RoleService } from '../../services/role.service';
+import { RoleService } from '../../core/services/role-service/role.service';
 import { NgFor } from '@angular/common';
-import { Page, PagesResponse } from '../../Models/page.interface';
-import { UpdateRolePagesDTO } from '../../Models/update.interface';
+import { Page, PagesResponse } from '../../core/models/page.interface';
+import { UpdateRolePagesDTO } from '../../core/models/update.interface';
 import { ActivatedRoute, NavigationExtras } from '@angular/router';
 import { Router } from '@angular/router';
 

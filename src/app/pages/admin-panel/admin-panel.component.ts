@@ -5,7 +5,6 @@ import { AdminVisitPurposeTableComponent } from './visit-purpose-management/admi
 import { AdminViewRoleComponent } from './role-management/admin-view-role/admin-view-role.component';
 import { LocationManagementComponent } from './location-management/location-management.component';
 
-
 @Component({
   selector: 'app-admin-panel',
   standalone: true,

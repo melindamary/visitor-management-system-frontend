@@ -4,7 +4,7 @@ import { LocationChartComponent } from "../../ui/location-chart/location-chart.c
 import { LocationVisitortableComponent } from "../../ui/location-visitortable/location-visitortable.component";
 import { PurposePieComponent } from "../../ui/purpose-pie/purpose-pie.component";
 import { LocationSecurityTableComponent } from "../../ui/location-security-table/location-security-table.component";
-import { SignalRService } from '../../services/visitor-service.service';
+import { SignalRService } from '../../core/services/visitor-service/visitor-service.service';
 import { HttpClient } from '@microsoft/signalr';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';

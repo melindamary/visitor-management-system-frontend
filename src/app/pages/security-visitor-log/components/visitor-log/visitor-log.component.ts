@@ -7,7 +7,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { TabViewModule } from 'primeng/tabview';
 import { CommonModule, DatePipe } from '@angular/common';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { VisitorLogService } from '../../../../core/services/visitorLogServices/visitor-log.service';
+import { VisitorLogService } from '../../../../core/services/visitor-log-service/visitor-log.service';
 import { VisitorPassCodeDTO } from '../../../../core/models/visitor-pass-code.interface';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
