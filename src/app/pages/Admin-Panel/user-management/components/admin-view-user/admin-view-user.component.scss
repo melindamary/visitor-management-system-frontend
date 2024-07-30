@@ -12,4 +12,13 @@
   width: 150px;
   border-radius: 5px;
   }
-
+//   ::ng-deep .p-button.p-button-outlined{
+//     // box-shadow: none;
+//     padding-block: 10px;
+// }
+  ::ng-deep .p-datatable .p-datatable-tbody > tr > td {
+   
+    padding: 0px 0px;
+    // padding-right: 3px;
+   
+}

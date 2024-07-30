@@ -22,3 +22,10 @@ export function passwordMatchValidator(controlName: string, matchingControlName:
     }
   };
 }
+
+export function alphabetValidator(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const valid = /^[a-zA-Z]*$/.test(control.value);
+    return valid ? null : { alphabetOnly: true };
+  };
+}

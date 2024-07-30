@@ -8,6 +8,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { TooltipModule } from 'primeng/tooltip';
 import { ToastModule } from 'primeng/toast';
 import { Router } from '@angular/router';
+import { ToolbarModule } from 'primeng/toolbar';
 import { InputIconModule } from 'primeng/inputicon';
 import { IconFieldModule } from 'primeng/iconfield';
 import { UserService } from '../../../../../core/services/UserManagementServices/User.service';
@@ -15,7 +16,7 @@ import { UserService } from '../../../../../core/services/UserManagementServices
 @Component({
   selector: 'app-admin-view-user',
   standalone: true,
-  imports: [TableComponent,ButtonModule,ConfirmDialogModule,IconFieldModule,
+  imports: [TableComponent,ButtonModule,ConfirmDialogModule,IconFieldModule,ToolbarModule ,
     TooltipModule,ToastModule,InputIconModule],
   providers: [ConfirmationService, MessageService],
   templateUrl: './admin-view-user.component.html',

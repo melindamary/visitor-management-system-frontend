@@ -44,7 +44,7 @@
         <mat-form-field appearance="outline" class="smallInput">
           <mat-label>Choose a date</mat-label>
           <input matInput [matDatepicker]="picker" formControlName="Date">
-          <mat-hint>MM/DD/YYYY</mat-hint>
+          
           <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
@@ -154,18 +154,17 @@
   </div>
   <div class="row">
     <div class="col label-col"></div>
-    <div class="col input-col">
-    <div *ngIf="addUserForm.errors?.['mismatch']">Passwords do not match</div>
+    <div class="col input-col warning">
+    <div *ngIf="addUserForm.errors?.['mismatch']">*Passwords do not match</div>
   </div>
   </div>
 </div>
 <div class="buttonRow">
-  <div class="column">
+  
     <app-admin-button-submit></app-admin-button-submit>
-  </div>
-  <div class="column">
+ 
     <app-admin-button-cancel></app-admin-button-cancel>
-  </div>
+  
 </div>
 </form>
 </div>

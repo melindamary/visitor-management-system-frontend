@@ -36,7 +36,7 @@ export class AdminViewIndividualUserComponent {
   user: any={}
   userEditForm!: FormGroup;
   isActive!: number
-
+  status!:string
   edit: boolean = false;
   showInput: boolean = true;
   editLocation: boolean = false;
@@ -96,6 +96,15 @@ export class AdminViewIndividualUserComponent {
         console.log('User by ID Response:', response);
         this.user = response;
         this.isActive = this.user.isActive ? 1 : 0;
+        if(this.isActive===1)
+        {
+          this.status="Active"
+        }
+        else if(this.isActive===0)
+        {
+          this.status="InActive"
+        }
+        
         console.log(this.isActive);
 
         this.formattedValidFrom = this.datePipe.transform(response.validFrom, 'MM/dd/yyyy');

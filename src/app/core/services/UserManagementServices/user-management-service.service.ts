@@ -44,6 +44,11 @@ export class UserManagementServiceService {
       })))
     );
   }
+
+  checkUsernameExists(username: string): Observable<boolean> {
+    return this.http.get<boolean>(`https://localhost:7121/User/CheckUsernameExists?username=${username}`);
+  }
+
   updateUserData(id:number, userData: any):Observable<any>{    
     console.log("recieved data",userData);
     

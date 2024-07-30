@@ -3,28 +3,78 @@
   <h3>Edit User Details</h3>
   <hr>
   <form [formGroup]="userEditForm" (ngSubmit)="OnSubmit()">
+
+    <h4><u>Contact Details</u></h4>
+ 
+    <div class="row">
+      <div class="col label-col">
+        <label class="inputLabel">First Name</label>
+      </div>
+      <div class="col input-col">
+        <mat-form-field appearance="outline" class="smallInput">        
+          <input matInput  [value]="user.firstName" >
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col label-col">
+        <label class="inputLabel">Last Name</label>
+      </div>
+      <div class="col input-col">
+        <mat-form-field appearance="outline" class="smallInput" >       
+          <input matInput  [value]="user.lastName">
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col label-col">
+        <label class="inputLabel">Phone Number</label>
+      </div>
+      <div class="col input-col">
+        <mat-form-field appearance="outline" class="smallInput">
+          <mat-label>Enter the Phone Number</mat-label>
+          <input matInput  [value]="user.phone" >
+        </mat-form-field>
+        
+      </div>
+    </div>
+    <div class="row">
+      <div class="col label-col">
+        <label class="inputLabel">Address</label>
+      </div>
+      <div class="col input-col">
+        <mat-form-field appearance="outline" class="smallInput">
+          <mat-label>Enter the Address</mat-label>
+          <textarea matInput  [value]="user.address"></textarea>
+        </mat-form-field>
+       
+      </div>
+    </div>
+  
+
+
   <h4><u>Role</u></h4>
   <div class="row">
     <div class="col label-col">
       <label class="inputLabel">Role  </label>
     </div>
     <div class="col input-col">
-      <ng-container *ngIf="showInput">      
-      <mat-form-field appearance="outline" class="smallInput"> <!-- <mat-label>Outline form field</mat-label> -->
+      <!-- <ng-container *ngIf="showInput">      
+      <mat-form-field appearance="outline" class="smallInput"> 
         <input matInput disabled [value]="user.roleName">   
       </mat-form-field>
-    </ng-container>
-    <ng-container *ngIf="edit">
+    </ng-container> -->
+    <ng-container *ngIf="showInput">
         <mat-form-field appearance="outline" class="smallInput">
           <mat-label>Select a Role</mat-label>
-          <mat-select   [(value)]="selectedRole" formControlName="RoleId" (selectionChange)="onRoleChange($event.value)">
+          <mat-select   [(value)]="selectedRole"   formControlName="RoleId" (selectionChange)="onRoleChange($event.value)">
             <mat-option *ngFor="let role of Roles" [value]="role.id" style="color: black;">
               {{ role.name }}
             </mat-option>
           </mat-select>     
         </mat-form-field>    
      </ng-container>
-     <mat-icon matSuffix (click)="changeToEditRole()">mode_edit</mat-icon>
+     <!-- <mat-icon matSuffix (click)="changeToEditRole()">mode_edit</mat-icon> -->
     </div>
    
   </div>
@@ -33,13 +83,12 @@
       <label class="inputLabel">Location</label>
     </div>
     <div class="col input-col">
-      <ng-container *ngIf="showInputLocation">
-        <mat-form-field appearance="outline" class="smallInput">
-          <!-- <mat-label>Outline form field</mat-label> -->         
+      <!-- <ng-container *ngIf="showInputLocation">
+        <mat-form-field appearance="outline" class="smallInput">         
           <input matInput  disabled [value]="user.officeLocation">         
         </mat-form-field>
-      </ng-container>
-      <ng-container *ngIf="editLocation">
+      </ng-container> -->
+      <ng-container *ngIf="showInputLocation">
       <mat-form-field appearance="outline" class="smallInput">
         <mat-label>Select a Location</mat-label>
             <mat-select [(value)]="selectedLocation" formControlName="LocationId" (selectionChange)="onLocationChange($event.value)">
@@ -49,7 +98,7 @@
             </mat-select>
       </mat-form-field>
       </ng-container>
-      <mat-icon matSuffix (click)="changeToEditLocation()">mode_edit</mat-icon>
+      <!-- <mat-icon matSuffix (click)="changeToEditLocation()">mode_edit</mat-icon> -->
     </div> 
      
     
@@ -59,81 +108,36 @@
       <label class="inputLabel">Valid From</label>
     </div>
     <div class="col input-col">
-      <ng-container *ngIf="showInputValidDate">
-        <mat-form-field appearance="outline" class="smallInput">
-          <!-- <mat-label>Outline form field</mat-label> -->         
+      <!-- <ng-container *ngIf="showInputValidDate">
+        <mat-form-field appearance="outline" class="smallInput">              
           <input matInput  disabled [value]="formattedValidFrom">         
-        </mat-form-field>
-      </ng-container>
-      <ng-container *ngIf="editValidDate">
+        </mat-form-field>[(value)]="formattedValidFrom"
+      </ng-container> -->
+      <ng-container *ngIf="showInputValidDate">
       <mat-form-field appearance="outline" class="smallInput">
         <mat-label>Choose a date</mat-label>
-        <input matInput [matDatepicker]="picker" formControlName="validFrom">
-        <mat-hint>MM/DD/YYYY</mat-hint>
+        <input  matInput [matDatepicker]="picker"  formControlName="validFrom">
+        <mat-hint>DD/MM/YYYY</mat-hint>
         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
     </ng-container>
-      <mat-icon matSuffix (click)="changeToEditValidDate()">mode_edit</mat-icon>
-    </div>
+      </div>
   </div>
   <div class="row">
     <div class="col label-col">
       <label class="inputLabel">Status</label>
     </div>
     <div class="col input-col">
-      <mat-radio-group aria-label="Select an option" formControlName="activeState" (change)="onRadioChange($event.value)">
-        <mat-radio-button value="1">Active</mat-radio-button>
-        <mat-radio-button value="0">Inactive</mat-radio-button>
+      <mat-radio-group  formControlName="activeState" (change)="onRadioChange($event.value)">
+        <mat-radio-button [value]="1">Active</mat-radio-button>
+        <mat-radio-button [value]="0">Inactive</mat-radio-button>
       </mat-radio-group>
     </div>
-  </div>
-  <h4><u>Contact Details</u></h4>
- 
-  <div class="row">
-    <div class="col label-col">
-      <label class="inputLabel">First Name</label>
     </div>
-    <div class="col input-col">
-      <mat-form-field appearance="outline" class="smallInput">        
-        <input matInput disabled [value]="user.firstName" >
-      </mat-form-field>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col label-col">
-      <label class="inputLabel">Last Name</label>
-    </div>
-    <div class="col input-col">
-      <mat-form-field appearance="outline" class="smallInput">       
-        <input matInput disabled [value]="user.lastName">
-      </mat-form-field>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col label-col">
-      <label class="inputLabel">Phone Number</label>
-    </div>
-    <div class="col input-col">
-      <mat-form-field appearance="outline" class="smallInput">
-        <mat-label>Enter the Phone Number</mat-label>
-        <input matInput [disabled]="fieldStates.isPhoneEditable" [value]="user.phone" >
-      </mat-form-field>
-      <mat-icon matSuffix (click)="toggleFieldState('isPhoneEditable')">mode_edit</mat-icon>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col label-col">
-      <label class="inputLabel">Address</label>
-    </div>
-    <div class="col input-col">
-      <mat-form-field appearance="outline" class="smallInput">
-        <mat-label>Enter the Address</mat-label>
-        <textarea matInput [disabled]="fieldStates.isAddressEditable" [value]="user.address"></textarea>
-      </mat-form-field>
-      <mat-icon matSuffix (click)="toggleFieldState('isAddressEditable')">mode_edit</mat-icon>
-    </div>
-  </div>
+
+
+
   <h4><u>Account Details</u></h4>
   
   <div class="row">
@@ -142,7 +146,7 @@
     </div>
     <div class="col input-col">
       <mat-form-field appearance="outline" class="smallInput">        
-        <input matInput disabled disabled [value]="user.username">
+        <input matInput  [value]="user.username">
       </mat-form-field>
     </div>
   </div>
@@ -202,17 +206,22 @@
       </mat-form-field>
     </div>
 
-   
+  </div>
+  
+  <div class="row">
+    <div class="col label-col"></div>
+    <div class="col input-col warning">
+    <div *ngIf="userEditForm.errors?.['mismatch']">*Passwords do not match</div>
+  </div>
   </div>
 </ng-container>
     <div class="buttonRow">
-        <div class="column">
+        
      <app-admin-button-submit></app-admin-button-submit>
-      </div>
-      <div class="column">
+      
         <app-admin-button-cancel></app-admin-button-cancel>
         </div>
-      </div>
+      
      
 </form>
 </div>

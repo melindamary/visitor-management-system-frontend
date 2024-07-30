@@ -61,10 +61,17 @@ h4 {
 
 .buttonRow {
   display: flex;
-  justify-content: space-between;
+  
+  justify-content: end;
+  
+ 
+  
   margin-top: 20px;
 }
-
+.warning{
+  color:red;
+  margin-left: 30px;
+}
 .column {
   flex: 1;
   display: flex;

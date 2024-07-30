@@ -16,6 +16,7 @@ import { UserService } from '../../../../../core/services/UserManagementServices
 import { UserManagementServiceService } from '../../../../../core/services/UserManagementServices/user-management-service.service';
 import { UserByIdOverview, UserOverview } from '../../../../../core/models/user-overview-display.interface';
 import { FormBuilder, FormGroup, FormsModule, NgModel, ReactiveFormsModule, Validators } from '@angular/forms';
+import { alphabetValidator, passwordMatchValidator } from '../admin-add-user/custom-validators';
 
 @Component({
   selector: 'app-admin-edit-user',
@@ -68,13 +69,24 @@ export class AdminEditUserComponent {
       LocationId: ['', Validators.required],
       validFrom: [null, Validators.required],
       activeState: ['', Validators.required],
+      firstName: ['', [Validators.required,alphabetValidator()]],
+      lastName: ['', [Validators.required,alphabetValidator()]],
+      username: ['', Validators.required],
       phone: ['', Validators.required],
       address: ['', Validators.required],
       password: [''],
       confirmPassword: ['']
+    },{
+      validators: passwordMatchValidator('password', 'confirmPassword')
     });
   }
-
+  passwordMatchValidator(formGroup: FormGroup) {
+    const password = formGroup.get('password');
+    const confirmPassword = formGroup.get('confirmPassword');
+    return password && confirmPassword && password.value === confirmPassword.value
+      ? null
+      : { 'mismatch': true };
+  }
   ngOnInit(): void {
     this.loadRoles();
     this.loadLocations();
@@ -99,16 +111,21 @@ export class AdminEditUserComponent {
         this.isActive = this.user.isActive ? 1 : 0;
         console.log(this.isActive);
 
-        this.formattedValidFrom = this.datePipe.transform(response.validFrom, 'MM/dd/yyyy');
+        this.formattedValidFrom = this.datePipe.transform(response.validFrom, 'dd-MM-yyyy');
 
         this.userEditForm.patchValue({
           RoleId: this.user.roleId,
           LocationId: this.user.officeLocationId,
           validFrom: new Date(this.user.validFrom),
-          activeState: this.isActive,
+          firstName: this.user.firstName,
+      lastName: this.user.lastName,
+      username: this.user.username,
+      activeState: this.isActive, 
           phone: this.user.phone,
           address: this.user.address
         });
+
+        console.log("test",this.userEditForm);
       },
       error: (error) => {
         console.error('Error loading user data:', error);
@@ -120,6 +137,7 @@ export class AdminEditUserComponent {
   loadRoles(): void {
     this.adduser.loadRoleIdAndName().subscribe((roles: GetIdAndName[]) => {
       this.Roles = roles;
+    
     });
   }
 
@@ -127,6 +145,7 @@ export class AdminEditUserComponent {
     this.adduser.loadLocationIdAndName().subscribe((locations: GetIdAndName[]) => {
       this.Locations = locations;
     });
+    
   }
 
   formatDate(date: Date | null): string {
@@ -164,8 +183,7 @@ export class AdminEditUserComponent {
   }
 
   onRadioChange(value: string) {
-    console.log("status change",value);
-    
+    console.log("status change",value);    
     this.userEditForm.patchValue({ activeState: value });
   }
 
@@ -181,9 +199,9 @@ export class AdminEditUserComponent {
       // Construct the updatedUser object conditionally
       const updatedUser: any = {
         userId: this.user.userId,
-        username: this.user.username,
-        firstName: this.user.firstName,
-        lastName: this.user.lastName,
+        username: formValues.username ||this.user.username,
+        firstName: formValues.firstName || this.user.firstName,
+        lastName: formValues.lastName ||this.user.lastName,
         phone: formValues.phone || this.user.phone,
         address: formValues.address || this.user.address,
         officeLocationId: formValues.LocationId || this.user.officeLocationId,
@@ -196,19 +214,32 @@ export class AdminEditUserComponent {
       if (this.resetPassword) {
         updatedUser.password = formValues.password;
       }
-  
-      this.apiService.updateUserData(this.user.userId, updatedUser).subscribe({
-        next: (response) => {
-          console.log('User updated successfully', response);
-          alert("User updated successfully");
-        },
-        error: (error) => {
-          console.error('Error updating user', error);
+
+      const username = formValues.username;
+
+    // Check if the username exists
+    this.apiService.checkUsernameExists(username).subscribe(
+      exists => {
+        if (exists) {
+          // Username exists, show error message
+          alert('Username already exists. Please choose a different username.');
+        }else{
+          this.apiService.updateUserData(this.user.userId, updatedUser).subscribe({
+            next: (response) => {
+              console.log('User updated successfully', response);
+              alert("User updated successfully");
+            },
+            error: (error) => {
+              console.error('Error updating user', error);
+            }
+        });
         }
-      });
-    } else {
-      alert('Please fill all required fields');
-    }
+      },
+      error => {
+        console.error('Error checking username', error);
+      }
+    );
   }
-  
+}
+
 }
