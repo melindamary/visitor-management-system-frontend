@@ -21,6 +21,7 @@ import { AddroleComponent } from './ui/addrole/addrole.component';
 import { EditroleComponent } from './ui/editrole/editrole.component';
 import { AdminViewRoleComponent } from './pages/admin-panel/role-management/admin-view-role/admin-view-role.component';
 import { AdminVisitPurposeTableComponent } from './pages/admin-panel/visit-purpose-management/admin-visit-purpose-table/admin-visit-purpose-table.component';
+import { VisitorConsentModalComponent } from './ui/visitor-consent-modal/visitor-consent-modal.component';
 
 export const routes: Routes = [
   {
@@ -72,12 +73,17 @@ export const routes: Routes = [
       {
         path:'visit-purpose',component: AdminVisitPurposeTableComponent
       }
+
     ],
   },
   {
     path: 'details',
     component: ViewDetailsComponent,
   },
+  {
+    path:'good',component: VisitorConsentModalComponent
+  },
+
   {
     path: 'welcomepage',
     component: WelcomepageComponent,
