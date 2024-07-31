@@ -35,3 +35,37 @@
 .table1{
     padding-bottom: 3rem;
 }
+.legend {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+  }
+  
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .legend-color {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+  }
+  
+  .legend-label {
+    font-size: 14px;
+  }
+  
+  .forms-submitted {
+    background-color: #000000;
+  }
+  
+  .active-visitors {
+    background-color: #ff9999;
+  }
+  
+  .total-visitors {
+    background-color: #9999ff;
+  }

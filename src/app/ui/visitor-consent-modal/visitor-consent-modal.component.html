@@ -1,0 +1,51 @@
+<body>
+  <p-button 
+  icon="pi pi-times" 
+  (click)="closeAndNavigate()" 
+  styleClass="p-button-rounded p-button-text close-button"
+  [style]="{'position': 'fixed', 'top': '20px', 'right': '20px', 'z-index': '1000'}"
+></p-button>
+  <img src="logo.png" alt="Experion Technologies Logo" class="logo">
+  <h1>Visitor Personal Information Consent</h1>
+  
+  <div class="fieldhead">
+      <label>Date:</label>
+      <input type="date" [value]="currentDate">
+    </div>
+  <div class="fieldhead">
+      <label>Office Location:</label>
+      <input type="text" [value]="location">
+  </div>
+
+  <p>Dear Visitor,</p>
+
+  <p>Welcome to Experion Technologies Pvt Ltd. To ensure the safety and security of our premises, we may collect and process certain personal information from our visitors. This is in line with our Privacy policy and commitment to data protection.</p>
+
+  <p>The information collected includes the visitor's Name, Phone number and laptop serial number (optional)</p>
+
+  <h2>Purpose of Information Collection:</h2>
+  <ul>
+      <li>Security: To ensure the safety of our employees, guests, and facilities.</li>
+      <li>Record Keeping: To maintain a log of visitors for emergency situations or contact tracing, if necessary.</li>
+  </ul>
+
+  <h2>Your Consent:</h2>
+  <p>By entering our premises, you acknowledge and provide consent for the collection and processing of the mentioned information for the stated purposes. This data will be handled securely and in compliance with privacy regulations and Experion privacy policy.</p>
+
+  <p>We will retain your information for a duration necessary to fulfil the intended purpose, after which it will be securely disposed of.</p>
+
+  <h2>Your Rights:</h2>
+  <p>You have the right to access, rectify, or request the deletion of your personal information. For any inquiries or requests, please contact our Data Protection Officer at privacyexperionglobal.com</p>
+
+  <p>Thank you for your cooperation and understanding.</p>
+
+  <p>Thank you,</p>
+  <p>
+      Mr. Sreekumar Pillai<br>
+      Data Protection Officer<br>
+      Experion Technologies Pvt Ltd<br>
+      Email: <a href="mailto:privacy@experionglobal.com">privacyexperionglobal.com</a>
+  </p>
+
+
+</body>

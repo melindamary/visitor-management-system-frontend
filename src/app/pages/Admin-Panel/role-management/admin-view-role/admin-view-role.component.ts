@@ -9,6 +9,7 @@ import { NavigationExtras, Router } from '@angular/router';
 import { RoleService } from '../../../../core/services/role-service/role.service';
 import { RoleOverview } from '../../../../core/models/RoleOverview.interface';
 import { EditroleComponent } from '../../../../ui/editrole/editrole.component';
+import { AddroleComponent } from '../../../../ui/addrole/addrole.component';
 import { NgIf } from '@angular/common';
 
 @Component({
@@ -25,8 +26,9 @@ export class AdminViewRoleComponent {
   roleDataSource: RoleOverview[] = [];
   columnsToDisplay: any[] = [
     { header: 'Role Name', field: 'name' },
-    { header: 'Created By', field: 'createdBy' },
     { header: 'Created Date', field: 'createdDate' },
+    // { header: 'Created By', field: 'createdBy' },
+    { header: 'Status', field: 'status', template: 'statusTemplate' },
     { header: 'Actions', field: 'actions' }
   ];
   rows: number = 5;
@@ -59,11 +61,20 @@ export class AdminViewRoleComponent {
   loadAllRoles(): void {
     this.roleService.getAllRoles().subscribe((response:any) => {
       console.log('Role Response:', response);
-      this.roleDataSource = response.$values || []; // Extract $values array
+      this.roleDataSource = (response.$values || []).map((role: any) => {
+        role.createdDate = this.formatDate(role.createdDate);
+        role.status= this.getStatusText(role.status);
+
+        return role;
+    }); // Extract $values array
       this.totalItems = response.length;
       
     });
   }
+  formatDate(dateString: string): string {
+    const date = new Date(dateString);
+    return `${String(date.getDate()).padStart(2, '0')}- ${String(date.getMonth() + 1).padStart(2, '0')}- ${date.getFullYear()}`;
+}
 
   viewOrEdit(role: any): void {
     this.selectedRoleId.set(role.id);
@@ -72,7 +83,7 @@ export class AdminViewRoleComponent {
       state: { roleId: role.id }
     };
 
-    this.router.navigate(['/editrole'], navigationExtras);
+    this.router.navigate(['/vms/edit-role'], navigationExtras);
   }
 
   deleteRole(role: any, event: Event) {
@@ -110,9 +121,11 @@ export class AdminViewRoleComponent {
   }
 
   addRole(): void {
-    this.router.navigate(['/addrole']);
+    this.router.navigate(['/vms/add-role']);
   }
-
+  getStatusText(status: number): string {
+    return status === 1 ? 'Active' : 'Inactive';
+  }
   // onEditRoleComplete(): void {
   //   this.showEditRole = false; // Hide the edit role component after completion
   //   this.loadAllRoles(); // Reload roles to reflect any updates
