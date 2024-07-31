@@ -133,42 +133,37 @@ header="Visitor Details"
 styleClass="p-fluid">
     <ng-template pTemplate="content">
       
-        <div class="flex-column-container purple-bold-heading align-center">
+        <div class="flex-row align-center">
           <img [src]="'data:image/jpeg;base64,' + visitorDetails.photo" height="200px" width="200px"/>
-          <p style="margin-top: 10px">{{visitorDetails.name}}</p>
+          <div class="view-more flex-column-container">
+            <p class="view-more-heading">{{visitorDetails.name}}</p>
+            <p>Phone: {{visitorDetails.phoneNumber}}</p>
+            <p>Date: {{visitorDetails.visitDate}}</p>
+            <p>Location: {{visitorDetails.officeLocation}}</p>
+          </div>
         </div>
         
-        <div class="flex-row-container">
-          <label>Phone Number </label>
-          <p>: {{visitorDetails.phoneNumber}}</p>
-        </div>
-        <div class="flex-row-container">
-          <label>Visit Date </label>
-          <p>: {{visitorDetails.visitDate}}</p>
-        </div>
-        <div class="flex-row-container">
-          <label>Office Location </label>
-          <p>: {{visitorDetails.officeLocation}}</p>
-        </div>
-        <div class="flex-row-container">
-          <label>Check-in Time </label>
-          <p>: {{visitorDetails.checkIn}}</p>
-        </div>
-        <div  class="flex-row-container">
-          <label>Check-out Time </label>
-          <p>: {{visitorDetails.checkOut}}</p>
-        </div>
-        <div  class="flex-row-container">
-          <label>Visit Purpose </label>
-          <p>: {{visitorDetails.visitPurpose}}</p>
-        </div>
-        <div  class="flex-row-container">
-          <label>Host Name </label>
-          <p>: {{visitorDetails.hostName}}</p>
-        </div>
-        <div  class="flex-row-container">
-          <label>Number of Devices </label>
-          <p>: {{visitorDetails.deviceCount}}</p>
+        <div class="view-more-body">
+          <div class="flex-row-container">
+            <label>Check-in Time </label>
+            <p>: {{visitorDetails.checkIn}}</p>
+          </div>
+          <div  class="flex-row-container">
+            <label>Check-out Time </label>
+            <p>: {{visitorDetails.checkOut}}</p>
+          </div>
+          <div  class="flex-row-container">
+            <label>Visit Purpose </label>
+            <p>: {{visitorDetails.visitPurpose}}</p>
+          </div>
+          <div  class="flex-row-container">
+            <label>Host Name </label>
+            <p>: {{visitorDetails.hostName}}</p>
+          </div>
+          <div  class="flex-row-container">
+            <label>Number of Devices </label>
+            <p>: {{visitorDetails.deviceCount}}</p>
+          </div>
         </div>
      
     </ng-template>

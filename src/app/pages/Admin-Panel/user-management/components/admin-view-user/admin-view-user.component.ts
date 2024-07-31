@@ -28,12 +28,12 @@ export class AdminViewUserComponent {
 
 DataSource: UserOverviewTransformed[] = [];;
 columnsToDisplay: any[] = [
-  { header: 'Username', field: 'username' },
+  { header: 'Username', field: 'username'},
   { header: 'Full Name', field: 'fullName' },
   { header: 'Role ', field: 'roleName' },
   { header: 'Location', field: 'location' },
   { header: 'Status', field: 'isActive' },
-  { header: 'Actions', field: 'actions' } // Assuming you have actions like edit/delete
+  { header: 'Actions', field: 'actions', width: "18%" } // Assuming you have actions like edit/delete
 ];
 rows: number = 5;
 totalItems!: number;

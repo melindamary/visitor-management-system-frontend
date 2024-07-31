@@ -119,18 +119,32 @@ th{
   
 }
 .flex-row-container label{
-  width: 50%;
+  width: 35%;
 }
 .flex-column-container{
   display: flex;
   flex-direction: column;
 }
-.purple-bold-heading{
+
+.align-center{
+  // align-items: center;
+  padding-bottom: 10px;
+}
+.view-more-heading{
   font-size: 18px;
   font-weight: bold;
   color: #896cc7;
 }
-.align-center{
-  // align-items: center;
-  padding-bottom: 10px;
+.view-more{
+  color: black;
+  font-size: 16px;
+  // background-color: #59ca8f;
+  margin-left: 5%;
+  margin-top: 10%;
+}
+.view-more-body{
+  margin:auto;
+}
+.flex-row{
+  display: flex;
 }

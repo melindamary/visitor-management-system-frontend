@@ -53,7 +53,7 @@ export class VisitorLogComponent implements OnInit {
   activeIndex = 0;
 
   columnsUpcoming = [
-    { field: 'id', header: 'Visitor Id' },
+    { field: 'id', header: 'Visitor Id',  },
     { field: 'name', header: 'Visitor Name' },
     { field: 'purposeName', header: 'Purpose of Visit' },
     { field: 'phone', header: 'Phone Number' },

@@ -2,6 +2,7 @@
     <div><img src="experion-logo.png"/></div>
     <div class="user-container" *ngIf="isLoggedIn">
         <div class="card flex justify-content-center">
+            <span class="user-greeting">{{username}}</span>
             <p-menu #menu [model]="items" [popup]="true" />
             <p-button 
             class="user-avatar-button"
