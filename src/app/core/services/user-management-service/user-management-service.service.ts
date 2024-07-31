@@ -6,6 +6,7 @@ import { GetIdAndName } from '../../models/getIdAndName.interface';
 import { AddNewUser } from '../../models/addNewUser.interface';
 import { UserByIdOverview, UserOverview, UserOverviewTransformed } from '../../models/user-overview-display.interface';
 import { response } from 'express';
+import { CheckUsernameResponse } from '../../models/check-Username.Interface';
 
 @Injectable({
   providedIn: 'root'
@@ -45,8 +46,8 @@ export class UserManagementServiceService {
     );
   }
 
-  checkUsernameExists(username: string): Observable<boolean> {
-    return this.http.get<boolean>(`https://localhost:7121/User/CheckUsernameExists?username=${username}`);
+  checkUsernameExists(username: string): Observable<CheckUsernameResponse> {
+    return this.http.get<CheckUsernameResponse>(`https://localhost:7121/User/CheckUsernameExists/${username}`);
   }
 
   updateUserData(id:number, userData: any):Observable<any>{    

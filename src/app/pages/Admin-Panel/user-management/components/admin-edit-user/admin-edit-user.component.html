@@ -12,7 +12,7 @@
       </div>
       <div class="col input-col">
         <mat-form-field appearance="outline" class="smallInput">        
-          <input matInput  [value]="user.firstName" >
+          <input matInput  formControlName="firstName" >
         </mat-form-field>
       </div>
     </div>
@@ -22,7 +22,7 @@
       </div>
       <div class="col input-col">
         <mat-form-field appearance="outline" class="smallInput" >       
-          <input matInput  [value]="user.lastName">
+          <input matInput formControlName="lastName">
         </mat-form-field>
       </div>
     </div>
@@ -33,7 +33,7 @@
       <div class="col input-col">
         <mat-form-field appearance="outline" class="smallInput">
           <mat-label>Enter the Phone Number</mat-label>
-          <input matInput  [value]="user.phone" >
+          <input matInput  formControlName="phone" >
         </mat-form-field>
         
       </div>
@@ -45,7 +45,7 @@
       <div class="col input-col">
         <mat-form-field appearance="outline" class="smallInput">
           <mat-label>Enter the Address</mat-label>
-          <textarea matInput  [value]="user.address"></textarea>
+          <textarea matInput  formControlName="address"></textarea>
         </mat-form-field>
        
       </div>
@@ -146,7 +146,7 @@
     </div>
     <div class="col input-col">
       <mat-form-field appearance="outline" class="smallInput">        
-        <input matInput  [value]="user.username">
+        <input matInput  formControlName="username">
       </mat-form-field>
     </div>
   </div>
