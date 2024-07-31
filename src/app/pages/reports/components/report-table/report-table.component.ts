@@ -113,8 +113,11 @@ export class ReportTableComponent {
       const dataToExport = this.selectedReports.map((report) => {
         const newReport: { [key: string]: any } = {}; // Use an index signature
         Object.keys(report).forEach((key) => {
-          const customHeader = this.customHeaders[key] || key.toUpperCase();
-          newReport[customHeader] = report[key];
+          if(!report.photo){
+            const customHeader = this.customHeaders[key] || key.toUpperCase();
+            newReport[customHeader] = report[key];
+          }
+          
         });
         return newReport;
       });
