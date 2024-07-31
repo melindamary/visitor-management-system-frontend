@@ -5,7 +5,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
 import { TooltipModule } from 'primeng/tooltip';
 import { CommonModule, DatePipe } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DialogModule } from 'primeng/dialog';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
@@ -35,6 +35,7 @@ import { ApiResponse, LocationDetails, UpdateLocation } from '../../../core/mode
     TabViewModule,
     ButtonModule,
     FormsModule,
+    ReactiveFormsModule,
     TooltipModule,
     ToolbarModule,
   ],
@@ -47,24 +48,32 @@ export class LocationManagementComponent implements OnInit {
   locationDataSource: LocationDetails[] = [];
   totalItems: number = 0;
   errorMessages: string[] = [];
-  selectedLocation: LocationDetails = {} as LocationDetails;
+  selectedLocation: LocationDetails | null = null; // Use null initially
   locationDialog: boolean = false;
   submitted: boolean = false;
+  locationForm: FormGroup;
 
   locationColumns = [
     { field: 'name', header: 'Location' },
     { field: 'address', header: 'Address' },
     { field: 'phone', header: 'Phone' },
-    { field: 'createdDate', header: 'Added On'},
+    { field: 'createdDate', header: 'Added On' },
     { field: 'actions', header: 'Actions' }
   ];
 
   constructor(
     private locationService: LocationService,
     private messageService: MessageService,
-    private confirmationService: ConfirmationService,
+    private fb: FormBuilder,
     private datePipe: DatePipe
-  ) {}
+  ) {
+    this.locationForm = this.fb.group({
+      id: [null], // Include id in the form
+      name: ['', Validators.required],
+      address: ['', Validators.required],
+      phone: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]]
+    });
+  }
 
   ngOnInit(): void {
     this.loadLocationDetails();
@@ -83,38 +92,48 @@ export class LocationManagementComponent implements OnInit {
     });
   }
 
-  openNewLocationDialog() {
-    this.selectedLocation = {} as LocationDetails;
+  openNewLocationDialog(): void {
+    this.locationForm.reset(); // Reset the form
+    this.locationForm.patchValue({ id: null }); // Reset the id field
+    this.selectedLocation = null; // Clear the selected location
     this.submitted = false;
     this.locationDialog = true;
   }
 
-  hideDialog() {
+  hideDialog(): void {
     this.locationDialog = false;
     this.submitted = false;
   }
 
   editLocation(location: LocationDetails): void {
-    this.selectedLocation = { ...location };
+    this.locationForm.setValue({
+      id: location.id, // Include id in the form
+      name: location.name,
+      address: location.address,
+      phone: location.phone
+    });
+    this.selectedLocation = location; // Set the selected location
     this.locationDialog = true;
   }
 
   saveLocation(): void {
     this.submitted = true;
-  
-    if (!this.selectedLocation.name || !this.selectedLocation.address || !this.selectedLocation.phone) {
+
+    if (this.locationForm.invalid) {
       return;
     }
-  
-    if (this.selectedLocation.id) {
-      this.locationService.updateLocation(this.selectedLocation.id, this.selectedLocation).subscribe({
+
+    const locationData: LocationDetails = this.locationForm.value;
+
+    if (locationData.id) {
+      this.locationService.updateLocation(locationData.id, locationData).subscribe({
         next: (response: ApiResponse<UpdateLocation>) => {
           if (response.isSuccess) {
-            this.messageService.add({ 
-              severity: 'success', 
-              summary: 'Success', 
-              detail: 'Location updated successfully', 
-              life: 3000 
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Success',
+              detail: 'Location updated successfully',
+              life: 3000
             });
             this.loadLocationDetails();
             this.locationDialog = false;
@@ -127,17 +146,17 @@ export class LocationManagementComponent implements OnInit {
             });
           }
         },
-        error: (error) => {
+        error: () => {
           this.messageService.add({
             severity: 'error',
             summary: 'Error',
-            detail:  'An error occurred while updating location.',
+            detail: 'An error occurred while updating location.',
             life: 3000
           });
         }
       });
     } else {
-      this.locationService.addLocation(this.selectedLocation).subscribe({
+      this.locationService.addLocation(locationData).subscribe({
         next: (response: ApiResponse<UpdateLocation>) => {
           if (response.isSuccess) {
             this.messageService.add({
@@ -157,19 +176,19 @@ export class LocationManagementComponent implements OnInit {
             });
           }
         },
-        error: (error) => {
+        error: () => {
           this.messageService.add({
             severity: 'error',
             summary: 'Error',
-            detail: error.message || 'An error occurred while adding location.',
+            detail: 'An error occurred while adding location.',
             life: 3000
           });
         }
       });
     }
   }
-  
+
   getFormattedDate(date: string): string {
-    return this.datePipe.transform(date, 'yyyy-MM-dd') || '';
+    return this.datePipe.transform(date, 'dd-MM-yyyy') || '';
   }
 }

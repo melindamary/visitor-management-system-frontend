@@ -1,18 +1,18 @@
 <div class="tile-container" style="display: flex; width: 100%;">
   <app-visitor-log-tiles 
-    title="Active Visitors" 
+    title="Today's Active Visitors" 
     [content]="activeVisitorsCount" 
     backgroundColor="#896CC7" 
     (tileClick)="selectTab('active')"
   ></app-visitor-log-tiles>
   <app-visitor-log-tiles 
-    title="Total Visitors" 
+    title="Today's Total Visitors" 
     [content]="totalVisitorsCount" 
     backgroundColor="#FF858C"
     (tileClick)="selectTab('total')"
   ></app-visitor-log-tiles>
   <app-visitor-log-tiles 
-    title="Checked Out Visitors" 
+    title="Today's Checked Out Visitors" 
     [content]="checkedOutVisitorsCount" 
     backgroundColor="#952991" 
     (tileClick)="selectTab('checkedOut')"
@@ -42,11 +42,7 @@
     </ng-template>
   </app-table>
   </div>
-  
-    
-  
-    
-    <!-- Dialogs here -->
+ 
     <p-dialog header="Check-In Visitor" [(visible)]="visibleCheckInDialog" [modal]="true" [style]="{ width: '25rem' }">
       <ng-template pTemplate="header">
         <div class="inline-flex align-items-center justify-content-center gap-2 bg-violet">
@@ -57,17 +53,29 @@
         <label for="name" class="font-semibold w-6rem">Visitor Name</label>
         <input pInputText [(ngModel)]="selectedVisitor.name" id="name" class="flex-auto" readonly [disabled]="true" />
       </div>
-      <div class="flex align-items-center gap-3 mb-4">
-        <label for="cardNumber" class="font-semibold w-6rem">Visitor Pass Code</label>
-        <input pInputText [(ngModel)]="cardNumber" id="cardNumber" class="flex-auto" autocomplete="off" />
-      </div>
+      <form [formGroup]="checkInForm" (ngSubmit)="saveCheckInTime()">
+        <div class="flex align-items-center gap-3 mb-2">
+          <label for="visitorPassCode" class="font-semibold w-6rem">Visitor Pass Code</label>
+          <input 
+              type="text" 
+              pInputText 
+              class="flex-auto"
+              id="visitorPassCode" 
+              formControlName="visitorPassCode" 
+              required 
+              placeholder="Enter pass code" />
+        </div>
+        <small class="p-error" *ngIf="checkInForm.get('visitorPassCode')?.invalid && (checkInForm.get('visitorPassCode')?.dirty || checkInForm.get('visitorPassCode')?.touched)">
+          <div *ngIf="checkInForm.get('visitorPassCode')?.errors?.['required']">Pass code is required.</div>
+          <div *ngIf="checkInForm.get('visitorPassCode')?.errors?.['pattern']">Pass code must be a number and cannot just be 0.</div>
+        </small>
+      </form>
       <ng-template pTemplate="footer">
         <p-button label="Cancel" styleClass="custom-reject-button" (click)="visibleCheckInDialog = false"></p-button>
-        <p-button label="Save"  (click)="saveCheckInTime()" [disabled]="!cardNumber"></p-button>
+        <p-button label="Save"  (click)="saveCheckInTime()" [disabled]="checkInForm.invalid"></p-button>
       </ng-template>  
     </p-dialog>
-    
-   
+
     <!-- <app-check-in-dialog [(visible)]="visibleCheckInDialog" [visitor]="selectedVisitor" (save)="saveCheckInTime($event)"></app-check-in-dialog> -->
     <app-visitor-details-dialog [(visible)]="visibleDetailsDialog" [visitor]="selectedVisitor" [currentTab]="currentTab" (visibleChange)="handleDialogVisibilityChange($event)"></app-visitor-details-dialog>
     <p-confirmDialog [style]="{ width: '450px' }" />

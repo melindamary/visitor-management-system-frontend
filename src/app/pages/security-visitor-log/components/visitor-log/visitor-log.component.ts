@@ -9,7 +9,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { VisitorLogService } from '../../../../core/services/visitor-log-service/visitor-log.service';
 import { VisitorPassCodeDTO } from '../../../../core/models/visitor-pass-code.interface';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { InputNumberModule } from 'primeng/inputnumber';
@@ -27,7 +27,7 @@ import { VisitorLogTilesComponent } from '../visitor-log-tiles/visitor-log-tiles
   imports: [TableModule, DialogModule, RippleModule, ToastModule,
     ConfirmDialogModule, InputTextModule, InputTextareaModule,
     CommonModule, InputNumberModule, TabViewModule, ButtonModule,
-    FormsModule, VisitorLogTilesComponent, TableComponent, 
+    FormsModule, ReactiveFormsModule, VisitorLogTilesComponent, TableComponent, 
     VisitorDetailsDialogComponent, TooltipModule],
   providers: [MessageService, ConfirmationService, VisitorLogService, DatePipe],
   templateUrl: './visitor-log.component.html',
@@ -49,23 +49,23 @@ export class VisitorLogComponent implements OnInit {
   visibleDetailsDialog = false;
   selectedVisitor: VisitorLog = {} as VisitorLog;
   cardNumber = '';
-  showTotalVisitorsModal = false;
   activeIndex = 0;
+  checkInForm: FormGroup;
 
   columnsUpcoming = [
-    { field: 'id', header: 'Visitor Id' },
-    { field: 'name', header: 'Visitor Name' },
-    { field: 'purposeName', header: 'Purpose of Visit' },
-    { field: 'phone', header: 'Phone Number' },
+    { field: 'id', header: 'Visitor Id', width: '14%' },
+    { field: 'name', header: 'Visitor Name', width: '22%'  },
+    { field: 'purposeName', header: 'Purpose of Visit', width: '23%' },
+    { field: 'phone', header: 'Phone Number', width: '23%' },
     { field: 'actions', header: 'Actions' }
   ];
 
   columnsActive = [
-    { field: 'visitorPassCode', header: 'Visitor Pass Code' },
-    { field: 'name', header: 'Visitor Name' },
-    { field: 'purposeName', header: 'Purpose of Visit' },
+    { field: 'visitorPassCode', header: 'Pass Code', width: '14%' },
+    { field: 'name', header: 'Visitor Name', width: '21%' },
+    { field: 'purposeName', header: 'Purpose of Visit',width: '23%' },
     { field: 'checkInTime', header: 'Check-In Time', type: 'date' },
-    { field: 'phone', header: 'Phone Number' },
+    { field: 'phone', header: 'Phone Number',width: '23%' },
     { field: 'actions', header: 'Actions' }
   ];
 
@@ -130,8 +130,14 @@ export class VisitorLogComponent implements OnInit {
     private visitorLogService: VisitorLogService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
-    private datePipe: DatePipe
-  ) {}
+    private datePipe: DatePipe,
+    private fb: FormBuilder,
+  ) {
+    this.checkInForm = this.fb.group({
+      id: [null],
+      visitorPassCode: ['', [Validators.required, Validators.pattern('^(0*[1-9][0-9]*)$')]]      
+      });
+  }
 
   ngOnInit(): void {
     this.loadVisitorLogToday();
@@ -220,14 +226,22 @@ export class VisitorLogComponent implements OnInit {
     this.cardNumber = '';
     this.visibleCheckInDialog = true;
     this.visibleDetailsDialog = false;
+    this.checkInForm.reset();
+    this.checkInForm.patchValue({ id: null }); // Reset the id field
+
   }
 
   saveCheckInTime(): void {
-    if (this.selectedVisitor) {
-      const updateVisitorPassCode: VisitorPassCodeDTO = {
-        visitorPassCode: this.cardNumber
-      };
+    // if (this.selectedVisitor) {
+    //   const updateVisitorPassCode: VisitorPassCodeDTO = {
+    //     visitorPassCode: +this.cardNumber
+    //   };
 
+    if (this.checkInForm.invalid) {
+      return;
+    }
+
+    const updateVisitorPassCode:VisitorPassCodeDTO = this.checkInForm.value;
       this.visitorLogService.updateCheckInTimeAndCardNumber(this.selectedVisitor.id, updateVisitorPassCode).subscribe({
         next: (response: VisitorLogResponse) => {
           if (response.isSuccess) {
@@ -245,7 +259,7 @@ export class VisitorLogComponent implements OnInit {
         }
       });
     }
-  }
+  
 
   viewVisitor(visitor: VisitorLog): void {
     this.selectedVisitor = { ...visitor };

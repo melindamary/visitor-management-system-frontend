@@ -23,7 +23,7 @@ export class VisitorLogService {
 
   updateCheckInTimeAndCardNumber(id: number, updateVisitorPassCode: VisitorPassCodeDTO): Observable<VisitorLogResponse> {
     const username = this.getUser();
-    return this.http.put<VisitorLogResponse>(`${this.apiUrl}/UpdateCheckInTimeAndCardNumber/${id}`,{...updateVisitorPassCode,username} ).pipe(
+    return this.http.put<VisitorLogResponse>(`${this.apiUrl}/UpdateCheckInTimeAndPassCode/${id}`,{...updateVisitorPassCode,username} ).pipe(
       catchError(this.handleError)
     );
   }
