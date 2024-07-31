@@ -118,14 +118,14 @@ onSubmit() {
     const username = formValues.username;
 
     // Check if the username exists
-    this.apiService.checkUsernameExists(username).subscribe(
-      exists => {
-        if (exists) {
-          // Username exists, show error message
-          alert('Username already exists. Please choose a different username.');
-        } 
-        else 
-        {
+    // this.apiService.checkUsernameExists(username).subscribe(
+    //   exists => {
+    //     if (exists) {
+    //       // Username exists, show error message
+    //       alert('Username already exists. Please choose a different username.');
+    //     } 
+    //     else 
+        // {
           // Username does not exist, proceed with user creation
           const dto: AddNewUser = {
             userName: username,
@@ -149,12 +149,12 @@ onSubmit() {
             }
           );
         }
-      },
-      error => {
-        console.error('Error checking username', error);
-      }
-    );
+    //   },
+    //   error => {
+    //     console.error('Error checking username', error);
+    //   }
+    // );
   }
-}
+// }
 
 }

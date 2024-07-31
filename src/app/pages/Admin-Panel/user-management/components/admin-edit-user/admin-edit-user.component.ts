@@ -4,7 +4,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
-// import { AdminAddUserComponent } from "../admin-add-user/admin-add-user.component"
 import { AdminAddUserComponent } from '../admin-add-user/admin-add-user.component';
 import { MatIconModule } from '@angular/material/icon';
 import { AdminButtonSubmitComponent } from "../../../../../ui/admin-button-submit/admin-button-submit.component";
@@ -35,9 +34,9 @@ export class AdminEditUserComponent {
 
   Roles: GetIdAndName[] = [];
   Locations: GetIdAndName[] = [];
-  user: any={}
+  user: any = {};
   userEditForm!: FormGroup;
-  isActive!: number
+  isActive!: number;
 
   edit: boolean = false;
   showInput: boolean = true;
@@ -69,17 +68,18 @@ export class AdminEditUserComponent {
       LocationId: ['', Validators.required],
       validFrom: [null, Validators.required],
       activeState: ['', Validators.required],
-      firstName: ['', [Validators.required,alphabetValidator()]],
-      lastName: ['', [Validators.required,alphabetValidator()]],
+      firstName: ['', [Validators.required, alphabetValidator()]],
+      lastName: ['', [Validators.required, alphabetValidator()]],
       username: ['', Validators.required],
       phone: ['', Validators.required],
       address: ['', Validators.required],
       password: [''],
       confirmPassword: ['']
-    },{
+    }, {
       validators: passwordMatchValidator('password', 'confirmPassword')
     });
   }
+
   passwordMatchValidator(formGroup: FormGroup) {
     const password = formGroup.get('password');
     const confirmPassword = formGroup.get('confirmPassword');
@@ -87,6 +87,7 @@ export class AdminEditUserComponent {
       ? null
       : { 'mismatch': true };
   }
+
   ngOnInit(): void {
     this.loadRoles();
     this.loadLocations();
@@ -98,7 +99,6 @@ export class AdminEditUserComponent {
       this.loadUserData(userId);
     } else {
       console.error('No user ID found');
-      // Handle the case where no user ID is available
     }
   }
 
@@ -118,18 +118,17 @@ export class AdminEditUserComponent {
           LocationId: this.user.officeLocationId,
           validFrom: new Date(this.user.validFrom),
           firstName: this.user.firstName,
-      lastName: this.user.lastName,
-      username: this.user.username,
-      activeState: this.isActive, 
+          lastName: this.user.lastName,
+          username: this.user.username,
+          activeState: this.isActive,
           phone: this.user.phone,
           address: this.user.address
         });
 
-        console.log("test",this.userEditForm);
+        console.log("test", this.userEditForm);
       },
       error: (error) => {
         console.error('Error loading user data:', error);
-        // Handle error
       }
     });
   }
@@ -137,7 +136,6 @@ export class AdminEditUserComponent {
   loadRoles(): void {
     this.adduser.loadRoleIdAndName().subscribe((roles: GetIdAndName[]) => {
       this.Roles = roles;
-    
     });
   }
 
@@ -145,14 +143,13 @@ export class AdminEditUserComponent {
     this.adduser.loadLocationIdAndName().subscribe((locations: GetIdAndName[]) => {
       this.Locations = locations;
     });
-    
   }
 
   formatDate(date: Date | null): string {
     if (date) {
       return date.toISOString();
     }
-    return ''; // or some default value if date is null
+    return '';
   }
 
   onRoleChange(value: string) {
@@ -183,7 +180,7 @@ export class AdminEditUserComponent {
   }
 
   onRadioChange(value: string) {
-    console.log("status change",value);    
+    console.log("status change", value);
     this.userEditForm.patchValue({ activeState: value });
   }
 
@@ -195,51 +192,33 @@ export class AdminEditUserComponent {
     if (this.userEditForm.valid) {
       const formValues = this.userEditForm.value;
       const validFrom = formValues.validFrom ? this.formatDate(formValues.validFrom) : null;
-  
-      // Construct the updatedUser object conditionally
+
       const updatedUser: any = {
         userId: this.user.userId,
-        username: formValues.username ||this.user.username,
-        firstName: formValues.firstName || this.user.firstName,
-        lastName: formValues.lastName ||this.user.lastName,
-        phone: formValues.phone || this.user.phone,
-        address: formValues.address || this.user.address,
-        officeLocationId: formValues.LocationId || this.user.officeLocationId,
-        roleId: formValues.RoleId || this.user.roleId,
+        username: formValues.username,
+        firstName: formValues.firstName,
+        lastName: formValues.lastName,
+        phone: formValues.phone,
+        address: formValues.address,
+        officeLocationId: formValues.LocationId,
+        roleId: formValues.RoleId,
         validFrom: validFrom,
-        isActive: formValues.activeState || this.user.isActive
+        isActive: formValues.activeState
       };
-  
-      // Add password only if resetPassword is true
+
       if (this.resetPassword) {
         updatedUser.password = formValues.password;
       }
 
-      const username = formValues.username;
-
-    // Check if the username exists
-    this.apiService.checkUsernameExists(username).subscribe(
-      exists => {
-        if (exists) {
-          // Username exists, show error message
-          alert('Username already exists. Please choose a different username.');
-        }else{
-          this.apiService.updateUserData(this.user.userId, updatedUser).subscribe({
-            next: (response) => {
-              console.log('User updated successfully', response);
-              alert("User updated successfully");
-            },
-            error: (error) => {
-              console.error('Error updating user', error);
-            }
-        });
+      this.apiService.updateUserData(this.user.userId, updatedUser).subscribe({
+        next: (response) => {
+          console.log('User updated successfully', response);
+          alert("User updated successfully");
+        },
+        error: (error) => {
+          console.error('Error updating user', error);
         }
-      },
-      error => {
-        console.error('Error checking username', error);
-      }
-    );
+      });
+    }
   }
-}
-
 }
