@@ -31,7 +31,7 @@ styleClass="p-datatable-striped"
     </ng-template>
     <ng-template pTemplate="body" let-rowData>
       <tr>
-        <td *ngFor="let col of columnsToDisplay" [style.width]="col.width || 'auto'">
+        <td *ngFor="let col of columnsToDisplay" [style.width]="col.width">
           <span *ngIf="col.field !== 'actions'">{{ rowData[col.field] }}</span>
           <ng-container *ngIf="col.field === 'actions'">
             <ng-container *ngTemplateOutlet="actionsTemplate; context: { $implicit: rowData }"></ng-container>
