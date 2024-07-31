@@ -70,9 +70,12 @@ export class LocationChartComponent implements OnInit,AfterViewInit {
           maintainAspectRatio: false,
           aspectRatio: .8
           ,
-          plugins: {
+          plugins: {                
+
               legend: {
+                display:false,
                   labels: {
+
                       color: "blue"
                   }
               }
