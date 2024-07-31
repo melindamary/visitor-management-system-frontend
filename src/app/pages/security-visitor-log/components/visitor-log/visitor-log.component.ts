@@ -61,16 +61,15 @@ export class VisitorLogComponent implements OnInit {
   ];
 
   columnsActive = [
-    { field: 'visitorPassCode', header: 'Pass Code', width: '14%' },
-    { field: 'name', header: 'Visitor Name', width: '21%' },
-    { field: 'purposeName', header: 'Purpose of Visit',width: '23%' },
-    { field: 'checkInTime', header: 'Check-In Time', type: 'date' },
-    { field: 'phone', header: 'Phone Number',width: '23%' },
-    { field: 'actions', header: 'Actions' }
+    { field: 'visitorPassCode', header: 'Pass Code', width: '14%'},
+    { field: 'name', header: 'Visitor Name',  },
+    { field: 'purposeName', header: 'Purpose of Visit',},
+    { field: 'checkInTime', header: 'Check-In Time', type: 'date', },
+    { field: 'phone', header: 'Phone Number',  },
+    { field: 'actions', header: 'Actions', width: '14%'}
   ];
 
   columnsCheckedOut = [
-    { field: 'id', header: 'Visitor Id' },
     { field: 'name', header: 'Visitor Name' },
     { field: 'purposeName', header: 'Purpose of Visit' },
     { field: 'checkInTime', header: 'Check-In Time', type: 'date' },

@@ -64,10 +64,10 @@
             id="phone" 
             formControlName="phone" 
             required 
-            pattern="[0-9]{10}"  
             autofocus />
         <small class="p-error" *ngIf="locationForm.get('phone')?.invalid && (locationForm.get('phone')?.dirty || submitted)">
-            Phone is required and should be 10 digits.
+          <div *ngIf="locationForm.get('phone')?.errors?.['required']">Phone is required.</div>
+          <div *ngIf="locationForm.get('phone')?.errors?.['pattern']">Phone must be a valid number.</div>
         </small>
       </div>
     </form>

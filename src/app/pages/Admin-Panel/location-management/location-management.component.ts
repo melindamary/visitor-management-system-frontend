@@ -52,6 +52,8 @@ export class LocationManagementComponent implements OnInit {
   locationDialog: boolean = false;
   submitted: boolean = false;
   locationForm: FormGroup;
+  private readonly phonePattern = /^(?:\+?\d{1,3})?[-.\s]?\(?\d{1,4}\)?[-.\s]?\d{1,4}[-.\s]?\d{4,}$/;
+
 
   locationColumns = [
     { field: 'name', header: 'Location' },
@@ -71,8 +73,8 @@ export class LocationManagementComponent implements OnInit {
       id: [null], // Include id in the form
       name: ['', Validators.required],
       address: ['', Validators.required],
-      phone: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]]
-    });
+      phone: ['', [Validators.required, Validators.pattern(this.phonePattern)]]
+      });
   }
 
   ngOnInit(): void {

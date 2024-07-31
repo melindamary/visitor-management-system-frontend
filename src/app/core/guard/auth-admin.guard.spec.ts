@@ -1,16 +1,22 @@
 import { TestBed } from '@angular/core/testing';
-import { CanActivateFn } from '@angular/router';
-import { authAdminGuard } from './auth-admin.guard';
+import { AuthAdminGuard } from './auth-admin.guard';
+import { RouterTestingModule } from '@angular/router/testing';
+import { AuthService } from '../services/auth-service/auth.service';
 
-describe('authAdminGuard', () => {
-  const executeGuard: CanActivateFn = (...guardParameters) => 
-      TestBed.runInInjectionContext(() => authAdminGuard(...guardParameters));
+describe('AuthAdminGuard', () => {
+  let guard: AuthAdminGuard;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      imports: [RouterTestingModule],
+      providers: [AuthAdminGuard, AuthService]  // Provide any dependencies here
+    });
+    guard = TestBed.inject(AuthAdminGuard);
   });
 
   it('should be created', () => {
-    expect(executeGuard).toBeTruthy();
+    expect(guard).toBeTruthy();
   });
+
+  // Add more tests as needed
 });
