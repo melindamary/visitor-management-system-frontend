@@ -11,7 +11,7 @@ import { UserManagementServiceService } from '../../../../../core/services/UserM
 import { GetIdAndName } from '../../../../../core/models/getIdAndName.interface';
 import { DatePipe, NgFor, NgIf } from '@angular/common';
 import {  FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { alphabetValidator, passwordMatchValidator } from './custom-validators';
+import { alphabetValidator, numberValidator, passwordMatchValidator } from './custom-validators';
 import { AddNewUser } from '../../../../../core/models/addNewUser.interface';
 import { Observable } from 'rxjs';
 
@@ -55,7 +55,7 @@ initializeForm() {
       Date: new FormControl(transformedDate, [Validators.required]),
       FirstName: new FormControl('', [Validators.required,alphabetValidator()]),
       LastName: new FormControl('', [Validators.required,alphabetValidator()]),
-      PhoneNumber: new FormControl('', [Validators.required]),
+      PhoneNumber: new FormControl('', [Validators.required,numberValidator()]),
       Address: new FormControl('', [Validators.required]),
       username: new FormControl('', [Validators.required, Validators.minLength(4)]),
       password: new FormControl('', [Validators.required, Validators.minLength(4)]),        
@@ -158,3 +158,5 @@ onSubmit() {
 // }
 
 }
+
+

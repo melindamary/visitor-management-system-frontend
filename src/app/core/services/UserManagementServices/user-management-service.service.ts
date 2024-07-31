@@ -12,7 +12,7 @@ import { CheckUsernameResponse } from '../../models/check-Username.Interface';
   providedIn: 'root'
 })
 export class UserManagementServiceService {
-
+  private baseUrl = 'https://localhost:7121/User';
 
   constructor(private http:HttpClient) { }
 
@@ -46,8 +46,9 @@ export class UserManagementServiceService {
     );
   }
 
-  checkUsernameExists(username: string): Observable<CheckUsernameResponse> {
-    return this.http.get<CheckUsernameResponse>(`https://localhost:7121/User/CheckUsernameExists/${username}`);
+  checkUsernameExists(username: string) {
+    const url = `${this.baseUrl}/CheckUsernameExists`;
+    return this.http.get(url, { params: { username } });
   }
 
   updateUserData(id:number, userData: any):Observable<any>{    

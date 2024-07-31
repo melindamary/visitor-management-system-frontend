@@ -64,6 +64,9 @@
       <mat-form-field appearance="outline" class="smallInput">
         <mat-label>Enter the First Name</mat-label>
         <input matInput formControlName="FirstName">
+        <mat-error *ngIf="addUserForm.get('FirstName')?.hasError('alphabetOnly')">
+          Only alphabetic characters are allowed.
+        </mat-error>
       </mat-form-field>
     </div>
   </div>
@@ -75,6 +78,9 @@
       <mat-form-field appearance="outline" class="smallInput">
         <mat-label>Enter the Last Name</mat-label>
         <input matInput formControlName="LastName">
+        <mat-error *ngIf="addUserForm.get('LastName')?.hasError('alphabetOnly')">
+          Only alphabetic characters are allowed.
+        </mat-error>
       </mat-form-field>
     </div>
     </div>
@@ -87,6 +93,9 @@
       <mat-form-field appearance="outline" class="smallInput">
         <mat-label>Enter the Phone Number</mat-label>
         <input matInput formControlName="PhoneNumber">
+        <mat-error *ngIf="addUserForm.get('PhoneNumber')?.hasError('numberOnly')">
+          Only alphabetic characters are allowed.
+        </mat-error>
       </mat-form-field>
     </div>
     </div>

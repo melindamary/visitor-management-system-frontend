@@ -22,7 +22,13 @@ export function passwordMatchValidator(controlName: string, matchingControlName:
     }
   };
 }
-
+export function numberValidator(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    // Check if the control's value is a valid number (non-empty and consisting of digits only)
+    const valid = /^\d*$/.test(control.value);
+    return valid ? null : { numberOnly: true };
+  };
+}
 export function alphabetValidator(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     const valid = /^[a-zA-Z]*$/.test(control.value);
