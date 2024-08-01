@@ -83,7 +83,7 @@ export class AdminViewRoleComponent {
       state: { roleId: role.id }
     };
 
-    this.router.navigate(['/vms/edit-role'], navigationExtras);
+    this.router.navigate(['/vms/admin-panel/edit-role'], navigationExtras);
   }
 
   deleteRole(role: any, event: Event) {
@@ -121,7 +121,7 @@ export class AdminViewRoleComponent {
   }
 
   addRole(): void {
-    this.router.navigate(['/vms/add-role']);
+    this.router.navigate(['/vms/admin-panel/add-role']);
   }
   getStatusText(status: number): string {
     return status === 1 ? 'Active' : 'Inactive';

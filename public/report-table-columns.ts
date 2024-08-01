@@ -1,7 +1,7 @@
 export const columns:any = [
   { field: 'name', header: 'Name', width: '15%' },
   { field: 'phoneNumber', header: 'Phone Number', width: '8%' },
-  { field: 'visitDate', header: 'Visit Date', width: '9%' },
+  { field: 'visitDate', header: 'Visit Date', width: '12%' },
   { field: 'officeLocation', header: 'Office Location', width: '12%' },
   { field: 'visitPurpose', header: 'Visit Purpose', width: '10%' },
   { field: 'hostName', header: 'Host Name', width: '11%' },

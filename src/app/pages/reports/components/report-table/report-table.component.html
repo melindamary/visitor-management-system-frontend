@@ -80,7 +80,7 @@
           <p-columnFilter
               *ngIf="col.field !== 'slNo' && col.field !== 'visitDate'"
               type="text" [field]="col.field" [matchMode]="'contains'"
-              [placeholder]="''"
+              [placeholder]="'Search...'"
               [(ngModel)]="searchTerms[col.field]"
               (keyup)="filterReports()"
           ></p-columnFilter>
@@ -92,7 +92,7 @@
             (onClose)="filterByDate()"
             dateFormat="dd-mm-yy" 
             [readonlyInput]="true" 
-            [showIcon]="false"
+            [showIcon]="true"
             placeholder=""
             appendTo="body"
           ></p-calendar>
@@ -163,6 +163,13 @@ styleClass="p-fluid">
           <div  class="flex-row-container">
             <label>Number of Devices </label>
             <p>: {{visitorDetails.deviceCount}}</p>
+          </div>
+          <div *ngIf="visitorDetails.deviceCount!=0" class="flex-row-container">
+            <label>Device Details </label>
+            <div>
+                <p *ngFor="let device of visitorDetails.devices">
+                    : {{device.name}} - {{device.serialNumber}}</p>
+            </div>
           </div>
         </div>
      

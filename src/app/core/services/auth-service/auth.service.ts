@@ -54,7 +54,7 @@ export class AuthService {
 
 
   getUserRole(username: string):Observable<any>{
-    const url = `${this.baseUrl}/User/GetUserRoleByUsername/${username}`;
+    const url = `${this.baseUrl}/User/UserRoleByUsername/${username}`;
     return this.http.get(url).pipe(
       tap((response:any) => {
         this.userRole = response.result.value.roleName;

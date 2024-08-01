@@ -70,7 +70,7 @@ viewOrEdit(user: UserOverview): void {
   
   console.log('Viewing/Editing user with ID:', userId);
   this.userService.setUserId(userId);
-  this.router.navigate(['/vms/edit-user']);
+  this.router.navigate(['/vms/admin-panel/edit-user']);
   // Implement the logic to view or edit the user details
 }
 view(user: UserOverview): void {
@@ -78,12 +78,12 @@ view(user: UserOverview): void {
   
   console.log('Viewing/Editing user with ID:', userId);
   this.userService.setUserId(userId);
-  this.router.navigate(['/vms/view-user']);
+  this.router.navigate(['/vms/admin-panel/view-user']);
   // Implement the logic to view or edit the user details
 }
 
 addUser(){
-  this.router.navigate(['/vms/add-user']);
+  this.router.navigate(['/vms/admin-panel/add-user']);
 }
 
 deleteUser(user: UserOverview,event:Event) {

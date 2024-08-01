@@ -13,7 +13,7 @@ export class ReportService {
   baseUrl = 'https://localhost:7121';
   
   fetchReport(): Observable<any>{
-    var response = this.http.get(`${this.baseUrl}/Report/GetAllVisitorReport`);
+    var response = this.http.get(`${this.baseUrl}/Report/VisitorList`);
     return response;
   }
 
@@ -49,7 +49,7 @@ export class ReportService {
 
 //fetch visitor details by visitor id
 getVisitorDetailsById(id: number): Observable<any>{
-  var response = this.http.get(`${this.baseUrl}/Report/GetVisitorDetails/${id}`);
+  var response = this.http.get(`${this.baseUrl}/Report/Visitor/${id}`);
   return response;
 }
 

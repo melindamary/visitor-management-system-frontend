@@ -10,7 +10,8 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { TooltipModule } from 'primeng/tooltip';
 import { ReportService } from '../../../../core/services/report-service/report.service';
 import { Router, RouterOutlet } from '@angular/router';
-import { Dialog, DialogModule } from 'primeng/dialog';
+import { DialogModule } from 'primeng/dialog';
+
 
 @Component({
   selector: 'app-report-table',
@@ -113,7 +114,7 @@ export class ReportTableComponent {
       const dataToExport = this.selectedReports.map((report) => {
         const newReport: { [key: string]: any } = {}; // Use an index signature
         Object.keys(report).forEach((key) => {
-          if(!report.photo){
+          if(key!=="photo"){
             const customHeader = this.customHeaders[key] || key.toUpperCase();
             newReport[customHeader] = report[key];
           }

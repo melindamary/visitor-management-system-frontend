@@ -16,7 +16,7 @@ export class VisitPurposeService {
   visitPurposes:any[] = [];
 
   fetchVisitPurposes(): Observable<any>{
-    var response = this.http.get(`${this.baseUrl}/PurposeOfVisit/GetPurposeList`);
+    var response = this.http.get(`${this.baseUrl}/PurposeOfVisit/PurposeList`);
     return response;
   }
 
@@ -44,7 +44,7 @@ export class VisitPurposeService {
 
   updatePurpose(id: number, purpose: string): Observable<any>{
     var username = this.getUser();
-    const url = `${this.baseUrl}/PurposeOfVisit/UpdatePurpose`;
+    const url = `${this.baseUrl}/PurposeOfVisit/Purpose`;
     const body = { Id: id, Purpose: purpose, Username: username };
     // console.log(body);
     return this.http.put(url, body);
@@ -52,7 +52,7 @@ export class VisitPurposeService {
 
   deletePurpose(id: number): Observable<any>{
     console.log("Deleted successfully",id)
-    var response = this.http.delete(`${this.baseUrl}/PurposeOfVisit/DeletePurpose/${id}`);
+    var response = this.http.delete(`${this.baseUrl}/PurposeOfVisit/Purpose/${id}`);
     return response;
   }
   getUser(){

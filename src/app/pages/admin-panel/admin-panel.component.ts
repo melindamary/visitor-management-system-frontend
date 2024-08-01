@@ -8,7 +8,8 @@ import { LocationManagementComponent } from './location-management/location-mana
 @Component({
   selector: 'app-admin-panel',
   standalone: true,
-  imports: [TabViewModule, AdminViewUserComponent, AdminVisitPurposeTableComponent, LocationManagementComponent, AdminViewRoleComponent],
+  imports: [TabViewModule, AdminViewUserComponent, AdminVisitPurposeTableComponent,
+     LocationManagementComponent, AdminViewRoleComponent],
   templateUrl: './admin-panel.component.html',
   styleUrl: './admin-panel.component.scss'
 })
