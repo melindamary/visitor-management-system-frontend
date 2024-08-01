@@ -15,7 +15,7 @@ export class LocationService {
 
   // Fetch all location details
   getAllLocationDetails(): Observable<LocationDetails[]> {
-    return this.http.get<ApiResponse<{ $values: LocationDetails[] }>>(`${this.apiUrl}/GetAllLocationDetails`).pipe(
+    return this.http.get<ApiResponse<{ $values: LocationDetails[] }>>(`${this.apiUrl}/LocationList`).pipe(
       map(response => response.result.$values)
     );
   }
@@ -23,13 +23,13 @@ export class LocationService {
   // Add a new location
   addLocation(addedLocation: UpdateLocation): Observable<ApiResponse<UpdateLocation>> {
     const username = this.getUser();
-    return this.http.post<ApiResponse<UpdateLocation>>(`${this.apiUrl}/AddLocation`, { ...addedLocation, username });
+    return this.http.post<ApiResponse<UpdateLocation>>(`${this.apiUrl}/PostLocation`, { ...addedLocation, username });
   }
 
   // Update an existing location
   updateLocation(id: number, updatedLocation: UpdateLocation): Observable<ApiResponse<UpdateLocation>> {
     const username = this.getUser();
-    return this.http.put<ApiResponse<UpdateLocation>>(`${this.apiUrl}/UpdateLocation/${id}`, { ...updatedLocation, username });
+    return this.http.put<ApiResponse<UpdateLocation>>(`${this.apiUrl}/Location/${id}`, { ...updatedLocation, username });
   }
 
   getUser(): string | null {

@@ -15,7 +15,7 @@ export class VisitorLogService {
     @Inject(PLATFORM_ID) private platformId: Object) { }
 
   getVisitorLogToday(): Observable<VisitorLogResponse> {
-    return this.http.get<VisitorLogResponse>(`${this.apiUrl}/GetVisitorLogToday`)
+    return this.http.get<VisitorLogResponse>(`${this.apiUrl}/VisitorLogList`)
     .pipe(
       catchError(this.handleError)
     );
@@ -23,13 +23,13 @@ export class VisitorLogService {
 
   updateCheckInTimeAndCardNumber(id: number, updateVisitorPassCode: VisitorPassCodeDTO): Observable<VisitorLogResponse> {
     const username = this.getUser();
-    return this.http.put<VisitorLogResponse>(`${this.apiUrl}/UpdateCheckInTimeAndPassCode/${id}`,{...updateVisitorPassCode,username} ).pipe(
+    return this.http.put<VisitorLogResponse>(`${this.apiUrl}/VisitorLogCheckIn/${id}`,{...updateVisitorPassCode,username} ).pipe(
       catchError(this.handleError)
     );
   }
 
   updateCheckOutTime(id: number): Observable<VisitorLogResponse> {
-    return this.http.put<VisitorLogResponse>(`${this.apiUrl}/UpdateCheckOutTime/${id}`, {}).pipe(
+    return this.http.put<VisitorLogResponse>(`${this.apiUrl}/VisitorLogCheckOut/${id}`, {}).pipe(
       catchError(this.handleError)
     );
   }
