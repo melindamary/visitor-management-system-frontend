@@ -18,7 +18,7 @@ export class AuthAceGuard implements CanActivate {
   canActivate(): boolean {
     if (isPlatformBrowser(this.platformId)) {
       const userRole = localStorage.getItem('userRole');
-      if (this.authService.isLoggedIn() && (userRole === 'ACE' || userRole === 'Admin')) {
+      if (this.authService.isLoggedIn() && (userRole === 'ACE' || userRole === 'Admin' || userRole === 'SuperAdmin')) {
         return true;
       } else {
         this.router.navigate(['/login']);

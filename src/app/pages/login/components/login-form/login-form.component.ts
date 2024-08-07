@@ -31,7 +31,7 @@ export class LoginFormComponent {
               (response: any) => {
                 this.userRole = response.result.value.roleName;
                 console.log("Role retrieved",response.result.value.roleName);
-                if(this.userRole == "Admin" || this.userRole == "ACE")
+                if(this.userRole == "Admin" || this.userRole =="SuperAdmin" || this.userRole == "ACE")
                   this.router.navigate(['/vms/dashboard']);
                 else if(this.userRole == "Security")
                   this.router.navigate(['/vms/visitor-log']);
