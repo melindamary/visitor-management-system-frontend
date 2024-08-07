@@ -1,0 +1,88 @@
+.visitor-card {
+    width: 300px;
+    height: 500px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+
+    .photo-area {
+      width: 100%;
+      height: 50%;
+      display: flex;
+      justify-content: center;
+      padding-bottom: 20px;
+      align-items: center;
+      background-color: #f0f0f0;
+  
+      .photo-placeholder {
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        background-color: #d0d0d0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 24px;
+        color: #888888;
+      }
+    }
+  
+    .info-area {
+      height: 63%;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      top:37%;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-items: center;
+      background-color: #808080;
+      padding: 20px;
+      color: #ffffff;
+
+  
+      .visitor-id {
+        padding-top: 30px;
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+  
+      .name-placeholder,
+      .purpose-placeholder {
+        font-size: 18px;
+        margin-bottom: 10px;
+      }
+  
+      .company-logo {
+        margin-top: 20px;
+        img {
+          max-width: 200px;
+        }
+      }
+  
+      .address {
+        font-size: 12px;
+        margin-top: 10px;
+      }
+    }
+  }
+  .download-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  
+    &:hover {
+      background-color: #45a049;
+    }
+}
