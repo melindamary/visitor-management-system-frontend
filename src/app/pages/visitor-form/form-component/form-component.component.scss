@@ -1,0 +1,134 @@
+.astrik{
+    color:red;  
+
+}
+.plusBtn{
+    border: none;
+    
+}
+.plusBtnHide{
+    display: none;
+}
+.astrik-white{
+    color:white;  
+
+}
+.button3{
+    border: none;
+    border-radius: 5px;
+    width: 200px;
+    padding: 15px 32px;
+    align-items: center;
+    text-decoration: none;
+    display: inline-flex; /* Use inline-flex instead of inline-block */
+    justify-content: center; /* Center items horizontally */
+    font-size: 16px;
+    margin: 10px 20px;
+    cursor: pointer;
+    background-color: #DC143C; 
+    color: white; 
+    border: 2px solid #DC143C;
+}
+.button span {
+    margin: 0 5px; /* Adjust the spacing as needed */
+    display: flex;
+    align-items: center;
+}
+.inputLabel{
+    display: block;
+    margin-bottom: 10px;
+}
+.plus{
+    cursor: pointer;
+    margin-bottom: 15px;
+    margin-right: -11px;
+    margin-left:10px;
+    height: 25px;
+    width: 25px;
+    
+
+}
+::ng-deep  .largeInput .p-autocomplete{
+    width: 840px;
+    margin-right: 10px;
+}
+::ng-deep  .customInput .p-autocomplete{
+    width: 840px;
+    margin-right:-30px;
+}
+::ng-deep  .mediumInput .p-autocomplete{
+    width: 810px;
+    margin-right: 10px;
+}
+
+::ng-deep .p-autocomplete{
+    
+    height: 55px;
+    
+   
+}
+::ng-deep .p-inputtext:hover{
+    border-color: #DC143C;
+   
+}
+::ng-deep .p-autocomplete:focus{
+    border-color: #DC143C;
+}
+// ::ng-deep .custom-float-label {
+//     line-height: 1.5; /* Adjust this value as needed */
+// }
+
+// .custom-float-label label {
+//     top: 20px; /* Adjust this value as needed */
+// }
+::ng-deep .p-autocomplete-input:focus{
+    border-color: #DC143C;
+    box-shadow: 0 0 0 0.1rem rgba(239, 8, 77, 0.25); // Adjusted box-shadow to match Bootstrap's default
+}
+::ng-deep .p-button{
+    background: #DC143C;
+    border: none;
+    border-radius: 0 5px 5px 0; 
+}
+
+.visitorForm{
+    display: flex;
+    justify-content: center; 
+    flex-direction: column;   
+    width: 100%;
+    margin-top: 20px;
+    align-items: center;
+    
+    
+}
+.form-control:focus {
+    border-color: #DC143C;
+    box-shadow: 0 0 0 0.1rem rgba(239, 8, 77, 0.25); // Adjusted box-shadow to match Bootstrap's default
+}
+.row{
+    display: flex;    
+}
+
+.smallInput {
+    width: 400px;
+    margin-right: 10px;
+}
+::ng-deep   .p-float-label label {
+    position: absolute;
+    pointer-events: none;
+    top: 50%;
+    left: 1rem;
+    margin-top: -1rem;
+    transition-property: all;
+    transition-timing-function: ease;
+    line-height: 1;
+}
+::ng-deep   .p-float-label label :focus  {
+    opacity: 0;
+    transition-property: all;
+    transition-timing-function: ease;
+}
+::ng-deep .p-inputtext {
+    padding-top: 1rem; /* Adjust to provide space for label */
+  left:10px;
+}

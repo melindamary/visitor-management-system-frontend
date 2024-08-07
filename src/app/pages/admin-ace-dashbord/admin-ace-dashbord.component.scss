@@ -1,0 +1,71 @@
+.dashboard-tiles {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+.charts{
+    display: flex;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    height: 500px;
+    flex-direction: row;
+    .barChart{
+        width: 60%;
+        height: 500px;
+    }
+    .pieChart{
+        width: 40%;
+    }
+
+}
+
+.securitytiles{
+    display: flex;
+    flex-direction: column;
+    padding-top: 30px;
+    padding-left: 30px;
+    .tilesSecurity{
+        padding: 30px;
+    } 
+}
+
+.locationsecuritytable{
+    padding-bottom: 3rem;
+}
+.table1{
+    padding-bottom: 3rem;
+}
+.legend {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+  }
+  
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .legend-color {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+  }
+  
+  .legend-label {
+    font-size: 14px;
+  }
+  
+  .forms-submitted {
+    background-color: #000000;
+  }
+  
+  .active-visitors {
+    background-color: #ff9999;
+  }
+  
+  .total-visitors {
+    background-color: #9999ff;
+  }

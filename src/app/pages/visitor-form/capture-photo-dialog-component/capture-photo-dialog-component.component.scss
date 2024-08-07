@@ -1,0 +1,32 @@
+.button3{
+    border: none;
+    border-radius: 5px;
+    width: 200px;
+    padding: 15px 32px;
+    align-items: center;
+    text-decoration: none;
+    display: inline-flex; /* Use inline-flex instead of inline-block */
+    justify-content: center; /* Center items horizontally */
+    font-size: 16px;
+    margin: 10px 20px;
+    cursor: pointer;
+    background-color: #DC143C; 
+    color: white; 
+    border: 2px solid #DC143C;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .captured-image-container {
+    margin-top: 10px;
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }

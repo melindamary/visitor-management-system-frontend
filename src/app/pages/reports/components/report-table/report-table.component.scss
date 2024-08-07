@@ -1,0 +1,150 @@
+::ng-deep .p-datatable tr:hover td {
+    background-color: #f1ebff; /* Change to desired hover background color */
+}
+
+::ng-deep .p-datatable tr td {
+  padding-block: 0rem; 
+}
+th{
+  background-color: #eaeaea;
+  color: #896cc7;
+  padding-block: 0.5rem;
+}
+.search-header{
+  background-color: white;
+  padding-block: 0.5rem;
+}
+
+::ng-deep .p-sortable-column .p-sortable-column-icon,
+::ng-deep .p-column-filter-menu-button {
+    color: #896cc7;
+}
+
+::ng-deep .p-fluid .p-inputtext{
+  width: 100%;
+  height: 16px;
+  border-radius: none;
+  padding-left: 1px;
+}
+::ng-deep .p-column-filter-row .p-column-filter-clear-button,
+::ng-deep .p-column-filter-menu-button{
+  display: none;
+}
+
+::ng-deep .p-button.p-button-outlined{
+  box-shadow: none;
+  padding-block: 10px;
+}
+
+.excel-icon{
+  font-size: 22px;
+  // color: #00a651;
+  color: #59ca8f;
+  cursor: pointer;
+}
+.excel-icon:hover{
+  color: #00a651;
+}
+.export-btn{
+  padding: 6px;
+  border: solid 1px #8e8e8e;
+  font-size: 16px;
+  border-radius: 4px;
+  background-color: #8e8e8e;
+  color: white;
+  cursor: pointer;
+}
+.export-btn:hover{
+  background-color: #808080;
+}
+
+::ng-deep .p-toolbar{
+  background-color: #fff;
+  padding: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+::ng-deep .p-calendar{
+  height: 2rem;
+  width: 13rem;
+  margin-right: 0.5rem;
+}
+::ng-deep .date-range-picker{
+  width: 18rem;
+}
+
+::ng-deep .date-picker{
+  width: 8rem;
+}
+
+::ng-deep .p-paginator{
+  height: 3rem;
+  padding: 0px;
+}
+
+::ng-deep .p-paginator .p-paginator-pages .p-paginator-page{
+  height: 2rem;
+  min-width: 2rem;
+}
+
+::ng-deep .p-dropdown{
+  height: 2rem;
+  outline: none;
+}
+
+::ng-deep .p-dropdown-label{
+  padding: 0.3rem 0rem 0.5rem 0.6rem;
+}
+
+::ng-deep .p-checkbox-box{
+  height: 1rem;
+  width: 1rem;
+}
+
+::ng-deep .p-datepicker table td > span {
+  height: 1.3rem;
+  width: 1.3rem;
+  border-radius: 5%;
+}
+
+::ng-deep .search-header .p-datepicker table td > span {
+  height: 0.5rem !important;
+  width: 0.5rem;
+  border-radius: 5%;
+}
+
+.flex-row-container{
+  display: flex;
+  
+}
+.flex-row-container label{
+  width: 35%;
+}
+.flex-column-container{
+  display: flex;
+  flex-direction: column;
+}
+
+.align-center{
+  // align-items: center;
+  padding-bottom: 10px;
+}
+.view-more-heading{
+  font-size: 18px;
+  font-weight: bold;
+  color: #896cc7;
+}
+.view-more{
+  color: black;
+  font-size: 16px;
+  // background-color: #59ca8f;
+  margin-left: 5%;
+  margin-top: 10%;
+}
+.view-more-body{
+  margin:auto;
+}
+.flex-row{
+  display: flex;
+}
