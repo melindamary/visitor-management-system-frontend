@@ -1,6 +1,7 @@
-import { Component, NgModule } from '@angular/core';
+import { Component, inject, NgModule } from '@angular/core';
 import { LocationService } from '../../core/services/location-management/location.service'; // Adjust the import based on your project structure
 import { NgFor, NgIf } from '@angular/common';
+import { Router } from '@angular/router';
 interface LocationDetails {
   id: number;
   name: string;
@@ -20,6 +21,8 @@ export class BootingPageComponent {
   selectedLocationId: number | null = null;
   selectedLocationName: string = '';
   showConfirmationMessage: boolean = false;
+  private router = inject(Router);
+
 
   constructor(private locationService: LocationService) { }
 
@@ -51,9 +54,10 @@ export class BootingPageComponent {
 
   confirmSelection(): void {
     if (this.selectedLocationId && this.selectedLocationName) {
-      localStorage.setItem('selectedLocationId', this.selectedLocationId.toString());
-      localStorage.setItem('selectedLocationName', this.selectedLocationName);
+      localStorage.setItem('LocationId', this.selectedLocationId.toString());
+      localStorage.setItem('LocationName', this.selectedLocationName);
       this.showConfirmationMessage = false; // Hide the message after saving
     }
+    this.router.navigate(['/welcomepage'])
   }
 }
