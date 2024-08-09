@@ -1,20 +1,26 @@
 <div class="tile-container" style="display: flex; width: 100%;">
   <app-visitor-log-tiles 
-    title="Today's Active Visitors" 
+    title="Upcoming Visitors" 
     [content]="activeVisitorsCount" 
-    backgroundColor="#896CC7" 
+    backgroundColor="#c097e3" 
     (tileClick)="selectTab('active')"
   ></app-visitor-log-tiles>
   <app-visitor-log-tiles 
-    title="Today's Total Visitors" 
+    title="Active Visitors" 
+    [content]="activeVisitorsCount" 
+    backgroundColor="#e7b3fe" 
+    (tileClick)="selectTab('active')"
+  ></app-visitor-log-tiles>
+  <app-visitor-log-tiles 
+    title="Total Visitors" 
     [content]="totalVisitorsCount" 
-    backgroundColor="#FF858C"
+    backgroundColor="#896CC7"
     (tileClick)="selectTab('total')"
   ></app-visitor-log-tiles>
   <app-visitor-log-tiles 
-    title="Today's Checked Out Visitors" 
+    title="Checked Out Visitors" 
     [content]="checkedOutVisitorsCount" 
-    backgroundColor="#952991" 
+    backgroundColor="#6f16c0" 
     (tileClick)="selectTab('checkedOut')"
   ></app-visitor-log-tiles>
 </div>
