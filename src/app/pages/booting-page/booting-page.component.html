@@ -1,0 +1,24 @@
+<!-- <div>
+    <select [(ngModel)]="selectedLocationId">
+      <option *ngFor="let location of locations" [value]="location.id">{{ location.name }}</option>
+    </select>
+    <button (click)="onSubmit()">Submit</button>
+  </div>
+  
+  <div *ngIf="showConfirmationMessage" class="confirmation-message">
+    <p>Are you sure you want to continue with the location "{{ selectedLocationName }}"?</p>
+    <span (click)="confirmSelection()" class="arrow">➔</span>
+  </div>
+   -->
+   <div>
+    <select id="locationSelect" (change)="onLocationChange($event)">
+      <option *ngFor="let location of locations" [value]="location.id">{{ location.name }}</option>
+    </select>
+  </div>
+  
+  <div *ngIf="showConfirmationMessage" class="confirmation-message">
+    <p>Are you sure you want to continue with the location "{{ selectedLocationName }}"?</p>
+    <span (click)="confirmSelection()" class="arrow-mark">➔</span>
+  </div>
+  
+  
