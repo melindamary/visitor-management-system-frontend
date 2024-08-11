@@ -4,30 +4,46 @@ import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
 import * as XLSX from 'xlsx';
 import { CalendarModule } from 'primeng/calendar';
-import { FormsModule } from '@angular/forms';
-import {columns, customHeaders} from '../../../../../../public/report-table-columns';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  columns,
+  customHeaders,
+} from '../../../../../../public/report-table-columns';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TooltipModule } from 'primeng/tooltip';
 import { ReportService } from '../../../../core/services/report-service/report.service';
-import { Router, RouterOutlet } from '@angular/router';
+import { RouterOutlet } from '@angular/router';
 import { DialogModule } from 'primeng/dialog';
+import { DropdownModule } from 'primeng/dropdown';
 
-
+interface Locations {
+  name: string;
+}
 @Component({
   selector: 'app-report-table',
   standalone: true,
-  imports: [TableModule, CommonModule, ButtonModule, 
-    CalendarModule,FormsModule, ToolbarModule, TooltipModule, DialogModule,
-    RouterOutlet],
+  imports: [
+    TableModule,
+    CommonModule,
+    ButtonModule,
+    CalendarModule,
+    FormsModule,
+    ToolbarModule,
+    TooltipModule,
+    DialogModule,
+    DropdownModule,
+    RouterOutlet,
+    ReactiveFormsModule
+  ],
   templateUrl: './report-table.component.html',
   styleUrl: './report-table.component.scss',
 })
 export class ReportTableComponent {
-
-  constructor(public reportService: ReportService, private router: Router){}
+  constructor(public reportService: ReportService) {}
   selectedMonth: Date | undefined;
   selectedYear: Date | undefined;
   selectedDate!: Date | '';
+  selectedLocation: Locations | null = null;
   rangeDates: Date[] | undefined;
   selectedReports: any[] = [];
   filteredReports: any[] = [];
@@ -40,15 +56,21 @@ export class ReportTableComponent {
   visitorDetails: any;
   searchTerms: { [key: string]: string } = {};
 
-  async fetchReport():Promise<void>{
-    console.log("Entered Reports");
+  locations: { name: string }[] = [
+    { name: 'Gayathri' },
+    { name: 'Thejaswini' },
+    { name: 'Athulya' },
+    // Add more locations as needed
+  ];
+  async fetchReport(): Promise<void> {
+    console.log('Entered Reports');
     this.reports = await this.reportService.getReport();
     this.filteredReports = this.reports;
-    console.log("Filtered Reports 2" + this.filteredReports);
+    console.log('Filtered Reports 2' + this.filteredReports);
   }
 
   filterReports() {
-    this.filteredReports = this.reports.filter(report => {
+    this.filteredReports = this.reports.filter((report) => {
       for (const field in this.searchTerms) {
         if (this.searchTerms[field]) {
           const fieldValue = report[field]?.toString().toLowerCase() || '';
@@ -65,10 +87,12 @@ export class ReportTableComponent {
 
   filterByDate() {
     if (this.selectedDate) {
-      this.filteredReports = this.reports.filter(report => {
+      this.filteredReports = this.reports.filter((report) => {
         const reportDate = this.parseDate(report.visitDate);
-        return reportDate.toLocaleDateString()
-         === new Date(this.selectedDate).toLocaleDateString();
+        return (
+          reportDate.toLocaleDateString() ===
+          new Date(this.selectedDate).toLocaleDateString()
+        );
       });
     } else {
       this.filteredReports = [...this.reports];
@@ -78,13 +102,13 @@ export class ReportTableComponent {
     if (this.selectedYear) {
       const selectedYear = this.selectedYear.getFullYear();
 
-      console.log("Selected year 1: " + this.selectedYear.getFullYear())
-    
+      console.log('Selected year 1: ' + this.selectedYear.getFullYear());
+
       this.filteredReports = this.reports.filter((report) => {
         const reportDate = this.parseDate(report.visitDate);
         return reportDate.getFullYear() === selectedYear;
       });
-      console.log("Filtered reports 1: " + this.filteredReports)
+      console.log('Filtered reports 1: ' + this.filteredReports);
     } else {
       this.filteredReports = this.reports;
     }
@@ -103,7 +127,20 @@ export class ReportTableComponent {
       this.filteredReports = this.reports; // Show all reports if no date range is selected
     }
   }
- parseDate(dateStr: string): Date {
+
+  filterByLocation() {
+    console.log('Location: ', this.selectedLocation?.name);
+
+    if (this.selectedLocation) {
+      this.filteredReports = this.reports.filter((report) => {
+        return report.officeLocation === this.selectedLocation?.name;
+      });
+    } else {
+      this.filteredReports = this.reports; // Show all reports if no location is selected
+    }
+  }
+
+  parseDate(dateStr: string): Date {
     const [day, month, year] = dateStr.split('-').map(Number);
     return new Date(year, month - 1, day); // Months are 0-based in JavaScript Date
   }
@@ -114,11 +151,10 @@ export class ReportTableComponent {
       const dataToExport = this.selectedReports.map((report) => {
         const newReport: { [key: string]: any } = {}; // Use an index signature
         Object.keys(report).forEach((key) => {
-          if(key!=="photo"){
+          if (key !== 'photo') {
             const customHeader = this.customHeaders[key] || key.toUpperCase();
             newReport[customHeader] = report[key];
           }
-          
         });
         return newReport;
       });
@@ -153,7 +189,7 @@ export class ReportTableComponent {
     this.selectedDate = '';
   }
   viewDetails(rowData: any) {
-    console.log("Row data: ",rowData);
+    console.log('Row data: ', rowData);
     this.viewDetailsDialog = true;
     this.visitorDetails = rowData;
     // this.router.navigate(['/vms/reports/details'], { state: { visitorId: rowData.visitorId } });
@@ -170,7 +206,7 @@ export class ReportTableComponent {
       'staffContactNumber',
       'checkIn',
       'checkOut',
-    ]; // Add all the fields you want to be sortable here
+    ]; // Add all the fields to be sorted here
     return sortableFields.includes(field);
   }
 

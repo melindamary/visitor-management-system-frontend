@@ -1,8 +1,29 @@
   <p-toolbar>
 
-    <!-- Filter by date range -->
     <ng-template pTemplate="left">
+      <!-- Location dropdown -->
+      <p-dropdown 
+      ngDefaultControl
+      [options]="locations" 
+      placeholder="Select Location"
+      optionLabel="name"
+      [(ngModel)]="selectedLocation" 
+      (onChange)="filterByLocation()"
+    ></p-dropdown>
+      <!-- Filter by date -->
       <p-calendar 
+      ngDefaultControl
+      [(ngModel)]="selectedDate" 
+      (onClose)="filterByDate()"
+      dateFormat="dd-mm-yy" 
+      [readonlyInput]="true" 
+      [showIcon]="true"
+      placeholder="Select Date"
+    ></p-calendar>
+
+    <!-- Filter by date range -->
+      <p-calendar 
+      ngDefaultControl
       styleClass="date-range-picker"
       [(ngModel)]="rangeDates" 
       (onClose)="filterByDateRange()"
@@ -13,26 +34,26 @@
       variant="filled" 
       />
 
-
-    <!-- Filter by year -->
-    <p-calendar 
-    [(ngModel)]="selectedYear" 
-    (onClose)="filterByYear()"
-    view="year" 
-    dateFormat="yy" 
-    [showIcon]="true"
-    placeholder="Select Year"/>
+      <!-- Filter by year -->
+      <p-calendar 
+      ngDefaultControl
+      [(ngModel)]="selectedYear" 
+      (onClose)="filterByYear()"
+      view="year" 
+      dateFormat="yy" 
+      [showIcon]="true"
+      placeholder="Select Year"/>
 
     <!-- Reset button -->
     <button 
     class="export-btn" 
     (click)="resetReport()">
-    Reset
-  </button>
+      Reset
+    </button>
     </ng-template>
 
-    <!-- Export as Excel -->
     <ng-template pTemplate="right">
+      <!-- Export as Excel -->
       <i class="pi pi-file-excel excel-icon"
       (click)="exportSelectedToExcel()"
       pTooltip="Export" 
@@ -48,7 +69,7 @@
   styleClass="p-datatable-striped p-datatable-gridlines" 
   [columns]="cols"
   [value]="filteredReports"
-  [tableStyle]="{ 'min-width': '55rem' }"
+  [tableStyle]="{ 'min-width': '55rem', 'min-height': '70vh' }"
   [paginator]="true"
   [rows]="10"
   [scrollable]="true" 
@@ -78,6 +99,7 @@
       <th class="search-header"></th>
       <th class="search-header" *ngFor="let col of columns">
           <p-columnFilter
+              ngDefaultControl
               *ngIf="col.field !== 'slNo' && col.field !== 'visitDate'"
               type="text" [field]="col.field" [matchMode]="'contains'"
               [placeholder]="'Search...'"
@@ -85,6 +107,7 @@
               (keyup)="filterReports()"
           ></p-columnFilter>
           <p-calendar 
+            ngDefaultControl
             styleClass="date-picker"
             class="single-date-picker"
             *ngIf="col.field == 'visitDate'"
@@ -103,9 +126,9 @@
 
    <!-- Column data -->
   <ng-template pTemplate="body" let-rowData let-columns="columns">
-    <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="columns">
+    <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="columns" style="height: 30px; flex:none">
       <td><p-tableCheckbox [value]="rowData" /></td>
-      <td *ngFor="let col of columns"  [style.width]="col.width || 'auto'">
+      <td *ngFor="let col of columns"  [style.width]="col.width || 'auto'" style="height: 30px">
         {{ rowData[col.field] }}
       </td>
       <td alignFrozen="right" pFrozenColumn [frozen]="true" style="background-color: white;">
@@ -123,6 +146,8 @@
     </tr>
   </ng-template>
 </p-table>
+
+
 
 <!-- View Details Dialog -->
 <p-dialog 

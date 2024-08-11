@@ -20,7 +20,6 @@ import { AdminViewRoleComponent } from './pages/admin-panel/role-management/admi
 import { VisitorConsentModalComponent } from './ui/visitor-consent-modal/visitor-consent-modal.component';
 import { AdminAddUserComponent } from './pages/admin-panel/user-management/components/admin-add-user/admin-add-user.component';
 import { AdminEditUserComponent } from './pages/admin-panel/user-management/components/admin-edit-user/admin-edit-user.component';
-
 export const routes: Routes = [
   {
     path: 'vms',
@@ -39,7 +38,7 @@ export const routes: Routes = [
       {
         path: 'reports',
         component: ReportTableComponent,
-        canActivate: [AccessGuard],
+        canActivate: [AuthAdminGuard],
       },
       {
         path: 'admin-panel',
