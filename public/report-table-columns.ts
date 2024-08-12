@@ -1,5 +1,5 @@
 export const columns:any = [
-  { field: 'name', header: 'Name', width: '15%' },
+  { field: 'name', header: 'Name', width: '20%' },
   { field: 'phoneNumber', header: 'Phone Number', width: '8%' },
   { field: 'visitDate', header: 'Visit Date', width: '12%' },
   { field: 'officeLocation', header: 'Office Location', width: '12%' },
@@ -23,5 +23,7 @@ export const customHeaders: { [key: string]: string } = {
   staffContactNumber: 'Staff Contact',
   checkIn: 'Check-In',
   checkOut: 'Check-Out',
+  deviceCount: 'Number of Devices Carried',
+  devices: 'Device Name and Serial Number',
   // Add more field mappings as needed
 };

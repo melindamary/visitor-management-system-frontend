@@ -10,19 +10,30 @@
       [(ngModel)]="selectedLocation" 
       (onChange)="filterByLocation()"
     ></p-dropdown>
-      <!-- Filter by date -->
+      <!-- Start date -->
       <p-calendar 
       ngDefaultControl
-      [(ngModel)]="selectedDate" 
+      [(ngModel)]="selectedStartDate" 
       (onClose)="filterByDate()"
       dateFormat="dd-mm-yy" 
       [readonlyInput]="true" 
       [showIcon]="true"
-      placeholder="Select Date"
+      placeholder="Select Start Date"
+    ></p-calendar>
+
+      <!-- End date -->
+      <p-calendar 
+      ngDefaultControl
+      [(ngModel)]="selectedEndDate" 
+      (onClose)="filterByDateRange()"
+      dateFormat="dd-mm-yy" 
+      [readonlyInput]="true" 
+      [showIcon]="true"
+      placeholder="Select End Date"
     ></p-calendar>
 
     <!-- Filter by date range -->
-      <p-calendar 
+      <!-- <p-calendar 
       ngDefaultControl
       styleClass="date-range-picker"
       [(ngModel)]="rangeDates" 
@@ -32,17 +43,7 @@
       [showIcon]="true" 
       [readonlyInput]="true"
       variant="filled" 
-      />
-
-      <!-- Filter by year -->
-      <p-calendar 
-      ngDefaultControl
-      [(ngModel)]="selectedYear" 
-      (onClose)="filterByYear()"
-      view="year" 
-      dateFormat="yy" 
-      [showIcon]="true"
-      placeholder="Select Year"/>
+      /> -->
 
     <!-- Reset button -->
     <button 
@@ -72,7 +73,7 @@
   [tableStyle]="{ 'min-width': '55rem', 'min-height': '70vh' }"
   [paginator]="true"
   [rows]="10"
-  [scrollable]="true" 
+  [scrollable]="true"  
   scrollHeight="70vh" 
   [rowsPerPageOptions]="[5, 10, 20]"
   sortMode="multiple"
@@ -84,6 +85,7 @@
 
   <!-- Column headers -->
   <ng-template pTemplate="header" let-columns>
+    <!-- <div class="table-body"> -->
     <tr>
       <th><p-tableHeaderCheckbox /></th>
         <th *ngFor="let col of columns" [pSortableColumn]="isSortable(col.field)? col.field : null">
@@ -122,13 +124,16 @@
       </th>
       <th class="search-header" alignFrozen="right" pFrozenColumn [frozen]="true"></th>
     </tr>
+  <!-- </div> -->
   </ng-template>
 
    <!-- Column data -->
   <ng-template pTemplate="body" let-rowData let-columns="columns">
-    <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="columns" style="height: 30px; flex:none">
+    <!-- <div class="table-body"> -->
+    <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="columns">
       <td><p-tableCheckbox [value]="rowData" /></td>
-      <td *ngFor="let col of columns"  [style.width]="col.width || 'auto'" style="height: 30px">
+      <td *ngFor="let col of columns" 
+       [style.width]="col.width">
         {{ rowData[col.field] }}
       </td>
       <td alignFrozen="right" pFrozenColumn [frozen]="true" style="background-color: white;">
@@ -144,7 +149,9 @@
           />
         </td>
     </tr>
+    <!-- </div> -->
   </ng-template>
+
 </p-table>
 
 

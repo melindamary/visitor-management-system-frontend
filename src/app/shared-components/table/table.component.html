@@ -7,8 +7,10 @@ styleClass="p-datatable-striped"
   currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
  [showCurrentPageReport]="true" 
  [rowHover]="true" 
- [tableStyle]="{ 'min-width': '60rem' }"
+ [tableStyle]="tableStyle"
  sortMode="multiple"
+ [scrollHeight]="scrollHeight"
+ [rowsPerPageOptions]="rowsPerPageOptions"
  >
   <ng-container *ngFor="let col of columnsToDisplay">
     <ng-template pTemplate="header">

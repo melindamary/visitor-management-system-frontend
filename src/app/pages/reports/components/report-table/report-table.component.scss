@@ -4,11 +4,26 @@
 
 ::ng-deep .p-datatable tr td {
   padding-block: 0rem; 
-  flex: none;
-  height: 30px;
+  line-height: 5rem;
 }
 ::ng-deep .p-datatable-table{
   background-color: white;
+}
+::ng-deep .p-datatable-tbody > tr {
+  height: 50px; /* Set this to your desired fixed row height */
+}
+.p-datatable-tbody > tr {
+  height: 50px; /* Set a fixed height for rows */
+  overflow: hidden; /* Hide overflow content */
+}
+
+::ng-deep .p-datatable-tbody > tr > td {
+  line-height: 1.5 !important; /* Increase this value to adjust line height */
+  overflow: hidden !important;
+  text-overflow: ellipsis;
+  padding: 0rem 1rem;
+  height: 30px !important;
+  
 }
 th{
   background-color: #eaeaea;
@@ -73,8 +88,8 @@ th{
 ::ng-deep .p-calendar,
 ::ng-deep .p-dropdown{
   height: 2rem;
-  width: 13rem;
-  margin-right: 0.5rem;
+  width: 10rem;
+  margin-right: 0.2rem;
 }
 ::ng-deep .date-range-picker{
   width: 18rem;

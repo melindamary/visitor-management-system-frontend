@@ -43,6 +43,8 @@ export class ReportTableComponent {
   selectedMonth: Date | undefined;
   selectedYear: Date | undefined;
   selectedDate!: Date | '';
+  selectedStartDate!: Date | '';
+  selectedEndDate!: Date | '';
   selectedLocation: Locations | null = null;
   rangeDates: Date[] | undefined;
   selectedReports: any[] = [];
@@ -86,47 +88,48 @@ export class ReportTableComponent {
   }
 
   filterByDate() {
-    if (this.selectedDate) {
+    if (this.selectedStartDate) {
       this.filteredReports = this.reports.filter((report) => {
         const reportDate = this.parseDate(report.visitDate);
         return (
           reportDate.toLocaleDateString() ===
-          new Date(this.selectedDate).toLocaleDateString()
+          new Date(this.selectedStartDate).toLocaleDateString()
         );
       });
     } else {
       this.filteredReports = [...this.reports];
     }
   }
-  filterByYear(): void {
-    if (this.selectedYear) {
-      const selectedYear = this.selectedYear.getFullYear();
-
-      console.log('Selected year 1: ' + this.selectedYear.getFullYear());
-
-      this.filteredReports = this.reports.filter((report) => {
-        const reportDate = this.parseDate(report.visitDate);
-        return reportDate.getFullYear() === selectedYear;
-      });
-      console.log('Filtered reports 1: ' + this.filteredReports);
-    } else {
-      this.filteredReports = this.reports;
-    }
-  }
 
   filterByDateRange() {
-    if (this.rangeDates && this.rangeDates.length === 2) {
-      const startDate = new Date(this.rangeDates[0]);
-      const endDate = new Date(this.rangeDates[1]);
-
+    console.log("Start date:", this.selectedStartDate);
+    console.log("End date:", this.selectedEndDate);
+    if (this.selectedStartDate && this.selectedEndDate) {
       this.filteredReports = this.reports.filter((report) => {
-        const reportDate = this.parseDate(report.visitDate); // Replace 'date' with your date field
-        return reportDate >= startDate && reportDate <= endDate;
+        const reportDate = this.parseDate(report.visitDate);
+        return (
+          reportDate >= new Date(this.selectedStartDate) &&
+          reportDate <= new Date(this.selectedEndDate)
+        );
       });
     } else {
-      this.filteredReports = this.reports; // Show all reports if no date range is selected
+      this.filteredReports = [...this.reports];
     }
   }
+
+  // filterByDateRange() {
+  //   if (this.rangeDates && this.rangeDates.length === 2) {
+  //     const startDate = new Date(this.rangeDates[0]);
+  //     const endDate = new Date(this.rangeDates[1]);
+
+  //     this.filteredReports = this.reports.filter((report) => {
+  //       const reportDate = this.parseDate(report.visitDate); // Replace 'date' with your date field
+  //       return reportDate >= startDate && reportDate <= endDate;
+  //     });
+  //   } else {
+  //     this.filteredReports = this.reports; // Show all reports if no date range is selected
+  //   }
+  // }
 
   filterByLocation() {
     console.log('Location: ', this.selectedLocation?.name);
@@ -151,7 +154,7 @@ export class ReportTableComponent {
       const dataToExport = this.selectedReports.map((report) => {
         const newReport: { [key: string]: any } = {}; // Use an index signature
         Object.keys(report).forEach((key) => {
-          if (key !== 'photo') {
+          if (key !== 'photo' && key !== 'visitorId') {
             const customHeader = this.customHeaders[key] || key.toUpperCase();
             newReport[customHeader] = report[key];
           }
@@ -160,22 +163,38 @@ export class ReportTableComponent {
       });
       const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(dataToExport);
 
-      // Set column widths to auto
-      const colWidths = dataToExport.map((row) =>
-        Object.keys(row).map((key) => ({
-          wch: Math.max(
-            ...dataToExport.map((r) => (r[key] ? r[key].toString().length : 0))
-          ),
-        }))
-      )[0];
-
-      worksheet['!columns'] = colWidths;
 
       const workbook: XLSX.WorkBook = {
-        Sheets: { data: worksheet },
-        SheetNames: ['data'],
+        Sheets: { 'Visitor Report': worksheet },
+        SheetNames: ['Visitor Report'],
       };
-      XLSX.writeFile(workbook, 'SelectedVisitorReports.xlsx');
+      const date1 = new Date(this.selectedStartDate);
+      console.log(date1.getUTCDate()+1);
+      const startDate = date1.getUTCDate() + 1;
+      const startMonth = date1.getUTCMonth() + 1;
+      const startYear = date1.getUTCFullYear();
+      let formattedStartDate = startDate+"-"+startMonth+"-"+startYear;
+      
+      const date2 = new Date(this.selectedEndDate);
+      console.log(date2.getUTCDate()+1);
+      const endDate = date2.getUTCDate() + 1;
+      const endMonth = date2.getUTCMonth() + 1;
+      const endYear = date2.getUTCFullYear();
+      let formattedEndDate = endDate+"-"+endMonth+"-"+endYear;
+
+      if(this.selectedStartDate != undefined && this.selectedEndDate == undefined){
+        console.log("Logging workbook: ",workbook);
+        XLSX.writeFile(workbook, 'Experion Visitor Report ('+formattedStartDate+').xlsx');
+        console.log(startDate+"/"+startMonth+"/"+startYear);
+      }
+      else if(this.selectedStartDate != undefined && this.selectedEndDate != undefined){
+        console.log("Logging workbook: ",workbook);
+        XLSX.writeFile(workbook, 'Experion Visitor Report ('+formattedStartDate+' to '+formattedEndDate+').xlsx');
+      }
+      else if(this.selectedStartDate == (undefined || null) && this.selectedEndDate == (undefined || null)){
+        console.log("Logging workbook: ",workbook);
+        XLSX.writeFile(workbook, 'Experion Visitor Report.xlsx');
+      }
     } else {
       alert('Please select at least one report to export.');
     }
@@ -186,7 +205,8 @@ export class ReportTableComponent {
     this.rangeDates = undefined;
     this.selectedMonth = undefined;
     this.selectedYear = undefined;
-    this.selectedDate = '';
+    this.selectedStartDate = '';
+    this.selectedEndDate = '';
   }
   viewDetails(rowData: any) {
     console.log('Row data: ', rowData);

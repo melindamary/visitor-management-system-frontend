@@ -14,6 +14,9 @@ export class TableComponent  {
   @Input() columnsToDisplay: any[] = [];
   @Input() rows: number = 5;
   @Input() totalItems: number = 0;
+  @Input() rowsPerPageOptions: number[] = [5];
+  @Input() scrollHeight: string = "70vh";
+  @Input() tableStyle = { 'min-width': '60rem', 'min-height': '' };
   @Input() actionsTemplate: TemplateRef<any> | null = null;
   @Input() summaryTemplate: TemplateRef<any> | null = null;
 
