@@ -38,6 +38,7 @@ export class VisitorLogComponent implements OnInit {
   activeVisitorsCount = 0;
   totalVisitorsCount = 0;
   checkedOutVisitorsCount = 0;
+  upcomingVisitorsCount =0;
 
   upcomingVisitors: VisitorLog[] = [];
   activeVisitors: VisitorLog[] = [];
@@ -213,6 +214,7 @@ export class VisitorLogComponent implements OnInit {
         break;
       default:
         this.activeIndex = 0;
+        this.currentTab = 'upcoming';
         break;
     }
   }
