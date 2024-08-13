@@ -6,6 +6,8 @@ import { DialogModule } from 'primeng/dialog';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { DeviceService } from '../../../core/services/device-service/device.service';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-device-management',
@@ -23,24 +25,16 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './device-management.component.scss',
 })
 export class DeviceManagementComponent {
-  closeDialog() {
-    throw new Error('Method not implemented.');
-  }
-  saveEdit() {
-    throw new Error('Method not implemented.');
-  }
-  confirmDelete(arg0: any) {
-    throw new Error('Method not implemented.');
-  }
-  openEditModal(_t7: any) {
-    throw new Error('Method not implemented.');
-  }
-
+  constructor(
+    private deviceService: DeviceService,
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService
+  ) {}
   devices: any[] = [];
   totalItems: number = 0;
   columns: any[] = [
-    { header: 'Visit Purpose', field: 'name', width: '22%' },
-    { header: 'Created On', field: 'createdDate' },
+    { header: 'Device', field: 'name', width: '22%' },
+    { header: 'Added On', field: 'createdDate' },
     { header: 'Updated By', field: 'lastModifiedBy' },
     { header: 'Updated On', field: 'lastModifiedOn' },
     { header: 'Status', field: 'status' },
@@ -48,4 +42,88 @@ export class DeviceManagementComponent {
   ];
   isEditModalVisible: boolean = false;
   selectedDevice: any;
+
+  async getDevices(): Promise<void> {
+    this.devices = await this.deviceService.getDevices();
+    this.devices.forEach((item) => (item.isEditing = false));
+    console.log('Entered Visit Purposes: ', this.devices);
+    this.totalItems = this.devices.length;
+  }
+
+  openEditModal(device: any) {
+    this.selectedDevice = { ...device }; // Create a copy of the object to avoid direct mutation
+    this.isEditModalVisible = true;
+  }
+
+  closeDialog() {
+    this.isEditModalVisible = false;
+  }
+
+  saveEdit() {
+    var response = this.deviceService
+      .updatePurpose(this.selectedDevice.id, this.selectedDevice.name)
+      .subscribe();
+    console.log(response);
+
+    //Close the dialog
+    this.isEditModalVisible = false;
+    this.selectedDevice = null;
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Success',
+      detail: 'Visit Purpose Approved!',
+      life: 3000,
+    });
+    setTimeout(() => {
+      this.getDevices();
+    }, 3000);
+  }
+
+  confirmDelete(id: number): void {
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to delete?',
+      header: 'Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      acceptLabel: 'Yes',
+      rejectLabel: 'No',
+      acceptIcon: 'none',
+      rejectIcon: 'none',
+      acceptButtonStyleClass: 'custom-accept-button',
+      rejectButtonStyleClass: 'custom-reject-button',
+      accept: () => {
+        this.deviceService.deleteDevice(id).subscribe({
+          next: (response: any) => {
+            if (response.isSuccess) {
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Success',
+                detail: 'Deleted successfully!',
+                life: 3000,
+              });
+              this.getDevices();
+            } else {
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Error',
+                detail: response.errorMessages.join(', '),
+                life: 3000,
+              });
+            }
+          },
+          error: (error) => {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: error.message,
+              life: 3000,
+            });
+          },
+        });
+      },
+    });
+  }
+
+  ngOnInit() {
+    this.getDevices();
+  }
 }
