@@ -24,6 +24,6 @@ export const customHeaders: { [key: string]: string } = {
   checkIn: 'Check-In',
   checkOut: 'Check-Out',
   deviceCount: 'Number of Devices Carried',
-  devices: 'Device Name and Serial Number',
+  devices: 'Device (Serial Number)',
   // Add more field mappings as needed
 };
