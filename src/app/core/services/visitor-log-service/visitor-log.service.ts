@@ -1,9 +1,10 @@
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { VisitorLogResponse, VisitorLogResult } from '../../models/visitor-log.interface';
 import { VisitorPassCodeDTO } from '../../models/visitor-pass-code.interface';
 import { isPlatformBrowser } from '@angular/common';
+import { SharedService } from '../shared-service/shared-data.service.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,11 +12,18 @@ import { isPlatformBrowser } from '@angular/common';
 export class VisitorLogService {
   private apiUrl = 'https://localhost:7121/VisitorLog';
 
-  constructor(private http: HttpClient,
+  constructor(
+    private sharedDataService : SharedService,
+    private http: HttpClient,
     @Inject(PLATFORM_ID) private platformId: Object) { }
 
   getVisitorLogToday(): Observable<VisitorLogResponse> {
-    return this.http.get<VisitorLogResponse>(`${this.apiUrl}/VisitorLogList`)
+    const locationName = this.sharedDataService.getLocation();
+    const rolename = this.sharedDataService.getRole();
+    const params = new HttpParams()
+    .set('locationName', locationName);
+    //.set('rolename', rolename);
+    return this.http.get<VisitorLogResponse>(`${this.apiUrl}/VisitorLogList`,{ params })
     .pipe(
       catchError(this.handleError)
     );

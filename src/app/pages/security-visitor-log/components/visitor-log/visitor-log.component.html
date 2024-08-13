@@ -1,9 +1,9 @@
 <div class="tile-container" style="display: flex; width: 100%;">
   <app-visitor-log-tiles 
     title="Upcoming Visitors" 
-    [content]="activeVisitorsCount" 
+    [content]="upcomingVisitors.length" 
     backgroundColor="#c097e3" 
-    (tileClick)="selectTab('active')"
+    (tileClick)="selectTab('upcoming')"
   ></app-visitor-log-tiles>
   <app-visitor-log-tiles 
     title="Active Visitors" 
@@ -12,16 +12,16 @@
     (tileClick)="selectTab('active')"
   ></app-visitor-log-tiles>
   <app-visitor-log-tiles 
-    title="Total Visitors" 
-    [content]="totalVisitorsCount" 
-    backgroundColor="#896CC7"
-    (tileClick)="selectTab('total')"
-  ></app-visitor-log-tiles>
-  <app-visitor-log-tiles 
     title="Checked Out Visitors" 
     [content]="checkedOutVisitorsCount" 
     backgroundColor="#6f16c0" 
     (tileClick)="selectTab('checkedOut')"
+  ></app-visitor-log-tiles>
+  <app-visitor-log-tiles 
+    title="Total Visitors" 
+    [content]="totalVisitorsCount" 
+    backgroundColor="#896CC7"
+    (tileClick)="selectTab('total')"
   ></app-visitor-log-tiles>
 </div>
 
