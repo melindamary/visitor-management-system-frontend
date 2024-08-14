@@ -13,12 +13,16 @@ export class SignalRService {
   private scheduledVisitorsSource = new BehaviorSubject<number>(0); // Initialize with 0
   private totalVisitorsSource = new BehaviorSubject<number>(0); // Initialize with 0
   
-  
+  private locationStatisticsSource = new BehaviorSubject<any[]>([]); // Observable to track location statistics
+
   
   visitorCount$ = this.visitorCountSource.asObservable(); // Expose observable
   scheduledVisitors$ = this.scheduledVisitorsSource.asObservable(); // Expose observable
   totalVisitors$ = this.totalVisitorsSource.asObservable(); // Expose observable
 
+  locationStatistics$ = this.locationStatisticsSource.asObservable(); // Expose observable for location statistics
+
+ 
   constructor() {
     this.hubConnection = new signalR.HubConnectionBuilder()
       .withUrl('https://localhost:7121/VisitorHub')
@@ -38,6 +42,10 @@ export class SignalRService {
         this.totalVisitorsSource.next(count); // Update the observable
         console.log(`Updated total visitors count: ${count}`);
       });
+      this.hubConnection.on('ReceiveLocationStatistics', (locationStats: any[]) => {
+        this.locationStatisticsSource.next(locationStats); // Update the observable for location statistics
+        console.log(`Updated location statistics: `, locationStats);
+      });
     this.hubConnection.start()     
      .then(() => {
       console.log('SignalR connected',this.visitorCountSource);
@@ -56,7 +64,10 @@ export class SignalRService {
 
     this.hubConnection.invoke('SendInitialTotalVisitorsCount')
       .catch(err => console.error('Error requesting initial total visitors count:', err));
+    this.hubConnection.invoke('SendInitialLocationStatistics')
+      .catch(err => console.error('Error requesting initial location statistics:', err)); // Request initial location statistics
   }
+  
   ngOnDestroy() {
     this.hubConnection.stop()
       .then(() => console.log('SignalR disconnected'))

@@ -11,6 +11,8 @@ import { DropdownModule } from 'primeng/dropdown';
 
 import { MultiSelectModule } from 'primeng/multiselect';
 import { FormsModule, NgModel } from '@angular/forms';
+import { SignalRService } from '../../core/services/visitor-service/visitor-service.service';
+import { Subscription } from 'rxjs';
 // Define the new interface for the API response
 interface ApiResponse {
   $id: string;
@@ -58,8 +60,9 @@ export class LocationVisitortableComponent {
 
   selectedTimePeriod: TimePeriod = this.timePeriods[1];  // Default to Daily
 
+  private subscriptions: Subscription[] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,private signalRService:SignalRService) {}
 
 
 
@@ -71,7 +74,12 @@ export class LocationVisitortableComponent {
     this.selectedTimePeriod = this.timePeriods[0];  // Set to Daily
     console.log('Initial selected period:', this.selectedTimePeriod);
     this.fetchlbTable();
-     
+    this.subscriptions.push(
+      this.signalRService.visitorCount$.subscribe(count => {
+        console.log('Real-time visitor count:', count);
+        this.fetchlbTable(); // Optionally refetch the table if your API is not pushing full data
+      })
+    );
   }
   fetchlbTable() {
     console.log('Selected time period:', this.selectedTimePeriod);
