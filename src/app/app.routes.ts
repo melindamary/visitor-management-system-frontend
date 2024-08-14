@@ -31,22 +31,22 @@ export const routes: Routes = [
       {
         path: 'dashboard',
         component: AdminACEDashbordComponent,
-        // canActivate: [AuthAceGuard]
+        canActivate: [AuthAceGuard]
       },
       {
         path: 'visitor-log',
         component: SecurityVisitorLogComponent,
-        // canActivate: [AuthSecurityGuard],
+        canActivate: [AuthSecurityGuard],
       },
       {
         path: 'reports',
         component: ReportTableComponent,
-        // canActivate: [AccessGuard],
+        canActivate: [AccessGuard],
       },
       {
         path: 'admin-panel',
         component: AdminPanelComponent,
-        // canActivate: [AuthAdminGuard],
+        canActivate: [AuthAdminGuard],
       },
       {
         path:'admin-panel/view-user',
