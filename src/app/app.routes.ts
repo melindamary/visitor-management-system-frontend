@@ -20,8 +20,6 @@ import { AdminViewRoleComponent } from './pages/Admin-Panel/role-management/admi
 import { VisitorConsentModalComponent } from './ui/visitor-consent-modal/visitor-consent-modal.component';
 import { AdminAddUserComponent } from './pages/Admin-Panel/user-management/components/admin-add-user/admin-add-user.component';
 import { AdminEditUserComponent } from './pages/Admin-Panel/user-management/components/admin-edit-user/admin-edit-user.component';
-import { VisitorCardComponent } from './ui/visitor-card/visitor-card.component';
-import { BootingPageComponent } from './pages/booting-page/booting-page.component';
 
 export const routes: Routes = [
   {
@@ -70,12 +68,6 @@ export const routes: Routes = [
       },
 
     ],
-  },
-  {
-    path:'visitorcard',component:VisitorCardComponent
-  },
-  {
-    path:'bootingpage',component:BootingPageComponent
   },
 
   {
