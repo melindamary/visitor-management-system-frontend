@@ -9,8 +9,10 @@ import { CommonModule } from '@angular/common';
 import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
 
+import { SignalRService } from '../../core/services/visitor-service/visitor-service.service';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { FormsModule, NgModel } from '@angular/forms';
+import { Subscription } from 'rxjs';
 interface TimePeriod {
   label: string;
   value: number;
@@ -63,8 +65,10 @@ export class LocationSecurityTableComponent {
   ];
   selectedTimePeriod: TimePeriod = this.timePeriods[1];  // Default to Daily
 
+  private subscriptions: Subscription[] = [];
 
-  constructor(private http: HttpClient) {
+
+  constructor(private http: HttpClient,private signalRService:SignalRService) {
 
 
   }
@@ -79,6 +83,12 @@ export class LocationSecurityTableComponent {
     this.selectedTimePeriod = this.timePeriods[0];  // Set to Daily
     console.log('Initial selected period:', this.selectedTimePeriod);
     this.fetchlbTable();
+    this.subscriptions.push(
+      this.signalRService.locationStatisticssecurity$.subscribe(count => {
+        console.log('Real-time security:', count);
+        this.fetchlbTable(); // Optionally refetch the table if your API is not pushing full data
+      })
+    );
      
   }
 

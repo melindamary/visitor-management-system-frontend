@@ -13,12 +13,19 @@ export class SignalRService {
   private scheduledVisitorsSource = new BehaviorSubject<number>(0); // Initialize with 0
   private totalVisitorsSource = new BehaviorSubject<number>(0); // Initialize with 0
   
-  
-  
+  private locationStatisticsSource = new BehaviorSubject<any[]>([]); // Observable to track location statistics
+
+  private locationStatisticssecurity = new BehaviorSubject<any[]>([]); // Observable to track location statistics
+
   visitorCount$ = this.visitorCountSource.asObservable(); // Expose observable
   scheduledVisitors$ = this.scheduledVisitorsSource.asObservable(); // Expose observable
   totalVisitors$ = this.totalVisitorsSource.asObservable(); // Expose observable
+//location based table
+  locationStatistics$ = this.locationStatisticsSource.asObservable(); // Expose observable for location statistics of location based table
 
+  locationStatisticssecurity$ = this.locationStatisticssecurity.asObservable(); // Expose observable for location statistics of locataion and security table
+
+ 
   constructor() {
     this.hubConnection = new signalR.HubConnectionBuilder()
       .withUrl('https://localhost:7121/VisitorHub')
@@ -38,6 +45,14 @@ export class SignalRService {
         this.totalVisitorsSource.next(count); // Update the observable
         console.log(`Updated total visitors count: ${count}`);
       });
+      this.hubConnection.on('ReceiveLocationStatistics', (locationStats: any[]) => {
+        this.locationStatisticsSource.next(locationStats); // Update the observable for location statistics
+        console.log(`Updated location statistics: `, locationStats);
+      });
+      this.hubConnection.on('ReceiveLocationStatisticsecurity', (locationStatisticssecurity: any[]) => {
+        this.locationStatisticssecurity.next(locationStatisticssecurity); // Update the observable for location statistics
+        console.log(`Updated location statistics: `, locationStatisticssecurity);
+      });
     this.hubConnection.start()     
      .then(() => {
       console.log('SignalR connected',this.visitorCountSource);
@@ -56,7 +71,13 @@ export class SignalRService {
 
     this.hubConnection.invoke('SendInitialTotalVisitorsCount')
       .catch(err => console.error('Error requesting initial total visitors count:', err));
+      
+    this.hubConnection.invoke('SendInitialLocationStatistics',30)
+      .catch(err => console.error('Error requesting initial location statistics:', err)); // Request initial location statistics
+    this.hubConnection.invoke('SendInitialLocationStatisticsecurity',30)
+      .catch(err => console.error('Error requesting initial location statistics:', err)); // Request initial location security statistics
   }
+  
   ngOnDestroy() {
     this.hubConnection.stop()
       .then(() => console.log('SignalR disconnected'))
