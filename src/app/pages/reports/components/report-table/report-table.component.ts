@@ -4,30 +4,53 @@ import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
 import * as XLSX from 'xlsx';
 import { CalendarModule } from 'primeng/calendar';
-import { FormsModule } from '@angular/forms';
-import {columns, customHeaders} from '../../../../../../public/report-table-columns';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  columns,
+  customHeaders,
+} from '../../../../../../public/report-table-columns';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TooltipModule } from 'primeng/tooltip';
 import { ReportService } from '../../../../core/services/report-service/report.service';
-import { Router, RouterOutlet } from '@angular/router';
+import { RouterOutlet } from '@angular/router';
 import { DialogModule } from 'primeng/dialog';
+import { DropdownModule } from 'primeng/dropdown';
+import { LocationService } from '../../../../core/services/location-management/location.service';
 
-
+interface Locations {
+  name: string;
+}
 @Component({
   selector: 'app-report-table',
   standalone: true,
-  imports: [TableModule, CommonModule, ButtonModule, 
-    CalendarModule,FormsModule, ToolbarModule, TooltipModule, DialogModule,
-    RouterOutlet],
+  imports: [
+    TableModule,
+    CommonModule,
+    ButtonModule,
+    CalendarModule,
+    FormsModule,
+    ToolbarModule,
+    TooltipModule,
+    DialogModule,
+    DropdownModule,
+    RouterOutlet,
+    ReactiveFormsModule,
+  ],
   templateUrl: './report-table.component.html',
   styleUrl: './report-table.component.scss',
 })
 export class ReportTableComponent {
+  constructor(
+    public reportService: ReportService,
+    private locationService: LocationService
+  ) {}
 
-  constructor(public reportService: ReportService, private router: Router){}
   selectedMonth: Date | undefined;
   selectedYear: Date | undefined;
   selectedDate!: Date | '';
+  selectedStartDate!: Date | '';
+  selectedEndDate!: Date | '';
+  selectedLocation: Locations | null = null;
   rangeDates: Date[] | undefined;
   selectedReports: any[] = [];
   filteredReports: any[] = [];
@@ -40,15 +63,27 @@ export class ReportTableComponent {
   visitorDetails: any;
   searchTerms: { [key: string]: string } = {};
 
-  async fetchReport():Promise<void>{
-    console.log("Entered Reports");
+  locations: { name: string }[] = [];
+
+  fetchLocations():any{
+      this.locationService.getAllLocationDetails().subscribe((response) => {
+        console.log(response);
+        this.locations = response.map(item => ({
+          name: item.name
+        }));
+        console.log(this.locations);
+      })
+  }
+
+  async fetchReport(): Promise<void> {
+    console.log('Entered Reports');
     this.reports = await this.reportService.getReport();
     this.filteredReports = this.reports;
-    console.log("Filtered Reports 2" + this.filteredReports);
+    console.log('Filtered Reports 2' + this.filteredReports);
   }
 
   filterReports() {
-    this.filteredReports = this.reports.filter(report => {
+    this.filteredReports = this.reports.filter((report) => {
       for (const field in this.searchTerms) {
         if (this.searchTerms[field]) {
           const fieldValue = report[field]?.toString().toLowerCase() || '';
@@ -64,46 +99,62 @@ export class ReportTableComponent {
   }
 
   filterByDate() {
-    if (this.selectedDate) {
-      this.filteredReports = this.reports.filter(report => {
+    if (this.selectedStartDate) {
+      this.filteredReports = this.reports.filter((report) => {
         const reportDate = this.parseDate(report.visitDate);
-        return reportDate.toLocaleDateString()
-         === new Date(this.selectedDate).toLocaleDateString();
+        return (
+          reportDate.toLocaleDateString() ===
+          new Date(this.selectedStartDate).toLocaleDateString()
+        );
       });
     } else {
       this.filteredReports = [...this.reports];
     }
   }
-  filterByYear(): void {
-    if (this.selectedYear) {
-      const selectedYear = this.selectedYear.getFullYear();
-
-      console.log("Selected year 1: " + this.selectedYear.getFullYear())
-    
-      this.filteredReports = this.reports.filter((report) => {
-        const reportDate = this.parseDate(report.visitDate);
-        return reportDate.getFullYear() === selectedYear;
-      });
-      console.log("Filtered reports 1: " + this.filteredReports)
-    } else {
-      this.filteredReports = this.reports;
-    }
-  }
 
   filterByDateRange() {
-    if (this.rangeDates && this.rangeDates.length === 2) {
-      const startDate = new Date(this.rangeDates[0]);
-      const endDate = new Date(this.rangeDates[1]);
-
+    console.log('Start date:', this.selectedStartDate);
+    console.log('End date:', this.selectedEndDate);
+    if (this.selectedStartDate && this.selectedEndDate) {
       this.filteredReports = this.reports.filter((report) => {
-        const reportDate = this.parseDate(report.visitDate); // Replace 'date' with your date field
-        return reportDate >= startDate && reportDate <= endDate;
+        const reportDate = this.parseDate(report.visitDate);
+        return (
+          reportDate >= new Date(this.selectedStartDate) &&
+          reportDate <= new Date(this.selectedEndDate)
+        );
       });
     } else {
-      this.filteredReports = this.reports; // Show all reports if no date range is selected
+      this.filteredReports = [...this.reports];
     }
   }
- parseDate(dateStr: string): Date {
+
+  // filterByDateRange() {
+  //   if (this.rangeDates && this.rangeDates.length === 2) {
+  //     const startDate = new Date(this.rangeDates[0]);
+  //     const endDate = new Date(this.rangeDates[1]);
+
+  //     this.filteredReports = this.reports.filter((report) => {
+  //       const reportDate = this.parseDate(report.visitDate); // Replace 'date' with your date field
+  //       return reportDate >= startDate && reportDate <= endDate;
+  //     });
+  //   } else {
+  //     this.filteredReports = this.reports; // Show all reports if no date range is selected
+  //   }
+  // }
+
+  filterByLocation() {
+    console.log('Location: ', this.selectedLocation?.name);
+
+    if (this.selectedLocation) {
+      this.filteredReports = this.reports.filter((report) => {
+        return report.officeLocation === this.selectedLocation?.name;
+      });
+    } else {
+      this.filteredReports = this.reports; // Show all reports if no location is selected
+    }
+  }
+
+  parseDate(dateStr: string): Date {
     const [day, month, year] = dateStr.split('-').map(Number);
     return new Date(year, month - 1, day); // Months are 0-based in JavaScript Date
   }
@@ -114,32 +165,73 @@ export class ReportTableComponent {
       const dataToExport = this.selectedReports.map((report) => {
         const newReport: { [key: string]: any } = {}; // Use an index signature
         Object.keys(report).forEach((key) => {
-          if(key!=="photo"){
+          if (key !== 'photo' && key !== 'visitorId') {
             const customHeader = this.customHeaders[key] || key.toUpperCase();
             newReport[customHeader] = report[key];
           }
-          
+          if (key === 'devices' && report['deviceCount'] > 0) {
+            // Format the devices' name and serial number as a single string
+            const devices = report[key]
+              .map((device: any) => `${device.name} (SN: ${device.serialNumber})`)
+              .join(', ');
+  
+            const customHeader = this.customHeaders[key] || key.toUpperCase();
+            newReport[customHeader] = devices;
+            console.log('Devices to be in excel: ', newReport[customHeader]);
+          }
         });
         return newReport;
       });
       const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(dataToExport);
 
-      // Set column widths to auto
-      const colWidths = dataToExport.map((row) =>
-        Object.keys(row).map((key) => ({
-          wch: Math.max(
-            ...dataToExport.map((r) => (r[key] ? r[key].toString().length : 0))
-          ),
-        }))
-      )[0];
-
-      worksheet['!columns'] = colWidths;
-
       const workbook: XLSX.WorkBook = {
-        Sheets: { data: worksheet },
-        SheetNames: ['data'],
+        Sheets: { 'Visitor Report': worksheet },
+        SheetNames: ['Visitor Report'],
       };
-      XLSX.writeFile(workbook, 'SelectedVisitorReports.xlsx');
+      const date1 = new Date(this.selectedStartDate);
+      console.log(date1.getUTCDate() + 1);
+      const startDate = date1.getUTCDate() + 1;
+      const startMonth = date1.getUTCMonth() + 1;
+      const startYear = date1.getUTCFullYear();
+      let formattedStartDate = startDate + '-' + startMonth + '-' + startYear;
+
+      const date2 = new Date(this.selectedEndDate);
+      console.log(date2.getUTCDate() + 1);
+      const endDate = date2.getUTCDate() + 1;
+      const endMonth = date2.getUTCMonth() + 1;
+      const endYear = date2.getUTCFullYear();
+      let formattedEndDate = endDate + '-' + endMonth + '-' + endYear;
+
+      if (
+        this.selectedStartDate != undefined &&
+        this.selectedEndDate == undefined
+      ) {
+        console.log('Logging workbook: ', workbook);
+        XLSX.writeFile(
+          workbook,
+          'Experion Visitor Report (' + formattedStartDate + ').xlsx'
+        );
+        console.log(startDate + '/' + startMonth + '/' + startYear);
+      } else if (
+        this.selectedStartDate != undefined &&
+        this.selectedEndDate != undefined
+      ) {
+        console.log('Logging workbook: ', workbook);
+        XLSX.writeFile(
+          workbook,
+          'Experion Visitor Report (' +
+            formattedStartDate +
+            ' to ' +
+            formattedEndDate +
+            ').xlsx'
+        );
+      } else if (
+        this.selectedStartDate == (undefined || null) &&
+        this.selectedEndDate == (undefined || null)
+      ) {
+        console.log('Logging workbook: ', workbook);
+        XLSX.writeFile(workbook, 'Experion Visitor Report.xlsx');
+      }
     } else {
       alert('Please select at least one report to export.');
     }
@@ -150,10 +242,11 @@ export class ReportTableComponent {
     this.rangeDates = undefined;
     this.selectedMonth = undefined;
     this.selectedYear = undefined;
-    this.selectedDate = '';
+    this.selectedStartDate = '';
+    this.selectedEndDate = '';
   }
   viewDetails(rowData: any) {
-    console.log("Row data: ",rowData);
+    console.log('Row data: ', rowData);
     this.viewDetailsDialog = true;
     this.visitorDetails = rowData;
     // this.router.navigate(['/vms/reports/details'], { state: { visitorId: rowData.visitorId } });
@@ -170,11 +263,12 @@ export class ReportTableComponent {
       'staffContactNumber',
       'checkIn',
       'checkOut',
-    ]; // Add all the fields you want to be sortable here
+    ]; // Add all the fields to be sorted here
     return sortableFields.includes(field);
   }
 
   ngOnInit(): void {
     this.fetchReport();
+    this.fetchLocations();
   }
 }

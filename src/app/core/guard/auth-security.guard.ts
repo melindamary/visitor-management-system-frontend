@@ -18,7 +18,7 @@ export class AuthSecurityGuard implements CanActivate {
   canActivate(): boolean {
     if (isPlatformBrowser(this.platformId)) {
       const userRole = localStorage.getItem('userRole');
-      if (this.authService.isLoggedIn() && (userRole === 'Security' || userRole === 'Admin')) {
+      if (this.authService.isLoggedIn() && (userRole === 'Security' || userRole === 'SuperAdmin' || userRole === 'Admin')) {
         return true;
       } else {
         this.router.navigate(['/login']);

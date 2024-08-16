@@ -1,8 +1,40 @@
   <p-toolbar>
 
-    <!-- Filter by date range -->
     <ng-template pTemplate="left">
+      <!-- Location dropdown -->
+      <p-dropdown 
+      ngDefaultControl
+      [options]="locations" 
+      placeholder="Select Location"
+      optionLabel="name"
+      [(ngModel)]="selectedLocation" 
+      (onChange)="filterByLocation()"
+    ></p-dropdown>
+      <!-- Start date -->
       <p-calendar 
+      ngDefaultControl
+      [(ngModel)]="selectedStartDate" 
+      (onClose)="filterByDate()"
+      dateFormat="dd-mm-yy" 
+      [readonlyInput]="true" 
+      [showIcon]="true"
+      placeholder="Select Start Date"
+    ></p-calendar>
+
+      <!-- End date -->
+      <p-calendar 
+      ngDefaultControl
+      [(ngModel)]="selectedEndDate" 
+      (onClose)="filterByDateRange()"
+      dateFormat="dd-mm-yy" 
+      [readonlyInput]="true" 
+      [showIcon]="true"
+      placeholder="Select End Date"
+    ></p-calendar>
+
+    <!-- Filter by date range -->
+      <!-- <p-calendar 
+      ngDefaultControl
       styleClass="date-range-picker"
       [(ngModel)]="rangeDates" 
       (onClose)="filterByDateRange()"
@@ -11,28 +43,18 @@
       [showIcon]="true" 
       [readonlyInput]="true"
       variant="filled" 
-      />
-
-
-    <!-- Filter by year -->
-    <p-calendar 
-    [(ngModel)]="selectedYear" 
-    (onClose)="filterByYear()"
-    view="year" 
-    dateFormat="yy" 
-    [showIcon]="true"
-    placeholder="Select Year"/>
+      /> -->
 
     <!-- Reset button -->
     <button 
     class="export-btn" 
     (click)="resetReport()">
-    Reset
-  </button>
+      Reset
+    </button>
     </ng-template>
 
-    <!-- Export as Excel -->
     <ng-template pTemplate="right">
+      <!-- Export as Excel -->
       <i class="pi pi-file-excel excel-icon"
       (click)="exportSelectedToExcel()"
       pTooltip="Export" 
@@ -48,10 +70,10 @@
   styleClass="p-datatable-striped p-datatable-gridlines" 
   [columns]="cols"
   [value]="filteredReports"
-  [tableStyle]="{ 'min-width': '55rem' }"
+  [tableStyle]="{ 'min-width': '55rem', 'min-height': '70vh' }"
   [paginator]="true"
   [rows]="10"
-  [scrollable]="true" 
+  [scrollable]="true"  
   scrollHeight="70vh" 
   [rowsPerPageOptions]="[5, 10, 20]"
   sortMode="multiple"
@@ -63,6 +85,7 @@
 
   <!-- Column headers -->
   <ng-template pTemplate="header" let-columns>
+    <!-- <div class="table-body"> -->
     <tr>
       <th><p-tableHeaderCheckbox /></th>
         <th *ngFor="let col of columns" [pSortableColumn]="isSortable(col.field)? col.field : null">
@@ -78,6 +101,7 @@
       <th class="search-header"></th>
       <th class="search-header" *ngFor="let col of columns">
           <p-columnFilter
+              ngDefaultControl
               *ngIf="col.field !== 'slNo' && col.field !== 'visitDate'"
               type="text" [field]="col.field" [matchMode]="'contains'"
               [placeholder]="'Search...'"
@@ -85,6 +109,7 @@
               (keyup)="filterReports()"
           ></p-columnFilter>
           <p-calendar 
+            ngDefaultControl
             styleClass="date-picker"
             class="single-date-picker"
             *ngIf="col.field == 'visitDate'"
@@ -99,13 +124,16 @@
       </th>
       <th class="search-header" alignFrozen="right" pFrozenColumn [frozen]="true"></th>
     </tr>
+  <!-- </div> -->
   </ng-template>
 
    <!-- Column data -->
   <ng-template pTemplate="body" let-rowData let-columns="columns">
+    <!-- <div class="table-body"> -->
     <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="columns">
       <td><p-tableCheckbox [value]="rowData" /></td>
-      <td *ngFor="let col of columns"  [style.width]="col.width || 'auto'">
+      <td *ngFor="let col of columns" 
+       [style.width]="col.width">
         {{ rowData[col.field] }}
       </td>
       <td alignFrozen="right" pFrozenColumn [frozen]="true" style="background-color: white;">
@@ -121,8 +149,12 @@
           />
         </td>
     </tr>
+    <!-- </div> -->
   </ng-template>
+
 </p-table>
+
+
 
 <!-- View Details Dialog -->
 <p-dialog 

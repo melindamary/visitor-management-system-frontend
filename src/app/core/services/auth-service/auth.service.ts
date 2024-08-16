@@ -108,6 +108,8 @@ getMenuItems(): any {
   ];
 
   switch (this.userRole) {
+    case 'SuperAdmin':
+      return adminMenu;
     case 'Admin':
       return adminMenu;
     case 'Security':
