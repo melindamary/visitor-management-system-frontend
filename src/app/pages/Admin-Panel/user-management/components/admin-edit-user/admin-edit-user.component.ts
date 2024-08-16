@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
-import { AdminAddUserComponent } from '../admin-add-user/admin-add-user.component';
+
 import { MatIconModule } from '@angular/material/icon';
 import { AdminButtonSubmitComponent } from "../../../../../ui/admin-button-submit/admin-button-submit.component";
 import { AdminButtonCancelComponent } from "../../../../../ui/admin-button-cancel/admin-button-cancel.component";
@@ -13,9 +13,11 @@ import { MatRadioModule } from '@angular/material/radio';
 import { GetIdAndName } from '../../../../../core/models/getIdAndName.interface';
 import { UserService } from '../../../../../core/services/user-management-service/User.service';
 import { UserManagementServiceService } from '../../../../../core/services/user-management-service/user-management-service.service';
-import { UserByIdOverview, UserOverview } from '../../../../../core/models/user-overview-display.interface';
+import { UserByIdOverview} from '../../../../../core/models/user-overview-display.interface';
 import { FormBuilder, FormGroup, FormsModule, NgModel, ReactiveFormsModule, Validators } from '@angular/forms';
-import { alphabetValidator, passwordMatchValidator } from '../admin-add-user/custom-validators';
+import { alphabetValidator, passwordMatchValidator } from '../../../../../pages/Admin-Panel/user-management/components/admin-add-user/custom-validators';
+import { AdminAddUserComponent } from '../admin-add-user/admin-add-user.component';
+import { SharedService } from '../../../../../core/services/shared-service/shared-data.service.service';
 
 @Component({
   selector: 'app-admin-edit-user',
@@ -58,6 +60,7 @@ export class AdminEditUserComponent {
 
   constructor(
     private fb: FormBuilder,
+    private sharedService:SharedService,
     private adduser: AdminAddUserComponent,
     private datePipe: DatePipe,
     private apiService: UserManagementServiceService,
@@ -90,6 +93,7 @@ export class AdminEditUserComponent {
 
   ngOnInit(): void {
     this.loadRoles();
+    
     this.loadLocations();
 
     const userId = this.userService.getUserId();
@@ -134,11 +138,16 @@ export class AdminEditUserComponent {
   }
 
   loadRoles(): void {
+    const currentUserRole = this.sharedService.getRole();
+  
     this.adduser.loadRoleIdAndName().subscribe((roles: GetIdAndName[]) => {
-      this.Roles = roles;
+      // Filter out the "SuperAdmin" role if the current user is an admin
+      this.Roles = roles.filter(role => 
+        !(currentUserRole === 'Admin' && role.name === 'SuperAdmin')
+      );
     });
   }
-
+  
   loadLocations(): void {
     this.adduser.loadLocationIdAndName().subscribe((locations: GetIdAndName[]) => {
       this.Locations = locations;
@@ -192,6 +201,7 @@ export class AdminEditUserComponent {
     if (this.userEditForm.valid) {
       const formValues = this.userEditForm.value;
       const validFrom = formValues.validFrom ? this.formatDate(formValues.validFrom) : null;
+      const loginUserName = this.sharedService.getUsername()
 
       const updatedUser: any = {
         userId: this.user.userId,
@@ -203,6 +213,7 @@ export class AdminEditUserComponent {
         officeLocationId: formValues.LocationId,
         roleId: formValues.RoleId,
         validFrom: validFrom,
+        loginUserName:loginUserName,
         isActive: formValues.activeState
       };
 

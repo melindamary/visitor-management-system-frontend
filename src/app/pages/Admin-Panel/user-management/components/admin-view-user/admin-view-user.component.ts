@@ -12,6 +12,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { InputIconModule } from 'primeng/inputicon';
 import { IconFieldModule } from 'primeng/iconfield';
 import { UserService } from '../../../../../core/services/user-management-service/User.service';
+import { SharedService } from '../../../../../core/services/shared-service/shared-data.service.service';
 
 @Component({
   selector: 'app-admin-view-user',
@@ -42,7 +43,9 @@ summaryTemplate!: TemplateRef<any>|null;
 
 
 
-constructor(private apiService: UserManagementServiceService,private router: Router,private userService: UserService,
+constructor(private apiService: UserManagementServiceService,
+  private sharedService:SharedService,
+  private router: Router,private userService: UserService,
   private confirmationService: ConfirmationService, private messageService: MessageService) {
   
   
@@ -58,12 +61,20 @@ ngOnInit(){
 // });
 // }
 loadAllUser(): void {
+  const currentUserRole = this.sharedService.getRole();
+
   this.apiService.getAllUser().subscribe(users => {
-    this.DataSource = users;
-    this.totalItems = users.length;
+    // Filter out "SuperAdmin" users if the current user is an admin
+    if (currentUserRole === 'Admin') {
+      this.DataSource = users.filter(user => user.roleName !== 'SuperAdmin');
+    } else {
+      this.DataSource = users; // SuperAdmin can see all users
+    }
+
+    this.totalItems = this.DataSource.length;
   });
-    
 }
+
 
 viewOrEdit(user: UserOverview): void {
   const userId = user.userId;  // Retrieve the user ID

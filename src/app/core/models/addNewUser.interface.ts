@@ -8,4 +8,5 @@ export interface AddNewUser {
     phone: string;
     address: string;
     roleId: number;
+    loginUserName:string;
   }
