@@ -20,6 +20,7 @@ import { AdminViewRoleComponent } from './pages/admin-panel/role-management/admi
 import { VisitorConsentModalComponent } from './ui/visitor-consent-modal/visitor-consent-modal.component';
 import { AdminAddUserComponent } from './pages/admin-panel/user-management/components/admin-add-user/admin-add-user.component';
 import { AdminEditUserComponent } from './pages/admin-panel/user-management/components/admin-edit-user/admin-edit-user.component';
+import { AdminVisitorLogComponent } from './pages/admin-visitor-log/admin-visitor-log.component';
 export const routes: Routes = [
   {
     path: 'vms',
@@ -61,7 +62,7 @@ export const routes: Routes = [
       {
           path:'admin-panel/add-role',component:AddroleComponent
       },
-      { path: 'edit-role', component: EditroleComponent },
+      { path: 'admin-panel/edit-role', component: EditroleComponent },
       {
         path:'visit-purpose',component: AdminVisitPurposeTableComponent
       },

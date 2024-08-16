@@ -17,9 +17,17 @@ export class VisitorLogService {
     private http: HttpClient,
     @Inject(PLATFORM_ID) private platformId: Object) { }
 
-  getVisitorLogToday(): Observable<VisitorLogResponse> {
-    const locationName = this.sharedDataService.getLocation();
+  getVisitorLogToday(selectedLocation?: string): Observable<VisitorLogResponse> {
     const rolename = this.sharedDataService.getRole();
+    const locationName = selectedLocation || 'Thejaswini';
+    // let locationName: string ;
+
+    // if (rolename === 'security') {
+    //   locationName = this.sharedDataService.getLocation();
+    // } else {
+    //   locationName = selectedLocation || 'Thejaswini';
+    //   console.log("hi",selectedLocation);
+    // }
     const params = new HttpParams()
     .set('locationName', locationName);
     //.set('rolename', rolename);
