@@ -1,3 +1,14 @@
+<div class="flex justify-content-end mb-2" *ngIf="role !== 'security'">
+  <p-dropdown 
+      [options]="locations" 
+      [(ngModel)]="selectedLocation" 
+      placeholder="Select a Location" 
+      [editable]="true" 
+      optionLabel="name" 
+      (onChange)="loadVisitorLogToday()"
+      />
+      <!-- (onChange)="getVisitorLogs()" -->
+</div>
 <div class="tile-container" style="display: flex; width: 100%;">
   <app-visitor-log-tiles 
     title="Upcoming Visitors" 
