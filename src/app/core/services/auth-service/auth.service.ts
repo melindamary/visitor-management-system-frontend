@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Inject,Injectable, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, map, Observable, tap, throwError } from 'rxjs';
+import { SharedService } from '../shared-service/shared-data.service.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,11 +14,20 @@ export class AuthService {
   constructor(
     public http:HttpClient,
     @Inject(PLATFORM_ID) private platformId: Object,
-    private router: Router
+    private router: Router,
+    private sharedService: SharedService
   ) { }
 
   baseUrl = 'https://localhost:7121';
   userRole:any = '';
+
+  updateLogoutStatus():Observable<any>{
+    const url = `${this.baseUrl}/Auth/Logout`;
+    var username = this.sharedService.getUsername();
+    const body = { Username: username};
+    console.log(body)
+    return this.http.put('https://localhost:7121/Auth/Logout', body);
+  }
 
   login(data: any):Observable<any>{
     const url = `${this.baseUrl}/Auth/Login`;
@@ -70,12 +80,19 @@ export class AuthService {
   }
 
   logout() {
-    if (isPlatformBrowser(this.platformId)){
-      localStorage.removeItem('authUser');
-      localStorage.removeItem('userRole');
-      this.router.navigate(['/login']);
-    }
-    
+    this.updateLogoutStatus().subscribe({
+      next: (response) => {
+        console.log(response);
+        if (isPlatformBrowser(this.platformId)) {
+          localStorage.removeItem('authUser');
+          localStorage.removeItem('userRole');
+          this.router.navigate(['/login']);
+        }
+      },
+      error: (error) => {
+        console.error('Logout failed', error);
+      }
+    });
   }
 
   isLoggedIn(): boolean {
