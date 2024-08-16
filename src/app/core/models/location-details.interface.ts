@@ -18,3 +18,9 @@ export interface LocationDetails {
     address: string;
     phone: string;
   }
+
+  export interface LocationIdAndName
+  {
+    id: number;
+    name: string;
+  }

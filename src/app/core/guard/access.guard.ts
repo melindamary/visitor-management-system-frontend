@@ -18,7 +18,7 @@ export class AccessGuard implements CanActivate {
   canActivate(): boolean {
     if (isPlatformBrowser(this.platformId)) {
       const userRole = localStorage.getItem('userRole');
-      if (this.authService.isLoggedIn() && (userRole === 'ACE' || userRole === 'Admin' || userRole === 'Security')) {
+      if (this.authService.isLoggedIn() && (userRole === 'ACE' || userRole === 'SuperAdmin' ||userRole === 'Admin' || userRole === 'Security')) {
         return true;
       } else {
         this.router.navigate(['/login']);

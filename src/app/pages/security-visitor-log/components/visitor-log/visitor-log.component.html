@@ -1,21 +1,38 @@
+<div class="flex justify-content-end mb-2" *ngIf="role !== 'security'">
+  <p-dropdown 
+      [options]="locations" 
+      [(ngModel)]="selectedLocation" 
+      placeholder="Select a Location" 
+      [editable]="true" 
+      optionLabel="name" 
+      (onChange)="loadVisitorLogToday()"
+      />
+      <!-- (onChange)="getVisitorLogs()" -->
+</div>
 <div class="tile-container" style="display: flex; width: 100%;">
   <app-visitor-log-tiles 
-    title="Today's Active Visitors" 
+    title="Upcoming Visitors" 
+    [content]="upcomingVisitors.length" 
+    backgroundColor="#c097e3" 
+    (tileClick)="selectTab('upcoming')"
+  ></app-visitor-log-tiles>
+  <app-visitor-log-tiles 
+    title="Active Visitors" 
     [content]="activeVisitorsCount" 
-    backgroundColor="#896CC7" 
+    backgroundColor="#e7b3fe" 
     (tileClick)="selectTab('active')"
   ></app-visitor-log-tiles>
   <app-visitor-log-tiles 
-    title="Today's Total Visitors" 
-    [content]="totalVisitorsCount" 
-    backgroundColor="#FF858C"
-    (tileClick)="selectTab('total')"
+    title="Checked Out Visitors" 
+    [content]="checkedOutVisitorsCount" 
+    backgroundColor="#6f16c0" 
+    (tileClick)="selectTab('checkedOut')"
   ></app-visitor-log-tiles>
   <app-visitor-log-tiles 
-    title="Today's Checked Out Visitors" 
-    [content]="checkedOutVisitorsCount" 
-    backgroundColor="#952991" 
-    (tileClick)="selectTab('checkedOut')"
+    title="Total Visitors" 
+    [content]="totalVisitorsCount" 
+    backgroundColor="#896CC7"
+    (tileClick)="selectTab('total')"
   ></app-visitor-log-tiles>
 </div>
 

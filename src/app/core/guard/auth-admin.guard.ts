@@ -5,10 +5,9 @@ import { PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthAdminGuard implements CanActivate {
-
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -18,7 +17,10 @@ export class AuthAdminGuard implements CanActivate {
   canActivate(): boolean {
     if (isPlatformBrowser(this.platformId)) {
       const userRole = localStorage.getItem('userRole');
-      if (this.authService.isLoggedIn() && (userRole === 'Admin')) {
+      if (
+        this.authService.isLoggedIn() &&
+        (userRole === 'Admin' || userRole === 'SuperAdmin')
+      ) {
         return true;
       } else {
         this.router.navigate(['/login']);

@@ -1,5 +1,5 @@
 <app-table
-    [dataSource]="visitPurposes"
+    [dataSource]="devices"
     [columnsToDisplay]="columns"
     [actionsTemplate]="actionsTemplate"
     [summaryTemplate]="summaryTemplate"
@@ -74,10 +74,10 @@
 </app-table>
 
 <p-dialog header="Approve Visit Purpose" [visible]="isEditModalVisible" [modal]="true" [closable]="false">
-    <div *ngIf="selectedPurpose">
+    <div *ngIf="selectedDevice">
       <div class="p-field">
         <!-- <label for="name">Purpose Name</label> -->
-        <input class="dialog-input" id="name" type="text" pInputText [value]="selectedPurpose.name" [(ngModel)]="selectedPurpose.name" />
+        <input class="dialog-input" id="name" type="text" pInputText [value]="selectedDevice.name" [(ngModel)]="selectedDevice.name" />
       </div>
     </div>
     <p-footer>

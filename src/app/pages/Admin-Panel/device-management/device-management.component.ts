@@ -1,49 +1,39 @@
 import { Component } from '@angular/core';
-import { TableComponent } from '../../../../shared-components/table/table.component';
-import { VisitPurposeService } from '../../../../core/services/visit-purpose-service/visit-purpose.service';
+import { TableComponent } from '../../../shared-components/table/table.component';
+import { ToastModule } from 'primeng/toast';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MessageService, ConfirmationService } from 'primeng/api';
-import { ToastModule } from 'primeng/toast';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { TooltipModule } from 'primeng/tooltip';
+import { DeviceService } from '../../../core/services/device-service/device.service';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
-interface VisitPurpose {
-  slNo: number;
-  name: string;
-  createdDate: Date;
-  status: string;
-  isEditing?: boolean;
-}
 @Component({
-  selector: 'app-admin-visit-purpose-table',
+  selector: 'app-device-management',
   standalone: true,
   imports: [
     TableComponent,
+    ToastModule,
     ButtonModule,
     DialogModule,
+    ConfirmDialogModule,
     NgIf,
     FormsModule,
-    ToastModule,
-    ConfirmDialogModule,
-    TooltipModule,
   ],
-  templateUrl: './admin-visit-purpose-table.component.html',
-  styleUrl: './admin-visit-purpose-table.component.scss',
+  templateUrl: './device-management.component.html',
+  styleUrl: './device-management.component.scss',
 })
-export class AdminVisitPurposeTableComponent {
+export class DeviceManagementComponent {
   constructor(
-    private visitPurposeService: VisitPurposeService,
+    private deviceService: DeviceService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService
   ) {}
-
-  visitPurposes: VisitPurpose[] = [];
+  devices: any[] = [];
   totalItems: number = 0;
   columns: any[] = [
-    { header: 'Visit Purpose', field: 'name', width: '22%' },
+    { header: 'Device', field: 'name', width: '22%' },
     { header: 'Added On', field: 'createdDate' },
     { header: 'Updated By', field: 'lastModifiedBy' },
     { header: 'Updated On', field: 'lastModifiedOn' },
@@ -51,32 +41,33 @@ export class AdminVisitPurposeTableComponent {
     { header: 'Actions', field: 'actions', width: '18%' },
   ];
   isEditModalVisible: boolean = false;
-  selectedPurpose: any;
+  selectedDevice: any;
 
-  async getVisitPurposes(): Promise<void> {
-    this.visitPurposes = await this.visitPurposeService.getVisitPurposes();
-    this.visitPurposes.forEach((item) => (item.isEditing = false));
-    console.log('Entered Visit Purposes: ', this.visitPurposes);
-    this.totalItems = this.visitPurposes.length;
+  async getDevices(): Promise<void> {
+    this.devices = await this.deviceService.getDevices();
+    this.devices.forEach((item) => (item.isEditing = false));
+    console.log('Entered Visit Purposes: ', this.devices);
+    this.totalItems = this.devices.length;
   }
 
-  openEditModal(purpose: any) {
-    this.selectedPurpose = { ...purpose }; // Create a copy of the object to avoid direct mutation
+  openEditModal(device: any) {
+    this.selectedDevice = { ...device }; // Create a copy of the object to avoid direct mutation
     this.isEditModalVisible = true;
   }
+
   closeDialog() {
     this.isEditModalVisible = false;
   }
 
   saveEdit() {
-    var response = this.visitPurposeService
-      .updatePurpose(this.selectedPurpose.id, this.selectedPurpose.name)
+    var response = this.deviceService
+      .updatePurpose(this.selectedDevice.id, this.selectedDevice.name)
       .subscribe();
     console.log(response);
 
-    // Close the dialog
+    //Close the dialog
     this.isEditModalVisible = false;
-    this.selectedPurpose = null;
+    this.selectedDevice = null;
     this.messageService.add({
       severity: 'success',
       summary: 'Success',
@@ -84,7 +75,7 @@ export class AdminVisitPurposeTableComponent {
       life: 3000,
     });
     setTimeout(() => {
-      this.getVisitPurposes();
+      this.getDevices();
     }, 3000);
   }
 
@@ -100,7 +91,7 @@ export class AdminVisitPurposeTableComponent {
       acceptButtonStyleClass: 'custom-accept-button',
       rejectButtonStyleClass: 'custom-reject-button',
       accept: () => {
-        this.visitPurposeService.deletePurpose(id).subscribe({
+        this.deviceService.deleteDevice(id).subscribe({
           next: (response: any) => {
             if (response.isSuccess) {
               this.messageService.add({
@@ -109,7 +100,7 @@ export class AdminVisitPurposeTableComponent {
                 detail: 'Deleted successfully!',
                 life: 3000,
               });
-              this.getVisitPurposes();
+              this.getDevices();
             } else {
               this.messageService.add({
                 severity: 'error',
@@ -131,7 +122,8 @@ export class AdminVisitPurposeTableComponent {
       },
     });
   }
+
   ngOnInit() {
-    this.getVisitPurposes();
+    this.getDevices();
   }
 }

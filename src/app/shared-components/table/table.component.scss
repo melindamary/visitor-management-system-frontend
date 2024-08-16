@@ -29,3 +29,13 @@
 ::ng-deep .p-column-filter-menu-button{
   display: none;
 }
+
+::ng-deep .p-paginator{
+  height: 3rem;
+  padding: 0px;
+}
+
+::ng-deep .p-paginator .p-paginator-pages .p-paginator-page{
+  height: 2rem;
+  min-width: 2rem;
+}

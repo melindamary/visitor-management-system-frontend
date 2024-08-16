@@ -20,6 +20,10 @@ import { TooltipModule } from 'primeng/tooltip';
 import { TableComponent } from '../../../../shared-components/table/table.component';
 import { VisitorDetailsDialogComponent } from '../visitor-details-dialog/visitor-details-dialog.component';
 import { VisitorLogTilesComponent } from '../visitor-log-tiles/visitor-log-tiles.component';
+import { LocationIdAndName } from '../../../../core/models/location-details.interface';
+import { LocationService } from '../../../../core/services/location-management/location.service';
+import { DropdownModule } from 'primeng/dropdown';
+import { SharedService } from '../../../../core/services/shared-service/shared-data.service.service';
 
 @Component({
   selector: 'app-visitor-log',
@@ -28,7 +32,7 @@ import { VisitorLogTilesComponent } from '../visitor-log-tiles/visitor-log-tiles
     ConfirmDialogModule, InputTextModule, InputTextareaModule,
     CommonModule, InputNumberModule, TabViewModule, ButtonModule,
     FormsModule, ReactiveFormsModule, VisitorLogTilesComponent, TableComponent, 
-    VisitorDetailsDialogComponent, TooltipModule],
+    VisitorDetailsDialogComponent, TooltipModule, DropdownModule],
   providers: [MessageService, ConfirmationService, VisitorLogService, DatePipe],
   templateUrl: './visitor-log.component.html',
   styleUrls: ['./visitor-log.component.scss']
@@ -38,6 +42,7 @@ export class VisitorLogComponent implements OnInit {
   activeVisitorsCount = 0;
   totalVisitorsCount = 0;
   checkedOutVisitorsCount = 0;
+  upcomingVisitorsCount =0;
 
   upcomingVisitors: VisitorLog[] = [];
   activeVisitors: VisitorLog[] = [];
@@ -51,6 +56,10 @@ export class VisitorLogComponent implements OnInit {
   cardNumber = '';
   activeIndex = 0;
   checkInForm: FormGroup;
+
+  locations: LocationIdAndName[] = [];
+  selectedLocation: LocationIdAndName | null = null;
+  role: string = '';
 
   columnsUpcoming = [
     { field: 'id', header: 'Visitor Id', width: '14%' },
@@ -126,6 +135,8 @@ export class VisitorLogComponent implements OnInit {
   }
 
   constructor(
+    private sharedDataService : SharedService,
+    private locationService: LocationService,
     private visitorLogService: VisitorLogService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
@@ -139,11 +150,31 @@ export class VisitorLogComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.role = this.sharedDataService.getRole().toLowerCase();
+    this.loadLocations();
     this.loadVisitorLogToday();
   }
 
+  loadLocations(): void {
+    this.locationService.getLocationByIdAndName().subscribe(
+      (data: LocationIdAndName[]) => {
+        this.locations = data;
+      },
+      error => {
+        console.error('Error fetching locations', error);
+      }
+    );
+  }
+
   loadVisitorLogToday(): void {
-    this.visitorLogService.getVisitorLogToday().subscribe({
+    const rolename = this.sharedDataService.getRole().toLowerCase();
+    let locationName: string | undefined;
+    if (rolename === 'security') {
+      locationName = this.sharedDataService.getLocation();
+    } else {
+      locationName = this.selectedLocation?.name;
+    }
+    this.visitorLogService.getVisitorLogToday(locationName).subscribe({
       next: (response: VisitorLogResponse) => {
         if (response.isSuccess) {
           console.log(response);
@@ -164,10 +195,9 @@ export class VisitorLogComponent implements OnInit {
             checkInTime: this.datePipe.transform(visitor.checkInTime, 'shortTime'),
             checkOutTime: this.datePipe.transform(visitor.checkOutTime, 'shortTime')
           }));
-          console.log(response);
-          console.log(response.result);
-        }
-      //   } 
+          // console.log(response);
+          // console.log(response.result);
+        } 
       else {
           console.error('Error:', response.errorMessages);
           this.messageService.add({ severity: 'error', summary: 'Error', detail: response.errorMessages.join(', '), life: 3000 });
@@ -213,6 +243,7 @@ export class VisitorLogComponent implements OnInit {
         break;
       default:
         this.activeIndex = 0;
+        this.currentTab = 'upcoming';
         break;
     }
   }
