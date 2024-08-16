@@ -61,7 +61,7 @@ export const routes: Routes = [
       {
           path:'admin-panel/add-role',component:AddroleComponent
       },
-      { path: 'edit-role', component: EditroleComponent },
+      { path: 'admin-panel/edit-role', component: EditroleComponent },
       {
         path:'visit-purpose',component: AdminVisitPurposeTableComponent
       },
