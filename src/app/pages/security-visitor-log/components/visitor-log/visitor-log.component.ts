@@ -25,6 +25,8 @@ import { LocationIdAndName } from '../../../../core/models/location-details.inte
 import { LocationService } from '../../../../core/services/location-management/location.service';
 import { DropdownModule } from 'primeng/dropdown';
 import { SharedService } from '../../../../core/services/shared-service/shared-data.service.service';
+import { SignalRService } from '../../../../core/services/visitor-service/visitor-service.service';
+import { subscribe } from 'diagnostics_channel';
 
 @Component({
   selector: 'app-visitor-log',
@@ -139,6 +141,7 @@ export class VisitorLogComponent implements OnInit {
     private sharedDataService : SharedService,
     private locationService: LocationService,
     private visitorLogService: VisitorLogService,
+    private signalRService: SignalRService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
     private datePipe: DatePipe,
@@ -154,6 +157,12 @@ export class VisitorLogComponent implements OnInit {
     this.role = this.sharedDataService.getRole().toLowerCase();
     this.loadLocations();
     this.loadVisitorLogToday();
+    this.signalRService.reloadVisitorLog.subscribe(() => {
+      this.loadVisitorLogToday();
+    });
+    this.signalRService.reloadLocationListDropdown.subscribe(() => {
+      this.loadLocations();
+    });
   }
 
   loadLocations(): void {
