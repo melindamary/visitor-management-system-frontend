@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-admin-button-cancel',
@@ -9,5 +9,14 @@ import { RouterLink } from '@angular/router';
   styleUrl: './admin-button-cancel.component.scss'
 })
 export class AdminButtonCancelComponent {
-
+  /**
+   *
+   */
+  constructor(private router: Router) {
+   
+    
+  }
+onClick(){
+  this.router.navigate(['/vms/admin-panel']);
+}
 }
