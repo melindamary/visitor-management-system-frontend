@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import * as signalR from '@microsoft/signalr';
 import { HubConnectionBuilder } from '@microsoft/signalr';
 import {BehaviorSubject } from 'rxjs';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -24,12 +25,22 @@ export class SignalRService {
   locationStatistics$ = this.locationStatisticsSource.asObservable(); // Expose observable for location statistics of location based table
 
   locationStatisticssecurity$ = this.locationStatisticssecurity.asObservable(); // Expose observable for location statistics of locataion and security table
-
+  public reloadVisitorLog = new Subject<void>();
+  public reloadLocationListDropdown = new Subject<void>();
  
   constructor() {
     this.hubConnection = new signalR.HubConnectionBuilder()
       .withUrl('https://localhost:7121/VisitorHub')
       .build();
+
+      this.hubConnection.on('ReloadVisitorLog', () => {
+        this.reloadVisitorLog.next();
+      });
+      
+      this.hubConnection.on('LocationAdded', () => {
+        this.reloadLocationListDropdown.next();
+      });
+
       this.hubConnection.on('ReceiveVisitorCount', (count: number) => {
         this.visitorCountSource.next(count); // Update the observable
         console.log(`Updated visitor count: ${count}`);
