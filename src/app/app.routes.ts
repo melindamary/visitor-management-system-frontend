@@ -14,7 +14,6 @@ import { Routes } from '@angular/router';
 import { AddroleComponent } from './ui/addrole/addrole.component';
 import { EditroleComponent } from './ui/editrole/editrole.component';
 import { VisitorConsentModalComponent } from './ui/visitor-consent-modal/visitor-consent-modal.component';
-
 import { AdminAddUserComponent } from './pages/admin-panel/user-management/components/admin-add-user/admin-add-user.component';
 import { AdminEditUserComponent } from './pages/admin-panel/user-management/components/admin-edit-user/admin-edit-user.component';
 import { AdminVisitorLogComponent } from './pages/admin-visitor-log/admin-visitor-log.component';
@@ -22,6 +21,7 @@ import { AdminPanelComponent } from './pages/admin-panel/admin-panel.component';
 import { AdminViewRoleComponent } from './pages/admin-panel/role-management/admin-view-role/admin-view-role.component';
 import { AdminViewIndividualUserComponent } from './pages/admin-panel/user-management/components/admin-view-individual-user/admin-view-individual-user.component';
 import { AdminVisitPurposeTableComponent } from './pages/admin-panel/visit-purpose-management/admin-visit-purpose-table/admin-visit-purpose-table.component';
+
 export const routes: Routes = [
   {
     path: 'vms',
@@ -70,6 +70,7 @@ export const routes: Routes = [
 
     ],
   },
+
   {
     path: 'welcomepage',
     component: WelcomepageComponent,

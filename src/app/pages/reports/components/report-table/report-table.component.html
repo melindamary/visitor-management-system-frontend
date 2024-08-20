@@ -1,5 +1,4 @@
   <p-toolbar>
-
     <ng-template pTemplate="left">
       <!-- Location dropdown -->
       <p-dropdown 
@@ -10,6 +9,7 @@
       [(ngModel)]="selectedLocation" 
       (onChange)="filterByLocation()"
     ></p-dropdown>
+
       <!-- Start date -->
       <p-calendar 
       ngDefaultControl
@@ -45,22 +45,25 @@
       variant="filled" 
       /> -->
 
+  </ng-template>
+
+  <ng-template pTemplate="right">
     <!-- Reset button -->
-    <button 
-    class="export-btn" 
-    (click)="resetReport()">
+    <button class="cta-btn" (click)="resetReport()">
+      <i class="pi pi-refresh" style="font-size: 13px; margin-right: 1px"></i>
       Reset
     </button>
-    </ng-template>
-
-    <ng-template pTemplate="right">
       <!-- Export as Excel -->
-      <i class="pi pi-file-excel excel-icon"
+    <button class="cta-btn" (click)="exportSelectedToExcel()">
+      <i class="pi pi-upload cta-btn-icon" style="margin-right: 1px"></i>
+      Export
+    </button>
+    <!-- <i class="pi pi-file-excel excel-icon"
       (click)="exportSelectedToExcel()"
       pTooltip="Export" 
       tooltipPosition="bottom"
       tooltipStyleClass="custom-tooltip"
-      ></i>
+      ></i> -->
     </ng-template>
 </p-toolbar>
 
@@ -82,20 +85,21 @@
   [showCurrentPageReport]="true"
   currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
 >
-
   <!-- Column headers -->
   <ng-template pTemplate="header" let-columns>
     <!-- <div class="table-body"> -->
     <tr>
       <th><p-tableHeaderCheckbox /></th>
-        <th *ngFor="let col of columns" [pSortableColumn]="isSortable(col.field)? col.field : null">
+      <th
+        *ngFor="let col of columns"
+        [pSortableColumn]="isSortable(col.field) ? col.field : null"
+      >
         <div class="flex align-items-center">
             {{ col.header }} 
             <p-sortIcon *ngIf="isSortable(col.field)" [field]="col.field" />
-            
         </div>
       </th>
-      <th  alignFrozen="right" pFrozenColumn [frozen]="true">Actions</th>
+      <th alignFrozen="right" pFrozenColumn [frozen]="true">Actions</th>
     </tr>
     <tr>
       <th class="search-header"></th>
@@ -103,7 +107,9 @@
           <p-columnFilter
               ngDefaultControl
               *ngIf="col.field !== 'slNo' && col.field !== 'visitDate'"
-              type="text" [field]="col.field" [matchMode]="'contains'"
+          type="text"
+          [field]="col.field"
+          [matchMode]="'contains'"
               [placeholder]="'Search...'"
               [(ngModel)]="searchTerms[col.field]"
               (keyup)="filterReports()"
@@ -122,7 +128,12 @@
             appendTo="body"
           ></p-calendar>
       </th>
-      <th class="search-header" alignFrozen="right" pFrozenColumn [frozen]="true"></th>
+      <th
+        class="search-header"
+        alignFrozen="right"
+        pFrozenColumn
+        [frozen]="true"
+      ></th>
     </tr>
   <!-- </div> -->
   </ng-template>
@@ -132,11 +143,15 @@
     <!-- <div class="table-body"> -->
     <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="columns">
       <td><p-tableCheckbox [value]="rowData" /></td>
-      <td *ngFor="let col of columns" 
-       [style.width]="col.width">
+      <td *ngFor="let col of columns" [style.width]="col.width">
         {{ rowData[col.field] }}
       </td>
-      <td alignFrozen="right" pFrozenColumn [frozen]="true" style="background-color: white;">
+      <td
+        alignFrozen="right"
+        pFrozenColumn
+        [frozen]="true"
+        style="background-color: white"
+      >
         <p-button 
             class="view-btn"
             pRipple 
@@ -151,13 +166,10 @@
     </tr>
     <!-- </div> -->
   </ng-template>
-
 </p-table>
 
-
-
 <!-- View Details Dialog -->
-<p-dialog 
+<!-- <p-dialog
 [(visible)]="viewDetailsDialog" 
 [style]="{ width: '40vw' }" 
 header="Visitor Details" 

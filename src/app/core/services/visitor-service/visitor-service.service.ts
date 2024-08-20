@@ -70,6 +70,7 @@ export class SignalRService {
      this.requestInitialCount();
      setInterval(() => {}, 1000);
 
+
     })
      .catch(err => console.error('Error connecting to SignalR hub:', err));
   }

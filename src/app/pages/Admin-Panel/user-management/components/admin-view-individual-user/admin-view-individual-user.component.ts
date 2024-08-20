@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
-import { AdminAddUserComponent } from '../admin-add-user/admin-add-user.component';
+
 import { MatIconModule } from '@angular/material/icon';
 import { AdminButtonSubmitComponent } from "../../../../../ui/admin-button-submit/admin-button-submit.component";
 import { AdminButtonCancelComponent } from "../../../../../ui/admin-button-cancel/admin-button-cancel.component";
@@ -15,6 +15,7 @@ import { UserService } from '../../../../../core/services/user-management-servic
 import { UserManagementServiceService } from '../../../../../core/services/user-management-service/user-management-service.service';
 import { UserByIdOverview, UserOverview } from '../../../../../core/models/user-overview-display.interface';
 import { FormBuilder, FormGroup, FormsModule, NgModel, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AdminAddUserComponent } from '../admin-add-user/admin-add-user.component';
 
 @Component({
   selector: 'app-admin-view-individual-user',

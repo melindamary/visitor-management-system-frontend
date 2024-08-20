@@ -33,12 +33,12 @@ export class DeviceManagementComponent {
   devices: any[] = [];
   totalItems: number = 0;
   columns: any[] = [
-    { header: 'Device', field: 'name', width: '22%' },
+    { header: 'Device', field: 'name' },
     { header: 'Added On', field: 'createdDate' },
     { header: 'Updated By', field: 'lastModifiedBy' },
     { header: 'Updated On', field: 'lastModifiedOn' },
     { header: 'Status', field: 'status' },
-    { header: 'Actions', field: 'actions', width: '18%' },
+    { header: 'Actions', field: 'actions', width: '12%' },
   ];
   isEditModalVisible: boolean = false;
   selectedDevice: any;

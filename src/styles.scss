@@ -3,44 +3,102 @@
 @import "primeng/resources/primeng.css";
 @import "primeicons/primeicons.css";
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+*{
+  font-family: "Inter", sans-serif;
+  font-size: 1rem;
+}
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+}
 
 //top-bar
-.user-avatar-button .p-button{
-    // background-color: #896cc7;
-    background-color: white !important;
-    color: #896cc7;
-    border-radius: 50%;
-    width: 1.5rem;
-    height: 1.5rem;
+.user-avatar-button .p-button {
+  // background-color: #896cc7;
+  background-color: white !important;
+  color: #896cc7;
+  border-radius: 50%;
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
-//visit-purpose table 
-.btn-outline-none .p-button{
+//Call-to-Action Button
+.cta-btn{
+  padding: 5px 8px;
+  width: fit-content;
+  height: fit-content;
+  border: solid 1px #F09951;
+  border-radius: 4px;
+  background-color: #F09951;
+  color: white;
+  font-weight:500;
+  cursor: pointer;
+  margin-left: 0.2rem;
+  box-shadow: 0px 0.2px 0px 0px #F09951;
+}
+
+.cta-btn:hover{
+  // background-color: #896cc7;
+  background-color:#D87F46;
+  color: white;
+}
+
+.cta-btn-icon{
+  font-size: 13px;
+}
+
+//visit-purpose table
+.btn-outline-none .p-button {
   box-shadow: none;
   padding-block: 10px;
+  // height: 10px; 
 }
-.negative-button .p-button{
-  background-color: #e0e0e0;
-  color: #000000 ;
-  border: none;
+
+.negative-button .p-button {
+  background-color: white;
+  color: #F09951;
+  border: solid 1px #F09951;
 }
-.negative-button .p-button:hover{
-  background-color: #bdbdbd;
-  color: #000000 ;
+.negative-button .p-button:hover {
+  background-color: #F6F6F6;
+  color: #F3B07D;
+  border-color: #F3B07D;
+}
+
+.positive-button .p-button {
+  background-color: #F09951;
+  color: white;
+  border: solid 1px #F09951;
+}
+.positive-button .p-button:hover {
+  background-color: #D87F46;
   border: none;
 }
 
 //button theme
 .custom-accept-button {
-    background-color: #896CC7 !important;
-    color: #ffffff !important;
-    border: none !important;
-  }
+  background-color: #896cc7 !important;
+  color: #ffffff !important;
+  border: none !important;
+}
+
+.custom-reject-button {
+  background-color: #eeeaea !important;
+  color: #000000 !important;
+  border: none !important;
+}
+
+//View Visitor Details Modal
+.view-details-modal .p-dialog{
+  width: 70vw;
+  height: 100vh;
+  margin: auto;
   
-  .custom-reject-button {
-    background-color: #EEEAEA !important;
-    color: #000000 !important;
-    border: none !important;
-  }
+}
+
+
+

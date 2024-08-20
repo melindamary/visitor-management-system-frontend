@@ -14,6 +14,7 @@ import {  FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angul
 import { alphabetValidator, passwordMatchValidator } from './custom-validators';
 import { AddNewUser } from '../../../../../core/models/addNewUser.interface';
 import { Observable } from 'rxjs';
+import { SharedService } from '../../../../../core/services/shared-service/shared-data.service.service';
 
 @Component({
   selector: 'app-admin-add-user',
@@ -34,11 +35,13 @@ export class AdminAddUserComponent {
   addUserForm !: FormGroup  
   hidePassword: boolean = true;
   hideConfirmPassword: boolean = true;
+ currentUserRole = this.sharedService.getRole();
  
 /**
  *
  */
-constructor(private apiService: UserManagementServiceService,private datePipe: DatePipe) {
+constructor(private apiService: UserManagementServiceService,
+  private sharedService:SharedService ,private datePipe: DatePipe) {
 
   this.initializeForm();
 
@@ -73,9 +76,15 @@ passwordMatchValidator(formGroup: FormGroup) {
 }
 
 ngOnInit(){
+  
+
   this.loadRoleIdAndName().subscribe((response: GetIdAndName[]) => {
-    this.Roles = response;
+    // Filter out the "SuperAdmin" role if the current user is an admin
+    this.Roles = response.filter(role => 
+      !(this.currentUserRole === 'Admin' && role.name === 'SuperAdmin')
+    );
   });
+
   this.loadLocationIdAndName().subscribe((response: GetIdAndName[]) => {
     this.Locations = response;
   });
@@ -116,6 +125,9 @@ onSubmit() {
   if (this.addUserForm.valid) {
     const formValues = this.addUserForm.value;
     const username = formValues.username;
+    const loginUserName = this.sharedService.getUsername()
+    console.log("current logged in user",loginUserName);
+    
 
     // Check if the username exists
     // this.apiService.checkUsernameExists(username).subscribe(
@@ -136,7 +148,8 @@ onSubmit() {
             lastName: formValues.LastName,
             phone: formValues.PhoneNumber,
             address: formValues.Address,
-            roleId: formValues.RoleId
+            roleId: formValues.RoleId,
+            loginUserName:loginUserName
           };
 
           this.apiService.postNewUser(dto).subscribe(
