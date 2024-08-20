@@ -1,3 +1,4 @@
+// Report Table Styles
 ::ng-deep .p-datatable tr:hover td {
     background-color: #f1ebff; /* Change to desired hover background color */
 }
@@ -88,7 +89,7 @@ th{
 ::ng-deep .p-calendar,
 ::ng-deep .p-dropdown{
   height: 2rem;
-  width: 10rem;
+  width: 13rem;
   margin-right: 0.2rem;
 }
 ::ng-deep .date-range-picker{
@@ -145,40 +146,5 @@ th{
   height: 0.5rem !important;
   width: 0.5rem;
   border-radius: 5%;
-}
-
-.flex-row-container{
-  display: flex;
-  
-}
-.flex-row-container label{
-  width: 35%;
-}
-.flex-column-container{
-  display: flex;
-  flex-direction: column;
-}
-
-.align-center{
-  // align-items: center;
-  padding-bottom: 10px;
-}
-.view-more-heading{
-  font-size: 18px;
-  font-weight: bold;
-  color: #896cc7;
-}
-.view-more{
-  color: black;
-  font-size: 16px;
-  // background-color: #59ca8f;
-  margin-left: 5%;
-  margin-top: 10%;
-}
-.view-more-body{
-  margin:auto;
-}
-.flex-row{
-  display: flex;
 }
 

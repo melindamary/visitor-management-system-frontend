@@ -16,6 +16,7 @@ import { RouterOutlet } from '@angular/router';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { LocationService } from '../../../../core/services/location-management/location.service';
+import { ViewDetailsModalComponent } from "../view-details-modal/view-details-modal.component";
 
 interface Locations {
   name: string;
@@ -35,7 +36,9 @@ interface Locations {
     DropdownModule,
     RouterOutlet,
     ReactiveFormsModule,
-  ],
+    ViewDetailsModalComponent,
+  
+],
   templateUrl: './report-table.component.html',
   styleUrl: './report-table.component.scss',
 })
@@ -248,8 +251,12 @@ export class ReportTableComponent {
   viewDetails(rowData: any) {
     console.log('Row data: ', rowData);
     this.viewDetailsDialog = true;
+    console.log('Hi view details:', this.viewDetailsDialog);
     this.visitorDetails = rowData;
     // this.router.navigate(['/vms/reports/details'], { state: { visitorId: rowData.visitorId } });
+  }
+  handleDialogClose() {
+    this.viewDetailsDialog = false;
   }
   isSortable(field: string): boolean {
     const sortableFields = [

@@ -1,0 +1,74 @@
+::ng-deep .p-dialog .p-dialog-header{
+    padding: 0.5rem;
+    border-bottom: 1px solid #ccc;
+}
+.modal-header{
+    display: flex;
+    // flex-direction: column;
+    padding: 0.5rem 0.8rem;
+    // align-items: center;
+    width: 100%;
+}
+.modal-header img{
+    border-radius: 50%;
+    height: 150px;
+    width: 150px;
+}
+.modal-header-data{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.flex-row{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.modal-header p{
+    width: auto;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    padding: 0px 1rem;
+    font-size: 1.5rem;
+}
+.column-3 .modal-body-data{
+    margin: 0.5rem 0rem;
+    width: 40%;
+}
+.modal-body{
+    margin-top: 1rem;
+}
+.modal-body-heading{
+    font-weight: bold;
+    
+}
+.modal-body-data label{
+    color: #4D4D4D;
+    font-size: 0.8rem;
+}
+.modal-body-data p,
+.flex-row p{
+    font-size: 1rem;
+}
+
+.column-3{
+    width: 100%;
+    display: flex;
+    gap: 1rem;
+}
+::ng-deep .p-dialog .p-button{
+    background-color: white;
+    color: #4D4D4D;
+    position: relative;
+    top: -4rem;
+}
+::ng-deep .p-dialog .p-button:hover{
+    background-color: none;
+    color: black;
+}
+
+::ng-deep .p-dialog .p-dialog-content::-webkit-scrollbar{
+    background-color: transparent;
+}
