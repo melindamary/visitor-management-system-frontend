@@ -10,12 +10,10 @@ import { AdminButtonCancelComponent } from "../../../../../ui/admin-button-cance
 import { UserManagementServiceService } from '../../../../../core/services/user-management-service/user-management-service.service';
 import { GetIdAndName } from '../../../../../core/models/getIdAndName.interface';
 import { DatePipe, NgFor, NgIf } from '@angular/common';
-
-
+import {  FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { alphabetValidator, passwordMatchValidator } from './custom-validators';
 import { AddNewUser } from '../../../../../core/models/addNewUser.interface';
 import { Observable } from 'rxjs';
-import { alphabetValidator, passwordMatchValidator } from '../../../../../pages/Admin-Panel/user-management/components/admin-add-user/custom-validators';
-import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { SharedService } from '../../../../../core/services/shared-service/shared-data.service.service';
 
 @Component({

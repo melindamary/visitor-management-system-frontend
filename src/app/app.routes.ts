@@ -69,6 +69,7 @@ export const routes: Routes = [
 
     ],
   },
+
   {
     path: 'welcomepage',
     component: WelcomepageComponent,
