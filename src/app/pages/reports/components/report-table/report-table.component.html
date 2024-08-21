@@ -140,7 +140,6 @@
 
    <!-- Column data -->
   <ng-template pTemplate="body" let-rowData let-columns="columns">
-    <!-- <div class="table-body"> -->
     <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="columns">
       <td><p-tableCheckbox [value]="rowData" /></td>
       <td *ngFor="let col of columns" [style.width]="col.width">
@@ -164,61 +163,14 @@
           />
         </td>
     </tr>
-    <!-- </div> -->
   </ng-template>
 </p-table>
 
 <!-- View Details Dialog -->
-<!-- <p-dialog
-[(visible)]="viewDetailsDialog" 
-[style]="{ width: '40vw' }" 
-header="Visitor Details" 
-[modal]="true" 
-styleClass="p-fluid">
-    <ng-template pTemplate="content">
-      
-        <div class="flex-row align-center">
-          <img [src]="'data:image/jpeg;base64,' + visitorDetails.photo" height="200px" width="200px"/>
-          <div class="view-more flex-column-container">
-            <p class="view-more-heading">{{visitorDetails.name}}</p>
-            <p>Phone: {{visitorDetails.phoneNumber}}</p>
-            <p>Date: {{visitorDetails.visitDate}}</p>
-            <p>Location: {{visitorDetails.officeLocation}}</p>
-          </div>
-        </div>
-        
-        <div class="view-more-body">
-          <div class="flex-row-container">
-            <label>Check-in Time </label>
-            <p>: {{visitorDetails.checkIn}}</p>
-          </div>
-          <div  class="flex-row-container">
-            <label>Check-out Time </label>
-            <p>: {{visitorDetails.checkOut}}</p>
-          </div>
-          <div  class="flex-row-container">
-            <label>Visit Purpose </label>
-            <p>: {{visitorDetails.visitPurpose}}</p>
-          </div>
-          <div  class="flex-row-container">
-            <label>Host Name </label>
-            <p>: {{visitorDetails.hostName}}</p>
-          </div>
-          <div  class="flex-row-container">
-            <label>Number of Devices </label>
-            <p>: {{visitorDetails.deviceCount}}</p>
-          </div>
-          <div *ngIf="visitorDetails.deviceCount!=0" class="flex-row-container">
-            <label>Device Details </label>
-            <div>
-                <p *ngFor="let device of visitorDetails.devices">
-                    : {{device.name}} - {{device.serialNumber}}</p>
-            </div>
-          </div>
-        </div>
-     
-    </ng-template>
-
-</p-dialog>
+ <app-view-details-modal
+ [visitorDetails]="visitorDetails"
+ [viewDetailsDialog]="viewDetailsDialog"
+ (closeDialog)="this.handleDialogClose()"
+ ></app-view-details-modal>
 
 <router-outlet></router-outlet>
