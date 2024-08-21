@@ -16,10 +16,11 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { alphabetValidator, passwordMatchValidator } from './custom-validators';
+import { alphabetValidator, numberValidator, passwordMatchValidator } from '../../../../../pages/Admin-Panel/user-management/components/admin-add-user/custom-validators';
 import { AddNewUser } from '../../../../../core/models/addNewUser.interface';
 import { Observable } from 'rxjs';
 import { SharedService } from '../../../../../core/services/shared-service/shared-data.service.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-add-user',
@@ -55,6 +56,7 @@ export class AdminAddUserComponent {
 
   constructor(
     private apiService: UserManagementServiceService,
+    private router: Router,
     private sharedService: SharedService,
     private datePipe: DatePipe
   ) {
@@ -80,7 +82,7 @@ export class AdminAddUserComponent {
           Validators.required,
           alphabetValidator(),
         ]),
-        PhoneNumber: new FormControl('', [Validators.required]),
+        PhoneNumber: new FormControl('', [Validators.required,numberValidator()]),
         Address: new FormControl('', [Validators.required]),
         username: new FormControl('', [
           Validators.required,
@@ -149,21 +151,25 @@ export class AdminAddUserComponent {
     this.hideConfirmPassword = !this.hideConfirmPassword;
   }
 
-  checkIfUsernameExists( event: FocusEvent): void {
+  checkIfUsernameExists(event: FocusEvent): void {
     const inputElement = event.target as HTMLInputElement;
     const username = inputElement?.value || '';
     console.log('Username entered:', username);
+  
     this.apiService.checkUsernameExists(username).subscribe(
       (exists) => {
         console.log('response of username exists', exists);
         if (exists.result) {
-          // Username exists, show error message
-          alert(
-            'Username already exists. Please choose a different username.'
-          );
-        } 
-      })
+          // Username exists, set custom error
+          this.addUserForm.get('username')?.setErrors({ usernameExists: true });
+        } else {
+          // If no error, clear the error
+          this.addUserForm.get('username')?.setErrors(null);
+        }
+      }
+    );
   }
+  
 
   // component.ts
   onSubmit() {
@@ -203,6 +209,7 @@ export class AdminAddUserComponent {
               response => {
                 console.log('User created successfully', response);
                 alert('User Added');
+                this.router.navigate(['/vms/admin-panel']);
               },
               error => {
                 console.error('Error creating user', error);

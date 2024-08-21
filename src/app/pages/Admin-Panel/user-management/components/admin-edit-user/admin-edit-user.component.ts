@@ -15,9 +15,13 @@ import { UserService } from '../../../../../core/services/user-management-servic
 import { UserManagementServiceService } from '../../../../../core/services/user-management-service/user-management-service.service';
 import { UserByIdOverview} from '../../../../../core/models/user-overview-display.interface';
 import { FormBuilder, FormGroup, FormsModule, NgModel, ReactiveFormsModule, Validators } from '@angular/forms';
-import { alphabetValidator, passwordMatchValidator } from '../admin-add-user/custom-validators';
-import { AdminAddUserComponent } from '../admin-add-user/admin-add-user.component';
+import { alphabetValidator, numberValidator, passwordMatchValidator } from '../../../../../pages/Admin-Panel/user-management/components/admin-add-user/custom-validators';
+
 import { SharedService } from '../../../../../core/services/shared-service/shared-data.service.service';
+import { AdminAddUserComponent } from '../admin-add-user/admin-add-user.component';
+import { Router } from '@angular/router';
+
+
 
 @Component({
   selector: 'app-admin-edit-user',
@@ -60,6 +64,7 @@ export class AdminEditUserComponent {
 
   constructor(
     private fb: FormBuilder,
+    private router: Router,
     private sharedService:SharedService,
     private adduser: AdminAddUserComponent,
     private datePipe: DatePipe,
@@ -74,7 +79,7 @@ export class AdminEditUserComponent {
       firstName: ['', [Validators.required, alphabetValidator()]],
       lastName: ['', [Validators.required, alphabetValidator()]],
       username: ['', Validators.required],
-      phone: ['', Validators.required],
+      phone: ['',[ Validators.required,numberValidator()]],
       address: ['', Validators.required],
       password: [''],
       confirmPassword: ['']
@@ -115,7 +120,7 @@ export class AdminEditUserComponent {
         this.isActive = this.user.isActive ? 1 : 0;
         console.log(this.isActive);
 
-        this.formattedValidFrom = this.datePipe.transform(response.validFrom, 'dd-MM-yyyy');
+        this.formattedValidFrom = this.datePipe.transform(response.validFrom, 'MM-dd-yyyy');
 
         this.userEditForm.patchValue({
           RoleId: this.user.roleId,
@@ -225,6 +230,7 @@ export class AdminEditUserComponent {
         next: (response) => {
           console.log('User updated successfully', response);
           alert("User updated successfully");
+          this.router.navigate(['/vms/admin-panel']);
         },
         error: (error) => {
           console.error('Error updating user', error);

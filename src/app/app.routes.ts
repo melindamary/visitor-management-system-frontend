@@ -14,10 +14,10 @@ import { Routes } from '@angular/router';
 import { AddroleComponent } from './ui/addrole/addrole.component';
 import { EditroleComponent } from './ui/editrole/editrole.component';
 import { VisitorConsentModalComponent } from './ui/visitor-consent-modal/visitor-consent-modal.component';
-import { AdminAddUserComponent } from './pages/admin-panel/user-management/components/admin-add-user/admin-add-user.component';
-import { AdminEditUserComponent } from './pages/admin-panel/user-management/components/admin-edit-user/admin-edit-user.component';
-import { AdminPanelComponent } from './pages/admin-panel/admin-panel.component';
-import { AdminViewIndividualUserComponent } from './pages/admin-panel/user-management/components/admin-view-individual-user/admin-view-individual-user.component';
+import { AdminAddUserComponent } from './pages/Admin-Panel/user-management/components/admin-add-user/admin-add-user.component';
+import { AdminEditUserComponent } from './pages/Admin-Panel/user-management/components/admin-edit-user/admin-edit-user.component';
+import { AdminPanelComponent } from './pages/Admin-Panel/admin-panel.component';
+import { AdminViewIndividualUserComponent } from './pages/Admin-Panel/user-management/components/admin-view-individual-user/admin-view-individual-user.component';
 import { AdminViewRoleComponent } from './pages/Admin-Panel/role-management/admin-view-role/admin-view-role.component';
 import { AdminVisitPurposeTableComponent } from './pages/Admin-Panel/visit-purpose-management/admin-visit-purpose-table/admin-visit-purpose-table.component';
 
