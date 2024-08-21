@@ -6,7 +6,7 @@
   [position]="'center'"
   [showHeader]="true"
   (onHide)="close()"
-  [closable]="true"
+  [closable]="false"
   [style]="{ width: '45vw', height: '70vh' }"
 >
   <ng-template pTemplate="header" class="header">
@@ -22,6 +22,9 @@
             <p><i class="pi pi-phone cta-btn-icon"></i> &nbsp; {{ visitorDetails.phoneNumber }}</p>
         </div>
       </div>
+      <button class="close-button" (click)="close()">
+        <i class="pi pi-times"></i>
+      </button>
     </div>
   </ng-template>
   <ng-template pTemplate="content" class="content">
