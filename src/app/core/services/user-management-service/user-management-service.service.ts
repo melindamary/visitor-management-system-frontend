@@ -13,8 +13,8 @@ import { CheckUsernameResponse } from '../../models/check-Username.Interface';
 })
 export class UserManagementServiceService {
 
-
   constructor(private http:HttpClient) { }
+  username:string = ''
 
   getRoleIdAndName(): Observable<GetIdAndName[]> {
     const apiUrl = "https://localhost:7121/Role/GetRoleIdAndName/get-role-id-name";
@@ -46,8 +46,8 @@ export class UserManagementServiceService {
     );
   }
 
-  checkUsernameExists(username: string): Observable<CheckUsernameResponse> {
-    return this.http.get<CheckUsernameResponse>(`https://localhost:7121/User/CheckUsernameExists/${username}`);
+  checkUsernameExists(username: string): Observable<any> {
+    return this.http.get<any>(`https://localhost:7121/User/CheckUsernameExists/${username}`);
   }
 
   updateUserData(id:number, userData: any):Observable<any>{    

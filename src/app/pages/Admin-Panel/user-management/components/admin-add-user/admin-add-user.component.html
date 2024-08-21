@@ -116,7 +116,7 @@
       <div class="col input-col">
       <mat-form-field appearance="outline" class="smallInput">
         <mat-label>Enter the User Name</mat-label>
-        <input matInput formControlName="username">
+        <input matInput formControlName="username" (blur)="checkIfUsernameExists($event)">
       </mat-form-field>
     </div>
   </div>
