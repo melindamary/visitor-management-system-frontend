@@ -1,4 +1,4 @@
-::ng-deep .p-dialog .p-dialog-header{
+::ng-deep .visitor-dialog .p-dialog .p-dialog-header{
     padding: 0.5rem;
     border-bottom: 1px solid #ccc;
 }
@@ -110,15 +110,15 @@
     display: flex;
     gap: 1rem;
 }
-::ng-deep .p-dialog .p-button{
+::ng-deep .visitor-dialog .p-dialog .p-button{
     background-color: white;
     color: #4D4D4D;
 }
-::ng-deep .p-dialog .p-button:hover{
+::ng-deep .visitor-dialog .p-dialog .p-button:hover{
     background-color: none;
     color: black;
 }
 
-::ng-deep .p-dialog .p-dialog-content::-webkit-scrollbar{
+::ng-deep .visitor-dialog .p-dialog .p-dialog-content::-webkit-scrollbar{
     background-color: transparent;
 }
