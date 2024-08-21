@@ -100,6 +100,7 @@ export class AdminEditUserComponent {
     this.loadRoles();
     
     this.loadLocations();
+  
 
     const userId = this.userService.getUserId();
     if (userId !== null && userId !== undefined) {
@@ -210,11 +211,12 @@ export class AdminEditUserComponent {
       (exists) => {
         console.log('response of username exists', exists);
         if (exists.result) {
-          // Username exists, show error message
-          alert(
-            'Username already exists. Please choose a different username.'
-          );
-        } 
+          // Username exists, set custom error
+          this.userEditForm.get('username')?.setErrors({ usernameExists: true });
+        } else {
+          // If no error, clear the error
+          this.userEditForm.get('username')?.setErrors(null);
+        }
       })
   }
   

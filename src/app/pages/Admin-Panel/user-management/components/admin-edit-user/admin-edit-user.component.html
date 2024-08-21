@@ -179,7 +179,10 @@
     </div>
     <div class="col input-col">
       <mat-form-field appearance="outline" class="smallInput">        
-        <input matInput  formControlName="username" (blur)="checkIfUsernameExists($event)">        
+        <input matInput  formControlName="username" (blur)="checkIfUsernameExists($event)">     
+        <mat-error *ngIf="userEditForm.get('username')?.hasError('usernameExists')" class="error">
+          Username already exists* 
+        </mat-error>   
         <mat-error *ngIf="userEditForm.get('username')?.hasError('required')" class="error">
           Required Field*
         </mat-error> 
