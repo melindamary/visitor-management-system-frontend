@@ -64,7 +64,9 @@
         <mat-form-field appearance="outline" class="smallInput">
           <mat-label>Enter the Address</mat-label>
           <textarea matInput  formControlName="address"></textarea>
-        
+          <mat-error *ngIf="userEditForm.get('address')?.hasError('required')" class="error">
+            Required Field*
+          </mat-error> 
         </mat-form-field>
        
       </div>
@@ -177,8 +179,7 @@
     </div>
     <div class="col input-col">
       <mat-form-field appearance="outline" class="smallInput">        
-        <input matInput  formControlName="username" (blur)="checkIfUsernameExists($event)">
-        <input matInput  formControlName="username">
+        <input matInput  formControlName="username" (blur)="checkIfUsernameExists($event)">        
         <mat-error *ngIf="userEditForm.get('username')?.hasError('required')" class="error">
           Required Field*
         </mat-error> 
