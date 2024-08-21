@@ -202,6 +202,22 @@ export class AdminEditUserComponent {
     this.resetPassword = !this.resetPassword;
   }
 
+  checkIfUsernameExists( event: FocusEvent): void {
+    const inputElement = event.target as HTMLInputElement;
+    const username = inputElement?.value || '';
+    console.log('Username entered:', username);
+    this.apiService.checkUsernameExists(username).subscribe(
+      (exists) => {
+        console.log('response of username exists', exists);
+        if (exists.result) {
+          // Username exists, show error message
+          alert(
+            'Username already exists. Please choose a different username.'
+          );
+        } 
+      })
+  }
+  
   OnSubmit(): void {
     if (this.userEditForm.valid) {
       const formValues = this.userEditForm.value;
