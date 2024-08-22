@@ -82,7 +82,7 @@ export class LocationSecurityTableComponent {
 
     this.selectedTimePeriod = this.timePeriods[0];  // Set to Daily
     console.log('Initial selected period:', this.selectedTimePeriod);
-    this.fetchlbTable();
+    this.fetchlbTable();//location based tabel 
     this.subscriptions.push(
       this.signalRService.locationStatisticssecurity$.subscribe(count => {
         console.log('Real-time security:', count);

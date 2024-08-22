@@ -17,6 +17,8 @@ import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { LocationService } from '../../../../core/services/location-management/location.service';
 import { ViewDetailsModalComponent } from "../view-details-modal/view-details-modal.component";
+import { Subscription } from 'rxjs';
+import { SignalRService } from '../../../../core/services/visitor-service/visitor-service.service';
 
 interface Locations {
   name: string;
@@ -43,9 +45,12 @@ interface Locations {
   styleUrl: './report-table.component.scss',
 })
 export class ReportTableComponent {
+  private subscriptions: Subscription[] = [];
+
   constructor(
     public reportService: ReportService,
-    private locationService: LocationService
+    private locationService: LocationService,
+    private signalRService:SignalRService
   ) {}
 
   selectedMonth: Date | undefined;
@@ -276,6 +281,13 @@ export class ReportTableComponent {
 
   ngOnInit(): void {
     this.fetchReport();
+    
     this.fetchLocations();
+
+    this.subscriptions.push(
+      this.signalRService.receiveReport$.subscribe(response => {
+        this.fetchReport(); 
+      })
+    );
   }
 }
