@@ -1,7 +1,7 @@
 <div>
   <div class="card">
     <div class="table-header">
-      <div class="dashboard-component-h3">Visitor Statistics</div>
+      <div class="dashboard-component-h3">Visitor Management Summary by Location</div>
       <div class="filterarrange">
         <p-dropdown
           class="dashboard-dropdown"
@@ -20,9 +20,10 @@
         />
       </div>
     </div>
-    <p-table [value]="lbTables">
+    <p-table
+     styleClass="p-databtable-striped p-datatable-gridlines" [value]="lbTables">
       <!-- <ng-template pTemplate="title"> -->
-      <h1>Location Based Visitor Details</h1>
+      <!-- <h1>Location Based Visitor Details</h1> -->
       <!-- </ng-template> -->
 
       <ng-template pTemplate="header">

@@ -33,19 +33,12 @@
       </div>
     </div>
 
-    <p-table [value]="lbSecurityTables">
-      <!-- <ng-template pTemplate="title"> -->
-      <h1>Location Based Visitor Details</h1>
-      <!-- </ng-template> -->
+    <p-table 
+      styleClass="p-datatable-striped p-datatable-gridlines"
+      [value]="lbSecurityTables">
 
       <ng-template pTemplate="header">
-        <tr>
-          <!-- <th>
-                        <div  style="display: flex; align-items: center;">
-                            Location 
-
-                        </div>
-                    </th> -->
+        <tr class="dashboard-table-header">
           <th pSortableColumn="location">
             Location <p-sortIcon field="location" />
           </th>

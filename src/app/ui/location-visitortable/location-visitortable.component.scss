@@ -9,6 +9,15 @@ th{
     color: #896cc7;
     padding-block: 0.5rem;
 }
+
+::ng-deep .p-datatable-tbody > tr > td {
+    line-height: 1.5 !important; /* Increase this value to adjust line height */
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+    padding: 0rem 1rem;
+    height: 30px !important;
+    }
+
 h3{
     padding-left: 20px;
     margin: 0;
