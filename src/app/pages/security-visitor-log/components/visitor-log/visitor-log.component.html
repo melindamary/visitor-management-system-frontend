@@ -7,7 +7,6 @@
       optionLabel="name" 
       (onChange)="loadVisitorLogToday()"
       />
-      <!-- (onChange)="getVisitorLogs()" -->
 </div>
 <div class="tile-container" style="display: flex; width: 100%;">
   <app-visitor-log-tiles 
@@ -49,7 +48,7 @@
              [actionsTemplate]="actionsTemplate" [summaryTemplate]="summaryTemplate" >
     <ng-template #actionsTemplate let-rowData>
       <p-button icon="pi pi-eye" [rounded]="true" [text]="true" (click)="viewVisitor(rowData)" pTooltip="View visitor details"></p-button>
-      <p-button *ngIf="currentTab === 'upcoming'" icon="pi pi-check" [rounded]="true" [text]="true" severity="success" (click)="checkInVisitor(rowData)" pTooltip="Check-In Visitor"></p-button>
+      <p-button *ngIf="currentTab === 'upcoming'" icon="pi pi-sign-in" [rounded]="true" [text]="true" severity="success" (click)="checkInVisitor(rowData)" pTooltip="Check-In Visitor"></p-button>
       <p-button *ngIf="currentTab === 'active'" icon="pi pi-sign-out" [rounded]="true" [text]="true" severity="danger" (click)="checkOutVisitor(rowData)" pTooltip="Check-Out Visitor"></p-button>
     </ng-template>
     <ng-template #summaryTemplate>
