@@ -1,13 +1,17 @@
 
         
-<div class="dashboard-tiles">
-    <app-tiles [title]="'Active Visitors'" [value]="visitorCount" [backgroundColor]="'#896CC7'" [icon]="'pi-users'"></app-tiles>
+<div class="dashboard-tiles dashboard-component-margin">
+    <!-- <app-tiles [title]="'Active Visitors'" [value]="visitorCount" [backgroundColor]="'#896CC7'" [icon]="'pi-users'"></app-tiles>
     
     <app-tiles [title]="'Total Visitors'" [value]="totalVisitors" [backgroundColor]="'#FF858C'" [icon]="'pi-users'"></app-tiles>
-    <app-tiles [title]="'Checked Out Visitors'" [value]="ScheduledVisitors" [backgroundColor]="'#952991'" [icon]="'pi-users'"></app-tiles>
+    <app-tiles [title]="'Checked Out Visitors'" [value]="ScheduledVisitors" [backgroundColor]="'#952991'" [icon]="'pi-users'"></app-tiles> -->
+    <app-tiles [title]="'Active Visitors'" [value]="visitorCount" [backgroundColor]="'white'" [icon]="'pi-users'"></app-tiles>
+    <!-- #cfcece -->
+    <app-tiles [title]="'Total Visitors'" [value]="totalVisitors" [backgroundColor]="'white'" [icon]="'pi-users'"></app-tiles>
+    <app-tiles [title]="'Checked-Out Visitors'" [value]="ScheduledVisitors" [backgroundColor]="'white'" [icon]="'pi-users'"></app-tiles>
 </div>
 <div class="charts">
-    <div class="barChart">
+    <div class="chart bar-chart">
         <app-location-chart></app-location-chart>
         <div><div class="legend">
             <div class="legend-item">
@@ -24,22 +28,15 @@
             </div>
           </div></div>
     </div>
-    <div class="pieChart">
+    <div class="chart pie-chart">
         <app-purpose-pie></app-purpose-pie>
     </div>
 </div>
 <div class="tables">
-    <div class="table1">
+    <div class="dashboard-component-margin">
         <app-location-visitortable></app-location-visitortable>
-
     </div>
-    <div class="table2">
-
+    <div class="dashboard-component-margin">
+      <app-location-security-table ></app-location-security-table>
     </div>
-
-</div>
-<div class="locationsecuritytable">
-<app-location-security-table ></app-location-security-table>
-
-
 </div>

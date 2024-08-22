@@ -16,9 +16,7 @@ export class PurposePieComponent {
 
   options: any;
   constructor(private http: HttpClient) {
-
-
-  }
+}
 
  
   ngOnInit() {
@@ -72,7 +70,6 @@ export class PurposePieComponent {
       plugins: {
         title: {
           display: true,
-          text: 'Visitor Purposes (Monthly)',
           font: {
             size: 16,
             color:'#00000',
