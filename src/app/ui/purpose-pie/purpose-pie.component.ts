@@ -16,8 +16,6 @@ export class PurposePieComponent {
 
   options: any;
   constructor(private http: HttpClient) {
-
-
   }
 
  
