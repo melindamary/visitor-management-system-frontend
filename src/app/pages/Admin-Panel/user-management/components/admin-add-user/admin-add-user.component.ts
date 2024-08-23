@@ -16,7 +16,8 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { alphabetValidator, numberValidator, passwordMatchValidator } from '../../../../../pages/admin-panel/user-management/components/admin-add-user/custom-validators';
+// import { alphabetValidator, numberValidator, passwordMatchValidator } from '../../../../../pages/admin-panel/user-management/components/admin-add-user/custom-validators';
+import { alphabetValidator, numberValidator, passwordMatchValidator } from './custom-validators';
 import { AddNewUser } from '../../../../../core/models/addNewUser.interface';
 import { Observable } from 'rxjs';
 import { SharedService } from '../../../../../core/services/shared-service/shared-data.service.service';
