@@ -57,28 +57,6 @@ th{
   padding-block: 10px;
 }
 
-.excel-icon{
-  font-size: 22px;
-  // color: #00a651;
-  color: #59ca8f;
-  cursor: pointer;
-}
-.excel-icon:hover{
-  color: #00a651;
-}
-.export-btn{
-  padding: 6px;
-  border: solid 1px #8e8e8e;
-  font-size: 16px;
-  border-radius: 4px;
-  background-color: #8e8e8e;
-  color: white;
-  cursor: pointer;
-}
-.export-btn:hover{
-  background-color: #808080;
-}
-
 ::ng-deep .p-toolbar{
   background-color: #fff;
   padding: 0.5rem;

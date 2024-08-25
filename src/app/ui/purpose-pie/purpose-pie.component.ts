@@ -16,7 +16,7 @@ export class PurposePieComponent {
 
   options: any;
   constructor(private http: HttpClient) {
-  }
+}
 
  
   ngOnInit() {
@@ -52,7 +52,7 @@ export class PurposePieComponent {
     // let { top6, otherItems } = this.prepareData(data);
 
     const colors = [
-      '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40', '#C9CBCF'
+      '#64A2F5','#3E68B9','#8061C3','#9792E8','#756DE8', '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40', '#C9CBCF'
     ];
 
     this.data = {
@@ -70,7 +70,6 @@ export class PurposePieComponent {
       plugins: {
         title: {
           display: true,
-          text: 'Visitor Purposes (Monthly)',
           font: {
             size: 16,
             color:'#00000',

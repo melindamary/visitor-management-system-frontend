@@ -1,27 +1,14 @@
-<!-- <p>tiles works!</p> -->
-<!-- <div class="tiles">
-    <div class="tile-title">
-        <p>
-            Active Visitors
-        </p>
+<div class="tiles dashboard-box-shadow">
+  <div class="tile-color-bar" [style.background-color]="backgroundColor"></div>
+  <div class="tile-content">
+    <div class="tile-heading">
+      {{ title }}
+      <i class="tile-icon pi {{ icon }}"></i>
     </div>
-        <div class="title-contents">
-            <p class="tile-value">
-                10
-            </p>
-            <i class="pi pi-user"></i>
-        </div>
-
-</div> -->
-
-<div class="tiles" [style.background-color]="backgroundColor">
-    <div class="tile-title">
-      <p>{{ title }}</p>
-    </div>
-    <div class="title-contents">
-      <p class="tile-value">{{ value }}</p>
-      <i class="pi {{ icon }}"></i>
+    <div class="tile-value">
+      {{ value }}  
     </div>
   </div>
+</div>
   
   

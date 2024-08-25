@@ -125,20 +125,20 @@ fetchChartData() {
       datasets: [
         {
           label: 'Forms Submitted',
-          backgroundColor: '#000',
-          borderColor: '#000',
+          backgroundColor: '#9792E8',
+          borderColor: '#9792E8',
           data: passesGenerated
         },
         {
           label: 'Active Visitors',
-          backgroundColor: '#FF858C',
-          borderColor: '#FF858C',
+          backgroundColor: '#3E68B9',
+          borderColor: '#3E68B9',
           data: activeVisitors
         },
         {
           label: 'Total Visitors',
-          backgroundColor: '#7857FF',
-          borderColor: '#7857FF',
+          backgroundColor: '#8061C3',
+          borderColor: '#8061C3',
           data: totalVisitors
         }
       ]

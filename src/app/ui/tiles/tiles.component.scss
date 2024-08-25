@@ -1,47 +1,40 @@
 @import "primeicons/primeicons.css";
 
 .tiles{
-    // width: 370px;
-    height: 153px;
-    // background-color: #896CC7;
-    border-radius: 16px;
-    justify-content: center;
+    width: calc(100% - 0rem);
+    height: 7rem;
+    border-radius: 4px;
+    display: flex;
+    // flex-direction: column;
+    // box-shadow: 1px 1px 1px 1px lightgrey;
+    align-items: center;
+}
+.tile-color-bar{
+    height: 100%;
+    width: 0.3rem;
+    margin-right: 2rem;
+    border-radius: 4px 0px 0px 4px;
+}
+.tile-content{
+    display: flex;
     flex-direction: column;
-    display: flex;
-}
-
-.tile-title{
-    display: flex;
+    height: fit-content;
     justify-content: center;
-    color: white;
-    font-size: 20px;
-    font-family: sans-serif;
-    // font-family: 'Times New Roman', Times, serif;
+    width: 100%;
 }
-.title-contents{
+.tile-heading{
     display: flex;
-    justify-content:space-between;
-    align-items: baseline;
-    gap: 1rem;
-    margin: 0;
-    padding: 0;
-    color: white;
-    font-size: 36px;
-    i{
-        display:flex;
-        color:black;
-        padding: 10px;
-        align-items: center;
-        padding-right: 70px;
-    }
-    .pi{
-        font-size: 2rem;
-    }
-
+    justify-content: space-between;
+    color: #000000;
+    font-size: 1.1rem;
+    font-weight: 400;
+    padding: 0rem 2rem 1rem 0rem;
+}
+.tile-icon{
+    font-size: 1.4rem;
 }
 .tile-value{
-    padding: 0;
-    padding-left: 120px;
-    
-
+    font-size: 2.4rem;
+    padding-left: 0rem;
+    font-weight: 500;
 }
