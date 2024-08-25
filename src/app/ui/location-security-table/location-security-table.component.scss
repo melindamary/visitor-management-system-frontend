@@ -85,9 +85,15 @@ h3 {
 }
 
 ::ng-deep .p-tag{
-  width: 80px;
+  width: 85px;
   height: 20px;
-  padding: 0px 5px;
+  padding: 5px 5px;
   margin: 0px 0px;
+  border-radius: 50px;
   font-weight: 400 !important;
+  
+}
+
+::ng-deep .p-tag-value{
+  font-size: 14px !important;
 }

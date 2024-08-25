@@ -14,11 +14,29 @@
 }
 .dashboard-tiles {
     display: flex;
-    // justify-content: space-between;
+    justify-content: space-between;
     flex-wrap: wrap;
-    column-gap: 1.4rem;
-    width: 100%;
+    gap: 1rem;
 }
+
+.dashboard-tiles app-tiles {
+  flex: 1 1 calc(33.33% - 1rem); /* Flex-grow: 1, Flex-shrink: 1, Flex-basis: 30% */
+  min-width: 200px; /* Minimum width to prevent tiles from becoming too small */
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 1200px) {
+  .dashboard-tiles app-tiles {
+    flex: 1 1 calc(45% - 1rem); /* Shrinks to 45% width on medium screens */
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-tiles app-tiles {
+    flex: 1 1 calc(100% - 1rem); /* Takes full width on smaller screens */
+  }
+}
+
 .charts{
     display: flex;
     // padding-top: 2rem;
