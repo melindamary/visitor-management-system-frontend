@@ -81,6 +81,7 @@ export class DeviceManagementComponent {
 
   confirmDelete(id: number): void {
     this.confirmationService.confirm({
+      key: 'deviceConfirm',
       message: 'Are you sure you want to delete?',
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
