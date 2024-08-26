@@ -1,4 +1,12 @@
-<p-dialog header="Visitor Details" [(visible)]="visible" [modal]="true" [style]="{ width: '40vw' }" styleClass="p-fluid" (onHide)="onDialogHide()">
+<p-dialog
+class="visitor-dialog"
+header="Visitor Details" 
+[(visible)]="visible" 
+[modal]="true" 
+[style]="{ width: '45vw', height:'70vh' }" 
+styleClass="p-fluid" 
+(onHide)="onDialogHide()"
+>
   <ng-template pTemplate="header">
     <div class="flex align-items-center gap-2">
       <span class="font-bold">Visitor Details</span>
