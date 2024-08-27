@@ -1,0 +1,65 @@
+<p-dialog
+  class="user-dialog"
+  [(visible)]="viewDetailsDialog"
+  [modal]="true"
+  styleClass="p-fluid"
+  [position]="'center'"
+  [showHeader]="true"
+  (onHide)="close()"
+  [closable]="false"
+  [style]="{ width: '45vw', height: '70vh' }"
+>
+<ng-template pTemplate="header" class="header">
+  <div class="modal-header">
+      <h2 class="modal-title">User Details</h2>
+      <button class="close-button" (click)="close()">
+          <i class="pi pi-times"></i>
+      </button>
+  </div>
+</ng-template>
+
+  <ng-template pTemplate="content" class="content">
+    <div class="modal-body">
+        <div class="column-3">
+          <div class="modal-body-data">
+            <label>Full Name</label>
+            <p>{{ userDetails.fullName }}</p>
+          </div>
+          <div class="modal-body-data">
+            <label>Phone Number</label>
+            <p>{{ userDetails.phone }}</p>
+          </div>
+        </div>
+
+        <div class="column-3">
+          <div class="modal-body-data">
+            <label>Address</label>
+            <p>{{ userDetails.address }}</p>
+          </div>
+          <div class="modal-body-data">
+            <label>User Name</label>
+            <p>{{ userDetails.username }}</p>
+          </div>
+          <div class="modal-body-data">
+            <label>Role</label>
+            <p>{{ userDetails.roleName }}</p>
+          </div>
+        </div>
+
+        <div class="column-3">
+          <div class="modal-body-data">
+            <label>Location</label>
+            <p>{{ userDetails.officeLocation }}</p>
+          </div>
+          <div class="modal-body-data">
+            <label>Valid From</label>
+            <p>{{ userDetails.formattedValidFrom }}</p>
+          </div>
+          <div class="modal-body-data">
+            <label>Status</label>
+            <p>{{ userDetails.status }}</p>
+          </div>
+        </div>
+    </div>
+  </ng-template>
+</p-dialog>
