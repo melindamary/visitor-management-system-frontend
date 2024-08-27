@@ -45,7 +45,7 @@ export class AdminViewUserComponent {
     { header: 'Full Name', field: 'fullName' },
     { header: 'Role ', field: 'roleName' },
     { header: 'Location', field: 'location' },
-    { header: 'Status', field: 'isActive' },
+    { header: 'Status', field: 'status' },
     { header: 'Actions', field: 'actions', width: '18%' }, // Assuming you have actions like edit/delete
   ];
   rows: number = 5;

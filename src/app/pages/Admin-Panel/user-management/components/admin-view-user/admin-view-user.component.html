@@ -25,9 +25,20 @@ class="mr-2"  (click)="addUser()"   />
   [columnsToDisplay]="columnsToDisplay"
   [rows]="5"
   [totalItems]="totalItems"
+  [statusTemplate]="statusTemplate"
   [actionsTemplate]="actionsTemplate"
   [summaryTemplate]="summaryTemplate"
 >
+<ng-template #statusTemplate let-rowData>
+  <p-tag
+    [ngClass]="{
+      'green-status': rowData.status === 'Active',
+      'gray-status': rowData.status === 'Inactive'
+    }"
+  >
+    {{ rowData.status }}</p-tag
+  >
+</ng-template>
   <ng-template #actionsTemplate let-rowData>
     <p-button
       icon="pi pi-eye"
