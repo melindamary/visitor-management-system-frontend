@@ -1,6 +1,7 @@
 <app-table
     [dataSource]="devices"
     [columnsToDisplay]="columns"
+    [statusTemplate]="statusTemplate"
     [actionsTemplate]="actionsTemplate"
     [summaryTemplate]="summaryTemplate"
     [rows] = 10
@@ -9,6 +10,16 @@
     [tableStyle]="{'min-width': '60rem', 'min-height': '56vh'}"
     [scrollHeight]="'56vh'"
 >
+<ng-template #statusTemplate let-rowData>
+  <p-tag
+    [ngClass]="{
+      'green-status': rowData.status === 'Approved',
+      'yellow-status': rowData.status === 'Pending'
+    }"
+  >
+    {{ rowData.status }}</p-tag
+  >
+</ng-template>
 <ng-template #actionsTemplate let-rowData let-rowIndex="rowIndex">
     <!-- Edit button -->
      <p-toast/>
@@ -26,7 +37,7 @@
 
     <!-- Approve button -->
     <p-button
-        *ngIf="rowData.status === 'Not Approved'"
+        *ngIf="rowData.status === 'Pending'"
         class="view-btn btn-outline-none"
         pRipple
         icon="pi pi-check-circle"
@@ -54,7 +65,7 @@
 
     <!-- Remove button -->
     <p-button
-        *ngIf="rowData.status === 'Not Approved'"
+        *ngIf="rowData.status === 'Pending'"
         class="view-btn btn-outline-none"
         pRipple
         icon="pi pi-times"

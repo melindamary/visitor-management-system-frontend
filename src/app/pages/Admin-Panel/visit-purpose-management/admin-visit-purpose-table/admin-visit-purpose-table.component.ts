@@ -3,12 +3,13 @@ import { TableComponent } from '../../../../shared-components/table/table.compon
 import { VisitPurposeService } from '../../../../core/services/visit-purpose-service/visit-purpose.service';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
-import { NgIf } from '@angular/common';
+import { NgIf, NgClass } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { TooltipModule } from 'primeng/tooltip';
+import { TagModule } from 'primeng/tag';
 
 interface VisitPurpose {
   slNo: number;
@@ -25,10 +26,12 @@ interface VisitPurpose {
     ButtonModule,
     DialogModule,
     NgIf,
+    NgClass,
     FormsModule,
     ToastModule,
     ConfirmDialogModule,
     TooltipModule,
+    TagModule
   ],
   templateUrl: './admin-visit-purpose-table.component.html',
   styleUrl: './admin-visit-purpose-table.component.scss',
@@ -43,9 +46,9 @@ export class AdminVisitPurposeTableComponent {
   visitPurposes: VisitPurpose[] = [];
   totalItems: number = 0;
   columns: any[] = [
-    { header: 'Visit Purpose', field: 'name', width: '22%' },
+    { header: 'Visit Purpose', field: 'name', width: '20%' },
     { header: 'Added On', field: 'createdDate' },
-    { header: 'Updated By', field: 'lastModifiedBy' },
+    { header: 'Updated By', field: 'lastModifiedBy', width: '20%' },
     { header: 'Updated On', field: 'lastModifiedOn' },
     { header: 'Status', field: 'status' },
     { header: 'Actions', field: 'actions', width: '18%' },
@@ -88,10 +91,10 @@ export class AdminVisitPurposeTableComponent {
     }, 3000);
   }
 
-  confirmDelete(id: number): void {
+  confirmDelete(id: number, message: string): void {
     this.confirmationService.confirm({
       key: 'visitPurposeConfirm',
-      message: 'Are you sure you want to delete?',
+      message: message,
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       acceptLabel: 'Yes',

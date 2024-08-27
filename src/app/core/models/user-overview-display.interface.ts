@@ -1,7 +1,7 @@
 export interface UserOverview{
     userId:number,
     fullName:string,
-    isActive:boolean,
+    status:string,
     location:string,
     roleName:string,
     username:string
@@ -28,7 +28,7 @@ export interface UserByIdOverview{
 export interface UserOverviewTransformed {
     userId: number;
     fullName: string;
-    isActive: string;
+    status: string;
     location: string;
     roleName: string;
     username: string;

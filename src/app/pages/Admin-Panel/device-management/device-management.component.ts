@@ -4,10 +4,11 @@ import { ToastModule } from 'primeng/toast';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { NgIf } from '@angular/common';
+import { NgClass, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DeviceService } from '../../../core/services/device-service/device.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { TagModule } from 'primeng/tag';
 
 @Component({
   selector: 'app-device-management',
@@ -19,7 +20,9 @@ import { ConfirmationService, MessageService } from 'primeng/api';
     DialogModule,
     ConfirmDialogModule,
     NgIf,
+    NgClass,
     FormsModule,
+    TagModule
   ],
   templateUrl: './device-management.component.html',
   styleUrl: './device-management.component.scss',

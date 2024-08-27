@@ -17,6 +17,7 @@ export class TableComponent  {
   @Input() rowsPerPageOptions: number[] = [5];
   @Input() scrollHeight: string = "70vh";
   @Input() tableStyle = { 'min-width': '60rem', 'min-height': '' };
+  @Input() statusTemplate: TemplateRef<any> | null = null;
   @Input() actionsTemplate: TemplateRef<any> | null = null;
   @Input() summaryTemplate: TemplateRef<any> | null = null;
 
