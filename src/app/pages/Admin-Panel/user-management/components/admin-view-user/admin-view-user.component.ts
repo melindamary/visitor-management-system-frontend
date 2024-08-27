@@ -1,7 +1,7 @@
 import { Component, TemplateRef } from '@angular/core';
 import { TableComponent } from "../../../../../shared-components/table/table.component";
 import { UserManagementServiceService } from '../../../../../core/services/user-management-service/user-management-service.service';
-import { UserOverview, UserOverviewTransformed } from '../../../../../core/models/user-overview-display.interface';
+import { UserByIdOverview, UserOverview, UserOverviewTransformed } from '../../../../../core/models/user-overview-display.interface';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -13,14 +13,15 @@ import { InputIconModule } from 'primeng/inputicon';
 import { IconFieldModule } from 'primeng/iconfield';
 import { UserService } from '../../../../../core/services/user-management-service/User.service';
 import { SharedService } from '../../../../../core/services/shared-service/shared-data.service.service';
-import { AdminViewIndividualUserComponent } from '../admin-view-individual-user/admin-view-individual-user.component';
+import { DatePipe } from '@angular/common';
+import { AdminViewUserModalComponent } from '../admin-view-user-modal/admin-view-user-modal.component';
 
 @Component({
   selector: 'app-admin-view-user',
   standalone: true,
   imports: [TableComponent,ButtonModule,ConfirmDialogModule,IconFieldModule,ToolbarModule ,
-    TooltipModule,ToastModule,InputIconModule, AdminViewIndividualUserComponent],
-  providers: [ConfirmationService, MessageService],
+    TooltipModule,ToastModule,InputIconModule, AdminViewUserModalComponent],
+  providers: [ConfirmationService, MessageService, DatePipe],
   templateUrl: './admin-view-user.component.html',
   styleUrl: './admin-view-user.component.scss'
 })
@@ -41,15 +42,15 @@ rows: number = 5;
 totalItems!: number;
 actionsTemplate!: TemplateRef<any>|null;
 summaryTemplate!: TemplateRef<any>|null;
-
+viewDetailsDialog: boolean = false;
+userDetails: any;
 
 
 constructor(private apiService: UserManagementServiceService,
   private sharedService:SharedService,
-  private router: Router,private userService: UserService,
-  private confirmationService: ConfirmationService, private messageService: MessageService) {
-  
-  
+    private datePipe: DatePipe,
+    private router: Router,private userService: UserService, 
+  private confirmationService: ConfirmationService, private messageService: MessageService) { 
 }
 
 ngOnInit(){
@@ -71,7 +72,7 @@ loadAllUser(): void {
     } else {
       this.DataSource = users; // SuperAdmin can see all users
     }
-
+    console.log(this.DataSource);
     this.totalItems = this.DataSource.length;
   });
 }
@@ -85,14 +86,46 @@ viewOrEdit(user: UserOverview): void {
   this.router.navigate(['/vms/admin-panel/edit-user']);
   // Implement the logic to view or edit the user details
 }
-view(user: UserOverview): void {
-  const userId = user.userId;  // Retrieve the user ID
+
+// view(user: UserOverview): void {
+//   const userId = user.userId;  // Retrieve the user ID
   
-  console.log('Viewing/Editing user with ID:', userId);
-  this.userService.setUserId(userId);
-  this.router.navigate(['/vms/admin-panel/view-user']);
-  // Implement the logic to view or edit the user details
+//   console.log('Viewing/Editing user with ID:', userId);
+//   this.userService.setUserId(userId);
+//   this.router.navigate(['/vms/admin-panel/view-user']);
+//   // Implement the logic to view or edit the user details
+// }
+
+handleDialogClose() {
+  this.viewDetailsDialog = false;
 }
+
+view(user: UserByIdOverview): void {
+  const userId = user.userId;
+  
+  this.apiService.getUserById(userId).subscribe({
+    next: (response: UserByIdOverview) => {
+      const isActive = response.isActive;
+      const status = isActive == 1 ? 'Active' : 'Inactive';
+      const formattedValidFrom = this.datePipe.transform(response.validFrom, 'MM/dd/yyyy');
+      const fullName = `${response.firstName} ${response.lastName}`;
+
+      this.userDetails = {
+        ...response,
+        fullName: fullName,
+        status: status,
+        formattedValidFrom: formattedValidFrom,
+      };
+      console.log("userdetails", this.userDetails);
+      this.viewDetailsDialog = true;
+    },
+    error: (err) => {
+      // Handle error scenario if needed
+    }
+  });
+}
+
+
 
 addUser(){
   this.router.navigate(['/vms/admin-panel/add-user']);

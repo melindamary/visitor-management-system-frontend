@@ -1,4 +1,4 @@
-<p-dialog
+<!-- <p-dialog
 class="visitor-dialog"
 header="Visitor Details" 
 [(visible)]="visible" 
@@ -50,6 +50,60 @@ styleClass="p-fluid"
         </div>
         <div class="flex align-items-center mb-2">
           <div class="font-bold w-8rem">Device Details:</div>
+          <div>{{ visitor.deviceName }}</div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</p-dialog> -->
+
+<p-dialog
+  class="visitor-dialog"
+  header="Visitor Details" 
+  [(visible)]="visible" 
+  [modal]="true" 
+  [style]="{ width: '45vw' }" 
+  styleClass="p-fluid" 
+  (onHide)="onDialogHide()"
+>
+  <ng-template pTemplate="header">
+    <div class="flex justify-content-between align-items-center">
+      <span class="font-bold">Visitor Details</span>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="content">
+    <div *ngIf="visitor">
+      <div class="flex align-items-center mb-4">
+        <img *ngIf="visitor.photoBase64" [src]="'data:image/jpeg;base64,' + visitor.photoBase64" alt="Visitor Image" class="rounded-photo mr-3" />
+        <div>
+          <div class="font-bold mb-1">{{ visitor.name }}</div>
+          <div>{{ visitor.phone }}</div>
+        </div>
+      </div>
+      
+      <div class="flex flex-wrap">
+        <div *ngIf="currentTab === 'active'" class="w-1-3 mb-3">
+          <div class="font-bold">Visitor Pass Code:</div>
+          <div>{{ visitor.visitorPassCode }}</div>
+        </div>
+        <div class="w-1-3 mb-3">
+          <div class="font-bold">Purpose of Visit:</div>
+          <div>{{ visitor.purposeName }}</div>
+        </div>
+        <div class="w-1-3 mb-3">
+          <div class="font-bold">Whom to Meet:</div>
+          <div>{{ visitor.hostName }}</div>
+        </div>
+        <div *ngIf="currentTab === 'active' || currentTab === 'checkedOut' || currentTab==='total'" class="w-1-3 mb-3">
+          <div class="font-bold">Check-In Time:</div>
+          <div>{{ visitor.checkInTime }}</div>
+        </div>
+        <div *ngIf="currentTab === 'checkedOut'" class="w-1-3 mb-3">
+          <div class="font-bold">Check-Out Time:</div>
+          <div>{{ visitor.checkOutTime }}</div>
+        </div>
+        <div class="w-1-3 mb-3">
+          <div class="font-bold">Device Details:</div>
           <div>{{ visitor.deviceName }}</div>
         </div>
       </div>
