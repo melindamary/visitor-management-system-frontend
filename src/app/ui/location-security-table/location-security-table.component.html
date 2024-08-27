@@ -95,9 +95,13 @@
                         </span>
                     </td> -->
         <td>
+          <!-- [severity]="getSeverity(lbSecurityTable.status)" -->
           <p-tag
             [value]="getStatusText(lbSecurityTable.status)"
-            [severity]="getSeverity(lbSecurityTable.status)"
+            [ngClass]="{
+              'green-status': getStatusText(lbSecurityTable.status) === 'Available',
+              'yellow-status': getStatusText(lbSecurityTable.status) === 'Away'
+            }"
           ></p-tag>
         </td>
         <td>{{ lbSecurityTable.phoneNumber }}</td>

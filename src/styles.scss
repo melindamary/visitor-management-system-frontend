@@ -106,3 +106,30 @@ body {
 .dashboard-box-shadow{
   box-shadow: 0.5px 1px 1px 1px lightgrey;
 }
+
+//Status badge styles
+//Status badges
+.p-tag {
+  width: auto;
+  height: 20px;
+  padding: 5px 10px;
+  border-radius: 50px;
+  font-weight: bold;
+  font-size: 10px ;
+  text-transform: uppercase;
+}
+.green-status .p-tag{
+  color: #188A42;
+  background-color: #Caf1d8;
+}
+
+.yellow-status .p-tag{
+  background-color: #feddc7;
+  color: #ae510f;
+}
+
+.gray-status .p-tag{
+  background-color: #d0e1fd;
+  color: #295bac;
+}
+

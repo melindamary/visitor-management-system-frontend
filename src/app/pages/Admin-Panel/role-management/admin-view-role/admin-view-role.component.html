@@ -16,6 +16,7 @@
   [columnsToDisplay]="columnsToDisplay"
   [rows]="5"
   [totalItems]="totalItems"
+  [statusTemplate]="statusTemplate"
   [actionsTemplate]="actionsTemplate"
   [summaryTemplate]="summaryTemplate"
 >
@@ -31,7 +32,15 @@
       severity="danger" [outlined]="false"></p-button> -->
   </ng-template>
   <ng-template #statusTemplate let-rowData>
-    {{ getStatusText(rowData.status) }}
+      <p-tag
+        [ngClass]="{
+          'green-status': rowData.status === 'Active',
+          'gray-status': rowData.status === 'Inactive'
+        }"
+      >
+      {{ rowData.status }}</p-tag
+      >
+    
   </ng-template>
 
   <!-- <ng-template #summaryTemplate>

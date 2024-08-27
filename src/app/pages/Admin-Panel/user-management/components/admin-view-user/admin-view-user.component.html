@@ -9,7 +9,6 @@
   </button>
 </div>
 
-
 <!-- <p-toolbar styleClass="mb-4 gap-2">
   <ng-template pTemplate="right">
  <p-button 
@@ -20,24 +19,36 @@ class="mr-2"  (click)="addUser()"   />
 </ng-template>
 </p-toolbar> -->
 
-<app-table class="reduced-spacing"  [dataSource]="DataSource" [columnsToDisplay]="columnsToDisplay" [rows]="5"
- [totalItems]="totalItems"
-[actionsTemplate]="actionsTemplate" [summaryTemplate]="summaryTemplate">
-
-
-
-<ng-template #actionsTemplate let-rowData >
-   
-    <p-button icon="pi pi-eye" [rounded]="true" [text]="true" (click)="view(rowData)"  pTooltip="View User" ></p-button>
-    <p-button icon="pi pi-pencil" [rounded]="true" [text]="true"  (click)="viewOrEdit(rowData)" pTooltip="Edit User" ></p-button>
- 
-     </ng-template>
+<app-table
+  class="reduced-spacing"
+  [dataSource]="DataSource"
+  [columnsToDisplay]="columnsToDisplay"
+  [rows]="5"
+  [totalItems]="totalItems"
+  [actionsTemplate]="actionsTemplate"
+  [summaryTemplate]="summaryTemplate"
+>
+  <ng-template #actionsTemplate let-rowData>
+    <p-button
+      icon="pi pi-eye"
+      [rounded]="true"
+      [text]="true"
+      (click)="view(rowData)"
+      pTooltip="View User"
+    ></p-button>
+    <p-button
+      icon="pi pi-pencil"
+      [rounded]="true"
+      [text]="true"
+      (click)="viewOrEdit(rowData)"
+      pTooltip="Edit User"
+    ></p-button>
+  </ng-template>
   <ng-template #summaryTemplate>
     <div class="flex align-items-center justify-content-between">
       In total there are {{ totalItems }} users.
     </div>
   </ng-template>
-  </app-table>
-  <p-toast />
-  <p-confirmDialog />
-  
+</app-table>
+<p-toast />
+<p-confirmDialog />

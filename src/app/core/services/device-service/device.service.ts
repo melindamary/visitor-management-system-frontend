@@ -30,7 +30,7 @@ export class DeviceService {
             slNo: index + 1,
             name: item.name,
             createdDate: this.datePipe.transform(item.createdDate,'dd-MM-yyyy'),
-            status: item.status == 0? 'Not Approved' : 'Approved',
+            status: item.status == 0? 'Pending' : 'Approved',
             lastModifiedBy: item.updatedBy? item.updatedBy : 'Visitor',
             lastModifiedOn: item.updatedDate ? this.datePipe.transform(item.updatedDate,'dd-MM-yyyy') : "-"
         }));
