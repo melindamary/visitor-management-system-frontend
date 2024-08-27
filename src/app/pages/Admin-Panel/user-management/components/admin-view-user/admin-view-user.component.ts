@@ -13,12 +13,13 @@ import { InputIconModule } from 'primeng/inputicon';
 import { IconFieldModule } from 'primeng/iconfield';
 import { UserService } from '../../../../../core/services/user-management-service/User.service';
 import { SharedService } from '../../../../../core/services/shared-service/shared-data.service.service';
+import { AdminViewIndividualUserComponent } from '../admin-view-individual-user/admin-view-individual-user.component';
 
 @Component({
   selector: 'app-admin-view-user',
   standalone: true,
   imports: [TableComponent,ButtonModule,ConfirmDialogModule,IconFieldModule,ToolbarModule ,
-    TooltipModule,ToastModule,InputIconModule],
+    TooltipModule,ToastModule,InputIconModule, AdminViewIndividualUserComponent],
   providers: [ConfirmationService, MessageService],
   templateUrl: './admin-view-user.component.html',
   styleUrl: './admin-view-user.component.scss'
