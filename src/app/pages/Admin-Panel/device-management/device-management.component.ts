@@ -84,10 +84,10 @@ export class DeviceManagementComponent {
     }, 3000);
   }
 
-  confirmDelete(id: number): void {
+  confirmDelete(id: number,message: string, status: number): void {
     this.confirmationService.confirm({
       key: 'deviceConfirm',
-      message: 'Are you sure you want to delete?',
+      message: message,
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       acceptLabel: 'Yes',
@@ -97,7 +97,7 @@ export class DeviceManagementComponent {
       acceptButtonStyleClass: 'custom-accept-button',
       rejectButtonStyleClass: 'custom-reject-button',
       accept: () => {
-        this.deviceService.deleteDevice(id).subscribe({
+        this.deviceService.updateDeviceStatus(id,status).subscribe({
           next: (response: any) => {
             if (response.isSuccess) {
               this.messageService.add({

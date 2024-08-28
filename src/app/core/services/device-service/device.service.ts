@@ -50,11 +50,15 @@ export class DeviceService {
     return this.http.put(url, body);
   }
 
-  deleteDevice(id: number): Observable<any>{
+  updateDeviceStatus(id: number, status: number): Observable<any>{
     console.log("Deleted successfully",id)
-    var response = this.http.delete(`${this.baseUrl}/Device/Device/${id}`);
+    var username = this.getUser();
+    const url = `${this.baseUrl}/Device/DeviceStatus`;
+    const body = { Id: id, Status: status, Username: username };
+    var response = this.http.put(url, body);
     return response;
   }
+
   getUser(){
     if (isPlatformBrowser(this.platformId)) {
       var authData = localStorage.getItem('authUser');
