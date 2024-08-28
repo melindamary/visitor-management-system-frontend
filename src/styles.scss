@@ -133,3 +133,19 @@ body {
   color: #295bac;
 }
 
+
+ .p-dialog-header-icon {
+  background-color: transparent !important; /* Remove background color */
+  border-radius: 50%; /* Remove the oval shape */
+  box-shadow: none !important; /* Remove any box shadow */
+  transition: none !important; /* Remove any transition effects */
+}
+
+ .p-dialog-header-icon:hover {
+  background-color: transparent !important; /* Keep the background color transparent on hover */
+  box-shadow: none !important; /* Ensure no shadow is applied on hover */
+  color: inherit !important; /* Keep the text color unchanged */
+  transform: none !important; /* Prevent any transformation on hover */
+}
+
+

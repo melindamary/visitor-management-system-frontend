@@ -76,7 +76,7 @@ export class VisitorLogComponent implements OnInit {
     { field: 'visitorPassCode', header: 'Pass Code', width: '14%'},
     { field: 'name', header: 'Visitor Name',  },
     { field: 'purposeName', header: 'Purpose of Visit',},
-    { field: 'checkInTime', header: 'Check-In Time', type: 'date', },
+    { field: 'checkInTime', header: 'Check-In', width:'14%' },
     { field: 'phone', header: 'Phone Number',  },
     { field: 'actions', header: 'Actions', width: '14%'}
   ];
@@ -84,8 +84,8 @@ export class VisitorLogComponent implements OnInit {
   columnsCheckedOut = [
     { field: 'name', header: 'Visitor Name' },
     { field: 'purposeName', header: 'Purpose of Visit' },
-    { field: 'checkInTime', header: 'Check-In Time', type: 'date' },
-    { field: 'checkOutTime', header: 'Check-Out Time', type: 'date' },
+    { field: 'checkInTime', header: 'Check-In', width:'14%' },
+    { field: 'checkOutTime', header: 'Check-Out', width:'16%'},
     { field: 'phone', header: 'Phone Number' },
     { field: 'actions', header: 'Actions' }
   ];
