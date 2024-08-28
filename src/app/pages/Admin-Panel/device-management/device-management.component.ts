@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { DeviceService } from '../../../core/services/device-service/device.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { TagModule } from 'primeng/tag';
+import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
   selector: 'app-device-management',
@@ -22,7 +23,8 @@ import { TagModule } from 'primeng/tag';
     NgIf,
     NgClass,
     FormsModule,
-    TagModule
+    TagModule,
+    TooltipModule
   ],
   templateUrl: './device-management.component.html',
   styleUrl: './device-management.component.scss',
