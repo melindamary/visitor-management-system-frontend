@@ -8,17 +8,17 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   columns,
   customHeaders,
-} from '../../../../../../public/report-table-columns';
+} from '../../../../../public/report-table-columns';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TooltipModule } from 'primeng/tooltip';
-import { ReportService } from '../../../../core/services/report-service/report.service';
+import { ReportService } from '../../../core/services/report-service/report.service';
 import { RouterOutlet } from '@angular/router';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
-import { LocationService } from '../../../../core/services/location-management/location.service';
-import { ViewDetailsModalComponent } from "../view-details-modal/view-details-modal.component";
+import { LocationService } from '../../../core/services/location-management/location.service';
+import { ViewDetailsModalComponent } from "../components/view-details-modal/view-details-modal.component";
 import { Subscription } from 'rxjs';
-import { SignalRService } from '../../../../core/services/visitor-service/visitor-service.service';
+import { SignalRService } from '../../../core/services/visitor-service/visitor-service.service';
 
 interface Locations {
   name: string;
