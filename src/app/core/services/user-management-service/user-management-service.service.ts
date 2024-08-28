@@ -38,7 +38,7 @@ export class UserManagementServiceService {
       map(response => response.$values.map(user => ({
         userId: user.userId,
         fullName: user.fullName,
-        status : user.status = 1? 'Active' : 'Inactive',
+        status : user.isActive ? 'Active' : 'Inactive',
         location: user.location,
         roleName: user.roleName,
         username: user.username

@@ -1,7 +1,7 @@
 export interface UserOverview{
     userId:number,
     fullName:string,
-    status:string,
+    isActive:boolean,
     location:string,
     roleName:string,
     username:string
