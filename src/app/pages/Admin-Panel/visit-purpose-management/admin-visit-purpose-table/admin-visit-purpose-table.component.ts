@@ -91,7 +91,7 @@ export class AdminVisitPurposeTableComponent {
     }, 3000);
   }
 
-  confirmDelete(id: number, message: string): void {
+  confirmDelete(id: number, message: string, status: number): void {
     this.confirmationService.confirm({
       key: 'visitPurposeConfirm',
       message: message,
@@ -104,14 +104,14 @@ export class AdminVisitPurposeTableComponent {
       acceptButtonStyleClass: 'custom-accept-button',
       rejectButtonStyleClass: 'custom-reject-button',
       accept: () => {
-        this.visitPurposeService.deletePurpose(id).subscribe({
+        this.visitPurposeService.updatePurposeStatus(id,status).subscribe({
           next: (response: any) => {
             if (response.isSuccess) {
               this.messageService.add({
                 severity: 'success',
                 summary: 'Success',
                 detail: 'Deleted successfully!',
-                life: 3000,
+                life: 5000,
               });
               this.getVisitPurposes();
             } else {
@@ -119,7 +119,7 @@ export class AdminVisitPurposeTableComponent {
                 severity: 'error',
                 summary: 'Error',
                 detail: response.errorMessages.join(', '),
-                life: 3000,
+                life: 5000,
               });
             }
           },

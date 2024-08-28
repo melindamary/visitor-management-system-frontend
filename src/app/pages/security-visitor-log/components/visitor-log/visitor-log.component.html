@@ -1,9 +1,9 @@
 <div class="flex justify-content-end mb-2" *ngIf="role !== 'security'">
   <p-dropdown 
-      [options]="locations" 
+      [options]="locations"
+      ngDefaultControl
       [(ngModel)]="selectedLocation" 
-      placeholder="Select a Location" 
-      [editable]="true" 
+      placeholder="Select a Location"
       optionLabel="name" 
       (onChange)="loadVisitorLogToday()"
       />
@@ -12,25 +12,25 @@
   <app-visitor-log-tiles 
     title="Upcoming Visitors" 
     [content]="upcomingVisitors.length" 
-    backgroundColor="#c097e3" 
+    backgroundColor="#F89D93" 
     (tileClick)="selectTab('upcoming')"
   ></app-visitor-log-tiles>
   <app-visitor-log-tiles 
     title="Active Visitors" 
     [content]="activeVisitorsCount" 
-    backgroundColor="#e7b3fe" 
+    backgroundColor="#E36D61" 
     (tileClick)="selectTab('active')"
   ></app-visitor-log-tiles>
   <app-visitor-log-tiles 
     title="Checked Out Visitors" 
     [content]="checkedOutVisitorsCount" 
-    backgroundColor="#6f16c0" 
+    backgroundColor="#9792E8" 
     (tileClick)="selectTab('checkedOut')"
   ></app-visitor-log-tiles>
   <app-visitor-log-tiles 
     title="Total Visitors" 
     [content]="totalVisitorsCount" 
-    backgroundColor="#896CC7"
+    backgroundColor="#756DE8"
     (tileClick)="selectTab('total')"
   ></app-visitor-log-tiles>
 </div>

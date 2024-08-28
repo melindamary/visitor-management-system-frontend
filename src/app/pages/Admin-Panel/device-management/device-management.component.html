@@ -57,7 +57,7 @@
         icon="pi pi-trash"
         outlined="true"
         [style]="{color: 'red'}"
-        (click)="confirmDelete(rowData.id)"
+        (click)="confirmDelete(rowData.id,'Are you sure you want to delete?', 3)"
         pTooltip="Delete" 
         tooltipPosition="bottom"
         tooltipStyleClass="custom-tooltip"
@@ -71,7 +71,7 @@
         icon="pi pi-times"
         outlined="true"
         [style]="{color: 'red'}"
-        (click)="confirmDelete(rowData.id)"
+        (click)="confirmDelete(rowData.id,'Are you sure you want to delete?', 2)"
         pTooltip="Reject" 
         tooltipPosition="bottom"
         tooltipStyleClass="custom-tooltip"
@@ -84,7 +84,7 @@
   </ng-template>
 </app-table>
 
-<p-dialog header="Approve Visit Purpose" [visible]="isEditModalVisible" [modal]="true" [closable]="false">
+<p-dialog header="Approve Device" [visible]="isEditModalVisible" [modal]="true" [closable]="false">
     <div *ngIf="selectedDevice">
       <div class="p-field">
         <!-- <label for="name">Purpose Name</label> -->

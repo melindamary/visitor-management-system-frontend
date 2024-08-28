@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { DeviceService } from '../../../core/services/device-service/device.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { TagModule } from 'primeng/tag';
+import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
   selector: 'app-device-management',
@@ -22,7 +23,8 @@ import { TagModule } from 'primeng/tag';
     NgIf,
     NgClass,
     FormsModule,
-    TagModule
+    TagModule,
+    TooltipModule
   ],
   templateUrl: './device-management.component.html',
   styleUrl: './device-management.component.scss',
@@ -49,7 +51,7 @@ export class DeviceManagementComponent {
   async getDevices(): Promise<void> {
     this.devices = await this.deviceService.getDevices();
     this.devices.forEach((item) => (item.isEditing = false));
-    console.log('Entered Visit Purposes: ', this.devices);
+    console.log('Entered Devices: ', this.devices);
     this.totalItems = this.devices.length;
   }
 
@@ -74,7 +76,7 @@ export class DeviceManagementComponent {
     this.messageService.add({
       severity: 'success',
       summary: 'Success',
-      detail: 'Visit Purpose Approved!',
+      detail: 'Device Approved!',
       life: 3000,
     });
     setTimeout(() => {
@@ -82,10 +84,10 @@ export class DeviceManagementComponent {
     }, 3000);
   }
 
-  confirmDelete(id: number): void {
+  confirmDelete(id: number,message: string, status: number): void {
     this.confirmationService.confirm({
       key: 'deviceConfirm',
-      message: 'Are you sure you want to delete?',
+      message: message,
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       acceptLabel: 'Yes',
@@ -95,7 +97,7 @@ export class DeviceManagementComponent {
       acceptButtonStyleClass: 'custom-accept-button',
       rejectButtonStyleClass: 'custom-reject-button',
       accept: () => {
-        this.deviceService.deleteDevice(id).subscribe({
+        this.deviceService.updateDeviceStatus(id,status).subscribe({
           next: (response: any) => {
             if (response.isSuccess) {
               this.messageService.add({

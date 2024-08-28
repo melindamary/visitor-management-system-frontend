@@ -50,9 +50,12 @@ export class VisitPurposeService {
     return this.http.put(url, body);
   }
 
-  deletePurpose(id: number): Observable<any>{
+  updatePurposeStatus(id: number, status: number): Observable<any>{
     console.log("Deleted successfully",id)
-    var response = this.http.delete(`${this.baseUrl}/PurposeOfVisit/Purpose/${id}`);
+    var username = this.getUser();
+    const url = `${this.baseUrl}/PurposeOfVisit/PurposeStatus`;
+    const body = { Id: id, Status: status, Username: username };
+    var response = this.http.put(url, body);
     return response;
   }
   getUser(){
