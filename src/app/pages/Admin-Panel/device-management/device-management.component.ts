@@ -49,7 +49,7 @@ export class DeviceManagementComponent {
   async getDevices(): Promise<void> {
     this.devices = await this.deviceService.getDevices();
     this.devices.forEach((item) => (item.isEditing = false));
-    console.log('Entered Visit Purposes: ', this.devices);
+    console.log('Entered Devices: ', this.devices);
     this.totalItems = this.devices.length;
   }
 
@@ -74,7 +74,7 @@ export class DeviceManagementComponent {
     this.messageService.add({
       severity: 'success',
       summary: 'Success',
-      detail: 'Visit Purpose Approved!',
+      detail: 'Device Approved!',
       life: 3000,
     });
     setTimeout(() => {

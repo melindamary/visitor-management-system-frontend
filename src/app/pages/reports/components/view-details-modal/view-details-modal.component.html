@@ -68,7 +68,11 @@
         <label>Device Details</label>
         <div>
           <p *ngFor="let device of visitorDetails.devices">
+            @if(device.serialNumber != null){
             {{ device.name }} - {{ device.serialNumber }}
+            }@else{
+              {{ device.name }}
+            }
           </p>
         </div>
       </div>
