@@ -18,16 +18,9 @@ export class VisitorLogService {
     @Inject(PLATFORM_ID) private platformId: Object) { }
 
   getVisitorLogToday(selectedLocation?: string): Observable<VisitorLogResponse> {
-    const rolename = this.sharedDataService.getRole();
-    const locationName = selectedLocation || 'Thejaswini';
-    // let locationName: string ;
-
-    // if (rolename === 'security') {
-    //   locationName = this.sharedDataService.getLocation();
-    // } else {
-    //   locationName = selectedLocation || 'Thejaswini';
-    //   console.log("hi",selectedLocation);
-    // }
+    const roleLocation = this.sharedDataService.getLocation();
+    const locationName = selectedLocation || roleLocation;
+    console.log("hi",locationName);
     const params = new HttpParams()
     .set('locationName', locationName);
     //.set('rolename', rolename);

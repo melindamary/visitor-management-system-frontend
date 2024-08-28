@@ -1,28 +1,44 @@
 .tile {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 80%;
-  height: 100%;
+  justify-content: space-between; /* Space between content and icon */
+  align-items: center; /* Center content vertically */
+  width: 95%; /* Increase tile width */
   padding: 10px;
+  padding-left: 15px; /* Adds space between the border-left and text */
+  margin-bottom: 10px; /* Adds space beneath each tile */
   box-sizing: border-box;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  color: white;
+  border-radius: 4px;
+  border-left: 5px solid; /* Creates the colored strip on the left */
+  background-color: white; /* Sets the background color to white */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  color: black; /* Sets text color to black */
+  transition: transform 0.2s, box-shadow 0.2s; /* Smooth transition for hover effect */
+}
 
-  &.active {
-    transform: scale(1.05);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
+.tile-content {
+  display: flex;
+  flex-direction: column;
+}
 
-  h3 {
-    font-size: 1.1rem;
-    margin: 0;
-  }
+.user-icon {
+  font-size: 1.5em; /* Adjust icon size */
+  color: black; /* Icon color */
+  margin-left: 6px; /* Adds space between text and icon */
+  margin-bottom: 55px;
+  //margin-right: 2px;
+}
 
-  p {
-    font-size: 2em;
-    padding-top: 10px;
-  }
+.tile.active {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+h3 {
+  font-size: 1rem;
+  margin: 0;
+}
+
+p {
+  font-size: 2em;
+  padding-top: 10px;
 }
