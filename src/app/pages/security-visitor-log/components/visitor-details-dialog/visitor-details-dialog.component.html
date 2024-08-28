@@ -9,11 +9,10 @@
 >
   <ng-template pTemplate="header">
     <div class="flex justify-content-between align-items-center">
-      <span class="font-bold fs-48">Visitor Details</span>
+      <span class="font-bold">Visitor Details</span>
     </div>
   </ng-template>
   <ng-template pTemplate="content">
-    <div *ngIf="visitor">
       <div class="flex align-items-center mb-3">
         <img *ngIf="visitor.photoBase64" [src]="'data:image/jpeg;base64,' + visitor.photoBase64" alt="Visitor Image" class="rounded-photo mr-3" />
         <div>
@@ -50,10 +49,13 @@
         <div *ngIf="visitor.devices && visitor.devices.$values.length > 0" class="w-full">
           <div class="content-label">Device Details:</div>
           <div *ngFor="let device of visitor.devices.$values" class="mb-2">
-            {{ device.name }} - {{ device.serialNumber || 'SL No. N/A' }}
+            @if(device.serialNumber != null){
+              {{ device.name }} - {{ device.serialNumber }}
+              }@else{
+                {{ device.name }}
+              }
           </div>
         </div>
       </div>
-    </div>
   </ng-template>
 </p-dialog>
