@@ -39,7 +39,7 @@ export const routes: Routes = [
       {
         path: 'reports',
         component: ReportTableComponent,
-        canActivate: [AuthAdminGuard],
+        canActivate: [AuthSecurityGuard],
       },
       {
         path: 'admin-panel',
