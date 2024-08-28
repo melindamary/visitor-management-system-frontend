@@ -1,9 +1,9 @@
 <div class="flex justify-content-end mb-2" *ngIf="role !== 'security'">
   <p-dropdown 
-      [options]="locations" 
+      [options]="locations"
+      ngDefaultControl
       [(ngModel)]="selectedLocation" 
-      placeholder="Select a Location" 
-      [editable]="true" 
+      placeholder="Select a Location"
       optionLabel="name" 
       (onChange)="loadVisitorLogToday()"
       />
