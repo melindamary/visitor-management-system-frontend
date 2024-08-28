@@ -1,0 +1,55 @@
+<!-- <p-button (click)="addRole()" label="Add New Role" class="buttonmain"></p-button> -->
+
+<div class="flex justify-content-end mb-2">
+  <!-- <p-button 
+      label="New" 
+      icon="pi pi-plus" 
+      (click)="addRole()"></p-button> -->
+  <button class="cta-btn" (click)="addRole()">
+    <i class="pi pi-plus cta-btn-icon"></i>
+    New
+  </button>
+</div>
+
+<app-table
+  [dataSource]="roleDataSource"
+  [columnsToDisplay]="columnsToDisplay"
+  [rows]="5"
+  [totalItems]="totalItems"
+  [statusTemplate]="statusTemplate"
+  [actionsTemplate]="actionsTemplate"
+  [summaryTemplate]="summaryTemplate"
+>
+  <ng-template #actionsTemplate let-rowData>
+    <p-button
+      icon="pi pi-eye"
+      [rounded]="true"
+      [text]="true"
+      (click)="viewOrEdit(rowData)"
+      pTooltip="View/Edit Role"
+    ></p-button>
+    <!-- <p-button icon="pi pi-trash" [rounded]="true" [text]="true" (click)="deleteRole(rowData, $event)"
+      severity="danger" [outlined]="false"></p-button> -->
+  </ng-template>
+  <ng-template #statusTemplate let-rowData>
+      <p-tag
+        [ngClass]="{
+          'green-status': rowData.status === 'Active',
+          'gray-status': rowData.status === 'Inactive'
+        }"
+      >
+      {{ rowData.status }}</p-tag
+      >
+    
+  </ng-template>
+
+  <!-- <ng-template #summaryTemplate>
+    <div class="flex align-items-center justify-content-between">
+      In total there are {{ totalItems }} roles.
+    </div>
+  </ng-template> -->
+</app-table>
+
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>
+<!-- <app-editrole *ngIf="showEditRole" [roleId]="selectedRoleId" (editComplete)="onEditRoleComplete()"></app-editrole> -->

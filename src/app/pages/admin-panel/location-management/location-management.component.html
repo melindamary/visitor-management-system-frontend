@@ -1,0 +1,137 @@
+<div class="card">
+  <p-toast></p-toast>
+
+  <div class="flex justify-content-end mb-2">
+    <!-- <p-button
+      label="New"
+      icon="pi pi-plus"
+      (click)="openNewLocationDialog()"
+    ></p-button> -->
+    <button class="cta-btn" (click)="openNewLocationDialog()">
+      <i class="pi pi-plus cta-btn-icon"></i>
+      New
+    </button>
+  </div>
+
+  <app-table
+    [dataSource]="locationDataSource"
+    [columnsToDisplay]="locationColumns"
+    [rows]="5"
+    [totalItems]="totalItems"
+    [actionsTemplate]="actionsTemplate"
+    [summaryTemplate]="summaryTemplate"
+  >
+    <ng-template #actionsTemplate let-rowData>
+      <p-button
+        icon="pi pi-pencil"
+        [rounded]="true"
+        [text]="true"
+        (click)="editLocation(rowData)"
+      ></p-button>
+    </ng-template>
+    <ng-template #summaryTemplate>
+      <div class="flex align-items-center justify-content-between">
+        In total there are {{ totalItems }} locations.
+      </div>
+    </ng-template>
+  </app-table>
+</div>
+
+<p-dialog
+  header="Location Details"
+  [(visible)]="locationDialog"
+  [modal]="true"
+  [style]="{ width: '50rem' }"
+  styleClass="p-fluid"
+>
+  <ng-template pTemplate="header">
+    <div
+      class="inline-flex align-items-center justify-content-center gap-2 bg-violet"
+    >
+      <span class="font-bold white-space-nowrap">Enter Location Details</span>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="content">
+    <form [formGroup]="locationForm" (ngSubmit)="saveLocation()">
+      <div class="field">
+        <label for="name">Name</label>
+        <input
+          type="text"
+          pInputText
+          id="name"
+          formControlName="name"
+          required
+          autofocus
+        />
+        <small
+          class="p-error"
+          *ngIf="
+            locationForm.get('name')?.invalid &&
+            (locationForm.get('name')?.dirty || submitted)
+          "
+        >
+          Name is required.
+        </small>
+      </div>
+      <div class="field">
+        <label for="address">Address</label>
+        <textarea
+          id="address"
+          pInputTextarea
+          formControlName="address"
+          required
+          rows="3"
+          cols="20"
+        >
+        </textarea>
+        <small
+          class="p-error"
+          *ngIf="
+            locationForm.get('address')?.invalid &&
+            (locationForm.get('address')?.dirty || submitted)
+          "
+        >
+          Address is required.
+        </small>
+      </div>
+      <div class="field">
+        <label for="phone">Phone</label>
+        <input
+          type="text"
+          pInputText
+          id="phone"
+          formControlName="phone"
+          required
+          autofocus
+        />
+        <small
+          class="p-error"
+          *ngIf="
+            locationForm.get('phone')?.invalid &&
+            (locationForm.get('phone')?.dirty || submitted)
+          "
+        >
+          <div *ngIf="locationForm.get('phone')?.errors?.['required']">
+            Phone is required.
+          </div>
+          <div *ngIf="locationForm.get('phone')?.errors?.['pattern']">
+            Phone must be a valid number.
+          </div>
+        </small>
+      </div>
+    </form>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <p-button
+      label="Cancel"
+      styleClass="custom-reject-button"
+      (click)="hideDialog()"
+    ></p-button>
+    <p-button
+      label="Save"
+      type="submit"
+      [disabled]="locationForm.invalid"
+      (click)="saveLocation()"
+    ></p-button>
+  </ng-template>
+</p-dialog>

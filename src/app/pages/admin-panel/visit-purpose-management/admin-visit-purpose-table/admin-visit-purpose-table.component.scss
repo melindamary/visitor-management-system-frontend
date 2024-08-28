@@ -1,0 +1,24 @@
+::ng-deep .p-button.p-button-outlined {
+  // box-shadow: none;
+  padding-block: 10px;
+}
+
+::ng-deep .p-datatable thead th:last-child {
+  padding-left: 30px; /* Adjust this value as needed */
+}
+.dialog-input {
+  outline: none;
+  width: 100%;
+  height: 30px;
+  font-size: 16px;
+}
+td {
+  padding-left: 1rem !important;
+}
+::ng-deep .p-datatable tr td {
+  padding-block: none;
+  padding-left: 1rem !important;
+}
+
+
+

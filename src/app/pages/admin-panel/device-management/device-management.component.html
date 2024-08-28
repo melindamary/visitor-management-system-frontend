@@ -1,0 +1,99 @@
+<app-table
+    [dataSource]="devices"
+    [columnsToDisplay]="columns"
+    [statusTemplate]="statusTemplate"
+    [actionsTemplate]="actionsTemplate"
+    [summaryTemplate]="summaryTemplate"
+    [rows] = 10
+    [rowsPerPageOptions]="[5, 10, 20]"
+    [totalItems]="totalItems"
+    [tableStyle]="{'min-width': '60rem', 'min-height': '56vh'}"
+    [scrollHeight]="'56vh'"
+>
+<ng-template #statusTemplate let-rowData>
+  <p-tag
+    [ngClass]="{
+      'green-status': rowData.status === 'Approved',
+      'yellow-status': rowData.status === 'Pending'
+    }"
+  >
+    {{ rowData.status }}</p-tag
+  >
+</ng-template>
+<ng-template #actionsTemplate let-rowData let-rowIndex="rowIndex">
+    <!-- Edit button -->
+     <p-toast/>
+    <p-button 
+        *ngIf="rowData.status === 'Approved'"
+        class="view-btn btn-outline-none"
+        pRipple
+        icon="pi pi-pencil"
+        outlined="true"
+        (click)="openEditModal(rowData)"
+        pTooltip="Edit" 
+        tooltipPosition="bottom"
+        tooltipStyleClass="custom-tooltip"
+    ></p-button>
+
+    <!-- Approve button -->
+    <p-button
+        *ngIf="rowData.status === 'Pending'"
+        class="view-btn btn-outline-none"
+        pRipple
+        icon="pi pi-check-circle"
+        outlined="true"
+        [style]="{color: 'green'}"
+        (click)="openEditModal(rowData)"
+        pTooltip="Approve" 
+        tooltipPosition="bottom"
+        tooltipStyleClass="custom-tooltip"
+    ></p-button>
+
+    <!-- Delete button -->
+    <p-button
+        *ngIf="rowData.status === 'Approved'"
+        class="view-btn btn-outline-none"
+        pRipple
+        icon="pi pi-trash"
+        outlined="true"
+        [style]="{color: 'red'}"
+        (click)="confirmDelete(rowData.id,'Are you sure you want to delete?', 3)"
+        pTooltip="Delete" 
+        tooltipPosition="bottom"
+        tooltipStyleClass="custom-tooltip"
+    ></p-button>
+
+    <!-- Remove button -->
+    <p-button
+        *ngIf="rowData.status === 'Pending'"
+        class="view-btn btn-outline-none"
+        pRipple
+        icon="pi pi-times"
+        outlined="true"
+        [style]="{color: 'red'}"
+        (click)="confirmDelete(rowData.id,'Are you sure you want to delete?', 2)"
+        pTooltip="Reject" 
+        tooltipPosition="bottom"
+        tooltipStyleClass="custom-tooltip"
+    ></p-button>
+  </ng-template>
+  <ng-template #summaryTemplate>
+    <div class="flex align-items-center justify-content-between">
+      In total there are {{ totalItems }} visit purposes.
+    </div>
+  </ng-template>
+</app-table>
+
+<p-dialog header="Approve Device" [visible]="isEditModalVisible" [modal]="true" [closable]="false">
+    <div *ngIf="selectedDevice">
+      <div class="p-field">
+        <!-- <label for="name">Purpose Name</label> -->
+        <input class="dialog-input" id="name" type="text" pInputText [value]="selectedDevice.name" [(ngModel)]="selectedDevice.name" />
+      </div>
+    </div>
+    <p-footer>
+      <p-button label="Save" icon="pi pi-check" (click)="saveEdit()" class="p-button-success positive-button"></p-button>
+      <p-button label="Cancel" icon="pi pi-times" (click)="closeDialog()" class="p-button-secondary negative-button"></p-button>
+    </p-footer>
+  </p-dialog>
+  <p-confirmDialog key="deviceConfirm"></p-confirmDialog>
