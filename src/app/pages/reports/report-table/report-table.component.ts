@@ -16,7 +16,7 @@ import { RouterOutlet } from '@angular/router';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { LocationService } from '../../../core/services/location-management/location.service';
-import { ViewDetailsModalComponent } from "../components/view-details-modal/view-details-modal.component";
+import { ViewDetailsModalComponent } from "../view-details-modal/view-details-modal.component";
 import { Subscription } from 'rxjs';
 import { SignalRService } from '../../../core/services/visitor-service/visitor-service.service';
 
