@@ -207,6 +207,7 @@ export class AdminEditUserComponent {
     const inputElement = event.target as HTMLInputElement;
     const username = inputElement?.value || '';
     console.log('Username entered:', username);
+    if (username !== this.user.username) {
     this.apiService.checkUsernameExists(username).subscribe(
       (exists) => {
         console.log('response of username exists', exists);
@@ -218,6 +219,10 @@ export class AdminEditUserComponent {
           this.userEditForm.get('username')?.setErrors(null);
         }
       })
+    } else {
+      // Username hasn't changed, proceed with the update
+      this.userEditForm.patchValue({ username: username });
+  }
   }
   
   OnSubmit(): void {

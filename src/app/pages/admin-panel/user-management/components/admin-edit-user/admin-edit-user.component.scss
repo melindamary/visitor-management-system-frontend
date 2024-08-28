@@ -7,7 +7,26 @@
 hr {
   border: 1px solid #896CC7;
 }
-
+.mat-mdc-radio-button.mat-accent{
+  --mdc-radio-selected-icon-color: #896CC7 !important;
+  --mdc-radio-selected-focus-icon-color: #896CC7 !important;
+     --mdc-radio-selected-hover-icon-color: #896CC7 !important; 
+     --mdc-radio-selected-icon-color: #896CC7 !important; 
+     --mdc-radio-selected-pressed-icon-color: #896CC7 !important;    
+    --mat-radio-checked-ripple-color: #896CC7 !important;
+}
+// html .mat-accent {
+//   --mdc-circular-progress-active-indicator-color: #0c0c0c !important;
+// }
+// .mat-mdc-radio-button .mdc-radio__native-control:enabled:checked+.mdc-radio__background .mdc-radio__outer-circle, .mat-mdc-radio-button .mdc-radio__native-control:enabled:checked+.mdc-radio__background .mdc-radio__inner-circle {
+//   border-color: #0c0c0c;
+// }
+// ::ng-deep .mat-mdc-radio-button .mdc-radio__native-control:enabled:checked+.mdc-radio__background .mdc-radio__outer-circle, .mat-mdc-radio-button .mdc-radio__native-control:enabled:checked+.mdc-radio__background .mdc-radio__inner-circle {
+//   border-color: #0c0c0c ;
+// }
+// .mat-mdc-radio-button .mdc-radio:hover .mdc-radio__native-control:enabled:checked+.mdc-radio__background .mdc-radio__outer-circle, .mat-mdc-radio-button .mdc-radio:hover .mdc-radio__native-control:enabled:checked+.mdc-radio__background .mdc-radio__inner-circle {
+//   border-color: #0c0c0c;
+// }
 .roleContainer {
   margin-top: 20px;
   margin-bottom: 50px;
