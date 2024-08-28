@@ -159,7 +159,7 @@
       <label class="inputLabel">Status</label>
     </div>
     <div class="col input-col">
-      <mat-radio-group  formControlName="activeState" (change)="onRadioChange($event.value)">
+      <mat-radio-group  formControlName="activeState" (change)="onRadioChange($event.value)" class="colorChange">
         <mat-radio-button [value]="1">Active</mat-radio-button>
         <mat-radio-button [value]="0">Inactive</mat-radio-button>
       </mat-radio-group>
