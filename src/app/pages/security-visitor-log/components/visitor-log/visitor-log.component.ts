@@ -65,10 +65,10 @@ export class VisitorLogComponent implements OnInit {
   role: string = '';
 
   columnsUpcoming = [
-    { field: 'id', header: 'Visitor Id', width: '14%' },
-    { field: 'name', header: 'Visitor Name', width: '22%'  },
-    { field: 'purposeName', header: 'Purpose of Visit', width: '23%' },
-    { field: 'phone', header: 'Phone Number', width: '23%' },
+    { field: 'name', header: 'Visitor Name', width: '20%'  },
+    { field: 'purposeName', header: 'Purpose of Visit', width: '22%' },
+    { field: 'phone', header: 'Phone Number', width: '22%' },
+    { field: 'hostName', header: 'Host Name', width: '20%' },
     { field: 'actions', header: 'Actions' }
   ];
 
@@ -198,7 +198,8 @@ export class VisitorLogComponent implements OnInit {
           }));
           this.visitorsToday = response.result.visitorsToday.$values.map(visitor => ({
             ...visitor,
-            checkInTime: this.datePipe.transform(visitor.checkInTime, 'shortTime')
+            checkInTime: this.datePipe.transform(visitor.checkInTime, 'shortTime'),
+            checkOutTime: this.datePipe.transform(visitor.checkOutTime, 'shortTime')
           }));
           this.checkedOutVisitors = response.result.checkedOutVisitors.$values.map(visitor => ({
             ...visitor,
