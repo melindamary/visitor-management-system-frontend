@@ -16,13 +16,10 @@ import { RouterOutlet } from '@angular/router';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { LocationService } from '../../../core/services/location-management/location.service';
-import { ViewDetailsModalComponent } from "../view-details-modal/view-details-modal.component";
+import { ViewDetailsModalComponent } from '../view-details-modal/view-details-modal.component';
 import { Subscription } from 'rxjs';
 import { SignalRService } from '../../../core/services/visitor-service/visitor-service.service';
-
-interface Locations {
-  name: string;
-}
+import { Locations } from '../../../core/models/location-details.interface'; 
 @Component({
   selector: 'app-report-table',
   standalone: true,
@@ -39,8 +36,7 @@ interface Locations {
     RouterOutlet,
     ReactiveFormsModule,
     ViewDetailsModalComponent,
-  
-],
+  ],
   templateUrl: './report-table.component.html',
   styleUrl: './report-table.component.scss',
 })
@@ -50,7 +46,7 @@ export class ReportTableComponent {
   constructor(
     public reportService: ReportService,
     private locationService: LocationService,
-    private signalRService:SignalRService
+    private signalRService: SignalRService
   ) {}
 
   selectedMonth: Date | undefined;
@@ -73,14 +69,17 @@ export class ReportTableComponent {
 
   locations: { name: string }[] = [];
 
-  fetchLocations():any{
-      this.locationService.getAllLocationDetails().subscribe((response) => {
-        console.log(response);
-        this.locations = response.map(item => ({
-          name: item.name
-        }));
-        console.log(this.locations);
-      })
+  fetchLocations(): any {
+    this.locationService.getAllLocationDetails().subscribe((response) => {
+      console.log(response);
+      this.locations = [
+        { name: 'All Locations' },
+        ...response.map((item) => ({
+          name: item.name,
+        })),
+      ];
+      console.log(this.locations);
+    });
   }
 
   async fetchReport(): Promise<void> {
@@ -107,12 +106,12 @@ export class ReportTableComponent {
   }
 
   filterByDate() {
-    if (this.selectedStartDate) {
+    if (this.selectedDate) {
       this.filteredReports = this.reports.filter((report) => {
         const reportDate = this.parseDate(report.visitDate);
         return (
           reportDate.toLocaleDateString() ===
-          new Date(this.selectedStartDate).toLocaleDateString()
+          new Date(this.selectedDate).toLocaleDateString()
         );
       });
     } else {
@@ -120,46 +119,48 @@ export class ReportTableComponent {
     }
   }
 
-  filterByDateRange() {
-    console.log('Start date:', this.selectedStartDate);
-    console.log('End date:', this.selectedEndDate);
+  filterEntireReports() {
+    // Apply location filter first
+    let filtered = this.reports;
+
+    if (
+      this.selectedLocation &&
+      this.selectedLocation.name !== 'All Locations'
+    ) {
+      filtered = filtered.filter(
+        (report) => report.officeLocation === this.selectedLocation?.name
+      );
+    }
+
+    // Apply date range filter next
     if (this.selectedStartDate && this.selectedEndDate) {
-      this.filteredReports = this.reports.filter((report) => {
+      const startDate = new Date(this.selectedStartDate);
+      const endDate = new Date(this.selectedEndDate);
+
+      // Check if start date is after end date
+      if (startDate > endDate) {
+        console.error('Start date cannot be after end date');
+        this.filteredReports = []; // Clear the filtered reports
+        return; // Exit the function without filtering
+      }
+
+      filtered = filtered.filter((report) => {
+        const reportDate = this.parseDate(report.visitDate);
+        return reportDate >= startDate && reportDate <= endDate;
+      });
+    } else if (this.selectedStartDate) {
+      // Apply single date filter if only start date is selected
+      const startDate = new Date(this.selectedStartDate);
+      filtered = filtered.filter((report) => {
         const reportDate = this.parseDate(report.visitDate);
         return (
-          reportDate >= new Date(this.selectedStartDate) &&
-          reportDate <= new Date(this.selectedEndDate)
+          reportDate.toLocaleDateString() === startDate.toLocaleDateString()
         );
       });
-    } else {
-      this.filteredReports = [...this.reports];
     }
-  }
 
-  // filterByDateRange() {
-  //   if (this.rangeDates && this.rangeDates.length === 2) {
-  //     const startDate = new Date(this.rangeDates[0]);
-  //     const endDate = new Date(this.rangeDates[1]);
-
-  //     this.filteredReports = this.reports.filter((report) => {
-  //       const reportDate = this.parseDate(report.visitDate); // Replace 'date' with your date field
-  //       return reportDate >= startDate && reportDate <= endDate;
-  //     });
-  //   } else {
-  //     this.filteredReports = this.reports; // Show all reports if no date range is selected
-  //   }
-  // }
-
-  filterByLocation() {
-    console.log('Location: ', this.selectedLocation?.name);
-
-    if (this.selectedLocation) {
-      this.filteredReports = this.reports.filter((report) => {
-        return report.officeLocation === this.selectedLocation?.name;
-      });
-    } else {
-      this.filteredReports = this.reports; // Show all reports if no location is selected
-    }
+    this.filteredReports = filtered;
+    console.log('Filtered reports:', this.filteredReports);
   }
 
   parseDate(dateStr: string): Date {
@@ -180,9 +181,11 @@ export class ReportTableComponent {
           if (key === 'devices' && report['deviceCount'] > 0) {
             // Format the devices' name and serial number as a single string
             const devices = report[key]
-              .map((device: any) => `${device.name} (SN: ${device.serialNumber})`)
+              .map(
+                (device: any) => `${device.name} (SN: ${device.serialNumber})`
+              )
               .join(', ');
-  
+
             const customHeader = this.customHeaders[key] || key.toUpperCase();
             newReport[customHeader] = devices;
             console.log('Devices to be in excel: ', newReport[customHeader]);
@@ -210,6 +213,7 @@ export class ReportTableComponent {
       const endYear = date2.getUTCFullYear();
       let formattedEndDate = endDate + '-' + endMonth + '-' + endYear;
 
+      //only start date is selected
       if (
         this.selectedStartDate != undefined &&
         this.selectedEndDate == undefined
@@ -221,6 +225,7 @@ export class ReportTableComponent {
         );
         console.log(startDate + '/' + startMonth + '/' + startYear);
       } else if (
+        //start and end dates are selected
         this.selectedStartDate != undefined &&
         this.selectedEndDate != undefined
       ) {
@@ -234,6 +239,7 @@ export class ReportTableComponent {
             ').xlsx'
         );
       } else if (
+        //start and end dates are not selected
         this.selectedStartDate == (undefined || null) &&
         this.selectedEndDate == (undefined || null)
       ) {
@@ -252,6 +258,7 @@ export class ReportTableComponent {
     this.selectedYear = undefined;
     this.selectedStartDate = '';
     this.selectedEndDate = '';
+    this.selectedLocation = null;
   }
   viewDetails(rowData: any) {
     console.log('Row data: ', rowData);
@@ -281,12 +288,12 @@ export class ReportTableComponent {
 
   ngOnInit(): void {
     this.fetchReport();
-    
+
     this.fetchLocations();
 
     this.subscriptions.push(
-      this.signalRService.receiveReport$.subscribe(response => {
-        this.fetchReport(); 
+      this.signalRService.receiveReport$.subscribe((response) => {
+        this.fetchReport();
       })
     );
   }

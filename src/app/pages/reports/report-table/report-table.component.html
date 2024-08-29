@@ -4,17 +4,17 @@
       <p-dropdown 
       ngDefaultControl
       [options]="locations" 
-      placeholder="Select Location"
+      placeholder="All Locations"
       optionLabel="name"
       [(ngModel)]="selectedLocation" 
-      (onChange)="filterByLocation()"
+      (onChange)="filterEntireReports()"
     ></p-dropdown>
 
       <!-- Start date -->
       <p-calendar 
       ngDefaultControl
       [(ngModel)]="selectedStartDate" 
-      (onClose)="filterByDate()"
+      (onClose)="filterEntireReports()"
       dateFormat="dd-mm-yy" 
       [readonlyInput]="true" 
       [showIcon]="true"
@@ -25,7 +25,7 @@
       <p-calendar 
       ngDefaultControl
       [(ngModel)]="selectedEndDate" 
-      (onClose)="filterByDateRange()"
+      (onClose)="filterEntireReports()"
       dateFormat="dd-mm-yy" 
       [readonlyInput]="true" 
       [showIcon]="true"
