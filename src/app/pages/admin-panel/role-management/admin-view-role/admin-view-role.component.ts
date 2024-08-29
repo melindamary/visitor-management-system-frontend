@@ -8,8 +8,6 @@ import { ToastModule } from 'primeng/toast';
 import { NavigationExtras, Router } from '@angular/router';
 import { RoleService } from '../../../../core/services/role-service/role.service';
 import { RoleOverview } from '../../../../core/models/RoleOverview.interface';
-import { EditroleComponent } from '../../../../ui/editrole/editrole.component';
-import { AddroleComponent } from '../../../../ui/addrole/addrole.component';
 import { NgClass, NgIf } from '@angular/common';
 import { TagModule } from 'primeng/tag';
 
@@ -24,7 +22,6 @@ import { TagModule } from 'primeng/tag';
     ConfirmDialogModule,
     TooltipModule,
     ToastModule,
-    EditroleComponent,
     TagModule
   ],
   providers: [ConfirmationService, MessageService],

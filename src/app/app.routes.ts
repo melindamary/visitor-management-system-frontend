@@ -11,8 +11,8 @@ import { AuthSecurityGuard } from './core/guard/auth-security.guard';
 import { AuthAceGuard } from './core/guard/auth-ace.guard';
 import { AccessGuard } from './core/guard/access.guard';
 import { Routes } from '@angular/router';
-import { AddroleComponent } from './ui/addrole/addrole.component';
-import { EditroleComponent } from './ui/editrole/editrole.component';
+import { AddroleComponent } from './pages/admin-panel/role-management/admin-add-role/addrole.component';
+import { AdminEditRoleComponent } from './pages/admin-panel/role-management/admin-edit-role/admin-edit-role.component';
 import { VisitorConsentModalComponent } from './ui/visitor-consent-modal/visitor-consent-modal.component';
 import { AdminPanelComponent } from './pages/admin-panel/admin-panel.component';
 import { AdminViewRoleComponent } from './pages/Admin-Panel/role-management/admin-view-role/admin-view-role.component';
@@ -62,7 +62,7 @@ export const routes: Routes = [
       {
           path:'admin-panel/add-role',component:AddroleComponent
       },
-      { path: 'admin-panel/edit-role', component: EditroleComponent },
+      { path: 'admin-panel/edit-role', component: AdminEditRoleComponent },
       {
         path:'visit-purpose',component: AdminVisitPurposeTableComponent
       },
