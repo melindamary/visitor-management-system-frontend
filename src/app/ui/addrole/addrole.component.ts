@@ -114,7 +114,7 @@ export class AddroleComponent {
         const navigationExtras: NavigationExtras = {
           state: { message: `Role "${roleName}" has been added successfully` }
         };
-        this.router.navigate(['/vms/sharedtable'], navigationExtras);        
+        this.router.navigate(['/vms/admin-panel'], navigationExtras);        
         // Handle the response as needed
       },
       error => {
@@ -135,7 +135,7 @@ export class AddroleComponent {
   }
 
   onCancel() {
-    this.router.navigate(['/vms/sharedtable'])
+    this.router.navigate(['/vms/admin-panel'])
   }
 }
 

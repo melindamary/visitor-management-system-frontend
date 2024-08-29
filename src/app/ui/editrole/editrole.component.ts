@@ -194,7 +194,7 @@ export class EditroleComponent {
   //   // this.status=value;
   // }
   onCancel() {
-    this.router.navigate(['/vms/sharedtable'])
+    this.router.navigate(['/vms/admin-panel'])
   }
 
  
