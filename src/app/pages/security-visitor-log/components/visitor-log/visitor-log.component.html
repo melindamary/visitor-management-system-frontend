@@ -10,29 +10,42 @@
 </div>
 <div class="tile-container" style="display: flex; width: 100%;">
   <app-visitor-log-tiles 
+    header="Today's"
     title="Upcoming Visitors" 
     [content]="upcomingVisitors.length" 
     backgroundColor="#F89D93" 
     (tileClick)="selectTab('upcoming')"
   ></app-visitor-log-tiles>
   <app-visitor-log-tiles 
+    header="Today's" 
     title="Active Visitors" 
     [content]="activeVisitorsCount" 
     backgroundColor="#E36D61" 
     (tileClick)="selectTab('active')"
   ></app-visitor-log-tiles>
   <app-visitor-log-tiles 
+    header="Today's"
     title="Checked Out Visitors" 
     [content]="checkedOutVisitorsCount" 
     backgroundColor="#9792E8" 
     (tileClick)="selectTab('checkedOut')"
   ></app-visitor-log-tiles>
   <app-visitor-log-tiles 
+    header="Today's"
     title="Total Visitors" 
     [content]="totalVisitorsCount" 
     backgroundColor="#756DE8"
     (tileClick)="selectTab('total')"
   ></app-visitor-log-tiles>
+  @if(role !== 'security'){
+  <app-visitor-log-tiles 
+    header="Future"
+    title="Scheduled Visitors" 
+    [content]="scheduledVisitors.length" 
+    backgroundColor="#756DE8"
+    (tileClick)="selectTab('scheduled')"
+  ></app-visitor-log-tiles>
+  }
 </div>
 
 <p-tabView [(activeIndex)]="activeIndex" (onChange)="onTabChange($event)">
@@ -40,6 +53,9 @@
   <p-tabPanel header="Active Visitors"></p-tabPanel>
   <p-tabPanel header="Checked Out Visitors"></p-tabPanel>
   <p-tabPanel header="Total Visitors"></p-tabPanel>
+  @if(role !== 'security'){
+  <p-tabPanel header="Scheduled Visitors"></p-tabPanel>
+  }
 </p-tabView>
 
     <div class="card">

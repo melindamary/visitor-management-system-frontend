@@ -16,7 +16,7 @@ export interface VisitorLog {
   checkInTime: string | null;
   checkOutTime: string | null;
   visitorPassCode: string;
-  visitDate: Date | null;
+  visitDate: string | null;
   deviceName: string | null; // Consider removing if not used
   serialNumber: string | null; // Consider removing if not used
   hostName: string | null;
@@ -37,6 +37,7 @@ export interface VisitorLogResult {
   activeVisitors: VisitorList;
   visitorsToday: VisitorList;
   checkedOutVisitors: VisitorList;
+  scheduledVisitors: VisitorList;
 }
 
 export interface VisitorLogResponse {

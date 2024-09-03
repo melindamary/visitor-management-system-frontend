@@ -51,6 +51,7 @@ export class VisitorLogComponent implements OnInit {
   activeVisitors: VisitorLog[] = [];
   checkedOutVisitors: VisitorLog[] = [];
   visitorsToday: VisitorLog[] = [];
+  scheduledVisitors: VisitorLog[] = [];
   
   currentTab: string = 'upcoming';
   visibleCheckInDialog = false;
@@ -98,6 +99,15 @@ export class VisitorLogComponent implements OnInit {
     { field: 'actions', header: 'Actions' }
   ];
 
+  columnsScheduled = [
+    { field: 'name', header: 'Visitor Name', width: '18%'  },
+    { field: 'purposeName', header: 'Purpose of Visit', width: '22%' },
+    { field: 'phone', header: 'Phone Number', width: '22%' },
+    {field: 'visitDate', header:'Visit Date', width:'20%'},
+    { field: 'hostName', header: 'Host Name', width: '20%' },
+    { field: 'actions', header: 'Actions' }
+  ];
+
   get visitorDataSource() {
     switch (this.currentTab) {
       case 'active':
@@ -106,6 +116,8 @@ export class VisitorLogComponent implements OnInit {
         return this.checkedOutVisitors;
       case 'total':
         return this.visitorsToday;
+      case 'scheduled':
+        return this.scheduledVisitors;
       default:
         return this.upcomingVisitors;
     }
@@ -119,6 +131,8 @@ export class VisitorLogComponent implements OnInit {
         return this.columnsCheckedOut;
       case 'total':
         return this.totalvisitorColumns;
+      case 'scheduled':
+        return this.columnsScheduled;
       default:
         return this.columnsUpcoming;
     }
@@ -132,6 +146,8 @@ export class VisitorLogComponent implements OnInit {
         return this.checkedOutVisitorsCount;
       case 'total':
         return this.totalVisitorsCount;
+      case 'scheduled':
+        return this.scheduledVisitors.length;
       default:
         return this.upcomingVisitors.length;
     }
@@ -206,8 +222,10 @@ export class VisitorLogComponent implements OnInit {
             checkInTime: this.datePipe.transform(visitor.checkInTime, 'shortTime'),
             checkOutTime: this.datePipe.transform(visitor.checkOutTime, 'shortTime')
           }));
-          // console.log(response);
-          // console.log(response.result);
+          this.scheduledVisitors = response.result.scheduledVisitors.$values.map(visitor => ({
+            ...visitor,
+            visitDate: this.datePipe.transform(visitor.visitDate,'dd-MM-yyyy'),
+          }));
         } 
       else {
           console.error('Error:', response.errorMessages);
@@ -232,6 +250,9 @@ export class VisitorLogComponent implements OnInit {
       case 3:
         this.currentTab = 'total';
         break;
+      case 4:
+        this.currentTab = 'scheduled';
+        break;
       default:
         this.currentTab = 'upcoming';
         break;
@@ -251,6 +272,10 @@ export class VisitorLogComponent implements OnInit {
       case 'total':
         this.activeIndex = 3;
         this.currentTab = 'total';
+        break;
+      case 'scheduled':
+        this.activeIndex = 4;
+        this.currentTab = 'scheduled';
         break;
       default:
         this.activeIndex = 0;

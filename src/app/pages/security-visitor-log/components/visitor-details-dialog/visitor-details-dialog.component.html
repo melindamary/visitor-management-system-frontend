@@ -26,6 +26,10 @@
           <div class="content-label">Visitor Pass Code:</div>
           <div>{{ visitor.visitorPassCode }}</div>
         </div>
+        <div *ngIf="currentTab === 'scheduled'" class="w-1-3 mb-3">
+          <div class="content-label">Date of Visit:</div>
+          <div>{{ visitor.visitDate }}</div>
+        </div>
         <div class="w-1-3 mb-3">
           <div class="content-label">Purpose of Visit:</div>
           <div>{{ visitor.purposeName }}</div>
