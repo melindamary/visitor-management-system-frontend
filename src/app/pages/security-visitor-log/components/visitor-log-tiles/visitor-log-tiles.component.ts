@@ -9,6 +9,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrl: './visitor-log-tiles.component.scss'
 })
 export class VisitorLogTilesComponent {
+  @Input() header: string = '';
   @Input() title: string = '';
   @Input() content: string | number = '';
   @Input() backgroundColor: string = '#000000';
