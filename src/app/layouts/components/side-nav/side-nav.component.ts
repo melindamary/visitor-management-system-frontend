@@ -1,4 +1,4 @@
-import { Component, ViewChild} from '@angular/core';
+import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
@@ -12,32 +12,52 @@ import { RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/services/auth-service/auth.service';
 
 @Component({
-    selector: 'app-side-nav',
-    standalone: true,
-    templateUrl: './side-nav.component.html',
-    styleUrl: './side-nav.component.scss',
-    imports: [MatIconModule, MatButtonModule, MatToolbarModule,
-       MatSidenavModule, MatListModule, NgIf, NgFor, NgClass,
-       RouterOutlet, RouterLink, RouterLinkActive
-      ]
+  selector: 'app-side-nav',
+  standalone: true,
+  templateUrl: './side-nav.component.html',
+  styleUrl: './side-nav.component.scss',
+  imports: [
+    MatIconModule,
+    MatButtonModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatListModule,
+    NgIf,
+    NgFor,
+    NgClass,
+    RouterOutlet,
+    RouterLink,
+    RouterLinkActive,
+  ],
 })
 export class SideNavComponent {
   @ViewChild(MatSidenav) sidenav!: MatSidenav;
   isMobile = true;
   isCollapsed = true;
-  menuItems:any;
+  menuItems: any;
 
-  constructor(private observer: BreakpointObserver, private authService: AuthService) {}
+  constructor(
+    private observer: BreakpointObserver,
+    private authService: AuthService,
+    private cdr: ChangeDetectorRef // Inject ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
     this.menuItems = this.authService.getMenuItems();
+  }
+
+  ngAfterViewInit() {
     this.observer.observe(['(max-width: 800px)']).subscribe((screenSize) => {
       this.isMobile = screenSize.matches;
       this.isCollapsed = this.isMobile; // Make sure it starts as collapsed on mobile
       this.sidenav.mode = 'side';
       this.sidenav.open();
+
+      this.cdr.detectChanges();
     });
+
   }
+  
 
   toggleMenu() {
     this.isCollapsed = !this.isCollapsed;
