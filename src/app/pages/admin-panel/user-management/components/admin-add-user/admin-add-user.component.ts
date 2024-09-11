@@ -17,7 +17,7 @@ import {
   Validators,
 } from '@angular/forms';
 // import { alphabetValidator, numberValidator, passwordMatchValidator } from '../../../../../pages/admin-panel/user-management/components/admin-add-user/custom-validators';
-import { alphabetValidator, numberValidator, passwordMatchValidator } from './custom-validators';
+import { alphabetValidator, futureDateValidator, numberValidator, passwordMatchValidator } from './custom-validators';
 import { AddNewUser } from '../../../../../core/models/addNewUser.interface';
 import { Observable } from 'rxjs';
 import { SharedService } from '../../../../../core/services/shared-service/shared-data.service.service';
@@ -74,7 +74,7 @@ export class AdminAddUserComponent {
       {
         RoleId: new FormControl('', [Validators.required]),
         LocationId: new FormControl('', [Validators.required]),
-        Date: new FormControl(transformedDate, [Validators.required]),
+        Date: new FormControl(transformedDate, [Validators.required, futureDateValidator()]),
         FirstName: new FormControl('', [
           Validators.required,
           alphabetValidator(),
@@ -147,7 +147,11 @@ export class AdminAddUserComponent {
   toggleHidePassword(): void {
     this.hidePassword = !this.hidePassword;
   }
-
+  dateFilter = (d: Date | null): boolean => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Set time to the start of the day
+    return d ? d.getTime() >= today.getTime() : false;
+  };
   toggleHideConfirmPassword(): void {
     this.hideConfirmPassword = !this.hideConfirmPassword;
   }

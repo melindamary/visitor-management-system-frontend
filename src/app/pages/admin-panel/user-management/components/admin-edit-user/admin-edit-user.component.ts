@@ -16,7 +16,7 @@ import { UserManagementServiceService } from '../../../../../core/services/user-
 import { UserByIdOverview} from '../../../../../core/models/user-overview-display.interface';
 import { FormBuilder, FormGroup, FormsModule, NgModel, ReactiveFormsModule, Validators } from '@angular/forms';
 // import { alphabetValidator, numberValidator, passwordMatchValidator } from '../../../../../pages/Admin-Panel/user-management/components/admin-add-user/custom-validators';
-import { alphabetValidator, numberValidator, passwordMatchValidator } from '../admin-add-user/custom-validators';
+import { alphabetValidator, futureDateValidator, numberValidator, passwordMatchValidator } from '../admin-add-user/custom-validators';
 import { SharedService } from '../../../../../core/services/shared-service/shared-data.service.service';
 import { AdminAddUserComponent } from '../admin-add-user/admin-add-user.component';
 import { Router } from '@angular/router';
@@ -74,7 +74,7 @@ export class AdminEditUserComponent {
     this.userEditForm = this.fb.group({
       RoleId: ['', Validators.required],
       LocationId: ['', Validators.required],
-      validFrom: [null, Validators.required],
+      validFrom: [null, [Validators.required,futureDateValidator()]],
       activeState: ['', Validators.required],
       firstName: ['', [Validators.required, alphabetValidator()]],
       lastName: ['', [Validators.required, alphabetValidator()]],
@@ -111,7 +111,11 @@ export class AdminEditUserComponent {
       console.error('No user ID found');
     }
   }
-
+  dateFilter = (d: Date | null): boolean => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Set time to the start of the day
+    return d ? d.getTime() >= today.getTime() : false;
+  };
   loadUserData(userId: number): void {
     console.log(userId);
     this.apiService.getUserById(userId).subscribe({

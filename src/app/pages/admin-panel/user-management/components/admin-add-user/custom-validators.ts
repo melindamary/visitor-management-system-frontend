@@ -36,3 +36,12 @@ export function numberValidator(): ValidatorFn {
     return valid ? null : { numberOnly: true };
   };
 }
+
+export function futureDateValidator() {
+  return (control: AbstractControl): { [key: string]: any } | null => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Set time to the start of the day
+    const selectedDate = new Date(control.value);
+    return selectedDate.getTime() >= today.getTime() ? null : { invalidDate: true };
+  };
+}

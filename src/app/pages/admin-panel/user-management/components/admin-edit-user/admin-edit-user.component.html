@@ -143,7 +143,7 @@
       <ng-container *ngIf="showInputValidDate">
       <mat-form-field appearance="outline" class="smallInput">
         <mat-label>Choose a date</mat-label>
-        <input  matInput [matDatepicker]="picker"  formControlName="validFrom">
+        <input  matInput [matDatepicker]="picker"  formControlName="validFrom" [matDatepickerFilter]="dateFilter">
         <mat-hint>MM/DD/YYYY</mat-hint>
         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
