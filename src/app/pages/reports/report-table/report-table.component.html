@@ -141,7 +141,12 @@
    <!-- Column data -->
   <ng-template pTemplate="body" let-rowData let-columns="columns">
     <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="columns">
-      <td><p-tableCheckbox [value]="rowData" /></td>
+      <td>
+        <p-tableCheckbox 
+          [value]="rowData" 
+          (click)="onCheckboxClick($event, rowData)"
+        />
+      </td>
       <td *ngFor="let col of columns" [style.width]="col.width">
         {{ rowData[col.field] }}
       </td>

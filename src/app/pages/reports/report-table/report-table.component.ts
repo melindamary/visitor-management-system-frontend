@@ -69,6 +69,11 @@ export class ReportTableComponent {
 
   locations: { name: string }[] = [];
 
+   // Handle checkbox clicks
+   onCheckboxClick(event: Event, rowData: any): void {
+    event.stopPropagation(); // Prevent row click from triggering
+  }
+  
   fetchLocations(): any {
     this.locationService.getAllLocationDetails().subscribe((response) => {
       console.log(response);
@@ -240,8 +245,8 @@ export class ReportTableComponent {
         );
       } else if (
         //start and end dates are not selected
-        this.selectedStartDate == (undefined || null) &&
-        this.selectedEndDate == (undefined || null)
+        this.selectedStartDate == (null) &&
+        this.selectedEndDate == (null)
       ) {
         console.log('Logging workbook: ', workbook);
         XLSX.writeFile(workbook, 'Experion Visitor Report.xlsx');
