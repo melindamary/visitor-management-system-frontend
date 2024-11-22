@@ -3,12 +3,13 @@ import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { ApiResponse, LocationDetails, LocationIdAndName, UpdateLocation } from '../../models/location-details.interface';
 import { isPlatformBrowser } from '@angular/common';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LocationService {
-  private apiUrl = 'https://localhost:7121/Location';
+  private apiUrl = `${environment.apiUrl}Location`;
 
   constructor(private http: HttpClient,
               @Inject(PLATFORM_ID) private platformId: Object) { }
