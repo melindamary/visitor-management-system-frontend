@@ -6,7 +6,7 @@ import { NavigationPanelComponent } from './layouts/navigation-panel/navigation-
 import { Component } from '@angular/core';
 import { SecurityVisitorLogComponent } from './pages/security-visitor-log/security-visitor-log.component';
 import { ReportTableComponent } from './pages/reports/report-table/report-table.component';
-import { VisitorFormComponent } from './pages/visitor-form/visitor-form.component';
+// import { VisitorFormComponent } from './pages/visitor-form/visitor-form.component';
 import { AuthSecurityGuard } from './core/guard/auth-security.guard';
 import { AuthAceGuard } from './core/guard/auth-ace.guard';
 import { AccessGuard } from './core/guard/access.guard';
@@ -73,10 +73,10 @@ export const routes: Routes = [
     path: 'welcomepage',
     component: WelcomepageComponent,
   },
-  {
-    path: 'visitorform',
-    component: VisitorFormComponent,
-  },
+  // {
+  //   path: 'visitorform',
+  //   component: VisitorFormComponent,
+  // },
   {
     path: 'login',
     component: LoginComponent,
