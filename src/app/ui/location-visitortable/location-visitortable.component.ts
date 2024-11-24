@@ -13,6 +13,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { FormsModule, NgModel } from '@angular/forms';
 import { SignalRService } from '../../core/services/visitor-service/visitor-service.service';
 import { Subscription } from 'rxjs';
+import { environment } from '../../../environments/environment';
 // Define the new interface for the API response
 interface ApiResponse {
   $id: string;
@@ -89,7 +90,7 @@ export class LocationVisitortableComponent {
     
 
     this.http
-      .get<ApiResponse>('https://localhost:7121/Statistics/GetLocationStatistics/location', { params })
+      .get<ApiResponse>(`${environment.apiUrl}/Statistics/GetLocationStatistics/location`, { params })
       .subscribe((res) => {
          console.log(res);
          // Map the API response to the LbTable format

@@ -13,6 +13,7 @@ import { SignalRService } from '../../core/services/visitor-service/visitor-serv
 import { MultiSelectModule } from 'primeng/multiselect';
 import { FormsModule, NgModel } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { environment } from '../../../environments/environment';
 interface TimePeriod {
   label: string;
   value: number;
@@ -124,7 +125,7 @@ export class LocationSecurityTableComponent {
 
     this.http
       .get<ApiResponse>(
-        'https://localhost:7121/Statistics/GetSecurityStatistics/security',
+        `${environment.apiUrl}/Statistics/GetSecurityStatistics/security`,
         { params }
       )
       .subscribe((res) => {
