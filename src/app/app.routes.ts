@@ -15,7 +15,8 @@ import { AddroleComponent } from './pages/admin-panel/role-management/admin-add-
 import { AdminEditRoleComponent } from './pages/admin-panel/role-management/admin-edit-role/admin-edit-role.component';
 import { VisitorConsentModalComponent } from './ui/visitor-consent-modal/visitor-consent-modal.component';
 import { AdminPanelComponent } from './pages/admin-panel/admin-panel.component';
-import { AdminViewRoleComponent } from './pages/Admin-Panel/role-management/admin-view-role/admin-view-role.component';
+// import { AdminViewRoleComponent } from './pages/admin-padmin-view-role.component';
+import { AdminViewRoleComponent } from './pages/admin-panel/role-management/admin-view-role/admin-view-role.component';
 import { AdminEditUserComponent } from './pages/admin-panel/user-management/components/admin-edit-user/admin-edit-user.component';
 import { AdminViewIndividualUserComponent } from './pages/admin-panel/user-management/components/admin-view-individual-user/admin-view-individual-user.component';
 import { AdminVisitPurposeTableComponent } from './pages/Admin-Panel/visit-purpose-management/admin-visit-purpose-table/admin-visit-purpose-table.component';
