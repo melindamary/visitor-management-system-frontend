@@ -1,0 +1,30 @@
+.top-bar{
+    width: 100%;
+    height: 20px;
+    background-color: #896cc7;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 22px;
+    padding-top:26px;
+    // padding-top: rem;
+
+}
+.top-bar img{
+    width: 100%;
+    height: 35px;
+    
+}
+
+.user-container mat-icon {
+    cursor: pointer;
+    font-size: 26px;
+}
+.user-greeting {
+    margin-right: 15px; /* Adjust spacing as needed */
+    font-size: 16px; /* Adjust font size as needed */
+    margin-top: 2px;
+    // line-height: 32px; /* Adjust line height to align with the avatar */
+}
+

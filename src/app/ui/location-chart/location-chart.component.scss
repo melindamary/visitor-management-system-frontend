@@ -1,0 +1,56 @@
+// .chart-container {
+//     position: relative;
+//     padding-top: 40px; // Adjust this value based on your scale height
+//   }
+  
+//   .scale-nav {
+//     position: absolute;
+//     top: 0;
+//     left: 0;
+//     right: 0;
+//     height: 40px; // Adjust this value to match padding-top
+//     background-color: #f0f0f0;
+//     display: flex;
+//     justify-content: space-between;
+//     align-items: center;
+//     padding: 0 10px;
+//     border-bottom: 1px solid #ddd;
+//   }
+  
+//   .scale-item {
+//     font-size: 12px;
+//     color: #333;
+//   }
+  
+//   .chart-wrapper {
+//     width: 100%;
+//     height: calc(100% - 40px); // Subtract the height of the scale nav
+//   }
+
+// .chart-container {
+//     position: relative;
+//     height: 400px;  // Adjust as needed
+//     padding-top: 40px;  // Space for the scale
+//   }
+//   .scale-container {
+//     position:sticky;
+//     top: 10%;
+//     left: 0;
+//     right: 0;
+//     height: 30px;
+//     background-color: #f0f0f0;
+//     display: flex;
+//     justify-content: space-between;
+//     align-items: center;
+//     padding: 0 10px;
+//     border-bottom: 1px solid #ddd;
+//   }
+//   .scale {
+//     display: flex;
+//     justify-content: space-between;
+//     width: 100%;
+//   }
+h3{
+    font-weight: 500;
+    padding-left: 0.8rem;
+}

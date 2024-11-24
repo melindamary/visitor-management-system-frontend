@@ -1,0 +1,101 @@
+
+<div class="body">
+    <h3> User Details</h3>
+    <hr>
+    <form [formGroup]="userEditForm" (ngSubmit)="OnSubmit()"> 
+
+        <div class="row">
+            <div class="col label-col">
+              <label class="inputLabel">First Name</label>
+            </div>
+            <div class="col input-col">
+              {{user.firstName}}
+             
+            </div>
+          </div>
+          <div class="row">
+            <div class="col label-col">
+              <label class="inputLabel">Last Name</label>
+            </div>
+            <div class="col input-col">
+              {{user.lastName}}
+             
+            </div>
+          </div>
+          <div class="row">
+            <div class="col label-col">
+              <label class="inputLabel">Phone Number</label>
+            </div>
+            <div class="col input-col">
+              {{user.phone}}
+             
+             
+            </div>
+          </div>
+          <div class="row">
+            <div class="col label-col">
+              <label class="inputLabel">Address</label>
+            </div>
+            <div class="col input-col">
+              {{user.address}}        
+             
+            </div>
+          </div>
+          <div class="row">
+            <div class="col label-col">
+              <label class="inputLabel">User Name</label>
+            </div>
+            <div class="col input-col">
+              {{user.username}}
+              
+            </div>
+          </div>    
+
+    <div class="row">
+      <div class="col label-col">
+        <label class="inputLabel">Role  </label>
+      </div>
+      <div class="col input-col">     
+        {{user.roleName}}         
+      </div>
+     
+    </div>
+    <div class="row">
+      <div class="col label-col">
+        <label class="inputLabel">Location</label>
+      </div>
+      <div class="col input-col">
+        {{user.officeLocation}}
+         
+       
+      </div> 
+       
+      
+    </div>
+    <div class="row">
+      <div class="col label-col"> 
+        <label class="inputLabel">Valid From</label>
+      </div>
+      <div class="col input-col">
+        {{formattedValidFrom}}
+          
+       
+      </div>
+    </div>
+    <div class="row">
+      <div class="col label-col">
+        <label class="inputLabel">Status</label>
+      </div>
+      <div class="col input-col">
+        {{status}}
+    
+      </div>
+    </div>
+    
+   
+  
+    
+    
+  </form>
+  </div>
+  

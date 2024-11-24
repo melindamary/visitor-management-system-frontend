@@ -1,0 +1,112 @@
+.header {
+    height: 50px;
+    background: #896CC7;
+    color: white;
+  }
+  
+  hr {
+    border: 1px solid #896CC7;
+    margin-bottom: 20px;
+  }
+  
+  .roleContainer {
+    margin-top: 20px;
+    margin-bottom: 50px;
+  }
+
+  .contactContainer {
+    margin-top: 30px;
+    margin-bottom: 50px;
+  }
+  
+  .accountContainer {
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+  
+  .body {
+    padding: 20px;
+  }
+  
+  h3 {
+    font-weight: bold;
+    font-size: 25px;
+  }
+  
+  h4 {
+    font-size: large;
+    font-weight: bolder;
+    color: #896CC7;
+    margin: 0px 0px 7px;
+  }
+  
+  .row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .col {
+    display: flex;
+    align-items: center;
+  }
+  
+  .label-col {
+    flex: 0 0 150px; /* Adjust the width as needed */
+  }
+  
+  .input-col {
+    flex: 1;
+  }
+  
+  .buttonRow {
+    display: flex;
+    
+    justify-content: end;
+    
+   
+    
+    margin-top: 20px;
+  }
+  
+  .column {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .input-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .inputLabel {
+    width: 150px; /* Adjust the width as needed */
+    margin-right: 10px; /* Space between label and form field */
+  }
+  
+  .inputField {
+    flex: 1;
+  }
+  
+  .mat-form-field {
+    width: 100%;
+  }
+  
+  .smallInput {
+    width: 85%;
+    height: 40px;
+  }
+  .label-col  ::before {
+    content: ":";
+    position: absolute;
+    color: black;
+     /* Position the colon to the right edge of the label column */
+    margin-left: 150px; /* Optional: Adjust the space between the label text and the colon */
+  }
+  .warning{
+    color:red;
+    margin-left: 30px;
+  }
+  

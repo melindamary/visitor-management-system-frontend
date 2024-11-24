@@ -1,0 +1,48 @@
+.tile {
+  display: flex;
+  flex-direction: column;
+  width: 95%; /* Consistent tile width */
+  padding: 10px;
+  padding-left: 10px; /* Adds space between the border-left and text */
+  box-sizing: border-box;
+  border-radius: 4px;
+  border-left: 5px solid; /* Creates the colored strip on the left */
+  background-color: white; /* Sets the background color to white */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  color: black; /* Sets text color to black */
+  transition: transform 0.2s, box-shadow 0.2s; /* Smooth transition for hover effect */
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between; /* Space between header and icon */
+  align-items: center; /* Centers text and icon vertically */
+  width: 100%; /* Ensures the header spans the entire width */
+}
+
+.tile-content {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1px; /* Adds space between the header and content */
+}
+
+.user-icon {
+  font-size: 1.2em; /* Adjust icon size as needed */
+  color: black; /* Consistent icon color */
+  margin-right: 5px;
+}
+
+.tile.active {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Consistent active state */
+}
+
+h3 {
+  font-size: 1rem;
+  margin: 0;
+}
+
+p {
+  font-size: 2em;
+  padding-top: 10px;
+}

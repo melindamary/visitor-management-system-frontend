@@ -1,0 +1,53 @@
+<p-table 
+[value]="dataSource" 
+styleClass="p-datatable-striped" 
+[rows]="rows"
+ [paginator]="true" 
+ [scrollable]="true"
+  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+ [showCurrentPageReport]="true" 
+ [rowHover]="true" 
+ [tableStyle]="tableStyle"
+ sortMode="multiple"
+ [scrollHeight]="scrollHeight"
+ [rowsPerPageOptions]="rowsPerPageOptions"
+ >
+  <ng-container *ngFor="let col of columnsToDisplay">
+    <ng-template pTemplate="header">
+      <tr>
+        <th *ngFor="let col of columnsToDisplay" [pSortableColumn]="col.field"> 
+          {{ col.header }}
+          <p-sortIcon *ngIf="col.field !== 'actions'" [field]="col.field"></p-sortIcon>
+        </th>
+      </tr>
+      <tr>
+        <th class="search-header" *ngFor="let col of columnsToDisplay">
+            <p-columnFilter
+                *ngIf="col.field !== 'actions'"
+                type="text" [field]="col.field" [matchMode]="'contains'"
+                [placeholder]="'  Search...'"
+            ></p-columnFilter>
+        </th>
+      </tr>
+
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData>
+      <tr>
+        <td *ngFor="let col of columnsToDisplay" [style.width]="col.width">
+          <span *ngIf="col.field !== ('actions' && 'status')">{{ rowData[col.field] }}</span>
+          <ng-container *ngIf="col.field === 'status'">
+            <ng-container *ngTemplateOutlet="statusTemplate; context: { $implicit: rowData }"></ng-container>
+          </ng-container>
+          <ng-container *ngIf="col.field === 'actions'">
+            <ng-container *ngTemplateOutlet="actionsTemplate; context: { $implicit: rowData }"></ng-container>
+          </ng-container>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+      <ng-container *ngIf="summaryTemplate">
+        <ng-container *ngTemplateOutlet="summaryTemplate"></ng-container>
+      </ng-container>
+    </ng-template>
+  </ng-container>
+</p-table>

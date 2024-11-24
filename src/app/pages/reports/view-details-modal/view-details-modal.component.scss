@@ -1,0 +1,124 @@
+::ng-deep .visitor-dialog .p-dialog .p-dialog-header{
+    padding: 0.5rem;
+    border-bottom: 1px solid #ccc;
+}
+.modal-header{
+    display: flex;
+    padding: 0.5rem 0.8rem;
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+.modal-header img{
+    border-radius: 50%;
+    height: 150px;
+    width: 150px;
+}
+.modal-header-data{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-grow: 1;
+}
+.flex-row{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.modal-header p{
+    width: 12rem;
+    flex-wrap: wrap;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    padding: 0px 1rem;
+    font-size: 1.5rem;
+}
+.column-3 .modal-body-data{
+    margin: 0.5rem 0rem;
+    width: 33.3%;
+}
+
+.close-button {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.8rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #4D4D4D
+  }
+  
+  .close-button:hover {
+    color: black;
+  }
+
+/* For screen sizes below 768px */
+@media (max-width: 780px) {
+    .modal-header {
+        flex-direction: column; /* Stack the header elements vertically */
+        align-items: center; /* Center items */
+        justify-content: center;
+    }
+
+    .modal-header img {
+        height: 120px;
+        width: 120px;
+    }
+
+    .modal-header p {
+        padding: 0.5rem 0;
+        font-size: 1.2rem;
+        text-align: center; /* Center the text */
+        flex: row;
+        justify-content: center;
+    }
+
+    .column-3 .modal-body-data {
+        width: 100%; /* Take full width on smaller screens */
+        text-align: center; /* Center the content */
+    }
+
+    .column-3 {
+        flex-direction: column;
+        gap: 0.5rem; /* Reduce gap between items */
+    }
+}
+
+.modal-body{
+    margin-top: 1rem;
+}
+.modal-body-heading{
+    font-weight: bold;
+    
+}
+.modal-body-data label{
+    color: #4D4D4D;
+    font-size: 0.8rem;
+}
+.modal-body-data p,
+.flex-row p{
+    font-size: 1rem;
+}
+
+.column-3{
+    width: 100%;
+    display: flex;
+    gap: 1rem;
+}
+::ng-deep .visitor-dialog .p-dialog .p-button{
+    background-color: white;
+    color: #4D4D4D;
+}
+::ng-deep .visitor-dialog .p-dialog .p-button:hover{
+    background-color: none;
+    color: black;
+}
+
+::ng-deep .visitor-dialog .p-dialog .p-dialog-content::-webkit-scrollbar{
+    background-color: transparent;
+}

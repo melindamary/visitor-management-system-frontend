@@ -1,0 +1,41 @@
+::ng-deep .p-datatable tr:hover td {
+    background-color: #f1ebff; /* Change to desired hover background color */
+  }
+
+  th{
+    background-color: #eaeaea;
+    color: #896cc7;
+  }
+  td{
+    padding-top: 0  !important;
+    padding-bottom: 0 !important;
+  }
+  
+  ::ng-deep .p-datatable tr td {
+    padding-block: 0rem; 
+  }
+
+.search-header{
+  background-color: white;
+  padding-block: 0.5rem;
+}
+::ng-deep .p-fluid .p-inputtext{
+  width: 100%;
+  height: 16px;
+  border-radius: none;
+  padding-left: 1px;
+}
+::ng-deep .p-column-filter-row .p-column-filter-clear-button,
+::ng-deep .p-column-filter-menu-button{
+  display: none;
+}
+
+::ng-deep .p-paginator{
+  height: 3rem;
+  padding: 0px;
+}
+
+::ng-deep .p-paginator .p-paginator-pages .p-paginator-page{
+  height: 2rem;
+  min-width: 2rem;
+}

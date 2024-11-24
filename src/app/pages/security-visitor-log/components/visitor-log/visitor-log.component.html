@@ -1,0 +1,114 @@
+<div class="flex justify-content-end mb-2" *ngIf="role !== 'security'">
+  <p-dropdown 
+      [options]="locations"
+      ngDefaultControl
+      [(ngModel)]="selectedLocation" 
+      placeholder="Select a Location"
+      optionLabel="name" 
+      (onChange)="loadVisitorLogToday()"
+      />
+</div>
+<div class="tile-container" style="display: flex; width: 100%;">
+  <app-visitor-log-tiles 
+    header="Today's"
+    title="Upcoming Visitors" 
+    [content]="upcomingVisitors.length" 
+    backgroundColor="#F89D93" 
+    (tileClick)="selectTab('upcoming')"
+  ></app-visitor-log-tiles>
+  <app-visitor-log-tiles 
+    header="Today's" 
+    title="Active Visitors" 
+    [content]="activeVisitorsCount" 
+    backgroundColor="#E36D61" 
+    (tileClick)="selectTab('active')"
+  ></app-visitor-log-tiles>
+  <app-visitor-log-tiles 
+    header="Today's"
+    title="Checked Out Visitors" 
+    [content]="checkedOutVisitorsCount" 
+    backgroundColor="#9792E8" 
+    (tileClick)="selectTab('checkedOut')"
+  ></app-visitor-log-tiles>
+  <app-visitor-log-tiles 
+    header="Today's"
+    title="Total Visitors" 
+    [content]="totalVisitorsCount" 
+    backgroundColor="#756DE8"
+    (tileClick)="selectTab('total')"
+  ></app-visitor-log-tiles>
+  @if(role !== 'security'){
+  <app-visitor-log-tiles 
+    header="Future"
+    title="Scheduled Visitors" 
+    [content]="scheduledVisitors.length" 
+    backgroundColor="#756DE8"
+    (tileClick)="selectTab('scheduled')"
+  ></app-visitor-log-tiles>
+  }
+</div>
+
+<p-tabView [(activeIndex)]="activeIndex" (onChange)="onTabChange($event)">
+  <p-tabPanel header="Upcoming Visitors"></p-tabPanel>
+  <p-tabPanel header="Active Visitors"></p-tabPanel>
+  <p-tabPanel header="Checked Out Visitors"></p-tabPanel>
+  <p-tabPanel header="Total Visitors"></p-tabPanel>
+  @if(role !== 'security'){
+  <p-tabPanel header="Scheduled Visitors"></p-tabPanel>
+  }
+</p-tabView>
+
+    <div class="card">
+      <p-toast></p-toast>
+    <app-table [dataSource]="visitorDataSource" [columnsToDisplay]="visitorColumns" [rows]="5" [totalItems]="totalItems"
+             [actionsTemplate]="actionsTemplate" [summaryTemplate]="summaryTemplate" >
+    <ng-template #actionsTemplate let-rowData>
+      <p-button icon="pi pi-eye" [rounded]="true" [text]="true" (click)="viewVisitor(rowData)" pTooltip="View visitor details"></p-button>
+      <p-button *ngIf="currentTab === 'upcoming'" icon="pi pi-sign-in" [rounded]="true" [text]="true" severity="success" (click)="checkInVisitor(rowData)" pTooltip="Check-In Visitor"></p-button>
+      <p-button *ngIf="currentTab === 'active'" icon="pi pi-sign-out" [rounded]="true" [text]="true" severity="danger" (click)="checkOutVisitor(rowData)" pTooltip="Check-Out Visitor"></p-button>
+    </ng-template>
+    <ng-template #summaryTemplate>
+      <div class="flex align-items-center justify-content-between">
+        In total there are {{ totalItems }} visitors.
+      </div>
+    </ng-template>
+  </app-table>
+  </div>
+ 
+    <p-dialog header="Check-In Visitor" [(visible)]="visibleCheckInDialog" [modal]="true" [style]="{ width: '25rem' }">
+      <ng-template pTemplate="header">
+        <div class="inline-flex align-items-center justify-content-center gap-2 bg-violet">
+          <span class="font-bold white-space-nowrap">Enter Visitor Card Number</span>
+        </div>
+      </ng-template>
+      <div class="flex align-items-center gap-3 mb-2">
+        <label for="name" class="font-semibold w-6rem">Visitor Name</label>
+        <input pInputText [(ngModel)]="selectedVisitor.name" id="name" class="flex-auto" readonly [disabled]="true" />
+      </div>
+      <form [formGroup]="checkInForm" (ngSubmit)="saveCheckInTime()">
+        <div class="flex align-items-center gap-3 mb-2">
+          <label for="visitorPassCode" class="font-semibold w-6rem">Visitor Pass Code</label>
+          <input 
+              type="text" 
+              pInputText 
+              class="flex-auto"
+              id="visitorPassCode" 
+              formControlName="visitorPassCode" 
+              required 
+              placeholder="Enter pass code" />
+        </div>
+        <small class="p-error" *ngIf="checkInForm.get('visitorPassCode')?.invalid && (checkInForm.get('visitorPassCode')?.dirty || checkInForm.get('visitorPassCode')?.touched)">
+          <div *ngIf="checkInForm.get('visitorPassCode')?.errors?.['required']">Pass code is required.</div>
+          <div *ngIf="checkInForm.get('visitorPassCode')?.errors?.['pattern']">Pass code must be a number and cannot just be 0.</div>
+        </small>
+      </form>
+      <ng-template pTemplate="footer">
+        <p-button label="Cancel" styleClass="custom-reject-button" (click)="visibleCheckInDialog = false"></p-button>
+        <p-button label="Save"  (click)="saveCheckInTime()" [disabled]="checkInForm.invalid"></p-button>
+      </ng-template>  
+    </p-dialog>
+
+    <!-- <app-check-in-dialog [(visible)]="visibleCheckInDialog" [visitor]="selectedVisitor" (save)="saveCheckInTime($event)"></app-check-in-dialog> -->
+    <app-visitor-details-dialog [(visible)]="visibleDetailsDialog" [visitor]="selectedVisitor" [currentTab]="currentTab" (visibleChange)="handleDialogVisibilityChange($event)"></app-visitor-details-dialog>
+    <p-confirmDialog [style]="{ width: '450px' }" />
+    

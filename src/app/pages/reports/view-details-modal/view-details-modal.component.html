@@ -1,0 +1,81 @@
+<p-dialog
+  class="visitor-dialog"
+  [(visible)]="viewDetailsDialog"
+  header="Visitor Details"
+  [modal]="true"
+  styleClass="p-fluid"
+  [position]="'center'"
+  [showHeader]="true"
+  (onHide)="close()"
+  [closable]="false"
+  [style]="{ width: '45vw', height: '70vh' }"
+>
+  <ng-template pTemplate="header" class="header">
+    <div class="modal-header">
+      <img
+        [src]="'data:image/jpeg;base64,' + visitorDetails.photo"
+        height="200px"
+        width="200px"
+      />
+      <div class="modal-header-data">
+        <p>{{ visitorDetails.name }}</p>
+        <div class="flex-row">
+            <p><i class="pi pi-phone cta-btn-icon"></i> &nbsp; {{ visitorDetails.phoneNumber }}</p>
+        </div>
+      </div>
+      <button class="close-button" (click)="close()">
+        <i class="pi pi-times"></i>
+      </button>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="content" class="content">
+    <div class="modal-body">
+      <!-- <p class="modal-body-heading">Visit Details</p> -->
+      <div class="column-3">
+        <div class="modal-body-data">
+          <label>Date of Visit</label>
+          <p>{{ visitorDetails.visitDate }}</p>
+        </div>
+        <div class="modal-body-data">
+          <label>Office Location</label>
+          <p>{{ visitorDetails.officeLocation }}</p>
+        </div>
+        <div class="modal-body-data">
+          <label>Visit Purpose</label>
+          <p>{{ visitorDetails.visitPurpose }}</p>
+        </div>
+      </div>
+      <div class="column-3">
+        <div class="modal-body-data">
+          <label>Host Name</label>
+          <p>{{ visitorDetails.hostName }}</p>
+        </div>
+        <div class="modal-body-data">
+          <label>Check-in Time</label>
+          <p>{{ visitorDetails.checkIn }}</p>
+        </div>
+        <div class="modal-body-data">
+          <label>Check-out Time</label>
+          <p>{{ visitorDetails.checkOut }}</p>
+        </div>
+      </div>
+
+      <div class="modal-body-data">
+        <label>Number of Devices Carried</label>
+        <p>{{ visitorDetails.deviceCount }}</p>
+      </div>
+      <div class="modal-body-data" *ngIf="visitorDetails.deviceCount > 0">
+        <label>Device Details</label>
+        <div>
+          <p *ngFor="let device of visitorDetails.devices">
+            @if(device.serialNumber != null){
+            {{ device.name }} - {{ device.serialNumber }}
+            }@else{
+              {{ device.name }}
+            }
+          </p>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</p-dialog>

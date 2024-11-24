@@ -1,0 +1,212 @@
+
+<div class="body">
+  <h3>New User</h3>
+  <hr>
+  <form [formGroup]="addUserForm" (ngSubmit)="onSubmit()">
+    <div class="roleContainer">
+      <h4>Role</h4>
+      <div class="row">
+        <div class="col label-col">
+          <label class="inputLabel">Role </label>
+        </div>
+          <div class="col input-col">
+            <mat-form-field appearance="outline" class="smallInput">
+              <mat-label>Select a Role</mat-label>
+              <mat-select   [(value)]="selectedRole" formControlName="RoleId" (selectionChange)="onRoleChange($event.value)">
+                <mat-option *ngFor="let role of Roles" [value]="role.id" style="color: black;">
+                  {{ role.name }}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="addUserForm.get('RoleId')?.hasError('required')" class="error">
+                Required Field *
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      
+      <div class="row">
+        <div class="col label-col">
+          <label class="inputLabel">Location </label>
+        </div>
+        <div class="col input-col  ">
+         <mat-form-field appearance="outline" class="smallInput">
+            <mat-label>Select a Location</mat-label>
+            <mat-select [(value)]="selectedLocation" formControlName="LocationId" (selectionChange)="onLocationChange($event.value)">
+              <mat-option *ngFor="let location of Locations" [value]="location.id" style="color: black;">
+                {{ location.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="addUserForm.get('LocationId')?.hasError('required')" class="error">
+              Required Field*
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+ 
+    <div class="row">
+      <div class="col label-col"> <label class="inputLabel">Valid From </label>
+      </div>
+      <div class="col input-col"> 
+        <mat-form-field appearance="outline" class="smallInput">
+          <mat-label>Choose a date</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="Date" [matDatepickerFilter]="dateFilter">
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="addUserForm.get('Date')?.hasError('required')" class="error">
+            Required Field*
+          </mat-error>
+        </mat-form-field>
+      
+      </div>
+    </div>
+    </div>
+
+<div class="contactContainer">
+  <h4>Contact Details</h4>
+
+  <div class="row">
+    <div class="col label-col">
+      <label class="inputLabel">First Name  </label>
+    </div>
+    <div class="col input-col">
+      <mat-form-field appearance="outline" class="smallInput">
+        <mat-label>Enter the First Name</mat-label>
+        <input matInput formControlName="FirstName">
+        <mat-error *ngIf="addUserForm.get('FirstName')?.hasError('required')" class="error">
+          Required Field*
+        </mat-error>
+        <mat-error *ngIf="addUserForm.get('FirstName')?.hasError('alphabetOnly')" class="error">
+          Only alphabetic characters are allowed.
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col label-col">
+      <label class="inputLabel">Last Name  </label>
+      </div>
+      <div class="col input-col">
+      <mat-form-field appearance="outline" class="smallInput">
+        <mat-label>Enter the Last Name</mat-label>
+        <input matInput formControlName="LastName">
+        <mat-error *ngIf="addUserForm.get('LastName')?.hasError('required')" class="error">
+          Required Field*
+        </mat-error>
+        <mat-error *ngIf="addUserForm.get('LastName')?.hasError('alphabetOnly')" class="error">
+          Only alphabetic characters are allowed.
+        </mat-error>
+      </mat-form-field>
+    </div>
+    </div>
+ 
+  <div class="row">
+    <div class="col label-col">
+      <label class="inputLabel">Phone Number &nbsp;&nbsp; </label>
+    </div>
+    <div class="col input-col">
+      <mat-form-field appearance="outline" class="smallInput">
+        <mat-label>Enter the Phone Number</mat-label>
+        <input matInput formControlName="PhoneNumber">
+        <mat-error *ngIf="addUserForm.get('PhoneNumber')?.hasError('required')" class="error">
+          Required Field*
+        </mat-error>
+        <mat-error *ngIf="addUserForm.get('PhoneNumber')?.hasError('numberOnly')" class="error">
+          Only numbers are allowed.
+        </mat-error>
+      </mat-form-field>
+    </div>
+    </div>
+
+  <div class="row">
+    <div class="col label-col">
+      <label class="inputLabel">Address&nbsp;&nbsp;  </label>
+    </div>
+    <div class="col input-col">
+      <mat-form-field appearance="outline" class="smallInput">
+        <mat-label>Enter the Address</mat-label>
+        <textarea matInput formControlName="Address"></textarea>
+        <mat-error *ngIf="addUserForm.get('Address')?.hasError('required')" class="error">
+          Required Field*
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+
+</div>
+
+
+<div class="accountContainer">
+  <h4>Account Details</h4>
+
+  <div class="row">
+    <div class="col label-col">
+      <label class="inputLabel">User Name &nbsp;&nbsp; </label>
+      </div>
+      <div class="col input-col">
+      <mat-form-field appearance="outline" class="smallInput">
+        <mat-label>Enter the User Name</mat-label>
+        <input matInput formControlName="username" (blur)="checkIfUsernameExists($event)">
+        <mat-error *ngIf="addUserForm.get('username')?.hasError('usernameExists')" class="error">
+          Username already exists* 
+        </mat-error>
+        <mat-error *ngIf="addUserForm.get('username')?.hasError('required')">
+          Required Field*
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col label-col">
+      <label class="inputLabel">Password &nbsp;&nbsp; </label>
+    </div>
+    <div class="col input-col">
+      <mat-form-field appearance="outline" class="smallInput">
+        <mat-label>Enter the Password</mat-label>
+        <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password"/>
+        <button mat-icon-button matSuffix type="button" (click)="toggleHidePassword()"
+         [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
+          <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+        <mat-error *ngIf="addUserForm.get('password')?.hasError('required')" class="error">
+          Required Field*
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col label-col">
+      <label class="inputLabel">Confirm Password&nbsp;&nbsp;  </label>
+    </div>
+    <div class="col input-col">
+      <mat-form-field appearance="outline" class="smallInput">
+        <mat-label>Re-Enter the Password</mat-label>
+        <input matInput [type]="hideConfirmPassword ? 'password' : 'text'" formControlName="confirmPassword"/>
+        <button mat-icon-button matSuffix type="button" (click)="toggleHideConfirmPassword()"
+         [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hideConfirmPassword">
+          <mat-icon>{{ hideConfirmPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+        <mat-error *ngIf="addUserForm.get('confirmPassword')?.hasError('required')" class="error">
+          Required Field*
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+   
+  </div>
+  <div class="row">
+    <div class="col label-col"></div>
+    <div class="col input-col warning">
+    <div *ngIf="addUserForm.errors?.['mismatch']">*Passwords do not match</div>
+  </div>
+  </div>
+</div>
+<div class="buttonRow">
+  
+    <app-admin-button-submit></app-admin-button-submit>
+ 
+    <app-admin-button-cancel></app-admin-button-cancel>
+  
+</div>
+</form>
+</div>

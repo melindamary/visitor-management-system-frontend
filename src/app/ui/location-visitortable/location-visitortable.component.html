@@ -1,0 +1,59 @@
+<div class="card dashboard-box-shadow">
+  <div class="table-header">
+    <div class="dashboard-component-h3">
+      Visitor Management Summary by Location
+    </div>
+    <div class="filterarrange">
+      <p-dropdown
+        class="dashboard-dropdown"
+        [options]="timePeriods"
+        [(ngModel)]="selectedTimePeriod"
+        (onChange)="onTimePeriodChange($event)"
+        optionLabel="label"
+      >
+      </p-dropdown>
+      <input
+        class="dashboard-input"
+        *ngIf="showSearch"
+        type="text"
+        (input)="onSearch($event)"
+        placeholder="Search Location..."
+      />
+    </div>
+  </div>
+  <p-table
+    styleClass="p-datatable-gridlines"
+    [value]="lbTables"
+  >
+    <!-- <ng-template pTemplate="title"> -->
+    <!-- <h1>Location Based Visitor Details</h1> -->
+    <!-- </ng-template> -->
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="slno">SL Number <p-sortIcon field="slno" /></th>
+        <th pSortableColumn="location">
+          Location <p-sortIcon field="location" />
+        </th>
+        <th pSortableColumn="numberOfSecurity">
+          Number Of Security <p-sortIcon field="numberOfSecurity" />
+        </th>
+        <th pSortableColumn="passesGenerated">
+          Passes Generated <p-sortIcon field="passesGenerated" />
+        </th>
+        <th pSortableColumn="totalVisitors">
+          Total Visitors <p-sortIcon field="totalVisitors" />
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-lbTable let-rowIndex="rowIndex">
+      <tr>
+        <td>{{ rowIndex + 1 }}</td>
+        <td>{{ lbTable.location }}</td>
+        <td>{{ lbTable.numberOfSecurity }}</td>
+        <td>{{ lbTable.passesGenerated }}</td>
+        <td>{{ lbTable.totalVisitors }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

@@ -1,0 +1,174 @@
+
+<form class="visitorForm" [formGroup]="addvisitorForm" (ngSubmit)="onSubmit()">
+  <div class="row mb-3">
+      <div class="col">
+          <label class="inputLabel">Name<span class="astrik">*</span></label>
+          <div class="form-floating smallInput">
+            <input type="text" class="form-control" formControlName="name" id="name"
+             placeholder="Enter the Name" required/>
+            <label for="name">Enter the Name</label>
+            <div *ngIf="addvisitorForm.get('name')?.hasError('required')" class="astrik">
+              *Name is required.
+            </div>
+        </div>
+      </div>
+      <div class="col">
+          <label class="inputLabel">Phone Number<span class="astrik">*</span></label>
+          <div class="form-floating smallInput">             
+              <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" required
+              formControlName="phoneNumber" placeholder="Enter the Phone Number">
+              <label for="phoneNumber">Enter the Phone Number</label>
+              <div *ngIf="addvisitorForm.get('phoneNumber')?.hasError('required')" class="astrik">
+                *Phone Number is required.
+              </div>
+          </div>
+      </div>
+  </div>
+  <div class="row mb-3">
+      <div class="col">
+          <label class="inputLabel">Whom to Meet<span class="astrik">*</span></label>
+          <div class="form-floating largeInput">
+         
+              <p-autoComplete 
+  class="largeInput"
+ name="personInContact"
+  formControlName="personInContact"
+  [dropdown]="true" 
+  [suggestions]="filteredContacts" 
+  (completeMethod)="filterContact($event)" 
+  inputId="autocomplete-input"
+  placeholder=" "
+  required></p-autoComplete>
+
+              <label for="autocomplete-input">Enter the name of the host</label>
+        
+          <div *ngIf="addvisitorForm.get('personInContact')?.hasError('required')" class="astrik">
+            *Name of the host is required.
+          </div> 
+          </div>
+      </div>
+     
+  </div>
+  <div class="row mb-3">
+      <div class="col">
+          <label class="inputLabel">Purpose of Visit<span class="astrik">*</span></label><br>          
+          <p-autoComplete class="largeInput"          
+          [dropdown]="true"
+          [suggestions]="filteredPurposes"
+          (completeMethod)="filterPurpose($event)"
+          field="purposeName"
+          name="purposeofvisit"
+          inputId="purpose-autocomplete-input"
+          formControlName="purposeofvisit"
+          (keyup)="onKeyUpHandlerPurpose($event)"
+          (onSelect)="onPurposeChange($event)"
+         >
+        </p-autoComplete><!-- Placeholder added to trigger floating label -->
+        <div *ngIf="addvisitorForm.get('purposeofvisitId')?.touched" class="astrik">
+          *Name of the purpose is required.
+        </div> 
+      </div>
+  </div>
+
+  
+    <div formArrayName="items">
+      <div *ngFor="let item of items.controls; let i = index" [formGroupName]="i">
+        <div class="row mb-3">
+          <div class="col">
+            <label class="inputLabel">Device Carried<span class="astrik">*</span></label>
+            <p-autoComplete class="customInput"                            
+                            (onSelect)="onItemChange($event, i)"
+                            (keyup)="onKeyUpHandlerDevice($event, i)"
+                            [dropdown]="true"
+                            [suggestions]="filteredDevice"
+                            (completeMethod)="filterItem($event)"
+                            field="deviceName"
+                            name="Device"
+                            inputId="autocomplete-input"
+                            formControlName="Device"
+                            required>
+            </p-autoComplete>
+            <div *ngIf="item.get('Device')?.hasError('required') && item.get('Device')?.touched" class="astrik">
+              *Device is required.
+            </div>
+          </div>
+         <!-- <div>
+          <button (click)="checkPermission()">checkPermission</button>
+         </div> -->
+         <!-- <div *ngIf="camData">
+          <webcam [trigger]="$trigger" (imageCapture)="capture($event)"></webcam>
+          <button (click)="captureImage()">show</button>
+         </div>
+         <div>
+          <div *ngIf="capturedImage">
+            <img [src]="capturedImage">
+          </div>
+         </div> -->
+       
+          <div class="col d-flex align-items-end">
+           
+              <i class="material-icons astrik plus" (click)="addItem()">add_circle</i>
+            
+          </div>
+          
+        </div>
+  
+        <div class="row mb-3" *ngIf="items.at(i).value.showItemOtherInput">
+          <div class="mediumInput">
+            <label for="serialNumber">Enter Serial Number {{ items.at(i).value.deviceName }}</label>
+            <input type="text" class="form-control" name="DeviceSerialnumber" required formControlName="DeviceSerialnumber" id="serialNumber" placeholder="Enter details">
+            <div *ngIf="item.get('DeviceSerialnumber')?.hasError('required') && item.get('DeviceSerialnumber')?.touched" class="astrik">
+              *Serial Number is required.
+            </div>
+          </div>
+        </div>
+  
+      
+      </div>
+    </div>
+  
+  <div class="row mb-3">
+      <div class="form-check">
+          <input class="form-check-input"  formControlName="policy" type="checkbox" id="privacyPolicy">
+          <label class="form-check-label" for="privacyPolicy">
+              I confirm, I have read and agree to Experion Technologies'<a href="#"> Privacy Policy </a>and consent to sharing my information.
+          </label>
+      </div>
+  </div>
+  <div class="row mb-3">
+      <!-- <div class="col">
+        <button (click)="checkPermission()" class=" button3" type="button">
+         Permission
+      </button>
+        <div *ngIf="camData">
+          <webcam [trigger]="$trigger" (imageCapture)="capture($event)"></webcam>
+          <button class=" button3"(click)="captureImage()" type="button">
+              <i class="material-icons  camera">photo_camera</i>
+              Take Photo<span class="astrik">*</span>
+          </button>
+        </div>
+        <div>
+         <div *ngIf="capturedImage">
+           <img [src]="capturedImage" width="500px" height="500px">
+         </div>
+        </div>
+      </div> -->
+      <div class="col">
+        <button class=" button3"(click)="openDialog()" type="button">
+          <i class="material-icons  camera">photo_camera</i>
+           Photo<span class="astrik-white">*</span>
+      </button>
+       
+        <div *ngIf="capturedImage">
+          <img [src]="capturedImage.imageAsDataUrl" width="500px" height="500px">
+        </div>
+      </div>
+      <div class="col">
+          <button class=" button3" type="submit">
+              Submit
+          </button>
+      </div>
+  </div>
+</form>
+
+<!-- [ngClass]="{ 'plusBtnHide': !isItemEntered(i) }" -->

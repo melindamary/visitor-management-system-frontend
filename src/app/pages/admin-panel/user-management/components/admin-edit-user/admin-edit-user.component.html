@@ -1,0 +1,272 @@
+
+<div class="body">
+  <h3>Edit User Details</h3>
+  <hr>
+  <form [formGroup]="userEditForm" (ngSubmit)="OnSubmit()">
+
+    <h4><u>Contact Details</u></h4>
+ 
+    <div class="row">
+      <div class="col label-col">
+        <label class="inputLabel">First Name</label>
+      </div>
+      <div class="col input-col">
+        <mat-form-field appearance="outline" class="smallInput">        
+          <input matInput  formControlName="firstName" >
+          <mat-error *ngIf="userEditForm.get('firstName')?.hasError('required')" class="error">
+            Required Field*
+          </mat-error>
+          <mat-error *ngIf="userEditForm.get('firstName')?.hasError('alphabetOnly')" class="error">
+            Only alphabetic characters are allowed.
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col label-col">
+        <label class="inputLabel">Last Name</label>
+      </div>
+      <div class="col input-col">
+        <mat-form-field appearance="outline" class="smallInput" >       
+          <input matInput formControlName="lastName">
+          <mat-error *ngIf="userEditForm.get('lastName')?.hasError('required')" class="error">
+            Required Field*
+          </mat-error>
+          <mat-error *ngIf="userEditForm.get('lastName')?.hasError('alphabetOnly')" class="error">
+            Only alphabetic characters are allowed.
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col label-col">
+        <label class="inputLabel">Phone Number</label>
+      </div>
+      <div class="col input-col">
+        <mat-form-field appearance="outline" class="smallInput">
+          <mat-label>Enter the Phone Number</mat-label>
+          <input matInput  formControlName="phone" >
+          <mat-error *ngIf="userEditForm.get('phone')?.hasError('required')" class="error">
+            Required Field*
+          </mat-error>
+          <mat-error *ngIf="userEditForm.get('phone')?.hasError('numberOnly')" class="error">
+            Only numbers are allowed.
+          </mat-error>
+        </mat-form-field>
+        
+      </div>
+    </div>
+    <div class="row">
+      <div class="col label-col">
+        <label class="inputLabel">Address</label>
+      </div>
+      <div class="col input-col">
+        <mat-form-field appearance="outline" class="smallInput">
+          <mat-label>Enter the Address</mat-label>
+          <textarea matInput  formControlName="address"></textarea>
+          <mat-error *ngIf="userEditForm.get('address')?.hasError('required')" class="error">
+            Required Field*
+          </mat-error> 
+        </mat-form-field>
+       
+      </div>
+    </div>
+  
+
+
+  <h4><u>Role</u></h4>
+  <div class="row">
+    <div class="col label-col">
+      <label class="inputLabel">Role  </label>
+    </div>
+    <div class="col input-col">
+      <!-- <ng-container *ngIf="showInput">      
+      <mat-form-field appearance="outline" class="smallInput"> 
+        <input matInput disabled [value]="user.roleName">   
+      </mat-form-field>
+    </ng-container> -->
+    <ng-container *ngIf="showInput">
+        <mat-form-field appearance="outline" class="smallInput">
+          <mat-label>Select a Role</mat-label>
+          <mat-select   [(value)]="selectedRole"   formControlName="RoleId" (selectionChange)="onRoleChange($event.value)">
+            <mat-option *ngFor="let role of Roles" [value]="role.id" style="color: black;">
+              {{ role.name }}
+            </mat-option>
+          </mat-select>    
+          <mat-error *ngIf="userEditForm.get('RoleId')?.hasError('required')" class="error">
+            Required Field*
+          </mat-error> 
+        </mat-form-field>    
+     </ng-container>
+     <!-- <mat-icon matSuffix (click)="changeToEditRole()">mode_edit</mat-icon> -->
+    </div>
+   
+  </div>
+  <div class="row">
+    <div class="col label-col">
+      <label class="inputLabel">Location</label>
+    </div>
+    <div class="col input-col">
+      <!-- <ng-container *ngIf="showInputLocation">
+        <mat-form-field appearance="outline" class="smallInput">         
+          <input matInput  disabled [value]="user.officeLocation">         
+        </mat-form-field>
+      </ng-container> -->
+      <ng-container *ngIf="showInputLocation">
+      <mat-form-field appearance="outline" class="smallInput">
+        <mat-label>Select a Location</mat-label>
+            <mat-select [(value)]="selectedLocation" formControlName="LocationId" (selectionChange)="onLocationChange($event.value)">
+              <mat-option *ngFor="let location of Locations" [value]="location.id" style="color: black;">
+                {{ location.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="userEditForm.get('LocationId')?.hasError('required')" class="error">
+              Required Field*
+            </mat-error> 
+      </mat-form-field>
+      </ng-container>
+      <!-- <mat-icon matSuffix (click)="changeToEditLocation()">mode_edit</mat-icon> -->
+    </div> 
+     
+    
+  </div>
+  <div class="row">
+    <div class="col label-col"> 
+      <label class="inputLabel">Valid From</label>
+    </div>
+    <div class="col input-col">
+      <!-- <ng-container *ngIf="showInputValidDate">
+        <mat-form-field appearance="outline" class="smallInput">              
+          <input matInput  disabled [value]="formattedValidFrom">         
+        </mat-form-field>[(value)]="formattedValidFrom"
+      </ng-container> -->
+      <ng-container *ngIf="showInputValidDate">
+      <mat-form-field appearance="outline" class="smallInput">
+        <mat-label>Choose a date</mat-label>
+        <input  matInput [matDatepicker]="picker"  formControlName="validFrom" [matDatepickerFilter]="dateFilter">
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="userEditForm.get('validFrom')?.hasError('required')" class="error">
+          Required Field*
+        </mat-error> 
+      </mat-form-field>
+    </ng-container>
+      </div>
+  </div>
+  <div class="row">
+    <div class="col label-col">
+      <label class="inputLabel">Status</label>
+    </div>
+    <div class="col input-col">
+      <mat-radio-group  formControlName="activeState" (change)="onRadioChange($event.value)" class="colorChange">
+        <mat-radio-button [value]="1">Active</mat-radio-button>
+        <mat-radio-button [value]="0">Inactive</mat-radio-button>
+      </mat-radio-group>
+      <mat-error *ngIf="userEditForm.get('activeState')?.hasError('required')" class="error">
+        Required Field*
+      </mat-error> 
+    </div>
+    </div>
+
+
+
+  <h4><u>Account Details</u></h4>
+  
+  <div class="row">
+    <div class="col label-col">
+      <label class="inputLabel">User Name</label>
+    </div>
+    <div class="col input-col">
+      <mat-form-field appearance="outline" class="smallInput">        
+        <input matInput  formControlName="username" (blur)="checkIfUsernameExists($event)">     
+        <mat-error *ngIf="userEditForm.get('username')?.hasError('usernameExists')" class="error">
+          Username already exists* 
+        </mat-error>   
+        <mat-error *ngIf="userEditForm.get('username')?.hasError('required')" class="error">
+          Required Field*
+        </mat-error> 
+      </mat-form-field>
+    </div>
+  </div>
+  <!-- <div class="row">
+    <div class="col label-col">
+      <label class="inputLabel">Old Password</label>
+    </div>
+    <div class="col input-col">
+      <mat-form-field appearance="outline" class="smallInput">
+        <mat-label>Enter the Password</mat-label>
+        <input matInput [type]="fieldStates.hideOldPassword ? 'password' : 'text'" />
+        <button mat-icon-button matSuffix type="button" (click)="toggleFieldState('hideOldPassword')"
+         [attr.aria-label]="'Hide password'" [attr.aria-pressed]="fieldStates.hideOldPassword">
+          <mat-icon>{{ fieldStates.hideOldPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+  </div> -->
+  <div class="row">
+    <div class="col label-col">
+      <label class="inputLabel">Password </label>
+    </div>
+    <div class="col input-col">
+      
+      <button (click)="OnresetPassword()" type="button" class="button1"> Reset Password </button>
+    </div>
+      </div>
+
+      <ng-container *ngIf="resetPassword">
+  <div class="row">
+    <div class="col label-col">
+      <label class="inputLabel">New Password </label>
+    </div>
+    <div class="col input-col">
+      <mat-form-field appearance="outline" class="smallInput">
+        <mat-label>Enter the New Password</mat-label>
+        <input matInput [type]="fieldStates.hidePassword ? 'password' : 'text'" formControlName="password"/>
+        <button mat-icon-button matSuffix type="button" (click)="toggleFieldState('hidePassword')"
+         [attr.aria-label]="'Hide password'" [attr.aria-pressed]="fieldStates.hidePassword">
+          <mat-icon>{{ fieldStates.hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+        <mat-error *ngIf="userEditForm.get('password')?.hasError('required')" class="error">
+          Required Field*
+        </mat-error> 
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col label-col">
+      <label class="inputLabel">Confirm New Password </label>
+    </div>
+    <div class="col input-col">
+      <mat-form-field appearance="outline" class="smallInput">
+        <mat-label>Re-Enter the New Password</mat-label>
+        <input matInput [type]="fieldStates.hideConfirmPassword ? 'password' : 'text'" formControlName="confirmPassword"/>
+        <button mat-icon-button matSuffix type="button" (click)="toggleFieldState('hideConfirmPassword')"
+         [attr.aria-label]="'Hide password'" [attr.aria-pressed]="fieldStates.hideConfirmPassword">
+          <mat-icon>{{ fieldStates.hideConfirmPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+        <mat-error *ngIf="userEditForm.get('confirmPassword')?.hasError('required')" class="error">
+          Required Field*
+        </mat-error> 
+      </mat-form-field>
+    </div>
+
+  </div>
+  
+  <div class="row">
+    <div class="col label-col"></div>
+    <div class="col input-col warning">
+    <div *ngIf="userEditForm.errors?.['mismatch']">*Passwords do not match</div>
+  </div>
+  </div>
+</ng-container>
+    <div class="buttonRow">
+        
+     <app-admin-button-submit></app-admin-button-submit>
+      
+        <app-admin-button-cancel></app-admin-button-cancel>
+        </div>
+      
+     
+</form>
+</div>

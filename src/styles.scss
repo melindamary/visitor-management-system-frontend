@@ -1,40 +1,151 @@
+// @import "primeng/resources/themes/lara-light-purple/theme.css";
+@import "primeng/resources/themes/md-light-deeppurple/theme.css";
+@import "primeng/resources/primeng.css";
+@import "primeicons/primeicons.css";
 
-// Custom Theming for Angular Material
-// For more information: https://material.angular.io/guide/theming
-@use '@angular/material' as mat;
-// Plus imports for other components in your app.
-
-// Include the common styles for Angular Material. We include this here so that you only
-// have to load a single css file for Angular Material in your app.
-// Be sure that you only ever include this mixin once!
-@include mat.core();
-
-// Define the theme object.
-$visitor-management-system-theme: mat.define-theme((
-  color: (
-    theme-type: light,
-    primary: mat.$azure-palette,
-    tertiary: mat.$blue-palette,
-  ),
-  density: (
-    scale: 0,
-  )
-));
-
-// Include theme styles for core and each component used in your app.
-// Alternatively, you can import and @include the theme mixins for each component
-// that you are using.
-:root {
-  @include mat.all-component-themes($visitor-management-system-theme);
+*{
+  font-family: "Inter", sans-serif;
+  font-size: 1rem;
+}
+html,
+body {
+  height: 100%;
 }
 
-// Comment out the line below if you want to use the pre-defined typography utility classes.
-// For more information: https://material.angular.io/guide/typography#using-typography-styles-in-your-application.
-// @include mat.typography-hierarchy($visitor-management-system-theme);
+body {
+  margin: 0;
+}
 
-// Comment out the line below if you want to use the deprecated `color` inputs.
-// @include mat.color-variants-backwards-compatibility($visitor-management-system-theme);
-/* You can add global styles to this file, and also import other style files */
+//top-bar
+.user-avatar-button .p-button {
+  // background-color: #896cc7;
+  background-color: white !important;
+  color: #896cc7;
+  border-radius: 50%;
+  width: 1.5rem;
+  height: 1.5rem;
+}
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+//Call-to-Action Button
+.cta-btn{
+  padding: 5px 8px;
+  width: fit-content;
+  height: fit-content;
+  border: solid 1px #F09951;
+  border-radius: 4px;
+  background-color: #F09951;
+  color: white;
+  font-weight:500;
+  cursor: pointer;
+  margin-left: 0.2rem;
+  box-shadow: 0px 0.2px 0px 0px #F09951;
+}
+
+.cta-btn:hover{
+  // background-color: #896cc7;
+  background-color:#D87F46;
+  color: white;
+}
+
+.cta-btn-icon{
+  font-size: 13px;
+}
+
+//visit-purpose table
+.btn-outline-none .p-button {
+  box-shadow: none;
+  padding-block: 10px;
+  // height: 10px; 
+}
+
+.negative-button .p-button {
+  background-color: white;
+  color: #F09951;
+  border: solid 1px #F09951;
+}
+.negative-button .p-button:hover {
+  background-color: #F6F6F6;
+  color: #F3B07D;
+  border-color: #F3B07D;
+}
+
+.positive-button .p-button {
+  background-color: #F09951;
+  color: white;
+  border: solid 1px #F09951;
+}
+.positive-button .p-button:hover {
+  background-color: #D87F46;
+  border: none;
+}
+
+//button theme
+.custom-accept-button {
+  background-color: #896cc7 !important;
+  color: #ffffff !important;
+  border: none !important;
+}
+
+.custom-reject-button {
+  background-color: #eeeaea !important;
+  color: #000000 !important;
+  border: none !important;
+}
+
+
+//Dashboard Styles
+.dashboard-component-margin{
+  margin: 0rem 0.8rem;
+}
+
+.dashboard-component-h3{
+    font-weight: 500;
+    padding-left: 0.8rem;
+}
+
+.dashboard-box-shadow{
+  box-shadow: 0.5px 1px 1px 1px lightgrey;
+}
+
+//Status badge styles
+//Status badges
+.p-tag {
+  width: auto;
+  height: 20px;
+  padding: 5px 10px;
+  border-radius: 50px;
+  font-weight: bold;
+  font-size: 10px ;
+  text-transform: uppercase;
+}
+.green-status .p-tag{
+  color: #188A42;
+  background-color: #Caf1d8;
+}
+
+.yellow-status .p-tag{
+  background-color: #feddc7;
+  color: #ae510f;
+}
+
+.gray-status .p-tag{
+  background-color: #d0e1fd;
+  color: #295bac;
+}
+
+
+ .p-dialog-header-icon {
+  background-color: transparent !important; /* Remove background color */
+  border-radius: 50%; /* Remove the oval shape */
+  box-shadow: none !important; /* Remove any box shadow */
+  transition: none !important; /* Remove any transition effects */
+}
+
+ .p-dialog-header-icon:hover {
+  background-color: transparent !important; /* Keep the background color transparent on hover */
+  box-shadow: none !important; /* Ensure no shadow is applied on hover */
+  color: inherit !important; /* Keep the text color unchanged */
+  transform: none !important; /* Prevent any transformation on hover */
+}
+
+

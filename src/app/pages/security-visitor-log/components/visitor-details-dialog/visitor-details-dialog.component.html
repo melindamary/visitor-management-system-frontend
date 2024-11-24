@@ -1,0 +1,65 @@
+<p-dialog
+  class="visitor-dialog"
+  header="Visitor Details" 
+  [(visible)]="visible" 
+  [modal]="true" 
+  [style]="{ width: '45vw',height:'75vh' }" 
+  styleClass="p-fluid" 
+  (onHide)="onDialogHide()"
+>
+  <ng-template pTemplate="header">
+    <div class="flex justify-content-between align-items-center">
+      <span class="font-bold">Visitor Details</span>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="content">
+      <div class="flex align-items-center mb-3">
+        <img *ngIf="visitor.photoBase64" [src]="'data:image/jpeg;base64,' + visitor.photoBase64" alt="Visitor Image" class="rounded-photo mr-3" />
+        <div>
+          <div class="font-bold mb-2">{{ visitor.name }}</div>
+          <div>{{ visitor.phone }}</div>
+        </div>
+      </div>
+      
+      <div class="flex flex-wrap">
+        <div *ngIf="currentTab === 'active'" class="w-1-3 mb-3">
+          <div class="content-label">Visitor Pass Code:</div>
+          <div>{{ visitor.visitorPassCode }}</div>
+        </div>
+        <div *ngIf="currentTab === 'scheduled'" class="w-1-3 mb-3">
+          <div class="content-label">Date of Visit:</div>
+          <div>{{ visitor.visitDate }}</div>
+        </div>
+        <div class="w-1-3 mb-3">
+          <div class="content-label">Purpose of Visit:</div>
+          <div>{{ visitor.purposeName }}</div>
+        </div>
+        <div class="w-1-3 mb-3">
+          <div class="content-label">Whom to Meet:</div>
+          <div>{{ visitor.hostName }}</div>
+        </div>
+        <div *ngIf="currentTab === 'active' || currentTab === 'checkedOut' || currentTab==='total'" class="w-1-3 mb-3">
+          <div class="content-label">Check-In Time:</div>
+          <div>{{ visitor.checkInTime }}</div>
+        </div>
+        <div *ngIf="currentTab === 'checkedOut' || currentTab==='total'" class="w-1-3 mb-3">
+          <div class="content-label">Check-Out Time:</div>
+          <div>{{ visitor.checkOutTime }}</div>
+        </div>
+        <div class="w-1-3 mb-3">
+          <div class="content-label">Number of Devices Carried:</div>
+          <div>{{ visitor.devices.$values.length }}</div>
+        </div>
+        <div *ngIf="visitor.devices && visitor.devices.$values.length > 0" class="w-full">
+          <div class="content-label">Device Details:</div>
+          <div *ngFor="let device of visitor.devices.$values" class="mb-2">
+            @if(device.serialNumber != null){
+              {{ device.name }} - {{ device.serialNumber }}
+              }@else{
+                {{ device.name }}
+              }
+          </div>
+        </div>
+      </div>
+  </ng-template>
+</p-dialog>

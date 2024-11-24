@@ -1,0 +1,112 @@
+<div class="card dashboard-box-shadow">
+  <div class="Table-header">
+    <div class="dashboard-component-h3">Security Personnel Details</div>
+
+    <div class="filterarrange">
+      <!-- <p-dropdown [options]="timePeriods" [(ngModel)]="selectedTimePeriod" (onChange)="onTimePeriodChange($event)" 
+                optionLabel="label" [style]="{'width':'120px'}" styleClass="custom-dropdown">
+        <ng-template pTemplate="trigger">
+            <div class="dropdown-trigger">
+                {{selectedTimePeriod.label}} <i class="pi pi-chevron-down"></i>
+            </div>
+        </ng-template>
+    </p-dropdown> -->
+
+      <p-dropdown
+        class="dashboard-dropdown"
+        [options]="timePeriods"
+        [(ngModel)]="selectedTimePeriod"
+        (onChange)="onTimePeriodChange($event)"
+        optionLabel="label"
+      />
+
+      <!-- <button class="weekly-button">weekly <i class="pi pi-angle-down"></i>
+                </button> -->
+      <input
+        class="dashboard-input"
+        *ngIf="showSearch"
+        type="text"
+        (input)="onSearch($event)"
+        placeholder="Search Location..."
+      />
+    </div>
+  </div>
+
+  <p-table
+    styleClass="p-datatable-gridlines"
+    [value]="lbSecurityTables"
+  >
+    <ng-template pTemplate="header">
+      <tr class="dashboard-table-header">
+        <th pSortableColumn="location">
+          Location <p-sortIcon field="location" />
+        </th>
+        <th pSortableColumn="securityFirstName">
+          Security Name<p-sortIcon field="securityFirstName" />
+        </th>
+        <!-- <th pSortableColumn="securityStatus">
+                        Security Status<p-sortIcon field="securityStatus"></p-sortIcon>
+                        <p-multiSelect [options]="statuses" [(ngModel)]="selectedStatuses" 
+                                       defaultLabel="All Statuses" (onChange)="onStatusFilterChange($event)"
+                                       styleClass="p-column-filter">
+                        </p-multiSelect>
+                    </th> -->
+        <th pSortableColumn="status" style="min-width: 10rem">
+          <div
+            style="display: flex; align-items: center; justify-content: center"
+          >
+            Status
+            <p-sortIcon field="status"></p-sortIcon>
+            <p-columnFilter
+              field="status"
+              matchMode="equals"
+              [showMenu]="false"
+              class="ml-auto"
+            >
+              <ng-template
+                pTemplate="filter"
+                let-value
+                let-filter="filterCallback"
+              >
+                <!-- <p-dropdown [ngModel]="value" [options]="statuses" (onChange)="filter($event.value)" placeholder="Any"> -->
+                <!-- <ng-template let-option pTemplate="item">
+                                  <p-tag [value]="option.label" [severity]="getSeverity(option.value)"></p-tag>
+                                </ng-template> -->
+                <!-- </p-dropdown> -->
+              </ng-template>
+            </p-columnFilter>
+          </div>
+        </th>
+        <th pSortableColumn="phoneNumber">
+          Phone Number<p-sortIcon field="phoneNumber" />
+        </th>
+        <th pSortableColumn="visitorsApproved">
+          Visitors Approved<p-sortIcon field="visitorsApproved" />
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-lbSecurityTable>
+      <tr>
+        <td>{{ lbSecurityTable.location }}</td>
+        <td>{{ lbSecurityTable.securityFirstName }}</td>
+        <!-- <td>
+                        <span [ngClass]="getStatusClass(lbSecurityTable.securityStatus)">
+                            {{ getStatusText(lbSecurityTable.securityStatus) }}
+                        </span>
+                    </td> -->
+        <td>
+          <!-- [severity]="getSeverity(lbSecurityTable.status)" -->
+          <p-tag
+            [value]="getStatusText(lbSecurityTable.status)"
+            [ngClass]="{
+              'green-status': getStatusText(lbSecurityTable.status) === 'Available',
+              'yellow-status': getStatusText(lbSecurityTable.status) === 'Away'
+            }"
+          ></p-tag>
+        </td>
+        <td>{{ lbSecurityTable.phoneNumber }}</td>
+        <td>{{ lbSecurityTable.visitorsApproved }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

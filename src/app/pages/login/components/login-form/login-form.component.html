@@ -1,0 +1,31 @@
+
+<form class="form-container" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <p>Visit<span style="color: #DC143c;">Ex</span></p>
+    <div class="input-container">
+       <mat-icon>account_circle</mat-icon>
+        <input type="text" formControlName="username" (focus)="clearError()" placeholder="Username">
+    </div>
+
+      <div class="input-container">
+        <mat-icon>lock</mat-icon>
+         <input formControlName="password" type="password" (focus)="clearError()" placeholder="Password">
+       </div>
+    <button class="login-btn" [disabled]="loginForm.invalid" type="submit" (click)="onSubmit()">Login</button>
+    <div *ngIf="isLoading" class="spinner-container card flex justify-content-center pt-4">
+      <p-progressSpinner 
+        styleClass="w-2rem h-2rem" 
+        strokeWidth="8" 
+        fill="var(--surface-ground)" 
+        animationDuration="1s"
+        ariaLabel="loading" 
+      />
+    </div>
+    <div class="error-message">
+      {{errorMessage}}
+    </div>
+    
+</form>
+
+
+
+

@@ -1,0 +1,181 @@
+  <p-toolbar>
+    <ng-template pTemplate="left">
+      <!-- Location dropdown -->
+      <p-dropdown 
+      ngDefaultControl
+      [options]="locations" 
+      placeholder="All Locations"
+      optionLabel="name"
+      [(ngModel)]="selectedLocation" 
+      (onChange)="filterEntireReports()"
+    ></p-dropdown>
+
+      <!-- Start date -->
+      <p-calendar 
+      ngDefaultControl
+      [(ngModel)]="selectedStartDate" 
+      (onClose)="filterEntireReports()"
+      dateFormat="dd-mm-yy" 
+      [readonlyInput]="true" 
+      [showIcon]="true"
+      placeholder="Select Start Date"
+    ></p-calendar>
+
+      <!-- End date -->
+      <p-calendar 
+      ngDefaultControl
+      [(ngModel)]="selectedEndDate" 
+      (onClose)="filterEntireReports()"
+      dateFormat="dd-mm-yy" 
+      [readonlyInput]="true" 
+      [showIcon]="true"
+      placeholder="Select End Date"
+    ></p-calendar>
+
+    <!-- Filter by date range -->
+      <!-- <p-calendar 
+      ngDefaultControl
+      styleClass="date-range-picker"
+      [(ngModel)]="rangeDates" 
+      (onClose)="filterByDateRange()"
+      selectionMode="range"
+      placeholder="Select Date Range"
+      [showIcon]="true" 
+      [readonlyInput]="true"
+      variant="filled" 
+      /> -->
+
+  </ng-template>
+
+  <ng-template pTemplate="right">
+    <!-- Reset button -->
+    <button class="cta-btn" (click)="resetReport()">
+      <i class="pi pi-refresh" style="font-size: 13px; margin-right: 1px"></i>
+      Reset
+    </button>
+      <!-- Export as Excel -->
+    <button class="cta-btn" (click)="exportSelectedToExcel()">
+      <i class="pi pi-upload cta-btn-icon" style="margin-right: 1px"></i>
+      Export
+    </button>
+    <!-- <i class="pi pi-file-excel excel-icon"
+      (click)="exportSelectedToExcel()"
+      pTooltip="Export" 
+      tooltipPosition="bottom"
+      tooltipStyleClass="custom-tooltip"
+      ></i> -->
+    </ng-template>
+</p-toolbar>
+
+<!-- Reports Table -->
+<p-table
+  [resizableColumns]="true"
+  styleClass="p-datatable-striped p-datatable-gridlines" 
+  [columns]="cols"
+  [value]="filteredReports"
+  [tableStyle]="{ 'min-width': '55rem', 'min-height': '70vh' }"
+  [paginator]="true"
+  [rows]="10"
+  [scrollable]="true"  
+  scrollHeight="70vh" 
+  [rowsPerPageOptions]="[5, 10, 20]"
+  sortMode="multiple"
+  selectionMode="multiple"
+  [(selection)]="selectedReports"
+  [showCurrentPageReport]="true"
+  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+>
+  <!-- Column headers -->
+  <ng-template pTemplate="header" let-columns>
+    <!-- <div class="table-body"> -->
+    <tr>
+      <th><p-tableHeaderCheckbox /></th>
+      <th
+        *ngFor="let col of columns"
+        [pSortableColumn]="isSortable(col.field) ? col.field : null"
+      >
+        <div class="flex align-items-center">
+            {{ col.header }} 
+            <p-sortIcon *ngIf="isSortable(col.field)" [field]="col.field" />
+        </div>
+      </th>
+      <th alignFrozen="right" pFrozenColumn [frozen]="true">Actions</th>
+    </tr>
+    <tr>
+      <th class="search-header"></th>
+      <th class="search-header" *ngFor="let col of columns">
+          <p-columnFilter
+              ngDefaultControl
+              *ngIf="col.field !== 'slNo' && col.field !== 'visitDate'"
+          type="text"
+          [field]="col.field"
+          [matchMode]="'contains'"
+              [placeholder]="'Search...'"
+              [(ngModel)]="searchTerms[col.field]"
+              (keyup)="filterReports()"
+          ></p-columnFilter>
+          <p-calendar 
+            ngDefaultControl
+            styleClass="date-picker"
+            class="single-date-picker"
+            *ngIf="col.field == 'visitDate'"
+            [(ngModel)]="selectedDate" 
+            (onClose)="filterByDate()"
+            dateFormat="dd-mm-yy" 
+            [readonlyInput]="true" 
+            [showIcon]="true"
+            placeholder=""
+            appendTo="body"
+          ></p-calendar>
+      </th>
+      <th
+        class="search-header"
+        alignFrozen="right"
+        pFrozenColumn
+        [frozen]="true"
+      ></th>
+    </tr>
+  <!-- </div> -->
+  </ng-template>
+
+   <!-- Column data -->
+  <ng-template pTemplate="body" let-rowData let-columns="columns">
+    <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="columns">
+      <td>
+        <p-tableCheckbox 
+          [value]="rowData" 
+          (click)="onCheckboxClick($event, rowData)"
+        />
+      </td>
+      <td *ngFor="let col of columns" [style.width]="col.width">
+        {{ rowData[col.field] }}
+      </td>
+      <td
+        alignFrozen="right"
+        pFrozenColumn
+        [frozen]="true"
+        style="background-color: white"
+      >
+        <p-button 
+            class="view-btn"
+            pRipple 
+            icon="pi pi-eye" 
+            [outlined]="true" 
+            (onClick)="viewDetails(rowData)" 
+            pTooltip="View Details" 
+            tooltipPosition="left"
+            tooltipStyleClass="custom-tooltip"
+          />
+        </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<!-- View Details Dialog -->
+ <app-view-details-modal
+ [visitorDetails]="visitorDetails"
+ [viewDetailsDialog]="viewDetailsDialog"
+ (closeDialog)="this.handleDialogClose()"
+ ></app-view-details-modal>
+
+<router-outlet></router-outlet>

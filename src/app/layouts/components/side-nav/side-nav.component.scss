@@ -1,0 +1,46 @@
+.expanded {
+    width: 12.5rem;   
+}
+.contracted{
+    width: 4rem;
+}
+
+mat-sidenav-container {
+    // height:calc(100vh - 3.4rem);
+    height: calc(100vh - 48px);
+  
+}
+
+mat-sidenav {
+    @media screen and (min-width: 600px) {
+
+    }
+    .entry, .logo{
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+  }
+
+.mat-mdc-nav-list .mat-mdc-list-item {
+    border-radius: 0px;
+}
+mat-icon,
+.entry span {
+    // color: #808080;
+    color: #565656;
+    // font-weight:450;
+}
+
+.active-link{
+    background-color: #ded7ee; 
+}
+.active-link mat-icon,
+.active-link .entry span{
+    color: #896cc7;
+    
+}
+
+mat-sidenav-content{
+    padding: 1rem;
+}

@@ -1,0 +1,41 @@
+
+<div class="role-form-container">
+  <h2>Add Role</h2>
+  <div class="line"></div>
+  <form [formGroup]="roleForm" (ngSubmit)="createRole()">
+    <div class="form-group">
+      <mat-form-field appearance="outline">
+        <mat-label>Role Name</mat-label>
+        <input matInput formControlName="role" placeholder="Enter role name">
+        <mat-error *ngIf="formSubmitted && roleForm.get('role')!.invalid">
+          Role name is required.
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <!-- <div class="form-group">
+      <label class="status-label">Status:</label>
+      <mat-radio-group formControlName="status">
+        <mat-radio-button value="1">Active</mat-radio-button>
+        <mat-radio-button value="0">Inactive</mat-radio-button>
+      </mat-radio-group>
+    </div> -->
+
+    <div formGroupName="permissions" class="permissions-group">
+      <h3>Role Permissions</h3>
+      <div class="checkbox-group">
+        <mat-checkbox *ngFor="let page of pages" [formControlName]="page.id.toString()">
+          {{page.name}}
+        </mat-checkbox>
+      </div>
+      <mat-error *ngIf="formSubmitted && !isAnyPermissionSelected()">
+        At least one permission must be selected.
+      </mat-error>
+    </div>
+
+    <div class="button-group">
+      <button mat-raised-button color="primary" type="submit">SUBMIT</button>
+      <button mat-stroked-button type="button" (click)="onCancel()">CANCEL</button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,89 @@
+.form-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    min-width: 300px;
+    // height: 350px;
+    height: 400px;
+    width: 400px;
+    display: flex;
+    justify-content: center;
+
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+p,span{
+    text-align:center;
+    font-size: 24px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.input-container {
+    position: relative;
+    // display: inline-block;
+    display: flex;
+    border: 1px solid #ccc;
+    margin-bottom: 15px;
+    align-items: center;
+    border-radius: 4px;
+    padding-left: 2%;
+    // width: 97.5%;
+    width: 100%;
+    height: 12%;
+}
+  
+.input-container input {
+    padding-left: 10px; /* Adjust this value to make room for the icon */
+    height: 100%;
+    border: none;
+    outline: none;
+    width: 85%;
+    font-size: 16px;
+}
+  
+.input-container .icon {
+    position: absolute;
+    pointer-events: none; /* Ensures the icon doesn't block input interactions */ 
+}
+
+.login-btn {
+    padding: 10px;
+    background-color: #896cc7;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    height: 45px;
+    font-size: 16px;
+    text-transform: uppercase;
+}
+
+.login-btn:hover {
+    background-color: #563995;
+    color: white;
+}
+
+.login-btn:disabled {
+    background-color: #b093d8; 
+    color: white;
+    cursor: not-allowed;
+}
+
+mat-icon{
+    color: #896cc7;
+}
+
+.error-message{
+    color: red;
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}

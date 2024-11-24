@@ -1,0 +1,12 @@
+<div mat-dialog-content>
+    <webcam [trigger]="triggerObservable" (imageCapture)="handleImage($event)"></webcam>
+    <div *ngIf="webcamImage">
+      <img [src]="webcamImage.imageAsDataUrl">
+    </div>
+  </div>
+  
+  <div mat-dialog-actions class="button-container">
+    <button mat-button class="button3" (click)="captureImage()">Take Photo</button>
+  
+    <button mat-button class="button3" label="Show" (click)="openSnackBar()" (click)="closeDialog()">Submit</button>
+  </div>

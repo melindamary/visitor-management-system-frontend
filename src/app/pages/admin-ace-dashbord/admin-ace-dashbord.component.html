@@ -1,0 +1,59 @@
+<div class="dashboard-layout">
+  <div class="dashboard-component-h3 heading">Today's Summary</div>
+  <!-- <hr> -->
+  <div class="dashboard-tiles dashboard-component-margin">
+    <!-- <app-tiles [title]="'Active Visitors'" [value]="visitorCount" [backgroundColor]="'#896CC7'" [icon]="'pi-users'"></app-tiles>
+    
+    <app-tiles [title]="'Total Visitors'" [value]="totalVisitors" [backgroundColor]="'#FF858C'" [icon]="'pi-users'"></app-tiles>
+    <app-tiles [title]="'Checked Out Visitors'" [value]="ScheduledVisitors" [backgroundColor]="'#952991'" [icon]="'pi-users'"></app-tiles> -->
+    <app-tiles
+      [title]="'Active Visitors'"
+      [value]="visitorCount"
+      [backgroundColor]="'#3E68B9'"
+      [icon]="'pi-users'"
+    ></app-tiles>
+    <!-- #cfcece -->
+    <app-tiles
+      [title]="'Checked-Out Visitors'"
+      [value]="ScheduledVisitors"
+      [backgroundColor]="'#F09951'"
+      [icon]="'pi-users'"
+    ></app-tiles>
+    <app-tiles
+      [title]="'Total Visitors'"
+      [value]="totalVisitors"
+      [backgroundColor]="'#8061C3'"
+      [icon]="'pi-users'"
+    ></app-tiles>
+  </div>
+  <div class="charts">
+    <div class="chart bar-chart dashboard-box-shadow">
+      <app-location-chart></app-location-chart>
+      <div>
+        <div class="legend">
+          <div class="legend-item">
+            <span class="legend-color forms-submitted"></span>
+            <span class="legend-label">Forms Submitted</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-color active-visitors"></span>
+            <span class="legend-label">Active Visitors</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-color total-visitors"></span>
+            <span class="legend-label">Total Visitors</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="chart pie-chart dashboard-box-shadow">
+      <app-purpose-pie></app-purpose-pie>
+    </div>
+  </div>
+  <div class="dashboard-component-margin">
+    <app-location-visitortable></app-location-visitortable>
+  </div>
+  <div class="dashboard-component-margin">
+    <app-location-security-table></app-location-security-table>
+  </div>
+</div>
