@@ -30,7 +30,7 @@ export class LocationService {
   // Update an existing location
   updateLocation(id: number, updatedLocation: UpdateLocation): Observable<ApiResponse<UpdateLocation>> {
     const username = this.getUser();
-    return this.http.put<ApiResponse<UpdateLocation>>(`${this.apiUrl}/Location/${id}`, { ...updatedLocation, username });
+    return this.http.put<ApiResponse<UpdateLocation>>(`${this.apiUrl}/${id}`, { ...updatedLocation, username });
   }
 
   getLocationByIdAndName(): Observable<LocationIdAndName[]>{
