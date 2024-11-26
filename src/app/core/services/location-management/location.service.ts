@@ -9,7 +9,7 @@ import { environment } from '../../../../environments/environment';
   providedIn: 'root'
 })
 export class LocationService {
-  private apiUrl = `${environment.apiUrl}Location`;
+  private apiUrl = `${environment.apiUrl}/Location`;
 
   constructor(private http: HttpClient,
               @Inject(PLATFORM_ID) private platformId: Object) { }
