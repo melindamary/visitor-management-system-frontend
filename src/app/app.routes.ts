@@ -46,10 +46,10 @@ export const routes: Routes = [
         component: AdminPanelComponent,
         canActivate: [AuthAdminGuard],
       },
-      {
-        path:'admin-panel/view-user',
-        component:AdminViewIndividualUserComponent
-      },
+      // {
+      //   path:'admin-panel/view-user',
+      //   component:AdminViewIndividualUserComponent
+      // },
       {
         path:'admin-panel/add-user', component: AdminAddUserComponent
       },
@@ -73,10 +73,6 @@ export const routes: Routes = [
     path: 'welcomepage',
     component: WelcomepageComponent,
   },
-  // {
-  //   path: 'visitorform',
-  //   component: VisitorFormComponent,
-  // },
   {
     path: 'login',
     component: LoginComponent,
