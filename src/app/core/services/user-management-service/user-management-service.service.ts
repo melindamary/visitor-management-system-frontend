@@ -51,6 +51,10 @@ export class UserManagementServiceService {
     return this.http.get<any>(`${this.baseUrl}/User/CheckUsernameExists/${username}`);
   }
 
+  validateOldPassword(id:number,newPassword:string):Observable<any>{
+    return this.http.get<any>(`https://localhost:7121/User/CheckOldPassword/${id}/${newPassword}`);
+  }
+
   updateUserData(id:number, userData: any):Observable<any>{    
     console.log("recieved data",userData);
     

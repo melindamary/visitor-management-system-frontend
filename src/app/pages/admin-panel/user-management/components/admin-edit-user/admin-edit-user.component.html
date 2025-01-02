@@ -143,13 +143,13 @@
       <ng-container *ngIf="showInputValidDate">
       <mat-form-field appearance="outline" class="smallInput">
         <mat-label>Choose a date</mat-label>
-        <input  matInput [matDatepicker]="picker"  formControlName="validFrom" [matDatepickerFilter]="dateFilter">
+        <input  matInput [matDatepicker]="picker"  formControlName="validFrom" >
         <mat-hint>MM/DD/YYYY</mat-hint>
         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
-        <mat-error *ngIf="userEditForm.get('validFrom')?.hasError('required')" class="error">
+        <!-- <mat-error *ngIf="userEditForm.get('validFrom')?.hasError('required')" class="error">
           Required Field*
-        </mat-error> 
+        </mat-error>  -->
       </mat-form-field>
     </ng-container>
       </div>
@@ -222,11 +222,15 @@
     <div class="col input-col">
       <mat-form-field appearance="outline" class="smallInput">
         <mat-label>Enter the New Password</mat-label>
-        <input matInput [type]="fieldStates.hidePassword ? 'password' : 'text'" formControlName="password"/>
+        <input matInput [type]="fieldStates.hidePassword ? 'password' : 'text'" formControlName="password"
+        (blur)="checkIfNewPasswordIsSameAsOldPasswordExists($event)"/>
         <button mat-icon-button matSuffix type="button" (click)="toggleFieldState('hidePassword')"
          [attr.aria-label]="'Hide password'" [attr.aria-pressed]="fieldStates.hidePassword">
           <mat-icon>{{ fieldStates.hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
         </button>
+        <mat-error *ngIf="userEditForm.get('password')?.hasError('passwordExists')" class="error">
+          Cannot Enter Old password* 
+        </mat-error> 
         <mat-error *ngIf="userEditForm.get('password')?.hasError('required')" class="error">
           Required Field*
         </mat-error> 

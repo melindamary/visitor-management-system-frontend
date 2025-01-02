@@ -74,7 +74,7 @@ export class AdminEditUserComponent {
     this.userEditForm = this.fb.group({
       RoleId: ['', Validators.required],
       LocationId: ['', Validators.required],
-      validFrom: [null, [Validators.required,futureDateValidator()]],
+      validFrom: [null, [Validators.required]],
       activeState: ['', Validators.required],
       firstName: ['', [Validators.required, alphabetValidator()]],
       lastName: ['', [Validators.required, alphabetValidator()]],
@@ -130,7 +130,7 @@ export class AdminEditUserComponent {
         this.userEditForm.patchValue({
           RoleId: this.user.roleId,
           LocationId: this.user.officeLocationId,
-          validFrom: new Date(this.user.validFrom),
+          validFrom: this.user.validFrom,
           firstName: this.user.firstName,
           lastName: this.user.lastName,
           username: this.user.username,
@@ -205,6 +205,8 @@ export class AdminEditUserComponent {
 
   OnresetPassword() {
     this.resetPassword = !this.resetPassword;
+    console.log("password : ",this.user.password);
+     
   }
 
   checkIfUsernameExists( event: FocusEvent): void {
@@ -229,10 +231,44 @@ export class AdminEditUserComponent {
   }
   }
   
+
+  checkIfNewPasswordIsSameAsOldPasswordExists(event: FocusEvent): void {
+    const inputElement = event.target as HTMLInputElement;
+    const newPassword = inputElement?.value || '';
+    const id = this.user.userId;
+
+    console.log('New Password entered:', newPassword);
+
+    if (newPassword) {
+        this.apiService.validateOldPassword(id, newPassword).subscribe(
+            (response) => {
+                console.log('Response from CheckOldPassword API:', response);
+                if (response.isSuccess && response.result) {
+                    // New password matches the old password, set custom error
+                    this.userEditForm.get('password')?.setErrors({ passwordExists: true });
+                } else {
+                    // If no error, clear the error
+                    this.userEditForm.get('password')?.setErrors(null);
+                }
+            },
+            (error) => {
+                console.error('Error while validating password:', error);
+                // Handle error response
+                this.userEditForm.get('password')?.setErrors({ apiError: true });
+            }
+        );
+    } else {
+        console.warn('New Password is empty.');
+        this.userEditForm.get('password')?.setErrors({ required: true });
+    }
+}
+
+
+
   OnSubmit(): void {
     if (this.userEditForm.valid) {
       const formValues = this.userEditForm.value;
-      const validFrom = formValues.validFrom ? this.formatDate(formValues.validFrom) : null;
+      const validFrom = formValues.validFrom ;
       const loginUserName = this.sharedService.getUsername()
 
       const updatedUser: any = {
@@ -250,7 +286,14 @@ export class AdminEditUserComponent {
       };
 
       if (this.resetPassword) {
-        updatedUser.password = formValues.password;
+       if( updatedUser.password == formValues.password)
+       {
+        console.log("same passwrod as old")
+       }
+       else{
+        console.log("correct one",formValues.password);
+        
+       }
       }
 
       this.apiService.updateUserData(this.user.userId, updatedUser).subscribe({
