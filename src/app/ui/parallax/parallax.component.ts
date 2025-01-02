@@ -82,7 +82,7 @@ gridCells: GridCell[] = [];
 private animationInterval: any;
 constructor(private router: Router, private ngZone: NgZone) {}
 ngOnInit(): void {
-  this.setBackgroundImages();
+  // this.setBackgroundImages();
   this.createGrid();
   this.startAnimation();
 }
@@ -114,13 +114,13 @@ ngOnDestroy(): void {
   this.stopAnimation();
 }
 
-setBackgroundImages(): void {
-  this.sections.forEach((section, i) => {
-    gsap.set(`section:nth-child(${i + 1})`, {
-      backgroundImage: `url(https://picsum.photos/${innerWidth}/${innerHeight}?random=${i})`
-    });
-  });
-}
+// setBackgroundImages(): void {
+//   this.sections.forEach((section, i) => {
+//     gsap.set(`section:nth-child(${i + 1})`, {
+//       backgroundImage: `url(https://picsum.photos/${innerWidth}/${innerHeight}?random=${i})`
+//     });
+//   });
+// }
 
 
 

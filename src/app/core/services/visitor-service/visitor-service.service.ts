@@ -4,6 +4,7 @@ import * as signalR from '@microsoft/signalr';
 import { HubConnectionBuilder } from '@microsoft/signalr';
 import {BehaviorSubject } from 'rxjs';
 import { Subject } from 'rxjs';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -32,10 +33,11 @@ export class SignalRService {
 
   public reloadVisitorLog = new Subject<void>();
   public reloadLocationListDropdown = new Subject<void>();
- 
+  private baseUrl = environment.apiUrl;
+  
   constructor() {
     this.hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl('https://localhost:7121/VisitorHub')
+      .withUrl(`${this.baseUrl}/VisitorHub`)
       .build();
 
       this.hubConnection.on('ReloadVisitorLog', () => {

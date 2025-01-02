@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as signalR from '@microsoft/signalr';
 import { Subject } from 'rxjs';
+import { environment } from '../../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -9,10 +10,10 @@ export class VisitorLogSignalRService {
 
   private hubConnection: signalR.HubConnection;
   public reloadVisitorLog = new Subject<void>();
-
+  private baseUrl: string = environment.apiUrl
   constructor() {
     this.hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl('https://localhost:7121/VisitorHub')
+      .withUrl(`${this.baseUrl}/VisitorHub`)
       .build();
 
     this.hubConnection.on('ReloadVisitorLog', () => {

@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { DatePipe } from '@angular/common';
+import { environment } from '../../../../environments/environment';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -9,7 +11,7 @@ export class ReportService {
   constructor(private http: HttpClient, private datePipe: DatePipe) {}
   reports: any[] = [];
   result: any[] = [];
-  baseUrl = 'https://localhost:7121';
+  baseUrl = environment.apiUrl;
 
   fetchReport(): Observable<any> {
     var response = this.http.get(`${this.baseUrl}/Report/VisitorList`);

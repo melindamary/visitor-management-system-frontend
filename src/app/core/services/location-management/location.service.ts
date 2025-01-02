@@ -3,12 +3,13 @@ import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { ApiResponse, LocationDetails, LocationIdAndName, UpdateLocation } from '../../models/location-details.interface';
 import { isPlatformBrowser } from '@angular/common';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LocationService {
-  private apiUrl = 'https://localhost:7121/Location';
+  private apiUrl = `${environment.apiUrl}/Location`;
 
   constructor(private http: HttpClient,
               @Inject(PLATFORM_ID) private platformId: Object) { }
@@ -29,7 +30,7 @@ export class LocationService {
   // Update an existing location
   updateLocation(id: number, updatedLocation: UpdateLocation): Observable<ApiResponse<UpdateLocation>> {
     const username = this.getUser();
-    return this.http.put<ApiResponse<UpdateLocation>>(`${this.apiUrl}/Location/${id}`, { ...updatedLocation, username });
+    return this.http.put<ApiResponse<UpdateLocation>>(`${this.apiUrl}/${id}`, { ...updatedLocation, username });
   }
 
   getLocationByIdAndName(): Observable<LocationIdAndName[]>{

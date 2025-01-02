@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ChartModule } from 'primeng/chart';
 import { Chart } from 'chart.js';
 import { HttpClient } from '@angular/common/http';
-
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-purpose-pie',
@@ -129,7 +129,7 @@ export class PurposePieComponent {
 
   fetchpiedata() {
     return new Promise<any>((resolve, reject) => {
-      this.http.get<any>('https://localhost:7121/Statistics/GetPurposeStatistics/purpose').subscribe(res => {
+      this.http.get<any>(`${environment.apiUrl}/Statistics/GetPurposeStatistics/purpose`).subscribe(res => {
         let formattedData = res.$values.map((item: { value: any; name: any; }) => {
           return { value: item.value, name: item.name };
         });

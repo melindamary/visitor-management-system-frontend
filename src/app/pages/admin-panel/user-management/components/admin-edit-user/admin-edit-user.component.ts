@@ -15,7 +15,7 @@ import { UserService } from '../../../../../core/services/user-management-servic
 import { UserManagementServiceService } from '../../../../../core/services/user-management-service/user-management-service.service';
 import { UserByIdOverview} from '../../../../../core/models/user-overview-display.interface';
 import { FormBuilder, FormGroup, FormsModule, NgModel, ReactiveFormsModule, Validators } from '@angular/forms';
-// import { alphabetValidator, numberValidator, passwordMatchValidator } from '../../../../../pages/Admin-Panel/user-management/components/admin-add-user/custom-validators';
+// import { alphabetValidator, numberValidator, passwordMatchValidator } from '../../../../../pages/admin-panel/user-management/components/admin-add-user/custom-validators';
 import { alphabetValidator, futureDateValidator, numberValidator, passwordMatchValidator } from '../admin-add-user/custom-validators';
 import { SharedService } from '../../../../../core/services/shared-service/shared-data.service.service';
 import { AdminAddUserComponent } from '../admin-add-user/admin-add-user.component';
