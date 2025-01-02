@@ -52,7 +52,7 @@ export class UserManagementServiceService {
   }
 
   validateOldPassword(id:number,newPassword:string):Observable<any>{
-    return this.http.get<any>(`https://localhost:7121/User/CheckOldPassword/${id}/${newPassword}`);
+    return this.http.get<any>(`${this.baseUrl}/User/CheckOldPassword/${id}/${newPassword}`);
   }
 
   updateUserData(id:number, userData: any):Observable<any>{    
