@@ -9,7 +9,7 @@ import { environment } from '../../../../environments/environment';
   providedIn: 'root'
 })
 export class LocationService {
-  private apiUrl = `${environment.apiUrl}Location`;
+  private apiUrl = `${environment.apiUrl}/Location`;
 
   constructor(private http: HttpClient,
               @Inject(PLATFORM_ID) private platformId: Object) { }
@@ -30,7 +30,7 @@ export class LocationService {
   // Update an existing location
   updateLocation(id: number, updatedLocation: UpdateLocation): Observable<ApiResponse<UpdateLocation>> {
     const username = this.getUser();
-    return this.http.put<ApiResponse<UpdateLocation>>(`${this.apiUrl}/Location/${id}`, { ...updatedLocation, username });
+    return this.http.put<ApiResponse<UpdateLocation>>(`${this.apiUrl}/${id}`, { ...updatedLocation, username });
   }
 
   getLocationByIdAndName(): Observable<LocationIdAndName[]>{

@@ -4,7 +4,7 @@ import { RouterLink } from '@angular/router';
 import { log } from 'console';
 import { subscribe } from 'diagnostics_channel';
 import { ChartModule } from 'primeng/chart';
-
+import { environment } from '../../../environments/environment';
 interface ChartDataset {
   label: string;
   backgroundColor: string;
@@ -104,7 +104,7 @@ ngAfterViewInit() {
   // this.createScale();
 }
 fetchChartData() {
-  this.http.get<any>('https://localhost:7121/Statistics/GetDashboardStatistics/dashboard').subscribe(res => {
+  this.http.get<any>(`${environment.apiUrl}/Statistics/GetDashboardStatistics/dashboard`).subscribe(res => {
     console.log(res);
 
     const labels: string[] = [];
