@@ -49,7 +49,7 @@
 
   <ng-template pTemplate="right">
     <!-- Reset button -->
-    <button class="cta-btn" (click)="resetReport()">
+    <button class="cta-btn" (click)="resetReport(dt)">
       <i class="pi pi-refresh" style="font-size: 13px; margin-right: 1px"></i>
       Reset
     </button>
@@ -68,7 +68,7 @@
 </p-toolbar>
 
 <!-- Reports Table -->
-<p-table
+<p-table #dt
   [resizableColumns]="true"
   styleClass="p-datatable-striped p-datatable-gridlines" 
   [columns]="cols"

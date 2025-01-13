@@ -256,7 +256,7 @@ export class ReportTableComponent {
     }
   }
 
-  resetReport() {
+  resetReport(dt: any) {
     this.filteredReports = this.reports;
     this.rangeDates = undefined;
     this.selectedMonth = undefined;
@@ -264,6 +264,10 @@ export class ReportTableComponent {
     this.selectedStartDate = '';
     this.selectedEndDate = '';
     this.selectedLocation = null;
+    
+    this.searchTerms = {}; // Clear the searchTerms object
+    dt.clear(); // Clear all table filters
+    this.selectedDate = "";
   }
   viewDetails(rowData: any) {
     console.log('Row data: ', rowData);
