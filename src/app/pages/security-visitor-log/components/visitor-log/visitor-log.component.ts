@@ -344,8 +344,6 @@ export class VisitorLogComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       acceptLabel: 'Yes',
       rejectLabel: 'No',
-      acceptIcon: 'pi pi-check',
-      rejectIcon: 'pi pi-times',
       acceptButtonStyleClass: 'custom-accept-button',
       rejectButtonStyleClass: 'custom-reject-button',
       accept: () => {
