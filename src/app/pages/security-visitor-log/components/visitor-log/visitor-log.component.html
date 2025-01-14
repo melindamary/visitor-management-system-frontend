@@ -9,6 +9,21 @@
   (onChange)="loadVisitorLogToday()"
   />
 </div>
+<!-- <ng-container *ngIf="role !== 'security'">
+<mat-form-field appearance="outline" class="location">
+  <mat-label>Select a Location</mat-label>
+  <mat-select
+  [(value)]="selectedLocation"
+  
+    (selectionChange)="loadVisitorLogToday1($event.value)"
+  >
+    <mat-option *ngFor="let location of locations" [value]="location.name">
+      {{ location.name }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+</ng-container> -->
+
 <div class="tile-container" style="display: flex; width: 100%;">
   <app-visitor-log-tiles 
     header="Today's"
