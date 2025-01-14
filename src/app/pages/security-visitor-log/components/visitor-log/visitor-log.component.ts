@@ -11,7 +11,7 @@ import { VisitorLogService } from '../../../../core/services/visitor-log-service
 import { VisitorPassCodeDTO } from '../../../../core/models/visitor-pass-code.interface';
 import { ButtonModule } from 'primeng/button';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { DialogModule } from 'primeng/dialog';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
@@ -27,11 +27,11 @@ import { DropdownModule } from 'primeng/dropdown';
 import { SharedService } from '../../../../core/services/shared-service/shared-data.service.service';
 import { SignalRService } from '../../../../core/services/visitor-service/visitor-service.service';
 import { subscribe } from 'diagnostics_channel';
-
+import { MatSelectModule } from '@angular/material/select';
 @Component({
   selector: 'app-visitor-log',
   standalone: true,
-  imports: [TableModule, DialogModule, RippleModule, ToastModule,
+  imports: [TableModule, DialogModule, RippleModule, ToastModule,MatFormFieldModule,MatSelectModule,
     ConfirmDialogModule, InputTextModule, InputTextareaModule,
     CommonModule, InputNumberModule, TabViewModule, ButtonModule,
     FormsModule, ReactiveFormsModule, VisitorLogTilesComponent, TableComponent, 
@@ -235,6 +235,50 @@ export class VisitorLogComponent implements OnInit {
     });
   }
 
+
+  // loadVisitorLogToday1(value:string): void {
+  //   const rolename = this.sharedDataService.getRole().toLowerCase();
+  //   let locationName: string ;
+  //   if (rolename === 'security') {
+  //     locationName = this.sharedDataService.getLocation();
+  //   } else {
+  //     locationName = value;
+  //     console.log("My location",locationName)
+  //   }
+  //   this.visitorLogService.getVisitorLogToday(locationName).subscribe({
+  //     next: (response: VisitorLogResponse) => {
+  //       if (response.isSuccess) {
+  //         console.log("my response",response);
+  //         this.activeVisitorsCount = response.result.activeVisitorsCount;
+  //         this.totalVisitorsCount = response.result.totalVisitorsCount;
+  //         this.checkedOutVisitorsCount = response.result.checkedOutVisitorsCount;
+  //         this.upcomingVisitors = response.result.upcomingVisitors.$values;
+  //         this.activeVisitors = response.result.activeVisitors.$values.map(visitor => ({
+  //           ...visitor,
+  //           checkInTime: this.datePipe.transform(visitor.checkInTime, 'shortTime')
+  //         }));
+  //         this.visitorsToday = response.result.visitorsToday.$values.map(visitor => ({
+  //           ...visitor,
+  //           checkInTime: this.datePipe.transform(visitor.checkInTime, 'shortTime'),
+  //           checkOutTime: this.datePipe.transform(visitor.checkOutTime, 'shortTime')
+  //         }));
+  //         this.checkedOutVisitors = response.result.checkedOutVisitors.$values.map(visitor => ({
+  //           ...visitor,
+  //           checkInTime: this.datePipe.transform(visitor.checkInTime, 'shortTime'),
+  //           checkOutTime: this.datePipe.transform(visitor.checkOutTime, 'shortTime')
+  //         }));
+  //         this.scheduledVisitors = response.result.scheduledVisitors.$values.map(visitor => ({
+  //           ...visitor,
+  //           visitDate: this.datePipe.transform(visitor.visitDate,'dd-MM-yyyy'),
+  //         }));
+  //       } 
+  //     else {
+  //         console.error('Error:', response.errorMessages);
+  //         this.messageService.add({ severity: 'error', summary: 'Error', detail: response.errorMessages.join(', '), life: 3000 });
+  //       }
+  //     }
+  //   });
+  // }
   onTabChange(event: any): void {
     const index = event.index;
     switch (index) {
