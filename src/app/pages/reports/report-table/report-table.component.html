@@ -107,9 +107,9 @@
           <p-columnFilter
               ngDefaultControl
               *ngIf="col.field !== 'slNo' && col.field !== 'visitDate'"
-          type="text"
-          [field]="col.field"
-          [matchMode]="'contains'"
+              type="text"
+              [field]="col.field"
+              [matchMode]="'contains'"
               [placeholder]="'Search...'"
               [(ngModel)]="searchTerms[col.field]"
               (keyup)="filterReports()"
