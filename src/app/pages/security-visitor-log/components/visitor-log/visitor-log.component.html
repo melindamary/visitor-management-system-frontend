@@ -79,9 +79,11 @@
     <app-table [dataSource]="visitorDataSource" [columnsToDisplay]="visitorColumns" [rows]="5" [totalItems]="totalItems"
              [actionsTemplate]="actionsTemplate" [summaryTemplate]="summaryTemplate" >
     <ng-template #actionsTemplate let-rowData>
-      <p-button icon="pi pi-eye" [rounded]="true" [text]="true" (click)="viewVisitor(rowData)" pTooltip="View visitor details"></p-button>
-      <p-button *ngIf="currentTab === 'upcoming'" icon="pi pi-sign-in" [rounded]="true" [text]="true" severity="success" (click)="checkInVisitor(rowData)" pTooltip="Check-In Visitor"></p-button>
-      <p-button *ngIf="currentTab === 'active'" icon="pi pi-sign-out" [rounded]="true" [text]="true" severity="danger" (click)="checkOutVisitor(rowData)" pTooltip="Check-Out Visitor"></p-button>
+      <div class="button-container">
+        <p-button icon="pi pi-eye" [rounded]="true" [outlined]="true" (click)="viewVisitor(rowData)" pTooltip="View visitor details"></p-button>
+        <p-button *ngIf="currentTab === 'upcoming'" icon="pi pi-sign-in"  [outlined]="true" [rounded]="true" severity="success" (click)="checkInVisitor(rowData)" pTooltip="Check-In Visitor"></p-button>
+        <p-button *ngIf="currentTab === 'active'" icon="pi pi-sign-out" [outlined]="true" [rounded]="true" [text]="true" severity="danger" (click)="checkOutVisitor(rowData)" pTooltip="Check-Out Visitor"></p-button>
+      </div>
     </ng-template>
     <ng-template #summaryTemplate>
       <div class="flex align-items-center justify-content-between">

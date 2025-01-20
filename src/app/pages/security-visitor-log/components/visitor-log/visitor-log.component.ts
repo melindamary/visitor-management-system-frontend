@@ -67,8 +67,8 @@ export class VisitorLogComponent implements OnInit {
 
   columnsUpcoming = [
     { field: 'name', header: 'Visitor Name', width: '20%'  },
-    { field: 'purposeName', header: 'Purpose of Visit', width: '22%' },
-    { field: 'phone', header: 'Phone Number', width: '22%' },
+    { field: 'purposeName', header: 'Purpose of Visit', width: '21%' },
+    { field: 'phone', header: 'Phone Number', width: '21%' },
     { field: 'hostName', header: 'Host Name', width: '20%' },
     { field: 'actions', header: 'Actions' }
   ];
@@ -388,6 +388,8 @@ export class VisitorLogComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       acceptLabel: 'Yes',
       rejectLabel: 'No',
+      acceptIcon: 'none',
+      rejectIcon: 'none',
       acceptButtonStyleClass: 'custom-accept-button',
       rejectButtonStyleClass: 'custom-reject-button',
       accept: () => {
