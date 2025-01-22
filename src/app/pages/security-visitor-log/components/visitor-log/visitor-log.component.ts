@@ -1,5 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { VisitorLog, VisitorLogResponse } from '../../../../core/models/visitor-log.interface';
+import {
+  VisitorLog,
+  VisitorLogResponse,
+} from '../../../../core/models/visitor-log.interface';
 
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
@@ -10,7 +13,13 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { VisitorLogService } from '../../../../core/services/visitor-log-service/visitor-log.service';
 import { VisitorPassCodeDTO } from '../../../../core/models/visitor-pass-code.interface';
 import { ButtonModule } from 'primeng/button';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { DialogModule } from 'primeng/dialog';
 import { InputNumberModule } from 'primeng/inputnumber';
@@ -31,28 +40,44 @@ import { MatSelectModule } from '@angular/material/select';
 @Component({
   selector: 'app-visitor-log',
   standalone: true,
-  imports: [TableModule, DialogModule, RippleModule, ToastModule,MatFormFieldModule,MatSelectModule,
-    ConfirmDialogModule, InputTextModule, InputTextareaModule,
-    CommonModule, InputNumberModule, TabViewModule, ButtonModule,
-    FormsModule, ReactiveFormsModule, VisitorLogTilesComponent, TableComponent, 
-    VisitorDetailsDialogComponent, TooltipModule, DropdownModule],
+  imports: [
+    TableModule,
+    DialogModule,
+    RippleModule,
+    ToastModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    ConfirmDialogModule,
+    InputTextModule,
+    InputTextareaModule,
+    CommonModule,
+    InputNumberModule,
+    TabViewModule,
+    ButtonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    VisitorLogTilesComponent,
+    TableComponent,
+    VisitorDetailsDialogComponent,
+    TooltipModule,
+    DropdownModule,
+  ],
   providers: [MessageService, ConfirmationService, VisitorLogService, DatePipe],
   templateUrl: './visitor-log.component.html',
-  styleUrls: ['./visitor-log.component.scss']
+  styleUrls: ['./visitor-log.component.scss'],
 })
 export class VisitorLogComponent implements OnInit {
-
   activeVisitorsCount = 0;
   totalVisitorsCount = 0;
   checkedOutVisitorsCount = 0;
-  upcomingVisitorsCount =0;
+  upcomingVisitorsCount = 0;
 
   upcomingVisitors: VisitorLog[] = [];
   activeVisitors: VisitorLog[] = [];
   checkedOutVisitors: VisitorLog[] = [];
   visitorsToday: VisitorLog[] = [];
   scheduledVisitors: VisitorLog[] = [];
-  
+
   currentTab: string = 'upcoming';
   visibleCheckInDialog = false;
   visibleDetailsDialog = false;
@@ -66,46 +91,46 @@ export class VisitorLogComponent implements OnInit {
   role: string = '';
 
   columnsUpcoming = [
-    { field: 'name', header: 'Visitor Name', width: '20%'  },
+    { field: 'name', header: 'Visitor Name', width: '20%' },
     { field: 'purposeName', header: 'Purpose of Visit', width: '21%' },
     { field: 'phone', header: 'Phone Number', width: '21%' },
     { field: 'hostName', header: 'Host Name', width: '20%' },
-    { field: 'actions', header: 'Actions' }
+    { field: 'actions', header: 'Actions' },
   ];
 
   columnsActive = [
-    { field: 'visitorPassCode', header: 'Pass Code', width: '14%'},
-    { field: 'name', header: 'Visitor Name',  },
-    { field: 'purposeName', header: 'Purpose of Visit',},
-    { field: 'checkInTime', header: 'Check-In', width:'14%' },
-    { field: 'phone', header: 'Phone Number',  },
-    { field: 'actions', header: 'Actions', width: '14%'}
+    { field: 'visitorPassCode', header: 'Pass Code', width: '14%' },
+    { field: 'name', header: 'Visitor Name' },
+    { field: 'purposeName', header: 'Purpose of Visit' },
+    { field: 'checkInTime', header: 'Check-In', width: '14%' },
+    { field: 'phone', header: 'Phone Number' },
+    { field: 'actions', header: 'Actions', width: '14%' },
   ];
 
   columnsCheckedOut = [
     { field: 'name', header: 'Visitor Name' },
     { field: 'purposeName', header: 'Purpose of Visit' },
-    { field: 'checkInTime', header: 'Check-In', width:'14%' },
-    { field: 'checkOutTime', header: 'Check-Out', width:'16%'},
+    { field: 'checkInTime', header: 'Check-In', width: '14%' },
+    { field: 'checkOutTime', header: 'Check-Out', width: '16%' },
     { field: 'phone', header: 'Phone Number' },
-    { field: 'actions', header: 'Actions' }
+    { field: 'actions', header: 'Actions' },
   ];
 
   totalvisitorColumns = [
     { field: 'name', header: 'Visitor Name' },
     { field: 'purposeName', header: 'Purpose of Visit' },
-    { field: 'phone', header: 'Phone Number' }, 
+    { field: 'phone', header: 'Phone Number' },
     { field: 'hostName', header: 'Host name' },
-    { field: 'actions', header: 'Actions' }
+    { field: 'actions', header: 'Actions' },
   ];
 
   columnsScheduled = [
-    { field: 'name', header: 'Visitor Name', width: '18%'  },
+    { field: 'name', header: 'Visitor Name', width: '18%' },
     { field: 'purposeName', header: 'Purpose of Visit', width: '22%' },
     { field: 'phone', header: 'Phone Number', width: '22%' },
-    {field: 'visitDate', header:'Visit Date', width:'20%'},
+    { field: 'visitDate', header: 'Visit Date', width: '20%' },
     { field: 'hostName', header: 'Host Name', width: '20%' },
-    { field: 'actions', header: 'Actions' }
+    { field: 'actions', header: 'Actions' },
   ];
 
   get visitorDataSource() {
@@ -154,19 +179,22 @@ export class VisitorLogComponent implements OnInit {
   }
 
   constructor(
-    private sharedDataService : SharedService,
+    private sharedDataService: SharedService,
     private locationService: LocationService,
     private visitorLogService: VisitorLogService,
     private signalRService: SignalRService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
     private datePipe: DatePipe,
-    private fb: FormBuilder,
+    private fb: FormBuilder
   ) {
     this.checkInForm = this.fb.group({
       id: [null],
-      visitorPassCode: ['', [Validators.required, Validators.pattern('^(0*[1-9][0-9]*)$')]]      
-      });
+      visitorPassCode: [
+        '',
+        [Validators.required, Validators.pattern('^(0*[1-9][0-9]*)$')],
+      ],
+    });
   }
 
   ngOnInit(): void {
@@ -186,7 +214,7 @@ export class VisitorLogComponent implements OnInit {
       (data: LocationIdAndName[]) => {
         this.locations = data;
       },
-      error => {
+      (error) => {
         console.error('Error fetching locations', error);
       }
     );
@@ -206,35 +234,63 @@ export class VisitorLogComponent implements OnInit {
           console.log(response);
           this.activeVisitorsCount = response.result.activeVisitorsCount;
           this.totalVisitorsCount = response.result.totalVisitorsCount;
-          this.checkedOutVisitorsCount = response.result.checkedOutVisitorsCount;
+          this.checkedOutVisitorsCount =
+            response.result.checkedOutVisitorsCount;
           this.upcomingVisitors = response.result.upcomingVisitors.$values;
-          this.activeVisitors = response.result.activeVisitors.$values.map(visitor => ({
-            ...visitor,
-            checkInTime: this.datePipe.transform(visitor.checkInTime, 'shortTime')
-          }));
-          this.visitorsToday = response.result.visitorsToday.$values.map(visitor => ({
-            ...visitor,
-            checkInTime: this.datePipe.transform(visitor.checkInTime, 'shortTime'),
-            checkOutTime: this.datePipe.transform(visitor.checkOutTime, 'shortTime')
-          }));
-          this.checkedOutVisitors = response.result.checkedOutVisitors.$values.map(visitor => ({
-            ...visitor,
-            checkInTime: this.datePipe.transform(visitor.checkInTime, 'shortTime'),
-            checkOutTime: this.datePipe.transform(visitor.checkOutTime, 'shortTime')
-          }));
-          this.scheduledVisitors = response.result.scheduledVisitors.$values.map(visitor => ({
-            ...visitor,
-            visitDate: this.datePipe.transform(visitor.visitDate,'dd-MM-yyyy'),
-          }));
-        } 
-      else {
+          this.activeVisitors = response.result.activeVisitors.$values.map(
+            (visitor) => ({
+              ...visitor,
+              checkInTime: this.datePipe.transform(
+                visitor.checkInTime,
+                'shortTime'
+              ),
+            })
+          );
+          this.visitorsToday = response.result.visitorsToday.$values.map(
+            (visitor) => ({
+              ...visitor,
+              checkInTime: this.datePipe.transform(
+                visitor.checkInTime,
+                'shortTime'
+              ),
+              checkOutTime: this.datePipe.transform(
+                visitor.checkOutTime,
+                'shortTime'
+              ),
+            })
+          );
+          this.checkedOutVisitors =
+            response.result.checkedOutVisitors.$values.map((visitor) => ({
+              ...visitor,
+              checkInTime: this.datePipe.transform(
+                visitor.checkInTime,
+                'shortTime'
+              ),
+              checkOutTime: this.datePipe.transform(
+                visitor.checkOutTime,
+                'shortTime'
+              ),
+            }));
+          this.scheduledVisitors =
+            response.result.scheduledVisitors.$values.map((visitor) => ({
+              ...visitor,
+              visitDate: this.datePipe.transform(
+                visitor.visitDate,
+                'dd-MM-yyyy'
+              ),
+            }));
+        } else {
           console.error('Error:', response.errorMessages);
-          this.messageService.add({ severity: 'error', summary: 'Error', detail: response.errorMessages.join(', '), life: 3000 });
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: response.errorMessages.join(', '),
+            life: 3000,
+          });
         }
-      }
+      },
     });
   }
-
 
   // loadVisitorLogToday1(value:string): void {
   //   const rolename = this.sharedDataService.getRole().toLowerCase();
@@ -271,7 +327,7 @@ export class VisitorLogComponent implements OnInit {
   //           ...visitor,
   //           visitDate: this.datePipe.transform(visitor.visitDate,'dd-MM-yyyy'),
   //         }));
-  //       } 
+  //       }
   //     else {
   //         console.error('Error:', response.errorMessages);
   //         this.messageService.add({ severity: 'error', summary: 'Error', detail: response.errorMessages.join(', '), life: 3000 });
@@ -328,9 +384,6 @@ export class VisitorLogComponent implements OnInit {
     }
   }
 
-  
-  
-
   showDialog(visitor: VisitorLog): void {
     this.selectedVisitor = { ...visitor };
     this.cardNumber = '';
@@ -338,8 +391,9 @@ export class VisitorLogComponent implements OnInit {
     this.visibleDetailsDialog = false;
     this.checkInForm.reset();
     this.checkInForm.patchValue({ id: null }); // Reset the id field
-
   }
+
+  isSubmitting: boolean = false; // Track if the request is being processed
 
   saveCheckInTime(): void {
     // if (this.selectedVisitor) {
@@ -347,29 +401,51 @@ export class VisitorLogComponent implements OnInit {
     //     visitorPassCode: +this.cardNumber
     //   };
 
-    if (this.checkInForm.invalid) {
-      return;
+    if (this.checkInForm.invalid || this.isSubmitting) {
+      return; // Prevent submission if form is invalid or submission is in progress
     }
-
-    const updateVisitorPassCode:VisitorPassCodeDTO = this.checkInForm.value;
-      this.visitorLogService.updateCheckInTimeAndCardNumber(this.selectedVisitor.id, updateVisitorPassCode).subscribe({
+    this.isSubmitting = true; // Set the flag to true when the submission starts
+    const updateVisitorPassCode: VisitorPassCodeDTO = this.checkInForm.value;
+    this.visitorLogService
+      .updateCheckInTimeAndCardNumber(
+        this.selectedVisitor.id,
+        updateVisitorPassCode
+      )
+      .subscribe({
         next: (response: VisitorLogResponse) => {
           if (response.isSuccess) {
-            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Check-in time updated successfully', life: 3000 });
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Success',
+              detail: 'Check-in time updated successfully',
+              life: 3000,
+            });
             this.loadVisitorLogToday(); // Refresh the visitor log data
             this.visibleCheckInDialog = false;
           } else {
             console.error('Error:', response.errorMessages);
-            this.messageService.add({ severity: 'error', summary: 'Error', detail: response.errorMessages.join(', '), life: 3000 });
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: response.errorMessages.join(', '),
+              life: 3000,
+            });
           }
         },
         error: (error) => {
           console.error('Error updating visitor:', error);
-          this.messageService.add({ severity: 'error', summary: 'Error', detail: error.message || 'Error updating visitor', life: 3000 });
-        }
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: error.message || 'Error updating visitor',
+            life: 3000,
+          });
+        },
+        complete: () => {
+          this.isSubmitting = false; // Reset the flag once the request is completed
+        },
       });
-    }
-  
+  }
 
   viewVisitor(visitor: VisitorLog): void {
     this.selectedVisitor = { ...visitor };
@@ -396,17 +472,32 @@ export class VisitorLogComponent implements OnInit {
         this.visitorLogService.updateCheckOutTime(visitor.id).subscribe({
           next: (response: VisitorLogResponse) => {
             if (response.isSuccess) {
-              this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Visitor checked out successfully', life: 3000 });
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Success',
+                detail: 'Visitor checked out successfully',
+                life: 3000,
+              });
               this.loadVisitorLogToday();
             } else {
-              this.messageService.add({ severity: 'error', summary: 'Error', detail: response.errorMessages.join(', '), life: 3000 });
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Error',
+                detail: response.errorMessages.join(', '),
+                life: 3000,
+              });
             }
           },
           error: (error) => {
-            this.messageService.add({ severity: 'error', summary: 'Error', detail: error.message || 'Error checking out visitor', life: 3000 });
-          }
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: error.message || 'Error checking out visitor',
+              life: 3000,
+            });
+          },
         });
-      }
+      },
     });
   }
 
@@ -416,5 +507,4 @@ export class VisitorLogComponent implements OnInit {
     }
     this.visibleDetailsDialog = visible;
   }
-
 }
