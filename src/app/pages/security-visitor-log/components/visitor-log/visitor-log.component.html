@@ -122,7 +122,7 @@
       </form>
       <ng-template pTemplate="footer">
         <p-button label="Cancel" styleClass="custom-reject-button" (click)="visibleCheckInDialog = false"></p-button>
-        <p-button label="Save"  (click)="saveCheckInTime()" [disabled]="checkInForm.invalid"></p-button>
+        <p-button label="Save" (click)="saveCheckInTime()" [disabled]="checkInForm.invalid || isSubmitting"></p-button>
       </ng-template>  
     </p-dialog>
 
