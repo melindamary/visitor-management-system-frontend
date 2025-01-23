@@ -80,9 +80,9 @@
              [actionsTemplate]="actionsTemplate" [summaryTemplate]="summaryTemplate" >
     <ng-template #actionsTemplate let-rowData>
       <div class="button-container">
-        <p-button icon="pi pi-eye" [rounded]="true" [outlined]="true" (click)="viewVisitor(rowData)" pTooltip="View visitor details"></p-button>
-        <p-button *ngIf="currentTab === 'upcoming'" icon="pi pi-sign-in"  [outlined]="true" [rounded]="true" severity="success" (click)="checkInVisitor(rowData)" pTooltip="Check-In Visitor"></p-button>
-        <p-button *ngIf="currentTab === 'active'" icon="pi pi-sign-out" [outlined]="true" [rounded]="true" [text]="true" severity="danger" (click)="checkOutVisitor(rowData)" pTooltip="Check-Out Visitor"></p-button>
+        <p-button icon="pi pi-eye" [rounded]="true" [outlined]="false" (click)="viewVisitor(rowData)"   pTooltip="View visitor details"></p-button>
+        <p-button *ngIf="currentTab === 'upcoming'" icon="pi pi-sign-in"  [outlined]="false" [rounded]="true" severity="success" (click)="checkInVisitor(rowData)" pTooltip="Check-In Visitor"></p-button>
+        <p-button class = "" *ngIf="currentTab === 'active'" icon="pi pi-sign-out " [outlined]="false" [rounded]="true" severity="help"   (click)="checkOutVisitor(rowData)" pTooltip="Check-Out Visitor"></p-button>
       </div>
     </ng-template>
     <ng-template #summaryTemplate>
