@@ -430,6 +430,7 @@ export class VisitorLogComponent implements OnInit {
               detail: response.errorMessages.join(', '),
               life: 3000,
             });
+            this.isSubmitting = false;
           }
         },
         error: (error) => {
@@ -440,10 +441,8 @@ export class VisitorLogComponent implements OnInit {
             detail: error.message || 'Error updating visitor',
             life: 3000,
           });
-        },
-        complete: () => {
-          this.isSubmitting = false; // Reset the flag once the request is completed
-        },
+          this.isSubmitting = false;
+        }       
       });
   }
 
