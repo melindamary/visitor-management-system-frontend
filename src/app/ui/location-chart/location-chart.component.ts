@@ -105,7 +105,7 @@ ngAfterViewInit() {
 }
 fetchChartData() {
   this.http.get<any>(`${environment.apiUrl}/Statistics/GetDashboardStatistics/dashboard`).subscribe(res => {
-    console.log(res);
+    console.log("dashboard graph ",res);
 
     const labels: string[] = [];
     const passesGenerated: number[] = [];
@@ -130,7 +130,7 @@ fetchChartData() {
           data: passesGenerated
         },
         {
-          label: 'Active Visitors',
+          label: 'Incomplete Checkouts',
           backgroundColor: '#3E68B9',
           borderColor: '#3E68B9',
           data: activeVisitors

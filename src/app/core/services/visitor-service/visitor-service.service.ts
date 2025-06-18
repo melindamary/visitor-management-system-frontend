@@ -11,7 +11,7 @@ import { environment } from '../../../../environments/environment';
 })
 export class SignalRService {
   private hubConnection: signalR.HubConnection;
-  private visitorCountSource = new BehaviorSubject<number>(9); // Observable to track visitor count
+  private visitorCountSource = new BehaviorSubject<number>(0); // Observable to track visitor count
   private scheduledVisitorsSource = new BehaviorSubject<number>(0); // Initialize with 0
   private totalVisitorsSource = new BehaviorSubject<number>(0); // Initialize with 0
   

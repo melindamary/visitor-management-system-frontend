@@ -92,7 +92,7 @@ export class LocationVisitortableComponent {
     this.http
       .get<ApiResponse>(`${environment.apiUrl}/Statistics/GetLocationStatistics/location`, { params })
       .subscribe((res) => {
-         console.log(res);
+         console.log("visitor location data",res);
          // Map the API response to the LbTable format
          this.lbTables = res.$values.map(value => ({
            location: value.location,
