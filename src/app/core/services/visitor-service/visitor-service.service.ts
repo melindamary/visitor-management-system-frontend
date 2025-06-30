@@ -20,8 +20,11 @@ export class SignalRService {
   private locationStatisticssecurity = new BehaviorSubject<any[]>([]); // Observable to track location statistics
 //Receive Report update
   private receiveReport=new BehaviorSubject<any[]>([]);// Observable to track ReceiveReport
-  
-  
+
+  public reloadVisitorLog = new Subject<void>(); // Observable to track Visitor log
+  public reloadLocationListDropdown = new Subject<void>(); 
+
+  reloadVisitorLog$ = this.reloadVisitorLog.asObservable(); // Expose observable
   visitorCount$ = this.visitorCountSource.asObservable(); // Expose observable
   scheduledVisitors$ = this.scheduledVisitorsSource.asObservable(); // Expose observable
   totalVisitors$ = this.totalVisitorsSource.asObservable(); // Expose observable
@@ -31,8 +34,7 @@ export class SignalRService {
   locationStatisticssecurity$ = this.locationStatisticssecurity.asObservable(); // Expose observable for location statistics of locataion and security table
   receiveReport$ = this.receiveReport.asObservable(); // Expose observable for ReceiveReport 
 
-  public reloadVisitorLog = new Subject<void>();
-  public reloadLocationListDropdown = new Subject<void>();
+  
   private baseUrl = environment.apiUrl;
   
   constructor() {
