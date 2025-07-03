@@ -10,7 +10,8 @@ export class VisitorLogSignalRService {
 
   private hubConnection: signalR.HubConnection;
   public reloadVisitorLog = new Subject<void>();
-  private baseUrl: string = environment.apiUrl
+  // private baseUrl: string = environment.apiUrl
+  private baseUrl: string = 'https://visitex.experionglobal.dev';
   constructor() {
     this.hubConnection = new signalR.HubConnectionBuilder()
       .withUrl(`${this.baseUrl}/VisitorHub`)

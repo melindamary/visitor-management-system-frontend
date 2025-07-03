@@ -202,7 +202,7 @@ export class VisitorLogComponent implements OnInit {
     this.role = this.sharedDataService.getRole().toLowerCase();
     this.loadLocations();
     this.loadVisitorLogToday();
-    this.signalRService.reloadVisitorLog.subscribe(() => {
+    this.signalRService.reloadVisitorLog$.subscribe(() => {
       this.loadVisitorLogToday();
     });
     this.signalRService.reloadLocationListDropdown.subscribe(() => {

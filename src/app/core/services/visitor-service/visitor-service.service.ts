@@ -21,7 +21,8 @@ export class SignalRService {
 //Receive Report update
   private receiveReport=new BehaviorSubject<any[]>([]);// Observable to track ReceiveReport
 
-  public reloadVisitorLog = new Subject<void>(); // Observable to track Visitor log
+  //public reloadVisitorLog = new Subject<void>(); // Observable to track Visitor log
+  private reloadVisitorLog = new BehaviorSubject<any[]>([]);
   public reloadLocationListDropdown = new Subject<void>(); 
 
   reloadVisitorLog$ = this.reloadVisitorLog.asObservable(); // Expose observable
@@ -35,16 +36,17 @@ export class SignalRService {
   receiveReport$ = this.receiveReport.asObservable(); // Expose observable for ReceiveReport 
 
   
-  private baseUrl = environment.apiUrl;
+  private baseUrl = 'https://visitex.experionglobal.dev';
+  // private baseUrl = environment.apiUrl;
   
   constructor() {
     this.hubConnection = new signalR.HubConnectionBuilder()
       .withUrl(`${this.baseUrl}/VisitorHub`)
       .build();
 
-      this.hubConnection.on('ReloadVisitorLog', () => {
-        this.reloadVisitorLog.next();
-      });
+      // this.hubConnection.on('ReloadVisitorLog', () => {
+      //   this.reloadVisitorLog.next();
+      // });
       
       this.hubConnection.on('LocationAdded', () => {
         this.reloadLocationListDropdown.next();
@@ -77,6 +79,11 @@ export class SignalRService {
         this.receiveReport.next(ReceiveReport); // Update the observable for location statistics
         console.log(`Updated ReceiveReport :`, ReceiveReport);
       });
+      this.hubConnection.on('ReloadVisitorLog', (ReloadVisitorLog: any[]) => {
+        this.reloadVisitorLog.next(ReloadVisitorLog); // Update the observable for visitor statistics
+        console.log(`Updated ReloadVisitorLog :`, ReloadVisitorLog);
+      });
+
     this.hubConnection.start()     
      .then(() => {
       console.log('SignalR connected',this.visitorCountSource);
@@ -103,7 +110,7 @@ export class SignalRService {
       .catch(err => console.error('Error requesting initial location statistics:', err)); // Request initial location security statistics
       this.hubConnection.invoke('SendInitialReports')
       .catch(err => console.error('Error requesting initial location statistics:', err)); // Request initial ReceiveReport statistics
-     }
+    }
   
   ngOnDestroy() {
     this.hubConnection.stop()
