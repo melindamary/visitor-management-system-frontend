@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import {
   VisitorLog,
   VisitorLogResponse,
@@ -184,6 +184,7 @@ export class VisitorLogComponent implements OnInit {
     private visitorLogService: VisitorLogService,
     private signalRService: SignalRService,
     private messageService: MessageService,
+    private cdr: ChangeDetectorRef,
     private confirmationService: ConfirmationService,
     private datePipe: DatePipe,
     private fb: FormBuilder
@@ -387,11 +388,24 @@ export class VisitorLogComponent implements OnInit {
   showDialog(visitor: VisitorLog): void {
     this.selectedVisitor = { ...visitor };
     this.cardNumber = '';
+    this.isSubmitting = false;
     this.visibleCheckInDialog = true;
     this.visibleDetailsDialog = false;
-    this.checkInForm.reset();
-    this.checkInForm.patchValue({ id: null }); // Reset the id field
-  }
+ 
+   // Explicitly set new controls (force recreation of visitorPassCode)
+this.checkInForm = this.fb.group({
+      id: [null],
+      visitorPassCode: [
+        '',
+        [Validators.required, Validators.pattern('^(0*[1-9][0-9]*)$')],
+      ],
+    });
+
+  // Optionally trigger initial validation
+  this.checkInForm.markAsPristine();
+  this.checkInForm.updateValueAndValidity();
+   this.cdr.detectChanges();
+}
 
   isSubmitting: boolean = false; // Track if the request is being processed
 
@@ -400,6 +414,9 @@ export class VisitorLogComponent implements OnInit {
     //   const updateVisitorPassCode: VisitorPassCodeDTO = {
     //     visitorPassCode: +this.cardNumber
     //   };
+
+  this.checkInForm.get('visitorPassCode')?.markAsDirty();
+  this.checkInForm.get('visitorPassCode')?.updateValueAndValidity();
 
     if (this.checkInForm.invalid || this.isSubmitting) {
       return; // Prevent submission if form is invalid or submission is in progress
