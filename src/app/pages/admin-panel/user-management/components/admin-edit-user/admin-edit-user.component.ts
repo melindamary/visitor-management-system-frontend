@@ -274,6 +274,7 @@ export class AdminEditUserComponent {
       const updatedUser: any = {
         userId: this.user.userId,
         username: formValues.username,
+        password: formValues.password,
         firstName: formValues.firstName,
         lastName: formValues.lastName,
         phone: formValues.phone,
@@ -295,6 +296,8 @@ export class AdminEditUserComponent {
         
        }
       }
+
+      console.log("update user payload",updatedUser);
 
       this.apiService.updateUserData(this.user.userId, updatedUser).subscribe({
         next: (response) => {

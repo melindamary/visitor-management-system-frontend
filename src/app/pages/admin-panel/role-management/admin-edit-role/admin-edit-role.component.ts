@@ -80,7 +80,7 @@ export class AdminEditRoleComponent {
             }
           });
           this.roleForm = this.fb.group({
-            role: [''],
+            role: [{ value: '', disabled: true }],
             status:1,
             permissions: this.fb.group(permissionsGroup)
           });
@@ -157,7 +157,7 @@ export class AdminEditRoleComponent {
         const navigationExtras: NavigationExtras = {
           state: { message: `Role  has been Updated successfully` }
         };
-        this.router.navigate(['/vms/sharedtable'], navigationExtras);        
+        this.router.navigate(['/vms/admin-panel'], navigationExtras);        
       },
       error: error => console.error('Error updating role:', error)
     });
