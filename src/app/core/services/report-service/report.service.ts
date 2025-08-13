@@ -22,13 +22,14 @@ export class ReportService {
     try {
       const response = await this.fetchReport().toPromise();
       var reportData = response.result.$values;
-      console.log(reportData);
+      console.log("Reportdata",reportData);
       this.reports = reportData.map((item: any, index: any) => ({
         slNo: index + 1,
         visitorId: item.visitorId,
         name: this.capitalize(item.visitorName),
         phoneNumber: item.phone,
         visitDate: this.datePipe.transform(item.visitDate, 'dd-MM-yyyy'),
+        visitorPassCode : item.visitorPassCode,
         officeLocation: this.capitalize(item.locationName),
         visitPurpose: this.capitalize(item.purposeName.trim()),
         hostName: this.capitalize(item.hostName),

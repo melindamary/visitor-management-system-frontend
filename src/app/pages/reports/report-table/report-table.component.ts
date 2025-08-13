@@ -284,6 +284,7 @@ export class ReportTableComponent {
       'name',
       'phoneNumber',
       'visitDate',
+      'visitorPassCode',
       'officeLocation',
       'visitPurpose',
       'hostName',
